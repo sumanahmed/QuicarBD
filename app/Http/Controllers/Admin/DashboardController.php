@@ -12,6 +12,6 @@ class DashboardController extends Controller
      */
     public function dashboard ()
     {
-        dd('yess');
+        return 'yess';
     }
 }

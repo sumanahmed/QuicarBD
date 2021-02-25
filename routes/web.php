@@ -18,6 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function () {
+Route::group(['prefix'=>'/admin'], function(){
     Route::get('/', [DashboardController::class, 'dashboard']);
 });
