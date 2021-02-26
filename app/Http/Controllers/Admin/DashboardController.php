@@ -12,6 +12,6 @@ class DashboardController extends Controller
      */
     public function dashboard ()
     {
-        return 'yess';
+        return view('quicarbd.admin.dashboard.index');
     }
 }

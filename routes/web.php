@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DistrictController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix'=>'/admin'], function(){
-    Route::get('/', [DashboardController::class, 'dashboard']);
+Route::get('/admin',[AuthController::class, 'login'])->name('admin.login');
+Route::post('/admin/signin',[AuthController::class, 'signin'])->name('admin.signin');
+Route::post('/admin/logout',[AuthController::class, 'logout'])->name('admin.logout');
+
+Route::group(['prefix'=>'/admin', 'middleware' => 'admin'], function(){
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+});
+
+Route::group(['prefix'=>'/admin/setting/district', 'middleware' => 'admin'], function(){
+    Route::get('/', [DistrictController::class, 'index'])->name('setting.district.index');
+    Route::post('/store', [DistrictController::class, 'store'])->name('setting.district.store');
+    Route::post('/update', [DistrictController::class, 'update'])->name('setting.district.update');
+    Route::post('/destroy', [DistrictController::class, 'destroy'])->name('setting.district.destroy');
 });

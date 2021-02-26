@@ -9,5 +9,5 @@ class District extends Model
 {
     use HasFactory;
 
-    protected $table = "district"
+    protected $table = "district";
 }
