@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
+use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\TourSportController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/get-city/{district_id}', [CommonController::class, 'getCity'])->name('admin.get_city'); 
 
 Route::get('/admin',[AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/signin',[AuthController::class, 'signin'])->name('admin.signin');
@@ -49,4 +54,22 @@ Route::group(['prefix'=>'/admin/setting/tour-spot', 'middleware' => 'admin'], fu
     Route::post('/store', [TourSportController::class, 'store'])->name('setting.tour_spot.store');
     Route::post('/update', [TourSportController::class, 'update'])->name('setting.tour_spot.update');
     Route::post('/destroy', [TourSportController::class, 'destroy'])->name('setting.tour_spot.destroy');
+});
+
+Route::group(['prefix'=>'/admin/driver', 'middleware' => 'admin'], function(){
+    Route::get('/', [DriverController::class, 'index'])->name('driver.index');
+    Route::post('/store', [DriverController::class, 'store'])->name('driver.store');
+    Route::post('/update', [DriverController::class, 'update'])->name('driver.update');
+    Route::post('/destroy', [DriverController::class, 'destroy'])->name('driver.destroy');
+});
+
+Route::group(['prefix'=>'/admin/car', 'middleware' => 'admin'], function(){
+    Route::get('/', [CarController::class, 'index'])->name('car.index');
+    Route::get('/create', [CarController::class, 'create'])->name('car.create');
+    Route::post('/store', [CarController::class, 'store'])->name('car.store');
+    Route::get('/edit/{car_id}', [CarController::class, 'edit'])->name('car.edit');
+    Route::post('/update/{car_id}', [CarController::class, 'update'])->name('car.update');
+    Route::get('/details/{car_id}', [CarController::class, 'details'])->name('car.details');
+    Route::get('/expired', [CarController::class, 'expired'])->name('car.expired');
+    Route::post('/destroy', [CarController::class, 'destroy'])->name('car.destroy');
 });

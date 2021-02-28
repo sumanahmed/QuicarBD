@@ -22,6 +22,8 @@
 	<!-- EChartJS JavaScript -->
 	<script src="{{ asset('quicarbd/admin/vendors/bower_components/echarts/dist/echarts-en.min.js') }}"></script>
 	<script src="{{ asset('quicarbd/admin/vendors/echarts-liquidfill.min.js') }}"></script>	
+	<!-- Dropify JavaScript -->
+	<script src="{{ asset('quicarbd/admin/vendors/bower_components/dropify/dist/js/dropify.min.js') }}"></script>	
 	<!-- Toast JavaScript -->
 	<script src="{{ asset('quicarbd/admin/vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>	
 	<!-- Init JavaScript -->

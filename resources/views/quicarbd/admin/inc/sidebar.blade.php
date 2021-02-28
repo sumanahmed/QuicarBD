@@ -44,7 +44,7 @@
             <i class="zmdi zmdi-more"></i>
         </li>
         <li>
-            <a href="javascript:void(0);" data-toggle="collapse" data-target="#setting"><div class="pull-left"><i class="zmdi zmdi-edit mr-20"></i><span class="right-nav-text">Settings</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#setting"><div class="pull-left"><i class="fa fa-cog mr-20"></i><span class="right-nav-text">Settings</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="setting" class="collapse collapse-level-1 two-col-list">
                 <li>
                     <a href="{{ route('setting.district.index') }}">District</a>
@@ -54,6 +54,87 @@
                 </li>
                 <li>
                     <a href="{{ route('setting.tour_spot.index') }}">Tour Spot</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="{{ route('driver.index') }}" data-toggle="collapse" data-target="#driver"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Driver</span></div><div class="pull-right"></div><div class="clearfix"></div></a>
+        </li>
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#cars"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Cars</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="cars" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#carInfo"><div class="pull-left"><span class="right-nav-text">All Car</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="carInfo" class="collapse collapse-level-1 two-col-list">
+                        <li>
+                            <a href="#">Add New Car</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('car.index') }}">All Car</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#carinfo"><div class="pull-left"><span class="right-nav-text">Car Info</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="carinfo" class="collapse collapse-level-1 two-col-list">
+                        <li>
+                            <a href="#">Types</a>
+                        </li>
+                        <li>
+                            <a href="#">Brand</a>
+                        </li>
+                        <li>
+                            <a href="#">Year</a>
+                        </li>
+                        <li>
+                            <a href="#">Class</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#hotelInfo"><div class="pull-left"><i class="fa fa-hotel mr-20"></i><span class="right-nav-text">Hotel Info</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="hotelInfo" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="#">Property Type</a>
+                </li>
+                <li>
+                    <a href="#">Hotel Amenity</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#notice"><div class="pull-left"><i class="fa fa-exclamation-triangle mr-20"></i><span class="right-nav-text">Notice</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="notice" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="#">Car Package</a>
+                </li>
+                <li>
+                    <a href="#">Hotel Package</a>
+                </li>
+                <li>
+                    <a href="#">Travel Package</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#banner"><div class="pull-left"><i class="fa fa-image mr-20"></i><span class="right-nav-text">Banner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="banner" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="#">User</a>
+                </li>
+                <li>
+                    <a href="#">Partner</a>
+                </li>
+                <li>
+                    <a href="#">Car Package</a>
+                </li>
+                <li>
+                    <a href="#">Hotel Package</a>
+                </li>
+                <li>
+                    <a href="#">Travel Package</a>
                 </li>
             </ul>
         </li>

@@ -47,7 +47,7 @@
                                                     <td>{{ $district->value }}</td>
                                                     <td>{{ $district->bn_name }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-raised btn-warning" data-toggle="modal" id="editDistrict" data-target="#editDistrictModal" data-id="{{ $district->id }}" data-name="{{ $district->value }}" data-bn_name="{{ $district->bn_name }}" title="Edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="editDistrict" data-target="#editDistrictModal" data-id="{{ $district->id }}" data-name="{{ $district->value }}" data-bn_name="{{ $district->bn_name }}" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteDistrict" data-target="#deleteDistrictModal" data-id="{{ $district->id }}" title="Delete"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>

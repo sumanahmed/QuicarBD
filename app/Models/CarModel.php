@@ -9,5 +9,5 @@ class CarModel extends Model
 {
     use HasFactory;
 
-    protected $table = "car_model"
+    protected $table = "car_model";
 }
