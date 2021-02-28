@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +34,11 @@ Route::group(['prefix'=>'/admin/setting/district', 'middleware' => 'admin'], fun
     Route::post('/store', [DistrictController::class, 'store'])->name('setting.district.store');
     Route::post('/update', [DistrictController::class, 'update'])->name('setting.district.update');
     Route::post('/destroy', [DistrictController::class, 'destroy'])->name('setting.district.destroy');
+});
+
+Route::group(['prefix'=>'/admin/setting/city', 'middleware' => 'admin'], function(){
+    Route::get('/', [CityController::class, 'index'])->name('setting.city.index');
+    Route::post('/store', [DistrictController::class, 'store'])->name('setting.city.store');
+    Route::post('/update', [DistrictController::class, 'update'])->name('setting.city.update');
+    Route::post('/destroy', [DistrictController::class, 'destroy'])->name('setting.city.destroy');
 });

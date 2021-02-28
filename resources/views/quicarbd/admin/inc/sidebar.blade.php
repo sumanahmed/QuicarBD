@@ -47,7 +47,10 @@
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#setting"><div class="pull-left"><i class="zmdi zmdi-edit mr-20"></i><span class="right-nav-text">Settings</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="setting" class="collapse collapse-level-1 two-col-list">
                 <li>
-                    <a href="{{ route('setting.district.index') }}" class="active">District</a>
+                    <a href="{{ route('setting.district.index') }}">District</a>
+                </li>
+                <li>
+                    <a href="{{ route('setting.city.index') }}">City</a>
                 </li>
             </ul>
         </li>

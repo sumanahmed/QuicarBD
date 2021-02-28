@@ -34,8 +34,7 @@
 				<div class="nav-header pull-left">
 					<div class="logo-wrap">
 						<a href="/">
-							<img class="brand-img" src="{{ asset('quicarbd/admin/img/logo.jpg') }}" alt="brand"/>
-							<span class="brand-text">QuicarBd</span>
+							<img class="brand-img" src="{{ asset('quicarbd/logo.png') }}" alt="brand"/>
 						</a>
 					</div>
 				</div>	
