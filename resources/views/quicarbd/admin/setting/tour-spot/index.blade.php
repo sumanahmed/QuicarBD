@@ -1,18 +1,18 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','City')
+@section('title','Tour Spot')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <button type="button"data-toggle="modal" data-target="#createCityModal" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></button>
+            <button type="button"data-toggle="modal" data-target="#createSpotModal" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></button>
         </div>
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#"><span>Setting</span></a></li>
-            <li class="active"><span>City</span></li>
+            <li class="active"><span>Tour Spot</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -24,7 +24,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">All District</h6>
+                        <h6 class="panel-title txt-dark">All Tour Spot</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -34,29 +34,33 @@
                             <div class="table-responsive">
                                 <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
-                                        <tr>                                  
-                                            <th>Name</th>                                     
-                                            <th>Name(Bn)</th>                                     
-                                            <th>District</th>                                     
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Name(Bn)</th>
+                                            <th>District</th>
+                                            <th>Address</th>
+                                            <th>Image</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="allCity">
-                                        @if(isset($citys) && count($citys) > 0)
-                                            @foreach($citys as $city)
-                                                <tr class="city-{{ $city->id }}">
-                                                    <td>{{ $city->name }}</td>
-                                                    <td>{{ $city->bn_name }}</td>
-                                                    <td>{{ $city->district_name }}</td>
+                                    <tbody id="allSpot">
+                                        @if(isset($spots) && count($spots) > 0)                                  
+                                            @foreach($spots as $spot)
+                                                <tr class="spot-{{ $spot->id }}">
+                                                    <td>{{ $spot->name }}</td>
+                                                    <td>{{ $spot->bn_name }}</td>
+                                                    <td>{{ $spot->district_name }}</td>
+                                                    <td>{{ $spot->address != null ? $spot->address : '' }}</td>
+                                                    <td><img src="http://quicarbd.com/{{ $spot->image }}" style="width:80px;height:60px"/>                                            
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-raised btn-warning" data-toggle="modal" id="editCity" data-target="#editCityModal" data-id="{{ $city->id }}" data-name="{{ $city->name }}" data-bn_name="{{ $city->bn_name }}" data-district_id="{{ $city->district_id }}" title="Edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="#" class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="deleteCity" data-target="#deleteCityModal" data-id="{{ $city->id }}" title="Delete"><i class="fa fa-remove"></i></a>
+                                                        <buttton class="btn btn-xs btn-raised btn-warning" data-toggle="modal" id="editSpot" data-target="#editSpotModal" data-id="{{ $spot->id }}" data-district_id="{{ $spot->district_id }}" data-name="{{ $spot->name }}" data-bn_name="{{ $spot->bn_name }}" data-address="{{ $spot->address }}" data-image="{{ $spot->image }}" title="Edit"><i class="fa fa-edit"></i></buttton>
+                                                        <buttton class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="deleteSpot" data-target="#deleteSpotModal" data-id="{{ $spot->id }}" title="Delete"><i class="fa fa-remove"></i></buttton>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="4" class="text-center">No Data Found</td>
+                                                <td colspan="6" class="text-center">No Data Found</td>
                                             </tr>
                                         @endif
                                     </tbody>
@@ -69,7 +73,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="createCityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal fade" id="createSpotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -77,7 +81,8 @@
                     <h5 class="modal-title" id="exampleModalLabel1">Create</h5>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="createSpotForm" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }} {{ method_field('POST') }}
                         <div class="form-group">
                             <label for="name" class="control-label mb-10">Name(En) <span class="text-danger text-bold" title="Required Field">*</span></label>
                             <input type="text" name="name" id="name" class="form-control"placeholder="Enter Name in English" required>
@@ -98,6 +103,16 @@
                             </select>
                             <span class="text-danger districtError"></span>
                         </div>
+                        <div class="form-group">
+                            <label for="address" class="control-label mb-10">Address <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <input type="text" name="address" id="address" class="form-control" placeholder="Enter Address">
+                            <span class="text-danger addressError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="control-label mb-10">Image <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <input type="file" name="image" id="image" class="form-control" required>
+                            <span class="text-danger imageError"></span>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -108,7 +123,7 @@
         </div>
     </div>
     
-    <div class="modal fade" id="editCityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal fade" id="editSpotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -116,7 +131,8 @@
                     <h5 class="modal-title" id="exampleModalLabel1">Edit</h5>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="editSpotForm" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }} {{ method_field('POST') }}
                         <div class="form-group">
                             <label for="edit_name" class="control-label mb-10">Name(En) <span class="text-danger text-bold" title="Required Field">*</span></label>
                             <input type="text" name="name" id="edit_name" class="form-control"placeholder="Enter Name in English" required>
@@ -137,6 +153,20 @@
                             </select>
                             <span class="text-danger districtError"></span>
                         </div>
+                        <div class="form-group">
+                            <label for="edit_address" class="control-label mb-10">Name(Bn) <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <input type="text" name="address" id="edit_address" class="form-control" placeholder="Enter Address">
+                            <span class="text-danger addressError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="image" class="control-label mb-10">Previous Image <span class="text-danger text-bold" title="Required Field">*</span></label>                                
+                            <img src="" id="previous_image" style="width:80px;height:80px;"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="image" class="control-label mb-10">Update Image <span class="text-danger text-bold" title="Required Field">*</span></label>                                
+                            <input type="file" name="image" id="edit_image" class="form-control">
+                            <span class="text-danger imageError"></span>
+                        </div>    
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -148,13 +178,13 @@
     </div>
 
     <!-- Delete Class Modal -->
-    <div id="deleteCityModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="deleteSpotModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content text-center">
                 <div class="modal-header">
                     <h5 class="modal-title mb-10" id="exampleModalLabel">Are you sure to delete ?</h5>
                     <input type="hidden" name="del_id"/>
-                    <button type="button" class="btn btn-xs btn-danger btn-raised mr-2" id="destroyCity"><i class="fas fa-trash-alt"></i> Proceed</button>
+                    <button type="button" class="btn btn-xs btn-danger btn-raised mr-2" id="destroySpot"><i class="fas fa-trash-alt"></i> Proceed</button>
                     <button type="button" class="btn btn-xs btn-warning btn-raised" data-dismiss="modal" aria-label="Close"><i class="fas fa-backspace"></i> Cancel</button>
                 </div>
             </div>
@@ -163,7 +193,7 @@
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/city.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/tour-spot.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

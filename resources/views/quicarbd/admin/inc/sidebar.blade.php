@@ -52,6 +52,9 @@
                 <li>
                     <a href="{{ route('setting.city.index') }}">City</a>
                 </li>
+                <li>
+                    <a href="{{ route('setting.tour_spot.index') }}">Tour Spot</a>
+                </li>
             </ul>
         </li>
     </ul>

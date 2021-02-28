@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\District;
 use Illuminate\Http\Request;
+use Validator;
+use Response;
 
 class CityController extends Controller
 {
@@ -15,12 +17,12 @@ class CityController extends Controller
                             ->select('city.*','district.value as district_name')
                             ->get();
 
-        $districts  = District::all();
+        $districts  = District::orderBy('value','ASC')->get();
         return view('quicarbd.admin.setting.city.index', compact('citys','districts'));
     }
 
     //store
-    public function store(Request $request){
+    public function store(Request $request){ 
         $validators=Validator::make($request->all(),[
             'name'          => 'required',
             'bn_name'       => 'required',

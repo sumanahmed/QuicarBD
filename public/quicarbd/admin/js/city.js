@@ -6,7 +6,7 @@ $("#create").click(function (e) {
     var district_id = $("#district_id :selected").val();
     $.ajax({
         type:'POST',
-        url: '/admin/city/store',
+        url: '/admin/setting/city/store',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             name : name,
@@ -32,8 +32,8 @@ $("#create").click(function (e) {
                         '<td>'+ response.data.bn_name +'</td>\n' +
                         '<td>'+ response.data.district_name +'</td>\n' +
                         '<td style="vertical-align: middle;text-align: center;">\n' +                        
-                            '<button class="btn btn-warning" data-toggle="modal" id="editCity" data-target="#editCityModal" data-id="'+ response.data.id +'" data-name="'+ response.data.name +'" data-bn_name="'+ response.data.bn_name +'" data-district_id="'+ response.data.district_id +'" title="Edit"><i class="fas fa-edit"></i></button>\n' +
-                            '<button class="btn btn-danger" data-toggle="modal" id="deleteCity" data-target="#deleteCityModal" data-id="'+ response.data.id +'" title="Delete"><i class="fas fa-trash"></i></button>\n' +
+                            '<button class="btn btn-xs btn-warning" data-toggle="modal" id="editCity" data-target="#editCityModal" data-id="'+ response.data.id +'" data-name="'+ response.data.name +'" data-bn_name="'+ response.data.bn_name +'" data-district_id="'+ response.data.district_id +'" title="Edit"><i class="fa fa-edit"></i></button>\n' +
+                            '<button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteCity" data-target="#deleteCityModal" data-id="'+ response.data.id +'" title="Delete"><i class="fa fa-remove"></i></button>\n' +
                         '</td>\n' +
                     '</tr>'+
                 '');
@@ -66,7 +66,7 @@ $("#update").click(function (e) {
     var district_id = $("#edit_district_id :selected").val();
     $.ajax({
         type:'POST',
-        url: '/admin/city/update',
+        url: '/admin/setting/city/update',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id    : id,
@@ -93,8 +93,8 @@ $("#update").click(function (e) {
                         '<td>'+ response.data.bn_name +'</td>\n' +
                         '<td>'+ response.data.district_name +'</td>\n' +
                         '<td style="vertical-align: middle;text-align: center;">\n' +
-                            '<button class="btn btn-warning" data-toggle="modal" id="editCity" data-target="#editCityModal" data-id="'+ response.data.id +'" data-name="'+ response.data.name +'" data-bn_name="'+ response.data.bn_name +'" data-district_id="'+ response.data.district_id +'" title="Edit"><i class="fas fa-edit"></i></button>\n' +
-                            '<button class="btn btn-danger" data-toggle="modal" id="deleteCity" data-target="#deleteCityModal" data-id="'+ response.data.id +'" title="Delete"><i class="fas fa-trash"></i></button>\n' +
+                            '<button class="btn btn-xs btn-warning" data-toggle="modal" id="editCity" data-target="#editCityModal" data-id="'+ response.data.id +'" data-name="'+ response.data.name +'" data-bn_name="'+ response.data.bn_name +'" data-district_id="'+ response.data.district_id +'" title="Edit"><i class="fa fa-edit"></i></button>\n' +
+                            '<button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteCity" data-target="#deleteCityModal" data-id="'+ response.data.id +'" title="Delete"><i class="fa fa-remove"></i></button>\n' +
                         '</td>\n' +
                     '</tr>'+
                 '');
@@ -114,7 +114,7 @@ $(document).on('click', '#deleteCity', function () {
 $("#destroyCity").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/city/destroy',
+        url: '/admin/setting/city/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()
