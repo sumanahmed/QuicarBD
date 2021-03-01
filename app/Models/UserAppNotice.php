@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class UserAppNotice extends Model
 {
     use HasFactory;
+
+    protected $table = "user_app_notices";
 }

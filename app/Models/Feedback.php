@@ -9,5 +9,5 @@ class Feedback extends Model
 {
     use HasFactory;
 
-    protected $table = "feedback"
+    protected $table = "feedback";
 }

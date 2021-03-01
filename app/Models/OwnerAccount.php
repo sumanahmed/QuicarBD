@@ -9,5 +9,5 @@ class OwnerAccount extends Model
 {
     use HasFactory;
 
-    protected $table = "owner_account"
+    protected $table = "owner_account";
 }

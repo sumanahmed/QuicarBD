@@ -9,5 +9,5 @@ class DestinationPlaceOrder extends Model
 {
     use HasFactory;
 
-    protected $table = "destination_place_order"
+    protected $table = "destination_place_order";
 }

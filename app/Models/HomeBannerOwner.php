@@ -9,5 +9,5 @@ class HomeBannerOwner extends Model
 {
     use HasFactory;
 
-    protected $table = "home_banner_owner"
+    protected $table = "home_banner_owner";
 }

@@ -9,5 +9,5 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $table = "notification"
+    protected $table = "notification";
 }

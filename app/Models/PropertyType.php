@@ -9,5 +9,5 @@ class PropertyType extends Model
 {
     use HasFactory;
 
-    protected $table = "property_type"
+    protected $table = "property_type";
 }

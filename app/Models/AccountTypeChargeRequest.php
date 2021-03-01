@@ -9,5 +9,5 @@ class AccountTypeChargeRequest extends Model
 {
     use HasFactory;
 
-    protected $table = "account_type_chage_request"
+    protected $table = "account_type_chage_request";
 }

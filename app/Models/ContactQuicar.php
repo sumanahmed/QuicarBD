@@ -9,5 +9,5 @@ class ContactQuicar extends Model
 {
     use HasFactory;
 
-    protected $table = "contact_quicar"
+    protected $table = "contact_quicar";
 }

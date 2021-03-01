@@ -9,5 +9,5 @@ class ReportList extends Model
 {
     use HasFactory;
 
-    protected $table = "report_list"
+    protected $table = "report_list";
 }

@@ -9,5 +9,5 @@ class PolicyPartner extends Model
 {
     use HasFactory;
 
-    protected $table = "policy_partners"
+    protected $table = "policy_partners";
 }

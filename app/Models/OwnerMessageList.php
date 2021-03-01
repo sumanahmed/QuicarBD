@@ -9,5 +9,5 @@ class OwnerMessageList extends Model
 {
     use HasFactory;
 
-    protected $table = "owner_message_list"
+    protected $table = "owner_message_list";
 }

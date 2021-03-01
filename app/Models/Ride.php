@@ -9,5 +9,5 @@ class Ride extends Model
 {
     use HasFactory;
 
-    protected $table = "ride"
+    protected $table = "ride";
 }

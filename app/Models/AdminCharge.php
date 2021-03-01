@@ -9,5 +9,5 @@ class AdminCharge extends Model
 {
     use HasFactory;
 
-    protected $table = "admin_charge"
+    protected $table = "admin_charge";
 }

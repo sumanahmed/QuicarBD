@@ -9,5 +9,5 @@ class CarPackageOrder extends Model
 {
     use HasFactory;
 
-    protected $table = "car_package_order"
+    protected $table = "car_package_order";
 }

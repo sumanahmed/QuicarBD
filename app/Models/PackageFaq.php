@@ -9,5 +9,5 @@ class PackageFaq extends Model
 {
     use HasFactory;
 
-    protected $table = "package_faq"
+    protected $table = "package_faq";
 }

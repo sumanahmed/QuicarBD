@@ -9,5 +9,5 @@ class PolicyUser extends Model
 {
     use HasFactory;
 
-    protected $table = "policy_users"
+    protected $table = "policy_users";
 }

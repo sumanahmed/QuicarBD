@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Division extends Model
+class PackageBanner extends Model
 {
     use HasFactory;
 
-    protected $table = "district"
+    protected $table = "package_faq";
 }

@@ -9,5 +9,5 @@ class HomePackage extends Model
 {
     use HasFactory;
 
-    protected $table = "home_package"
+    protected $table = "home_package";
 }

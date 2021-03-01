@@ -9,5 +9,5 @@ class HomeOffer extends Model
 {
     use HasFactory;
 
-    protected $table = "home_offer"
+    protected $table = "home_offer";
 }

@@ -9,5 +9,5 @@ class BidCancelList extends Model
 {
     use HasFactory;
 
-    protected $table = "bit_cancel_list"
+    protected $table = "bit_cancel_list";
 }

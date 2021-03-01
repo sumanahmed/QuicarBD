@@ -9,5 +9,5 @@ class HotelPackage extends Model
 {
     use HasFactory;
 
-    protected $table = "hotel_packages"
+    protected $table = "hotel_packages";
 }

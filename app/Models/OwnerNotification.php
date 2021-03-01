@@ -9,5 +9,5 @@ class OwnerNotification extends Model
 {
     use HasFactory;
 
-    protected $table = "owner_notification"
+    protected $table = "owner_notification";
 }

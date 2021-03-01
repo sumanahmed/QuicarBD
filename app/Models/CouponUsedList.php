@@ -9,5 +9,5 @@ class CouponUsedList extends Model
 {
     use HasFactory;
 
-    protected $table = "coupon_used_list"
+    protected $table = "coupon_used_list";
 }

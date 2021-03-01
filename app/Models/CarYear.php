@@ -9,5 +9,5 @@ class CarYear extends Model
 {
     use HasFactory;
 
-    protected $table = "car_year"
+    protected $table = "car_year";
 }

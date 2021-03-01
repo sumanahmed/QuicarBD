@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class WithdrawListPartner extends Model
 {
     use HasFactory;
+
+    protected $table = "withdraw_list_partner";
 }
