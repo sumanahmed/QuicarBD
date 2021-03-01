@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\CarBrandController;
 use App\Http\Controllers\Admin\CarController;
+use App\Http\Controllers\Admin\CarModelController;
+use App\Http\Controllers\Admin\CarTypeController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -30,6 +33,7 @@ Route::get('/', function () {
 });
 
 Route::get('/get-city/{district_id}', [CommonController::class, 'getCity'])->name('admin.get_city'); 
+Route::get('/get-brand/{car_type_id}', [CommonController::class, 'getBrand'])->name('admin.get_brand'); 
 
 Route::get('/admin',[AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/signin',[AuthController::class, 'signin'])->name('admin.signin');
@@ -72,6 +76,27 @@ Route::group(['prefix'=>'/admin/property-type', 'middleware' => 'admin'], functi
     Route::post('/store', [PropertyTypeController::class, 'store'])->name('property_type.store');
     Route::post('/update', [PropertyTypeController::class, 'update'])->name('property_type.update');
     Route::post('/destroy', [PropertyTypeController::class, 'destroy'])->name('property_type.destroy');
+});
+
+Route::group(['prefix'=>'/admin/car-type', 'middleware' => 'admin'], function(){
+    Route::get('/', [CarTypeController::class, 'index'])->name('car_type.index');
+    Route::post('/store', [CarTypeController::class, 'store'])->name('car_type.store');
+    Route::post('/update', [CarTypeController::class, 'update'])->name('car_type.update');
+    Route::post('/destroy', [CarTypeController::class, 'destroy'])->name('car_type.destroy');
+});
+
+Route::group(['prefix'=>'/admin/brand', 'middleware' => 'admin'], function(){
+    Route::get('/', [CarBrandController::class, 'index'])->name('brand.index');
+    Route::post('/store', [CarBrandController::class, 'store'])->name('brand.store');
+    Route::post('/update', [CarBrandController::class, 'update'])->name('brand.update');
+    Route::post('/destroy', [CarBrandController::class, 'destroy'])->name('brand.destroy');
+});
+
+Route::group(['prefix'=>'/admin/model', 'middleware' => 'admin'], function(){
+    Route::get('/', [CarModelController::class, 'index'])->name('model.index');
+    Route::post('/store', [CarModelController::class, 'store'])->name('model.store');
+    Route::post('/update', [CarModelController::class, 'update'])->name('model.update');
+    Route::post('/destroy', [CarModelController::class, 'destroy'])->name('model.destroy');
 });
 
 Route::group(['prefix'=>'/admin/hotel-amenity', 'middleware' => 'admin'], function(){

@@ -78,10 +78,13 @@
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#carinfo"><div class="pull-left"><span class="right-nav-text">Car Info</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="carinfo" class="collapse collapse-level-1 two-col-list">
                         <li>
-                            <a href="#">Types</a>
+                            <a href="{{ route('car_type.index') }}">Types</a>
                         </li>
                         <li>
-                            <a href="#">Brand</a>
+                            <a href="{{ route('brand.index') }}">Brand</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('model.index') }}">Model</a>
                         </li>
                         <li>
                             <a href="#">Year</a>
