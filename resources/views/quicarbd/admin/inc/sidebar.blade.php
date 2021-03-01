@@ -87,10 +87,10 @@
                             <a href="{{ route('model.index') }}">Model</a>
                         </li>
                         <li>
-                            <a href="#">Year</a>
+                            <a href="{{ route('year.index') }}">Year</a>
                         </li>
                         <li>
-                            <a href="#">Class</a>
+                            <a href="{{ route('class.index') }}">Class</a>
                         </li>
                     </ul>
                 </li>
@@ -128,10 +128,10 @@
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#banner"><div class="pull-left"><i class="fa fa-image mr-20"></i><span class="right-nav-text">Banner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="banner" class="collapse collapse-level-1 two-col-list">
                 <li>
-                    <a href="#">User</a>
+                    <a href="{{ route('user_banner.index') }}">User</a>
                 </li>
                 <li>
-                    <a href="#">Partner</a>
+                    <a href="{{ route('partner_banner.index') }}">Partner</a>
                 </li>
                 <li>
                     <a href="{{ route('banner.packages', ['type' => 1]) }}">Car Package</a>

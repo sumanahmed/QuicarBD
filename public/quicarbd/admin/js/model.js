@@ -32,8 +32,8 @@ $("#create").click(function (e) {
                         '<td>'+ response.data.car_type_name +'</td>\n' +
                         '<td>'+ response.data.car_brand_name +'</td>\n' +
                         '<td style="vertical-align: middle;text-align: center;">\n' +                        
-                            '<button class="btn btn-xs btn-warning" data-toggle="modal" id="editModel" data-target="#editModelModal" data-id="'+ response.data.id +'" data-name="'+ response.data.value +'" data-car_type_id="'+ response.data.car_type_id +'" data-car_brand_id="'+ response.data.car_brand_id +'" title="Edit"><i class="fas fa-edit"></i></button>\n' +
-                            '<button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteModel" data-target="#deleteModelModal" data-id="'+ response.data.id +'" title="Delete"><i class="fas fa-trash"></i></button>\n' +
+                            '<button class="btn btn-xs btn-warning" data-toggle="modal" id="editModel" data-target="#editModelModal" data-id="'+ response.data.id +'" data-name="'+ response.data.value +'" data-car_type_id="'+ response.data.car_type_id +'" data-car_brand_id="'+ response.data.car_brand_id +'" title="Edit"><i class="fa fa-edit"></i></button>\n' +
+                            '<button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteModel" data-target="#deleteModelModal" data-id="'+ response.data.id +'" title="Delete"><i class="fa fa-remove"></i></button>\n' +
                         '</td>\n' +
                     '</tr>'+
                 '');
@@ -91,8 +91,8 @@ $("#update").click(function (e) {
                         '<td>'+ response.data.car_type_name +'</td>\n' +
                         '<td>'+ response.data.car_brand_name +'</td>\n' +
                         '<td style="vertical-align: middle;text-align: center;">\n' +
-                            '<button class="btn btn-xs btn-warning" data-toggle="modal" id="editModel" data-target="#editModelModal" data-id="'+ response.data.id +'" data-name="'+ response.data.value +'" data-car_type_id="'+ response.data.car_type_id +'" data-car_brand_id="'+ response.data.car_brand_id +'" title="Edit"><i class="fas fa-edit"></i></button>\n' +
-                            '<button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteModel" data-target="#deleteModelModal" data-id="'+ response.data.id +'" title="Delete"><i class="fas fa-trash"></i></button>\n' +
+                            '<button class="btn btn-xs btn-warning" data-toggle="modal" id="editModel" data-target="#editModelModal" data-id="'+ response.data.id +'" data-name="'+ response.data.value +'" data-car_type_id="'+ response.data.car_type_id +'" data-car_brand_id="'+ response.data.car_brand_id +'" title="Edit"><i class="fa fa-edit"></i></button>\n' +
+                            '<button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteModel" data-target="#deleteModelModal" data-id="'+ response.data.id +'" title="Delete"><i class="fa fa-remove"></i></button>\n' +
                         '</td>\n' +
                     '</tr>'+
                 '');

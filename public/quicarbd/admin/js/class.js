@@ -1,6 +1,6 @@
 
 //create offer
-$("#createClass").click(function (e) {
+$("#create").click(function (e) {
     e.preventDefault();
     var name = $("#name").val();
     var car_type_id = $("#car_type_id :selected").val();
@@ -26,8 +26,8 @@ $("#createClass").click(function (e) {
                         '<td>'+ response.data.value +'</td>\n' +
                         '<td>'+ response.data.car_type_name +'</td>\n' +
                         '<td style="vertical-align: middle;text-align: center;">\n' +                        
-                            '<button class="btn btn-warning" data-toggle="modal" id="editClass" data-target="#editClassModal" data-id="'+ response.data.id +'" data-name="'+ response.data.value +'" data-car_type_id="'+ response.data.car_type_id +'" title="Edit"><i class="fas fa-edit"></i></button>\n' +
-                            '<button class="btn btn-danger" data-toggle="modal" id="deleteClass" data-target="#deleteClassModal" data-id="'+ response.data.id +'" title="Delete"><i class="fas fa-trash"></i></button>\n' +
+                            '<button class="btn btn-xs btn-warning" data-toggle="modal" id="editClass" data-target="#editClassModal" data-id="'+ response.data.id +'" data-name="'+ response.data.value +'" data-car_type_id="'+ response.data.car_type_id +'" title="Edit"><i class="fa fa-edit"></i></button>\n' +
+                            '<button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteClass" data-target="#deleteClassModal" data-id="'+ response.data.id +'" title="Delete"><i class="fa fa-remove"></i></button>\n' +
                         '</td>\n' +
                     '</tr>'+
                 '');
@@ -48,7 +48,7 @@ $(document).on('click', '#editClass', function () {
  });
 
 // update Class
-$("#updateClass").click(function (e) {
+$("#update").click(function (e) {
     e.preventDefault();
     var id      = $("#edit_id").val();
     var name    = $("#edit_name").val();
@@ -74,9 +74,10 @@ $("#updateClass").click(function (e) {
                 $("tr.Class-"+ response.data.id).replaceWith('' +
                     '<tr class="Class-'+ response.data.id +'">\n' +
                         '<td>'+ response.data.value +'</td>\n' +
+                        '<td>'+ response.data.car_type_name +'</td>\n' +
                         '<td style="vertical-align: middle;text-align: center;">\n' +
-                            '<button class="btn btn-warning" data-toggle="modal" id="editClass" data-target="#editClassModal" data-id="'+ response.data.id +'" data-name="'+ response.data.value +'" data-car_type_id="'+ response.data.car_type_id +'" title="Edit"><i class="fas fa-edit"></i></button>\n' +
-                            '<button class="btn btn-danger" data-toggle="modal" id="deleteClass" data-target="#deleteClassModal" data-id="'+ response.data.id +'" title="Delete"><i class="fas fa-trash"></i></button>\n' +
+                            '<button class="btn btn-xs btn-warning" data-toggle="modal" id="editClass" data-target="#editClassModal" data-id="'+ response.data.id +'" data-name="'+ response.data.value +'" data-car_type_id="'+ response.data.car_type_id +'" title="Edit"><i class="fa fa-edit"></i></button>\n' +
+                            '<button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteClass" data-target="#deleteClassModal" data-id="'+ response.data.id +'" title="Delete"><i class="fa fa-remove"></i></button>\n' +
                         '</td>\n' +
                     '</tr>'+
                 '');

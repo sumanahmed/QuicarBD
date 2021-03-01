@@ -3,9 +3,11 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CarBrandController;
+use App\Http\Controllers\Admin\CarClassController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CarModelController;
 use App\Http\Controllers\Admin\CarTypeController;
+use App\Http\Controllers\Admin\CarYearController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -13,8 +15,11 @@ use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\HotelAmenityController;
 use App\Http\Controllers\Admin\NoticeController;
+use App\Http\Controllers\Admin\PartnerBannerController;
 use App\Http\Controllers\Admin\PropertyTypeController;
 use App\Http\Controllers\Admin\TourSportController;
+use App\Http\Controllers\Admin\UserBannerController;
+use App\Http\Controllers\Admin\YearController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -99,6 +104,20 @@ Route::group(['prefix'=>'/admin/model', 'middleware' => 'admin'], function(){
     Route::post('/destroy', [CarModelController::class, 'destroy'])->name('model.destroy');
 });
 
+Route::group(['prefix'=>'/admin/year', 'middleware' => 'admin'], function(){
+    Route::get('/', [YearController::class, 'index'])->name('year.index');
+    Route::post('/store', [YearController::class, 'store'])->name('year.store');
+    Route::post('/update', [YearController::class, 'update'])->name('year.update');
+    Route::post('/destroy', [YearController::class, 'destroy'])->name('year.destroy');
+});
+
+Route::group(['prefix'=>'/admin/class', 'middleware' => 'admin'], function(){
+    Route::get('/', [CarClassController::class, 'index'])->name('class.index');
+    Route::post('/store', [CarClassController::class, 'store'])->name('class.store');
+    Route::post('/update', [CarClassController::class, 'update'])->name('class.update');
+    Route::post('/destroy', [CarClassController::class, 'destroy'])->name('class.destroy');
+});
+
 Route::group(['prefix'=>'/admin/hotel-amenity', 'middleware' => 'admin'], function(){
     Route::get('/', [HotelAmenityController::class, 'index'])->name('hotel_amenity.index');
     Route::post('/store', [HotelAmenityController::class, 'store'])->name('hotel_amenity.store');
@@ -115,6 +134,20 @@ Route::group(['prefix'=>'/admin/car', 'middleware' => 'admin'], function(){
     Route::get('/details/{car_id}', [CarController::class, 'details'])->name('car.details');
     Route::get('/expired', [CarController::class, 'expired'])->name('car.expired');
     Route::post('/destroy', [CarController::class, 'destroy'])->name('car.destroy');
+});
+
+Route::group(['prefix'=>'/admin/user-banner', 'middleware' => 'admin'], function(){
+    Route::get('/', [UserBannerController::class, 'index'])->name('user_banner.index');
+    Route::post('/store', [UserBannerController::class, 'store'])->name('user_banner.store');
+    Route::post('/update', [UserBannerController::class, 'update'])->name('user_banner.update');
+    Route::post('/destroy', [UserBannerController::class, 'destroy'])->name('user_banner.destroy');
+});
+
+Route::group(['prefix'=>'/admin/partner-banner', 'middleware' => 'admin'], function(){
+    Route::get('/', [PartnerBannerController::class, 'index'])->name('partner_banner.index');
+    Route::post('/store', [PartnerBannerController::class, 'store'])->name('partner_banner.store');
+    Route::post('/update', [PartnerBannerController::class, 'update'])->name('partner_banner.update');
+    Route::post('/destroy', [PartnerBannerController::class, 'destroy'])->name('partner_banner.destroy');
 });
 
 Route::group(['prefix'=>'/admin/banner', 'middleware' => 'admin'], function(){
