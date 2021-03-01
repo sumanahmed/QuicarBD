@@ -97,10 +97,10 @@
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#hotelInfo"><div class="pull-left"><i class="fa fa-hotel mr-20"></i><span class="right-nav-text">Hotel Info</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="hotelInfo" class="collapse collapse-level-1 two-col-list">
                 <li>
-                    <a href="#">Property Type</a>
+                    <a href="{{ route('property_type.index') }}">Property Type</a>
                 </li>
                 <li>
-                    <a href="#">Hotel Amenity</a>
+                    <a href="{{ route('hotel_amenity.index') }}">Hotel Amenity</a>
                 </li>
             </ul>
         </li>
@@ -108,13 +108,16 @@
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#notice"><div class="pull-left"><i class="fa fa-exclamation-triangle mr-20"></i><span class="right-nav-text">Notice</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="notice" class="collapse collapse-level-1 two-col-list">
                 <li>
-                    <a href="#">Car Package</a>
+                    <a href="{{ route('notice.packages', ['type' => 0]) }}">Home Page</a>
                 </li>
                 <li>
-                    <a href="#">Hotel Package</a>
+                    <a href="{{ route('notice.packages', ['type' => 1]) }}">Car Package</a>
                 </li>
                 <li>
-                    <a href="#">Travel Package</a>
+                    <a href="{{ route('notice.packages', ['type' => 2]) }}">Hotel Package</a>
+                </li>
+                <li>
+                    <a href="{{ route('notice.packages', ['type' => 3]) }}">Travel Package</a>
                 </li>
             </ul>
         </li>
@@ -128,13 +131,13 @@
                     <a href="#">Partner</a>
                 </li>
                 <li>
-                    <a href="#">Car Package</a>
+                    <a href="{{ route('banner.packages', ['type' => 1]) }}">Car Package</a>
                 </li>
                 <li>
-                    <a href="#">Hotel Package</a>
+                    <a href="{{ route('banner.packages', ['type' => 2]) }}">Hotel Package</a>
                 </li>
                 <li>
-                    <a href="#">Travel Package</a>
+                    <a href="{{ route('banner.packages', ['type' => 3]) }}">Travel Package</a>
                 </li>
             </ul>
         </li>

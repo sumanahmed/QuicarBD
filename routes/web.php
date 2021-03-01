@@ -1,12 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\DriverController;
+use App\Http\Controllers\Admin\HotelAmenityController;
+use App\Http\Controllers\Admin\NoticeController;
+use App\Http\Controllers\Admin\PropertyTypeController;
 use App\Http\Controllers\Admin\TourSportController;
 use Illuminate\Support\Facades\Route;
 
@@ -63,6 +67,20 @@ Route::group(['prefix'=>'/admin/driver', 'middleware' => 'admin'], function(){
     Route::post('/destroy', [DriverController::class, 'destroy'])->name('driver.destroy');
 });
 
+Route::group(['prefix'=>'/admin/property-type', 'middleware' => 'admin'], function(){
+    Route::get('/', [PropertyTypeController::class, 'index'])->name('property_type.index');
+    Route::post('/store', [PropertyTypeController::class, 'store'])->name('property_type.store');
+    Route::post('/update', [PropertyTypeController::class, 'update'])->name('property_type.update');
+    Route::post('/destroy', [PropertyTypeController::class, 'destroy'])->name('property_type.destroy');
+});
+
+Route::group(['prefix'=>'/admin/hotel-amenity', 'middleware' => 'admin'], function(){
+    Route::get('/', [HotelAmenityController::class, 'index'])->name('hotel_amenity.index');
+    Route::post('/store', [HotelAmenityController::class, 'store'])->name('hotel_amenity.store');
+    Route::post('/update', [HotelAmenityController::class, 'update'])->name('hotel_amenity.update');
+    Route::post('/destroy', [HotelAmenityController::class, 'destroy'])->name('hotel_amenity.destroy');
+});
+
 Route::group(['prefix'=>'/admin/car', 'middleware' => 'admin'], function(){
     Route::get('/', [CarController::class, 'index'])->name('car.index');
     Route::get('/create', [CarController::class, 'create'])->name('car.create');
@@ -72,4 +90,14 @@ Route::group(['prefix'=>'/admin/car', 'middleware' => 'admin'], function(){
     Route::get('/details/{car_id}', [CarController::class, 'details'])->name('car.details');
     Route::get('/expired', [CarController::class, 'expired'])->name('car.expired');
     Route::post('/destroy', [CarController::class, 'destroy'])->name('car.destroy');
+});
+
+Route::group(['prefix'=>'/admin/banner', 'middleware' => 'admin'], function(){
+    Route::get('/packages', [BannerController::class, 'bannerPackages'])->name('banner.packages');
+    Route::post('/packages/update', [BannerController::class, 'bannerPackagesUpdate'])->name('banner.packages.update');
+});
+
+Route::group(['prefix'=>'/admin/notice', 'middleware' => 'admin'], function(){
+    Route::get('/packages', [NoticeController::class, 'noticePackages'])->name('notice.packages');
+    Route::post('/packages/update', [NoticeController::class, 'noticePackagesUpdate'])->name('notice.packages.update');
 });

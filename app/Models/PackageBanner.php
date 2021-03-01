@@ -9,5 +9,5 @@ class PackageBanner extends Model
 {
     use HasFactory;
 
-    protected $table = "package_faq";
+    protected $table = "packages_banner";
 }
