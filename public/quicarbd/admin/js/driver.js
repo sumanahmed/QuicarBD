@@ -114,6 +114,9 @@ $(document).on('click', '#editDriver', function () {
         }    
     }); 
 
+    // $('body').removeClass('modal-open');
+    // $('.modal-backdrop').remove();
+
     $('#editDriverModal').modal('show');
     $('#edit_id').val($(this).data('id'));
     $('#edit_name').val($(this).data('name'));

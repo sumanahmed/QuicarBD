@@ -138,8 +138,10 @@ Route::group(['prefix'=>'/admin/car', 'middleware' => 'admin'], function(){
 
 Route::group(['prefix'=>'/admin/user-banner', 'middleware' => 'admin'], function(){
     Route::get('/', [UserBannerController::class, 'index'])->name('user_banner.index');
+    Route::get('/create', [UserBannerController::class, 'create'])->name('user_banner.create');
     Route::post('/store', [UserBannerController::class, 'store'])->name('user_banner.store');
-    Route::post('/update', [UserBannerController::class, 'update'])->name('user_banner.update');
+    Route::get('/edit/{id}', [UserBannerController::class, 'edit'])->name('user_banner.edit');
+    Route::post('/update/{id}', [UserBannerController::class, 'update'])->name('user_banner.update');
     Route::post('/destroy', [UserBannerController::class, 'destroy'])->name('user_banner.destroy');
 });
 

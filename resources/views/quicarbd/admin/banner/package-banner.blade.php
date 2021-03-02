@@ -43,25 +43,12 @@
                                                         <input type="hidden" name="type" value="{{ $type }}"/>
                                                     </div>
                                                 </div>
-                                                <!-- <div class="col-sm-6 ol-md-6 col-xs-12">
-                                                    <div class="panel panel-default card-view">
-                                                        <div class="panel-heading">
-                                                            <div class="pull-left">
-                                                                <h6 class="panel-title txt-dark">{{ $title }} Banner Upload</h6>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                        </div>
-                                                        <div class="panel-wrapper collapse in">
-                                                            <div class="panel-body">
-                                                                <p class="text-muted">Just add <code>dropify</code> class in input tag.</p>
-                                                                <div class="mt-40">
-                                                                    <input type="file" name="{{ $name }}" id="input-file-now" class="dropify" />
-                                                                    <input type="hidden" name="type" value="{{ $type }}"/>
-                                                                </div>	
-                                                            </div>
-                                                        </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="img1" class="control-label mb-10">Curren {{ $title }} Banner </label>                                                        
+                                                        <img src="{{ $name }}" class="form-control"/>
                                                     </div>
-                                                </div>  -->
+                                                </div>
                                             </div>   
                                             <div class="row" style="margin-top:10px;">
                                                 <div class="col-md-4">

@@ -67,7 +67,7 @@
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#carInfo"><div class="pull-left"><span class="right-nav-text">All Car</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="carInfo" class="collapse collapse-level-1 two-col-list">
                         <li>
-                            <a href="#">Add New Car</a>
+                            <a href="{{ route('car.create') }}">Add New Car</a>
                         </li>
                         <li>
                             <a href="{{ route('car.index') }}">All Car</a>
