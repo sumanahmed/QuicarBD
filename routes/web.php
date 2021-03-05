@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\PropertyTypeController;
 use App\Http\Controllers\Admin\TourSportController;
 use App\Http\Controllers\Admin\UserBannerController;
 use App\Http\Controllers\Admin\YearController;
+use App\Http\Controllers\Admin\PartnerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -134,6 +135,16 @@ Route::group(['prefix'=>'/admin/car', 'middleware' => 'admin'], function(){
     Route::get('/details/{car_id}', [CarController::class, 'details'])->name('car.details');
     Route::get('/expired', [CarController::class, 'expired'])->name('car.expired');
     Route::post('/destroy', [CarController::class, 'destroy'])->name('car.destroy');
+});
+
+Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){
+    Route::get('/', [PartnerController::class, 'index'])->name('partner.index');
+    Route::get('/create', [PartnerController::class, 'create'])->name('partner.create');
+    Route::post('/store', [PartnerController::class, 'store'])->name('partner.store');
+    Route::get('/edit/{car_id}', [PartnerController::class, 'edit'])->name('partner.edit');
+    Route::post('/update/{car_id}', [PartnerController::class, 'update'])->name('partner.update');
+    Route::get('/details/{car_id}', [PartnerController::class, 'details'])->name('partner.details');
+    Route::post('/destroy', [PartnerController::class, 'destroy'])->name('partner.destroy');
 });
 
 Route::group(['prefix'=>'/admin/user-banner', 'middleware' => 'admin'], function(){

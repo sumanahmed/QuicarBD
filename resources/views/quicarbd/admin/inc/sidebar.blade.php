@@ -61,6 +61,17 @@
             <a href="{{ route('driver.index') }}" data-toggle="collapse" data-target="#driver"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Driver</span></div><div class="pull-right"></div><div class="clearfix"></div></a>
         </li>
         <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#partners"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Partner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="partners" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="{{ route('partner.create') }}">Add New Partner</a>
+                </li>
+                <li>
+                    <a href="{{ route('partner.index') }}">All Partner</a>
+                </li>
+            </ul>
+        </li>
+        <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#cars"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Cars</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="cars" class="collapse collapse-level-1 two-col-list">
                 <li>
