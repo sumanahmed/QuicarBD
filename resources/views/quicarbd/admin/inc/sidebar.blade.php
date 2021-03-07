@@ -1,3 +1,7 @@
+<?php
+    $pendingDriver = \App\Models\Driver::where('c_status', 0)->count('id');
+?>
+
 <div class="fixed-sidebar-left">
     <ul class="nav navbar-nav side-nav nicescroll-bar">
         <li class="navigation-header">
@@ -58,7 +62,11 @@
             </ul>
         </li>
         <li>
-            <a href="{{ route('driver.index') }}" data-toggle="collapse" data-target="#driver"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Driver</span></div><div class="pull-right"></div><div class="clearfix"></div></a>
+            <a href="{{ route('driver.index') }}" data-toggle="collapse" data-target="#driver"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Driver</span></div><div class="pull-right"></div>
+                @if($pendingDriver > 0)
+                    <div class="pull-right"><span class="label label-warning">{{ $pendingDriver }}</span></div>
+                @endif
+            <div class="clearfix"></div></a>
         </li>
         <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#partners"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Partner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
