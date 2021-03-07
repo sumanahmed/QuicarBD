@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Car;
+use App\Models\CarPackage;
 use Illuminate\Http\Request;
 use App\Models\Owner;
 use App\Models\District;
 use App\Models\City;
+use App\Models\Driver;
+use App\Models\HotelPackage;
+use App\Models\TravelPackage;
+use GuzzleHttp\Client;
+use Validator;
+use Response;
 
 class PartnerController extends Controller
 {
@@ -22,7 +30,7 @@ class PartnerController extends Controller
         return view('quicarbd.admin.partner.create', compact('districts'));
     }
 
-    //car store
+   //partner store
     public function store(Request $request){ 
         $this->validate($request, [
             'name'      => 'required',
@@ -102,7 +110,7 @@ class PartnerController extends Controller
         return view('quicarbd.admin.partner.edit', compact('partner','districts','citys', 'service_citys'));
     }
 
-    //car update
+   //partner update
     public function update(Request $request, $id){ 
         $this->validate($request, [
             'name'      => 'required',
@@ -181,10 +189,58 @@ class PartnerController extends Controller
         }
     }
 
-    //car details
+   //partner details
     public function details($id){
-        $car = Car::find($id);
-        $owners     = Owner::all();
-        return view('quicarbd.admin.car.details', compact('car','owners'));
+        $data['partner']        = Owner::find($id);
+        $data['total_car']      = Car::where('owner_id', $id)->count('id');
+        $data['total_driver']   = Driver::where('owner_id', $id)->count('id');
+        $data['total_car_package']      = CarPackage::where('owner_id', $id)->count('id');
+        $data['total_hotel_package']    = HotelPackage::where('owner_id', $id)->count('id');
+        $data['total_travel_package']   = TravelPackage::where('owner_id', $id)->count('id');
+        return view('quicarbd.admin.partner.details', $data);
+    }
+
+    //notification send
+    public function notificationSend(Request $request){         
+        $validators = Validator::make($request->all(),[
+            'title'   => 'required',
+            'message' => 'required',
+            'notification' => 'required',
+        ]);
+        if($validators->fails()){
+            return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+        }else{ 
+            if($request->notification == 1){ 
+                //push notification send            
+                    $id      = $request->n_key;
+                    $title   = $request->title;
+                    $body    = $request->message;
+                    $client  = new Client();
+                    $client->request("GET", "http://quicarbd.com//mobileapi/general/notification/send.php?id=".$id."&title=".$title ."&body=".$body);
+                //push notification send end
+                return Response::json([
+                    'status'    => 200,
+                    'message'   => "Notification send successfully",
+                ]);
+            }else{
+                //push notification send            
+                    $id      = $request->n_key;
+                    $title   = $request->title;
+                    $body    = $request->message;
+                    $client  = new Client();
+                    $client->request("GET", "http://quicarbd.com//mobileapi/general/notification/send.php?id=".$id."&title=".$title ."&body=".$body);
+                //push notification send end
+
+                //message send
+                    $msg    = $request->message;
+                    $client = new Client();            
+                    $sms    = $client->request("GET", "http://66.45.237.70/api.php?username=01670168919&password=TVZMBN3D&number=". $request->phone ."&message=".$msg);
+                //message send end
+                return Response::json([
+                    'status'    => 200,
+                    'message'   => "Notification & SMS send successfully",
+                ]);
+            }            
+        }        
     }
 }

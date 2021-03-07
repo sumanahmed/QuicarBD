@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\TourSportController;
 use App\Http\Controllers\Admin\UserBannerController;
 use App\Http\Controllers\Admin\YearController;
 use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -144,7 +145,15 @@ Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){
     Route::get('/edit/{car_id}', [PartnerController::class, 'edit'])->name('partner.edit');
     Route::post('/update/{car_id}', [PartnerController::class, 'update'])->name('partner.update');
     Route::get('/details/{car_id}', [PartnerController::class, 'details'])->name('partner.details');
+    Route::post('/notification/send', [PartnerController::class, 'notificationSend'])->name('partner.notification.send');
     Route::post('/destroy', [PartnerController::class, 'destroy'])->name('partner.destroy');
+});
+
+Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
+    Route::get('/', [UserController::class, 'index'])->name('user.index');
+    Route::get('/status/update', [UserController::class, 'create'])->name('user.status.update');
+    Route::get('/details/{user_id}', [UserController::class, 'details'])->name('user.details');
+    Route::post('/notification/send', [UserController::class, 'notificationSend'])->name('user.notification.send');
 });
 
 Route::group(['prefix'=>'/admin/user-banner', 'middleware' => 'admin'], function(){

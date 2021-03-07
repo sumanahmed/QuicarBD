@@ -80,6 +80,9 @@
             </ul>
         </li>
         <li>
+            <a href="{{ route('user.index') }}" data-toggle="collapse" data-target="#driver"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">User</span></div><div class="pull-right"></div>
+        </li>
+        <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#cars"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Cars</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="cars" class="collapse collapse-level-1 two-col-list">
                 <li>
@@ -110,6 +113,44 @@
                         </li>
                         <li>
                             <a href="{{ route('class.index') }}">Class</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#packages"><div class="pull-left"><i class="fa fa-cube mr-20"></i><span class="right-nav-text">Packages</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="packages" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#carPackage"><div class="pull-left"><span class="right-nav-text">Car Package</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="carPackage" class="collapse collapse-level-1 two-col-list">
+                        <li>
+                            <a href="#">Add New</a>
+                        </li>
+                        <li>
+                            <a href="#">All</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#hotelPackage"><div class="pull-left"><span class="right-nav-text">Hotel Package</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="hotelPackage" class="collapse collapse-level-1 two-col-list">
+                        <li>
+                            <a href="#">Add New</a>
+                        </li>
+                        <li>
+                            <a href="#">All</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#travelPackage"><div class="pull-left"><span class="right-nav-text">Travel Package</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="travelPackage" class="collapse collapse-level-1 two-col-list">
+                        <li>
+                            <a href="#">Add New</a>
+                        </li>
+                        <li>
+                            <a href="#">All</a>
                         </li>
                     </ul>
                 </li>

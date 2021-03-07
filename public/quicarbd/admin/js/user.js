@@ -1,13 +1,14 @@
+
 //open send notification modal
-$(document).on('click', '#sendNotificationModal', function () {
+$(document).on('click', '#userSendNotification', function () {
     var image = image_base_path + $(this).data('image');
-    $('#sendNotificationModalModal').modal('show');
+    $('#userSendNotificationModal').modal('show');
     $('#n_key').val($(this).data('n_key'));
     $('#phone').val($(this).data('phone'));
  });
 
- //destroy master category
-$("#ownerNotificationSend").click(function(){
+ //user notification send
+$("#userNotificationSend").click(function(){
     var n_key       = $('#n_key').val();
     var title       = $('#title').val();
     var message     = $('#message').val();
@@ -15,7 +16,7 @@ $("#ownerNotificationSend").click(function(){
     var phone       = $('#phone').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/partner/notification/send',
+        url: '/admin/user/notification/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             n_key       : n_key,
@@ -37,33 +38,9 @@ $("#ownerNotificationSend").click(function(){
                     $('.errorMessage').text('');
                 }  
             }else{
-                $('#sendNotificationModalModal').modal('hide');
+                $('#userSendNotificationModal').modal('hide');
                 toastr.success(response.message)
             }
-        }
-    });
-});
-
-//get city
-$("#district").change(function(){
-    var district_id = $(this).val();
-    $.get('/get-city/'+ district_id, function(data){
-        $('#city').empty();
-        $('#city').append('<option selected disabled>Select</option');
-        for(var i = 0; i <= data.length; i++){
-            $('#city').append('<option value="'+ data[i].name +'">'+ data[i].name +'</option');
-        }
-    });
-});
-
-//get city
-$("#service_location_district").change(function(){
-    var district_id = $(this).val();
-    $.get('/get-city/'+ district_id, function(data){
-        $('#service_location_city').empty();
-        $('#service_location_city').append('<option selected disabled>Select</option');
-        for(var i = 0; i <= data.length; i++){
-            $('#service_location_city').append('<option value="'+ data[i].name +'">'+ data[i].name +'</option');
         }
     });
 });

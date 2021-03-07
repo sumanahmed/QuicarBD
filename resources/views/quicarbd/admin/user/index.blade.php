@@ -1,18 +1,17 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Partner')
+@section('title','User')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <a href="{{ route('partner.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
         </div>
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Partner</a></li>
-            <li class="active"><span>All Partner</span></li>
+            <li><a href="#">User</a></li>
+            <li class="active"><span>All User</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -24,7 +23,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">All Partner</h6>
+                        <h6 class="panel-title txt-dark">All User</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -38,8 +37,8 @@
                                             <th>Name</th>
                                             <th>Phone</th>
                                             <th>Balance</th>
-                                            <th>Bidding Percent</th>
-                                            <th>Current Status</th>
+                                            <th>CashBack Balance</th>
+                                            <th>Account Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -48,26 +47,24 @@
                                             <th>Name</th>
                                             <th>Phone</th>
                                             <th>Balance</th>
-                                            <th>Bidding Percent</th>
-                                            <th>Current Status</th>
+                                            <th>CashBack Balance</th>
+                                            <th>Account Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody id="partnerData">
-                                        @if(isset($partners) && count($partners) > 0)
+                                    <tbody id="userData">
+                                        @if(isset($users) && count($users) > 0)
                                             @php $i=1; @endphp
-                                            @foreach($partners as $partner)
-                                                <tr class="partner-{{ $partner->id }}">
-                                                    <td>{{ $partner->name }}</td>
-                                                    <td>{{ $partner->phone }}</td>
-                                                    <td>{{ $partner->current_balance }}</td>
-                                                    <td>{{ $partner->bidding_percent }}</td>
-                                                    <td>{{ $partner->current_status == 0 ? 'Offline' : 'Online' }}</td>
+                                            @foreach($users as $user)
+                                                <tr class="user-{{ $user->id }}">
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->phone }}</td>
+                                                    <td>{{ $user->balance }}</td>
+                                                    <td>{{ $user->cash_back_balance }}</td>
+                                                    <td>{{ $user->account_status == 0 ? 'Off' : 'On' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-success" title="Verify"><i class="fa fa-unlock-alt"></i></a>
-                                                        <a href="#" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#sendNotificationModalModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
-                                                        <a href="{{ route('partner.edit', $partner->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="{{ route('partner.details', $partner->id) }}" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                        <a href="#" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#userSendNotificationModal" title="Notification" data-id="{{ $user->id }}" data-phone="{{ $user->phone }}" data-n_key="{{ $user->n_key }}"><i class="fa fa-bell"></i></a>
+                                                        <a href="{{ route('user.details', $user->id) }}" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -87,7 +84,7 @@
     </div>
     
     <!-- Notification Modal -->
-    <div id="sendNotificationModalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="userSendNotificationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -123,29 +120,15 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="ownerNotificationSend">Send</button>
+                    <button type="button" class="btn btn-primary" id="userNotificationSend">Send</button>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Delete Class Modal -->
-    <div id="deleteDriverModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content text-center">
-                <div class="modal-header">
-                    <h5 class="modal-title mb-10" id="exampleModalLabel">Are you sure to delete ?</h5>
-                    <input type="hidden" name="del_id"/>
-                    <button type="button" class="btn btn-xs btn-danger btn-raised mr-2" id="destroyDriver"><i class="fas fa-trash-alt"></i> Proceed</button>
-                    <button type="button" class="btn btn-xs btn-warning btn-raised" data-dismiss="modal" aria-label="Close"><i class="fas fa-backspace"></i> Cancel</button>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/user.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>
