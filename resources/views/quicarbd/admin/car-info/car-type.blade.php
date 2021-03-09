@@ -50,6 +50,7 @@
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="editCarType" data-target="#editCarTypeModal" data-id="{{ $car_type->id }}" data-name="{{ $car_type->name }}" data-seat="{{ $car_type->seat }}" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteCarType" data-target="#deleteCarTypeModal" data-id="{{ $car_type->id }}" title="Delete"><i class="fa fa-remove"></i></a>
+                                                        <a href="{{ route('brand.index',['car_type_id'=> $car_type->id]) }}" class="btn btn-xs btn-primary" title="Show Brand">Brand</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

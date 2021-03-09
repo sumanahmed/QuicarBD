@@ -12,10 +12,16 @@ use Response;
 class CarBrandController extends Controller
 {
     //all brands
-    public function index(){
-        $brands = CarBrand::join('car_types','car_types.id','car_brand.car_type_id')
-                            ->select('car_brand.*','car_types.name as car_type_name')
-                            ->get();
+    public function index(Request $request){
+
+        $query = CarBrand::join('car_types','car_types.id','car_brand.car_type_id')
+                            ->select('car_brand.*','car_types.name as car_type_name');
+
+        if ($request->car_type_id) {
+            $query = $query->where('car_type_id', $request->car_type_id);
+        }
+
+        $brands  = $query->get();
         $car_types = CarType::all();
         return view('quicarbd.admin.car-info.brand', compact('brands','car_types'));
     }

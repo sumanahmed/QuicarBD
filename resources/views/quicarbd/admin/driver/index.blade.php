@@ -53,14 +53,14 @@
                                                     <td><img src="http://quicarbd.com/{{ $driver->driver_photo }}" style="width:80px;height:60px"/>
                                                     <td>{{ $driver->account_status == 1 ? 'Active' : 'Inactive' }} </td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="editDriver" data-id="{{ $driver->id }}" data-name="{{ $driver->name }}"
+                                                        <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="editDriver" data-target="#editDriverModal" data-id="{{ $driver->id }}" data-name="{{ $driver->name }}"
                                                             data-email="{{ $driver->email }}" data-phone="{{ $driver->phone }}" data-dob="{{ $driver->dob }}" data-owner_id="{{ $driver->owner_id }}" data-nid="{{ $driver->nid }}"
                                                             data-district_id="{{ $driver->district_id }}" data-city_id="{{ $driver->city_id }}" data-address="{{ $driver->address }}" data-license="{{ $driver->license }}" data-driver_photo="http://quicarbd.com/{{ $driver->driver_photo }}"
                                                             data-nid_font_pic="http://quicarbd.com/{{ $driver->nid_font_pic }}" data-nid_back_pic="http://quicarbd.com/{{ $driver->nid_back_pic }}" 
                                                             data-license_font_pic="http://quicarbd.com/{{ $driver->license_font_pic }}" data-license_back_pic="http://quicarbd.com/{{ $driver->license_back_pic }}"
                                                             ><i class="fa fa-edit"></i>
                                                         </a>
-                                                        <button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteDriver" data-id="{{ $driver->id }}" title="Delete"><i class="fa fa-remove"></i></button>
+                                                        <button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteDriver" data-target="#deleteDriverModal" data-id="{{ $driver->id }}" title="Delete"><i class="fa fa-remove"></i></button>
                                                     </td>
                                                 </tr>
                                             @endforeach

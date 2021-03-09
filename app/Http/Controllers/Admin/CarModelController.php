@@ -14,10 +14,20 @@ class CarModelController extends Controller
 {
     //all models
     public function index(Request $request){ 
-        $models     = CarModel::join('car_types','car_types.id','car_model.car_type_id')
+        $query     = CarModel::join('car_types','car_types.id','car_model.car_type_id')
                             ->join('car_brand','car_brand.id','car_model.car_brand_id')
-                            ->select('car_model.*','car_types.name as car_type_name','car_brand.value as car_brand_name')
-                            ->get();
+                            ->select('car_model.*','car_types.name as car_type_name','car_brand.value as car_brand_name');
+
+        if ($request->car_type_id) {
+            $query = $query->where('car_model.car_type_id', $request->car_type_id);
+        } 
+
+        if ($request->car_brand_id) {
+            $query = $query->where('car_model.car_brand_id', $request->car_brand_id);
+        }
+
+        $models  = $query->get();
+
         $car_types  = CarType::all();
         $brands     = CarBrand::all();
         return view('quicarbd.admin.car-info.model', compact('models','car_types','brands'));

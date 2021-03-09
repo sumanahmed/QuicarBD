@@ -51,7 +51,7 @@
                                                     <td>{{ $model->car_brand_name }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="editModel" data-target="#editModelModal" data-id="{{ $model->id }}" data-name="{{ $model->value }}" data-car_type_id="{{ $model->car_type_id }}" data-car_brand_id="{{ $model->car_brand_id }}" title="Edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteModel" data-target="#deleteModelModal" data-id="{{ $model->id }}" title="Delete"><i class="fa fa-remove"></i></a>
+                                                        <a href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteModel" data-target="#deleteModelModal" data-id="{{ $model->id }}" title="Delete"><i class="fa fa-remove"></i></a>                                                        
                                                     </td>
                                                 </tr>
                                             @endforeach
