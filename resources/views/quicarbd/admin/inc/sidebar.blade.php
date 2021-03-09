@@ -92,7 +92,7 @@
                             <a href="{{ route('car.create') }}">Add New Car</a>
                         </li>
                         <li>
-                            <a href="{{ route('car.index') }}">All Car</a>
+                            <a href="{{ route('car.index') }}">All Car <div class="pull-right"><span class="label label-warning">11</span></div></a>
                         </li>
                     </ul>
                 </li>
@@ -128,7 +128,7 @@
                             <a href="{{ route('car_package.create') }}">Add New</a>
                         </li>
                         <li>
-                            <a href="{{ route('car_package.index') }}">All</a>
+                            <a href="{{ route('car_package.index') }}">All <div class="pull-right"><span class="label label-warning">11</span></div></a>
                         </li>
                     </ul>
                 </li>
@@ -139,7 +139,7 @@
                             <a href="#">Add New</a>
                         </li>
                         <li>
-                            <a href="#">All</a>
+                            <a href="#">All <div class="pull-right"><span class="label label-warning">11</span></div></a>
                         </li>
                     </ul>
                 </li>
@@ -150,7 +150,7 @@
                             <a href="#">Add New</a>
                         </li>
                         <li>
-                            <a href="#">All</a>
+                            <a href="#">All <div class="pull-right"><span class="label label-warning">11</span></div></a>
                         </li>
                     </ul>
                 </li>
