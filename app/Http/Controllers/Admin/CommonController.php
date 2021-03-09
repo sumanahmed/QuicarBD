@@ -75,8 +75,8 @@ class CommonController extends Controller
      * get car model
      */
     public function getCarModel ($car_type, $car_brand) {
-        $carType  = CarType::where('name', $car_type)->first();
-        $carBrand = CarBrand::where('value', $car_brand)->first();
+        $carType  = CarType::select('id')->where('name', $car_type)->first();
+        $carBrand = CarBrand::select('id')->where('car_type_id', $carType->id)->where('value', $car_brand)->first();
         $models   = CarModel::select('id','value')
                                 ->where('car_type_id', $carType->id)
                                 ->where('car_brand_id', $carBrand->id)
