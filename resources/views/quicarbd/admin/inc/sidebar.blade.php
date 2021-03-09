@@ -125,10 +125,10 @@
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#carPackage"><div class="pull-left"><span class="right-nav-text">Car Package</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="carPackage" class="collapse collapse-level-1 two-col-list">
                         <li>
-                            <a href="#">Add New</a>
+                            <a href="{{ route('car_package.create') }}">Add New</a>
                         </li>
                         <li>
-                            <a href="#">All</a>
+                            <a href="{{ route('car_package.index') }}">All</a>
                         </li>
                     </ul>
                 </li>

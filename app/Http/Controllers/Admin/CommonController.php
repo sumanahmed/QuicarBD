@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Car;
 use App\Models\CarBrand;
 use App\Models\City;
+use App\Models\Owner;
+use App\Models\TourSpot;
 use Illuminate\Http\Request;
 use Response;
 
@@ -35,5 +38,25 @@ class CommonController extends Controller
                 'data'      => []
             ]);
         }
+    }
+
+    /**
+     * get spots
+     */
+    public function getSpot ($district_id) {
+        $spots  = TourSpot::select('id','name')->where('district_id', $district_id)->get();
+        return response()->json($spots);
+    }
+
+    /**
+     * get car
+     */
+    public function getCar ($owner_id) {
+        $cars  = Car::select('id','carRegisterNumber')->where('owner_id',$owner_id)->where('status', 1)->get();
+        $car_package_charge = Owner::find($owner_id)->car_package_charge;
+        return response()->json([
+            'data' => $cars,
+            'car_package_charge' => $car_package_charge
+        ]);
     }
 }

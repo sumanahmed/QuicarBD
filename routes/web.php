@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CarBrandController;
 use App\Http\Controllers\Admin\CarClassController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CarModelController;
+use App\Http\Controllers\Admin\CarPackageController;
 use App\Http\Controllers\Admin\CarTypeController;
 use App\Http\Controllers\Admin\CarYearController;
 use App\Http\Controllers\Admin\CityController;
@@ -41,6 +42,8 @@ Route::get('/', function () {
 
 Route::get('/get-city/{district_id}', [CommonController::class, 'getCity'])->name('admin.get_city'); 
 Route::get('/get-brand/{car_type_id}', [CommonController::class, 'getBrand'])->name('admin.get_brand'); 
+Route::get('/get-spot/{district_id}', [CommonController::class, 'getSpot'])->name('admin.get_spot'); 
+Route::get('/get-car/{owner_id}', [CommonController::class, 'getCar'])->name('admin.get_car'); 
 
 Route::get('/admin',[AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/signin',[AuthController::class, 'signin'])->name('admin.signin');
@@ -170,6 +173,15 @@ Route::group(['prefix'=>'/admin/partner-banner', 'middleware' => 'admin'], funct
     Route::post('/store', [PartnerBannerController::class, 'store'])->name('partner_banner.store');
     Route::post('/update', [PartnerBannerController::class, 'update'])->name('partner_banner.update');
     Route::post('/destroy', [PartnerBannerController::class, 'destroy'])->name('partner_banner.destroy');
+});
+
+Route::group(['prefix'=>'/admin/car-package', 'middleware' => 'admin'], function(){
+    Route::get('/', [CarPackageController::class, 'index'])->name('car_package.index');
+    Route::get('/create', [CarPackageController::class, 'create'])->name('car_package.create');
+    Route::post('/store', [CarPackageController::class, 'store'])->name('car_package.store');
+    Route::get('/edit/{id}', [CarPackageController::class, 'edit'])->name('car_package.edit');
+    Route::post('/update/{id}', [CarPackageController::class, 'update'])->name('car_package.update');
+    Route::post('/destroy', [CarPackageController::class, 'destroy'])->name('user_bacar_packagenner.destroy');
 });
 
 Route::group(['prefix'=>'/admin/banner', 'middleware' => 'admin'], function(){
