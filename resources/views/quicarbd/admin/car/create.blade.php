@@ -73,6 +73,7 @@
                                                     <div class="form-group">
                                                         <label for="owner_id" class="control-label mb-10">Owner <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="owner_id" name="owner_id" class="form-control selectable" required>
+                                                            <option selected disabled>Select</option>
                                                             @foreach($owners as $owner)
                                                                 <option value="{{ $owner->id }}">{{ $owner->name }}</option>
                                                             @endforeach
@@ -88,6 +89,7 @@
                                                     <div class="form-group">
                                                         <label for="carType" class="control-label mb-10">Car Type <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="carType" name="carType" class="form-control selectable" required>
+                                                            <option selected disabled>Select</option>
                                                             @foreach($types as $type)
                                                                 <option value="{{ $type->name }}">{{ $type->name }}</option>
                                                             @endforeach
@@ -101,9 +103,9 @@
                                                     <div class="form-group">
                                                         <label for="carBrand" class="control-label mb-10">Car Brand <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="carBrand" name="carBrand" class="form-control selectable" required>
-                                                            @foreach($brands as $brand)
+                                                            <!-- @foreach($brands as $brand)
                                                                 <option value="{{ $brand->value }}">{{ $brand->value }}</option>
-                                                            @endforeach
+                                                            @endforeach -->
                                                         </select>
                                                         @if($errors->has('carBrand'))
                                                             <span class="text-danger"> {{ $errors->first('carBrand') }}</span>
@@ -114,9 +116,9 @@
                                                     <div class="form-group">
                                                         <label for="carModel" class="control-label mb-10">Car Model <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="carModel" name="carModel" class="form-control selectable" required>
-                                                            @foreach($models as $model)
+                                                            <!-- @foreach($models as $model)
                                                                 <option value="{{ $model->value }}">{{ $model->value }}</option>
-                                                            @endforeach
+                                                            @endforeach -->
                                                         </select>
                                                         @if($errors->has('carModel'))
                                                             <span class="text-danger"> {{ $errors->first('carModel') }}</span>

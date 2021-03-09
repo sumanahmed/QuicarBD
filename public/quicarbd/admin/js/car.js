@@ -117,3 +117,26 @@ $("#district_id").change(function(){
         }            
     });
 });
+
+$("#carType").change(function(){
+    var carType = $(this).val();
+    $("#carBrand").empty();
+    $("#carBrand").append('<option selected disabled>Select</option>');
+    $.get("/get-car-brand/"+ carType, function( data ) {
+        for( var i = 0; i < data.length; i++){
+            $("#carBrand").append('<option value="'+ data[i].value +'">'+ data[i].value +'</option>');
+        }            
+    });
+});
+
+$("#carBrand").change(function(){
+    var carType = $("#carType option:selected").val();
+    var carBrand = $(this).val();
+    $("#carModel").empty();
+    $("#carModel").append('<option selected disabled>Select</option>');
+    $.get("/get-car-model/"+ carType + '/' + carBrand, function( data ) {
+        for( var i = 0; i < data.length; i++){
+            $("#carModel").append('<option value="'+ data[i].value +'">'+ data[i].value +'</option>');
+        }            
+    });
+});

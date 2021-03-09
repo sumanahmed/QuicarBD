@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\CarBrand;
+use App\Models\CarModel;
+use App\Models\CarType;
 use App\Models\City;
 use App\Models\Owner;
 use App\Models\TourSpot;
@@ -58,5 +60,27 @@ class CommonController extends Controller
             'data' => $cars,
             'car_package_charge' => $car_package_charge
         ]);
+    }
+
+    /**
+     * get car brand
+     */
+    public function getCarBrand ($car_type) {
+        $carType = CarType::where('name', $car_type)->first();
+        $brands  = CarBrand::select('id','value')->where('car_type_id', $carType->id)->get();
+        return response()->json($brands);
+    }
+
+    /**
+     * get car model
+     */
+    public function getCarModel ($car_type, $car_brand) {
+        $carType  = CarType::where('name', $car_type)->first();
+        $carBrand = CarBrand::where('value', $car_brand)->first();
+        $models   = CarModel::select('id','value')
+                                ->where('car_type_id', $carType->id)
+                                ->where('car_brand_id', $carBrand->id)
+                                ->get();
+        return response()->json($models);
     }
 }
