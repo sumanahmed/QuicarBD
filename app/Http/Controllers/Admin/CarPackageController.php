@@ -27,7 +27,7 @@ class CarPackageController extends Controller
      */
     public function create(){
         $districts  = District::orderBy('id','ASC')->get();
-        $partners   = Owner::all();
+        $partners   = Owner::where('account_status', 1)->get();
         return view('quicarbd.admin.package.car-package.create', compact('districts','partners'));
     }
 
@@ -35,6 +35,27 @@ class CarPackageController extends Controller
      * car packages store
      */
     public function store(Request $request){
+        $this->validate($request,[
+            'name'          => 'required',
+            'details'       => 'required',
+            'district_id'   => 'required',
+            'spot_id'       => 'required',
+            'starting_location'         => 'required',
+            'starting_location_address' => 'required',
+            'owner_id'      => 'required',
+            'duration'      => 'required',
+            'total_person'  => 'required',
+            'facilities'    => 'required',
+            'price'         => 'required',
+            'status'        => 'required',
+            'package_status'=> 'required',
+            'status_message'=> 'required',
+            'owner_get'     => 'required',
+            'car_id'        => 'required',
+            'quicar_charge' => 'required',
+            'terms_condition'=> 'required',
+        ]);
+
         $car_packge                     = new CarPackage();
         $car_packge->name               = $request->name;
         $car_packge->details            = $request->details;
@@ -71,7 +92,7 @@ class CarPackageController extends Controller
     public function edit($id){
         $car_package= CarPackage::find($id);
         $districts  = District::all();
-        $partners   = Owner::all();
+        $partners   = Owner::where('account_status', 1)->get();
         $spots      = TourSpot::select('id','name')->where('district_id',$car_package->district_id)->get();
         $cars       = Car::select('id','carRegisterNumber')->where('owner_id',$car_package->owner_id)->where('status', 1)->get();
         return view('quicarbd.admin.package.car-package.edit', compact('car_package','districts','partners','spots','cars'));
@@ -82,6 +103,27 @@ class CarPackageController extends Controller
      * car packages store
      */
     public function update(Request $request, $id){
+        $this->validate($request,[
+            'name'          => 'required',
+            'details'       => 'required',
+            'district_id'   => 'required',
+            'spot_id'       => 'required',
+            'starting_location'         => 'required',
+            'starting_location_address' => 'required',
+            'owner_id'      => 'required',
+            'duration'      => 'required',
+            'total_person'  => 'required',
+            'facilities'    => 'required',
+            'price'         => 'required',
+            'status'        => 'required',
+            'package_status'=> 'required',
+            'status_message'=> 'required',
+            'owner_get'     => 'required',
+            'car_id'        => 'required',
+            'quicar_charge' => 'required',
+            'terms_condition'=> 'required',
+        ]);
+
         $car_packge                     = CarPackage::find($id);
         $car_packge->name               = $request->name;
         $car_packge->details            = $request->details;

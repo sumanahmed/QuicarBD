@@ -12,10 +12,18 @@ $("#owner_id").change(function(){
     var owner_id = $(this).val();
     $("#car_id").empty();
     $.get("/get-car/"+ owner_id, function( response ) {
+         $("#car_id").append('<option selected disabled>Select</option>');
         for( var i = 0; i < response.data.length; i++) {
             $("#car_id").append('<option value="'+ response.data[i].id +'">'+ response.data[i].carRegisterNumber +'</option>');
         }            
         $("#quicar_charge").val(response.car_package_charge);
+    });
+});
+
+$("#car_id").change(function(){
+    var car_id = $(this).val();
+    $.get("/get-car-sit/"+ car_id, function( response ) {        
+        $("#total_person").val(response);
     });
 });
 

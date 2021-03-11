@@ -56,7 +56,7 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="car_id" class="control-label mb-10">Car ID <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <label for="car_id" class="control-label mb-10">Select Car <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select class="form-control" name="car_id" id="car_id"> 
                                                             @foreach($cars as $car)
                                                                 <option value="{{ $car->id }}" @if($car_package->car_id == $car->id) selected @endif>{{ $car->carRegisterNumber }}</option>
@@ -84,7 +84,7 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="district_id" class="control-label mb-10">District <span class="text-danger" title="Required">*</span></label>
+                                                        <label for="district_id" class="control-label mb-10">Select Tour District <span class="text-danger" title="Required">*</span></label>
                                                         <select id="district_id" name="district_id" class="form-control selectable" required>
                                                             <option selected disabled>Select</option>
                                                             @foreach($districts as $district)
@@ -95,7 +95,7 @@
                                                 </div>
                                                 <div class="col-md-9">
                                                     <div class="form-group">
-                                                        <label for="spot_id" class="control-label mb-10">Tour Spot <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <label for="spot_id" class="control-label mb-10">Select Tour Spot <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="spot_id" name="spot_id[]" class="form-control" multiple required>                                                
                                                             @foreach($spots as $spot)
                                                                 <option value="{{ $spot->id }}"  @if(in_array($spot->id, json_decode($car_package->spot_id))) selected @endif>{{ $spot->name }}</option>
@@ -125,7 +125,7 @@
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="total_person" class="control-label mb-10"> Total Person <span class="text-danger" title="Required">*</span></label>
-                                                        <input type="text" id="total_person" name="total_person" value="{{ $car_package->total_person }}" class="form-control" placeholder="Total Person" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+                                                        <input type="text" id="total_person" name="total_person" value="{{ $car_package->total_person }}" class="form-control" placeholder="Total Person" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required  readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">                                        

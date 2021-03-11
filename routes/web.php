@@ -48,6 +48,7 @@ Route::get('/get-sit/{car_type}', [CommonController::class, 'getSit'])->name('ad
 Route::get('/get-car-brand/{car_type}', [CommonController::class, 'getCarBrand'])->name('admin.get_car_brand'); 
 Route::get('/get-car-model/{car_type}/{car_brand}', [CommonController::class, 'getCarModel'])->name('admin.get_car_model'); 
 Route::get('/get-car-year/{car_type}/{car_model}', [CommonController::class, 'getCarYear'])->name('admin.get_car_year'); 
+Route::get('/get-car-sit/{car_id}', [CommonController::class, 'getCarSit'])->name('admin.get_car_sit'); 
 
 Route::get('/admin',[AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/signin',[AuthController::class, 'signin'])->name('admin.signin');

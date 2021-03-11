@@ -108,4 +108,12 @@ class CommonController extends Controller
                                 ->get();
         return response()->json($years);
     }
+
+    /**
+     * get car sit
+     */
+    public function getCarSit ($car_id) {
+        $carType  = Car::select('sit_capacity')->where('id', $car_id)->first();
+        return response()->json($carType->sit_capacity);
+    }
 }
