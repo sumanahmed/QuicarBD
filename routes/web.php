@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\CarClassController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CarModelController;
 use App\Http\Controllers\Admin\CarPackageController;
+use App\Http\Controllers\Admin\HotelPackageController;
+use App\Http\Controllers\Admin\TravelPackageController;
 use App\Http\Controllers\Admin\CarTypeController;
 use App\Http\Controllers\Admin\CarYearController;
 use App\Http\Controllers\Admin\CityController;
@@ -186,7 +188,25 @@ Route::group(['prefix'=>'/admin/car-package', 'middleware' => 'admin'], function
     Route::post('/store', [CarPackageController::class, 'store'])->name('car_package.store');
     Route::get('/edit/{id}', [CarPackageController::class, 'edit'])->name('car_package.edit');
     Route::post('/update/{id}', [CarPackageController::class, 'update'])->name('car_package.update');
-    Route::post('/destroy', [CarPackageController::class, 'destroy'])->name('user_bacar_packagenner.destroy');
+    Route::post('/destroy', [CarPackageController::class, 'destroy'])->name('car_package.destroy');
+});
+
+Route::group(['prefix'=>'/admin/hotel-package', 'middleware' => 'admin'], function(){
+    Route::get('/', [HotelPackageController::class, 'index'])->name('hotel_package.index');
+    Route::get('/create', [HotelPackageController::class, 'create'])->name('hotel_package.create');
+    Route::post('/store', [HotelPackageController::class, 'store'])->name('hotel_package.store');
+    Route::get('/edit/{id}', [HotelPackageController::class, 'edit'])->name('hotel_package.edit');
+    Route::post('/update/{id}', [HotelPackageController::class, 'update'])->name('hotel_package.update');
+    Route::post('/destroy', [HotelPackageController::class, 'destroy'])->name('hotel_package.destroy');
+});
+
+Route::group(['prefix'=>'/admin/travel-package', 'middleware' => 'admin'], function(){
+    Route::get('/', [TravelPackageController::class, 'index'])->name('travel_package.index');
+    Route::get('/create', [TravelPackageController::class, 'create'])->name('travel_package.create');
+    Route::post('/store', [TravelPackageController::class, 'store'])->name('travel_package.store');
+    Route::get('/edit/{id}', [TravelPackageController::class, 'edit'])->name('travel_package.edit');
+    Route::post('/update/{id}', [TravelPackageController::class, 'update'])->name('travel_package.update');
+    Route::post('/destroy', [TravelPackageController::class, 'destroy'])->name('travel_package.destroy');
 });
 
 Route::group(['prefix'=>'/admin/banner', 'middleware' => 'admin'], function(){
