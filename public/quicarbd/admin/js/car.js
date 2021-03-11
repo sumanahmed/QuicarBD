@@ -107,11 +107,28 @@ $("#img5Upload").change(function() {
     img5(this);
 });
 
+//img5 upload
+function img6(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#img6Preview').css('background-image', 'url('+e.target.result +')');
+            $('#img6Preview').hide();
+            $('#img6Preview').fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#img6Upload").change(function() {
+    img6(this);
+});
+
 
 $("#district_id").change(function(){
     var district_id = $(this).val();
     $("#city_id").empty();
     $.get("/get-city/"+ district_id, function( data ) {
+        $("#city_id").append('<option selected disabled>Select</option>');
         for( var i = 0; i < data.length; i++){
             $("#city_id").append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
         }            
@@ -123,8 +140,10 @@ $("#carType").change(function(){
     $("#carBrand").empty();
     $("#carBrand").append('<option selected disabled>Select</option>');
     $.get("/get-car-brand/"+ carType, function( data ) {
-        for( var i = 0; i < data.length; i++){
-            $("#carBrand").append('<option value="'+ data[i].value +'">'+ data[i].value +'</option>');
+        $("#sit_capacity").val(data.sit);
+        $("#carBrand").append('<option selected disabled>Select</option>');
+        for( var i = 0; i < data.brands.length; i++){
+            $("#carBrand").append('<option value="'+ data.brands[i].value +'">'+ data.brands[i].value +'</option>');
         }            
     });
 });
@@ -140,3 +159,15 @@ $("#carBrand").change(function(){
         }            
     });
 });
+
+// $("#carModel").change(function(){
+//     var carType = $("#carType option:selected").val();
+//     var carModel = $(this).val();
+//     $("#carYear").empty();
+//     $("#carYear").append('<option selected disabled>Select</option>');
+//     $.get("/get-car-year/"+ carType + '/' + carModel, function( data ) {
+//         for( var i = 0; i < data.length; i++){
+//             $("#carYear").append('<option value="'+ data[i].value +'">'+ data[i].value +'</option>');
+//         }            
+//     });
+// });

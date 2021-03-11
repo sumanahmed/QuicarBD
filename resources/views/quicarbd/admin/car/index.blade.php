@@ -29,16 +29,61 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
+                    <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
+                        <form action="{{ route('car.index') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="carType" class="control-label mb-10">Car Type <span class="text-danger" title="Required">*</span></label>                                            
+                                        <select id="carType" name="carType" class="form-control selectable" required>
+                                            <option selected disabled>Select</option>
+                                            @foreach($types as $type)
+                                                <option value="{{ $type->name }}">{{ $type->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @if($errors->has('carType'))
+                                            <span class="text-danger"> {{ $errors->first('carType') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="carBrand" class="control-label mb-10">Car Brand <span class="text-danger" title="Required">*</span></label>                                            
+                                        <select id="carBrand" name="carBrand" class="form-control selectable" required>
+                                        </select>
+                                        @if($errors->has('carBrand'))
+                                            <span class="text-danger"> {{ $errors->first('carBrand') }}</span>
+                                        @endif
+                                    </div>
+                                </div>                                    
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="carModel" class="control-label mb-10">Car Model <span class="text-danger" title="Required">*</span></label>                                            
+                                        <select id="carModel" name="carModel" class="form-control selectable" required>
+                                        </select>
+                                        @if($errors->has('carModel'))
+                                            <span class="text-danger"> {{ $errors->first('carModel') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="panel-body">
                         <div class="table-wrap">
                             <div class="table-responsive">
-                                <table id="datable_1" class="table table-hover display pb-30" >
+                                <table class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
                                             <th>Registration No</th>
                                             <th>Owner Name</th>
                                             <th>Owner Phone</th>
-                                            <th>Current Status</th>
+                                            <th>Status</th>
                                             <th>Image</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -51,12 +96,10 @@
                                                     <td>{{ $car->carRegisterNumber }}</td>
                                                     <td>{{ $car->owner_name }}</td>
                                                     <td>{{ $car->owner_phone }}</td>
-                                                    <td>{{ $car->status == 0 ? 'Off Ride' : 'On Ride' }}</td>
+                                                    <td>{{ $car->status == 0 ? 'Pending' : 'Success' }}</td>
                                                     <th><img src="http://quicarbd.com/{{ $car->carImage }}" style="width:80px;height:60px;"/></th>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-success" title="Verify"><i class="fa fa-unlock-alt"></i></a>
                                                         <a href="{{ route('car.edit', $car->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="{{ route('car.details', $car->id) }}" class="bt btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -67,6 +110,8 @@
                                         @endif
                                     </tbody>
                                 </table>
+
+                                {{ $cars->links() }}
                             </div>
                         </div>
                     </div>
@@ -91,7 +136,7 @@
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/car.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

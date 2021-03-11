@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Car Package')
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-md-md-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -136,14 +136,14 @@
                                                 </div>       
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
-                                                        <label for="cash_back_price" class="control-label mb-10">Cash Back Price <span class="text-danger" title="Required">*</span></label>
-                                                        <input type="text" id="cash_back_price" name="cash_back_price" class="form-control" placeholder="Cash Back Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+                                                        <label for="cash_back_price" class="control-label mb-10">Cash Back Price</label>
+                                                        <input type="text" id="cash_back_price" name="cash_back_price" class="form-control" placeholder="Cash Back Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                                     </div>
                                                 </div>                                         
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
-                                                        <label for="cash_back_status" class="control-label mb-10">Cash Back Status <span class="text-danger" title="Required">*</span></label>
-                                                        <select id="cash_back_status" name="cash_back_status" class="form-control" required>
+                                                        <label for="cash_back_status" class="control-label mb-10">Cash Back Status </label>
+                                                        <select id="cash_back_status" name="cash_back_status" class="form-control">
                                                             <option selected disabled>Select</option>
                                                             <option value="0">Pause</option>
                                                             <option value="1">Active</option>
@@ -152,14 +152,14 @@
                                                 </div>
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
-                                                        <label for="cash_back_staring_time" class="control-label mb-10">Cash Back Start Time <span class="text-danger" title="Required">*</span></label>
-                                                        <input type="datetime-local" id="cash_back_staring_time" name="cash_back_staring_time" class="form-control" required>
+                                                        <label for="cash_back_staring_time" class="control-label mb-10">Cash Back Start Time</label>
+                                                        <input type="datetime-local" id="cash_back_staring_time" name="cash_back_staring_time" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
-                                                        <label for="cash_back_ending_time" class="control-label mb-10">Cash Back End Time <span class="text-danger" title="Required">*</span></label>
-                                                        <input type="datetime-local" id="cash_back_ending_time" name="cash_back_ending_time" class="form-control" required>
+                                                        <label for="cash_back_ending_time" class="control-label mb-10">Cash Back End Time </label>
+                                                        <input type="datetime-local" id="cash_back_ending_time" name="cash_back_ending_time" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">                                        
@@ -179,8 +179,8 @@
                                                         <label for="package_status" class="control-label mb-10">Package Status <span class="text-danger" title="Required">*</span></label>
                                                         <select id="package_status" name="package_status" class="form-control" required>
                                                             <option selected disabled>Select</option>
-                                                            <option value="0">Pause</option>
-                                                            <option value="1">Active</option>
+                                                            <option value="0">Pending</option>
+                                                            <option value="1">Approved</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -212,7 +212,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
     
@@ -232,7 +232,7 @@
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/car-package.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/car-package.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

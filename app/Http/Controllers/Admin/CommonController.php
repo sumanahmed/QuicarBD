@@ -7,6 +7,7 @@ use App\Models\Car;
 use App\Models\CarBrand;
 use App\Models\CarModel;
 use App\Models\CarType;
+use App\Models\CarYear;
 use App\Models\City;
 use App\Models\Owner;
 use App\Models\TourSpot;
@@ -53,6 +54,14 @@ class CommonController extends Controller
     /**
      * get car
      */
+    public function getSit ($car_type_id) {
+        $sitCapacity  = CarType::find($car_type_id)->seat;
+        return response()->json($sitCapacity);
+    }
+
+    /**
+     * get car
+     */
     public function getCar ($owner_id) {
         $cars  = Car::select('id','carRegisterNumber')->where('owner_id',$owner_id)->where('status', 1)->get();
         $car_package_charge = Owner::find($owner_id)->car_package_charge;
@@ -66,9 +75,12 @@ class CommonController extends Controller
      * get car brand
      */
     public function getCarBrand ($car_type) {
-        $carType = CarType::where('name', $car_type)->first();
+        $carType = CarType::select('id','seat')->where('name', $car_type)->first();
         $brands  = CarBrand::select('id','value')->where('car_type_id', $carType->id)->get();
-        return response()->json($brands);
+        return response()->json([
+            'sit'   => $carType->seat,
+            'brands'=> $brands,
+        ]);
     }
 
     /**
@@ -82,5 +94,18 @@ class CommonController extends Controller
                                 ->where('car_brand_id', $carBrand->id)
                                 ->get();
         return response()->json($models);
+    }
+
+    /**
+     * get car year
+     */
+    public function getCarYear ($car_type, $car_model) {
+        $carType  = CarType::select('id')->where('name', $car_type)->first();
+        $CarModel = CarModel::select('id')->where('car_type_id', $carType->id)->where('value', $car_model)->first();
+        $years    = CarYear::select('id','value')
+                                ->where('car_type_id', $carType->id)
+                                ->where('car_model_id', $CarModel->id)
+                                ->get();
+        return response()->json($years);
     }
 }

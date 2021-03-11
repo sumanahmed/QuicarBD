@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\CarBrand;
 use App\Models\CarClass;
+use App\Models\CarColor;
 use App\Models\CarModel;
 use App\Models\CarType;
+use App\Models\CarYear;
 use App\Models\City;
 use App\Models\District;
 use App\Models\Owner;
@@ -17,24 +19,38 @@ use Illuminate\Http\Request;
 class CarController extends Controller
 {
     //show all cars
-    public function index(){
-        $cars = Car::leftjoin('owners','owners.id','cars.owner_id')
+    public function index(Request $request){
+        $query = Car::leftjoin('owners','owners.id','cars.owner_id')
                     ->select('cars.id','cars.carRegisterNumber','cars.carImage','cars.status',
                             'owners.name as owner_name','owners.phone as owner_phone')
-                    ->get();
-        return view('quicarbd.admin.car.index', compact('cars'));
+                    ->orderBy('id','DESC');
+
+        if ($request->carType) {
+            $query = $query->where('carType', 'like', "{$request->carType}%");
+        }
+
+        if ($request->carBrand) {
+            $query = $query->where('carBrand', 'like', "{$request->carBrand}%");
+        }
+
+        if ($request->carModel) {
+            $query = $query->where('carModel', 'like', "{$request->carModel}%");
+        }
+
+        $cars = $query->paginate(3);
+        $types      = CarType::all();
+        return view('quicarbd.admin.car.index', compact('cars','types'));
     }
 
     //show create page
     public function create(){
         $types      = CarType::all();
-        $brands     = CarBrand::all();
-        $models     = CarModel::all();
-        $years      = Year::all();
+        $colors     = CarColor::all();
         $classes    = CarClass::all();
         $owners     = Owner::all();
+        $years      = Year::all();
         $districts  = District::orderBy('value','ASC')->get(); 
-        return view('quicarbd.admin.car.create', compact('types','brands','models','years','classes','owners','districts'));
+        return view('quicarbd.admin.car.create', compact('types','colors','classes','owners','districts','years'));
     }
 
     //car store
@@ -45,7 +61,6 @@ class CarController extends Controller
             'carModel'  => 'required',
             'carYear'   => 'required',
             'carColor'      => 'required',
-            'carClass'      => 'required',
             'carRegisterNumber' => 'required|unique:cars,carRegisterNumber',
             'district_id'           => 'required',
             'city_id'               => 'required',
@@ -71,6 +86,8 @@ class CarController extends Controller
         $car->fitness_expired_date      = $request->fitness_expired_date;
         $car->registration_expired_date = $request->registration_expired_date;
         $car->insurance_expired_date    = $request->insurance_expired_date;
+        $car->status    = $request->status;
+        $car->verify    = $request->verify;
         if($request->hasFile('carImage')){
             $image1             = $request->file('carImage');
             $image1Name         = "carImage".time().".".$image1->getClientOriginalExtension();
@@ -130,14 +147,17 @@ class CarController extends Controller
     public function edit($id){
         $car        = Car::find($id);
         $types      = CarType::all();
-        $brands     = CarBrand::all();
-        $models     = CarModel::all();
-        $years      = Year::all();
+        $carType    = CarType::select('id')->where('name', $car->carType)->first();
         $classes    = CarClass::all();
         $owners     = Owner::all();
         $districts  = District::orderBy('value','ASC')->get();
-        $citys      = City::where('district_id', $car->district_id)->get();
-        return view('quicarbd.admin.car.edit', compact('car','types','brands','models','years','classes','owners','districts','citys'));
+        $citys      = City::select('id','name')->where('district_id', $car->district_id)->get();
+        $brands     = CarBrand::where('car_type_id', $carType->id)->where('value', $car->carBrand)->get();
+        $carBrand   = CarBrand::select('id')->where('car_type_id', $carType->id)->where('value', $car->carBrand)->first();
+        $models     = CarModel::select('id','value')->where('car_type_id', $carType->id)->where('car_brand_id', $carBrand->id)->get();
+        $years      = Year::all();
+        $colors     = CarColor::all();
+        return view('quicarbd.admin.car.edit', compact('car','types','brands','models','years','classes','owners','districts','citys','colors'));
     }
 
     //car update
@@ -173,6 +193,8 @@ class CarController extends Controller
         $car->fitness_expired_date      = $request->fitness_expired_date;
         $car->registration_expired_date = $request->registration_expired_date;
         $car->insurance_expired_date    = $request->insurance_expired_date;
+        $car->status    = $request->status;
+        $car->verify    = $request->verify;
         if($request->hasFile('carImage')){
             if(($car->carImage != null) && file_exists($car->carImage)){
                 unlink($car->carImage);

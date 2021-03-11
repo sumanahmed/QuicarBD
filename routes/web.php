@@ -44,8 +44,10 @@ Route::get('/get-city/{district_id}', [CommonController::class, 'getCity'])->nam
 Route::get('/get-brand/{car_type_id}', [CommonController::class, 'getBrand'])->name('admin.get_brand'); 
 Route::get('/get-spot/{district_id}', [CommonController::class, 'getSpot'])->name('admin.get_spot'); 
 Route::get('/get-car/{owner_id}', [CommonController::class, 'getCar'])->name('admin.get_car'); 
+Route::get('/get-sit/{car_type}', [CommonController::class, 'getSit'])->name('admin.get_sit'); 
 Route::get('/get-car-brand/{car_type}', [CommonController::class, 'getCarBrand'])->name('admin.get_car_brand'); 
 Route::get('/get-car-model/{car_type}/{car_brand}', [CommonController::class, 'getCarModel'])->name('admin.get_car_model'); 
+Route::get('/get-car-year/{car_type}/{car_model}', [CommonController::class, 'getCarYear'])->name('admin.get_car_year'); 
 
 Route::get('/admin',[AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/signin',[AuthController::class, 'signin'])->name('admin.signin');
