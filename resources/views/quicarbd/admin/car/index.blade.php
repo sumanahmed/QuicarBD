@@ -32,38 +32,42 @@
                     <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
                         <form action="{{ route('car.index') }}" method="get">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="carType" class="control-label mb-10">Car Type <span class="text-danger" title="Required">*</span></label>                                            
-                                        <select id="carType" name="carType" class="form-control selectable" required>
+                                        <label for="carType" class="control-label mb-10">Car Type</label>                                            
+                                        <select id="carType" name="carType" class="form-control selectable">
                                             <option selected disabled>Select</option>
                                             @foreach($types as $type)
                                                 <option value="{{ $type->name }}">{{ $type->name }}</option>
                                             @endforeach
                                         </select>
-                                        @if($errors->has('carType'))
-                                            <span class="text-danger"> {{ $errors->first('carType') }}</span>
-                                        @endif
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="carBrand" class="control-label mb-10">Car Brand <span class="text-danger" title="Required">*</span></label>                                            
-                                        <select id="carBrand" name="carBrand" class="form-control selectable" required>
+                                        <label for="carBrand" class="control-label mb-10">Car Brand </label>                                            
+                                        <select id="carBrand" name="carBrand" class="form-control selectable">
                                         </select>
-                                        @if($errors->has('carBrand'))
-                                            <span class="text-danger"> {{ $errors->first('carBrand') }}</span>
-                                        @endif
                                     </div>
                                 </div>                                    
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="carModel" class="control-label mb-10">Car Model <span class="text-danger" title="Required">*</span></label>                                            
-                                        <select id="carModel" name="carModel" class="form-control selectable" required>
+                                        <label for="carModel" class="control-label mb-10">Car Model </label>                                            
+                                        <select id="carModel" name="carModel" class="form-control selectable">
                                         </select>
-                                        @if($errors->has('carModel'))
-                                            <span class="text-danger"> {{ $errors->first('carModel') }}</span>
-                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="perPage" class="control-label mb-10">Per Page </label>                                            
+                                        <select id="perPage" name="perPage" class="form-control selectable">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">

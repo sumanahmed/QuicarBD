@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Lib\Helper;
 use App\Models\Car;
 use App\Models\CarBrand;
 use App\Models\CarClass;
@@ -37,7 +38,8 @@ class CarController extends Controller
             $query = $query->where('carModel', 'like', "{$request->carModel}%");
         }
 
-        $cars = $query->paginate(3);
+        $cars = isset($request->perPage) ? $query->paginate($request->perPage) : $query->paginate(10);
+
         $types      = CarType::all();
         return view('quicarbd.admin.car.index', compact('cars','types'));
     }
@@ -49,8 +51,7 @@ class CarController extends Controller
         $classes    = CarClass::all();
         $owners     = Owner::all();
         $years      = Year::all();
-        $districts  = District::orderBy('value','ASC')->get(); 
-        return view('quicarbd.admin.car.create', compact('types','colors','classes','owners','districts','years'));
+        return view('quicarbd.admin.car.create', compact('types','colors','classes','owners','years'));
     }
 
     //car store
@@ -60,12 +61,9 @@ class CarController extends Controller
             'carBrand'  => 'required',
             'carModel'  => 'required',
             'carYear'   => 'required',
-            'carColor'      => 'required',
+            'carColor'  => 'required',
             'carRegisterNumber' => 'required|unique:cars,carRegisterNumber',
-            'district_id'           => 'required',
-            'city_id'               => 'required',
-            'owner_id'              => 'required',
-            'status_message'        => 'required',
+            'owner_id'          => 'required',
         ]);
         
         $car                    = new Car();
@@ -75,10 +73,10 @@ class CarController extends Controller
         $car->carYear           = $request->carYear;
         $car->carColor          = $request->carColor;
         $car->carClass          = $request->carClass;
-        $car->carRegisterNumber = $request->carRegisterNumber;
-        $car->district_id       = $request->district_id;
-        $car->city_id           = $request->city_id;
-        $car->carServieLocation = District::find($request->district_id)->value;
+        $car->carRegisterNumber = $request->carRegisterNumber;        
+        $car->district_id       = 0;
+        $car->city_id           = 0;
+        $car->carServieLocation = 'test';
         $car->owner_id          = $request->owner_id;
         $car->status_message    = $request->status_message;
         $car->sit_capacity      = $request->sit_capacity;
@@ -150,14 +148,12 @@ class CarController extends Controller
         $carType    = CarType::select('id')->where('name', $car->carType)->first();
         $classes    = CarClass::all();
         $owners     = Owner::all();
-        $districts  = District::orderBy('value','ASC')->get();
-        $citys      = City::select('id','name')->where('district_id', $car->district_id)->get();
         $brands     = CarBrand::where('car_type_id', $carType->id)->where('value', $car->carBrand)->get();
         $carBrand   = CarBrand::select('id')->where('car_type_id', $carType->id)->where('value', $car->carBrand)->first();
         $models     = CarModel::select('id','value')->where('car_type_id', $carType->id)->where('car_brand_id', $carBrand->id)->get();
         $years      = Year::all();
         $colors     = CarColor::all();
-        return view('quicarbd.admin.car.edit', compact('car','types','brands','models','years','classes','owners','districts','citys','colors'));
+        return view('quicarbd.admin.car.edit', compact('car','types','brands','models','years','classes','owners','colors'));
     }
 
     //car update
@@ -168,12 +164,8 @@ class CarController extends Controller
             'carModel'  => 'required',
             'carYear'  => 'required',
             'carColor'  => 'required',
-            'carClass'  => 'required',
             'carRegisterNumber'  => 'required',
-            'district_id'        => 'required',
-            'city_id'            => 'required',
             'owner_id'  => 'required',
-            'status_message'  => 'required',
         ]);
         
         $car                    = Car::find($id);
@@ -184,9 +176,9 @@ class CarController extends Controller
         $car->carColor          = $request->carColor;
         $car->carClass          = $request->carClass;
         $car->carRegisterNumber = $request->carRegisterNumber;
-        $car->district_id       = $request->district_id;
-        $car->city_id           = $request->city_id;
-        $car->carServieLocation = District::find($request->district_id)->value;
+        $car->district_id       = 0;
+        $car->city_id           = 0;
+        $car->carServieLocation = 'test';
         $car->owner_id          = $request->owner_id;
         $car->status_message    = $request->status_message;        
         $car->tax_expired_date          = $request->tax_expired_date;
@@ -195,6 +187,19 @@ class CarController extends Controller
         $car->insurance_expired_date    = $request->insurance_expired_date;
         $car->status    = $request->status;
         $car->verify    = $request->verify;
+
+        if ($car->verify == 1) {
+
+            $helper = new Helper(); 
+            $owner  = Owner::select('id','phone','name','n_key')->where('id', $request->owner_id)->first();
+            $id     = $owner->n_key;
+            $title  = 'Car Approved';            
+            $msg    = 'Dear '.$owner->name.', your car('.$car->carRegisterNumber.') approved successfully. Thanks for connecting with Quicar';                        
+
+            $helper->sendSingleNotification($id, $title, $msg); //push notificatio nsend
+            $helper->smsSend($owner->phone, $msg); // sms send
+        }
+
         if($request->hasFile('carImage')){
             if(($car->carImage != null) && file_exists($car->carImage)){
                 unlink($car->carImage);

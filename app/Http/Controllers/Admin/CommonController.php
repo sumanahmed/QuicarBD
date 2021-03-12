@@ -77,8 +77,12 @@ class CommonController extends Controller
     public function getCarBrand ($car_type) {
         $carType = CarType::select('id','seat')->where('name', $car_type)->first();
         $brands  = CarBrand::select('id','value')->where('car_type_id', $carType->id)->get();
+        $prefix = "to ";
+        $index = strpos($carType->seat, $prefix) + strlen($prefix);
+        $sit = substr($carType->seat, $index);
+
         return response()->json([
-            'sit'   => $carType->seat,
+            'sit'   => $sit,
             'brands'=> $brands,
         ]);
     }

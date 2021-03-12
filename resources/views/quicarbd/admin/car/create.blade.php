@@ -52,31 +52,6 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">                                        
-                                                    <div class="form-group">
-                                                        <label for="district_id" class="control-label mb-10">Car Service Location <span class="text-danger" title="Required">*</span></label>
-                                                        <select name="district_id" id="district_id" class="form-control selectable">
-                                                            <option selected disabled>Select</option>
-                                                            @foreach($districts as $district)
-                                                                <option value="{{ $district->id }}">{{ $district->value }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if($errors->has('district_id'))
-                                                            <span class="text-danger"> {{ $errors->first('district_id') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">                                        
-                                                    <div class="form-group">
-                                                        <label for="city_id" class="control-label mb-10">City <span class="text-danger" title="Required">*</span></label>
-                                                        <select name="city_id" id="city_id" class="form-control selectable">
-                                                        
-                                                        </select>
-                                                        @if($errors->has('city_id'))
-                                                            <span class="text-danger"> {{ $errors->first('city_id') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="owner_id" class="control-label mb-10">Owner <span class="text-danger" title="Required">*</span></label>                                            
@@ -242,7 +217,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="img6" class="control-label mb-10">Insurance Paper <span class="text-danger" title="Required">*</span> </label>
+                                                        <label for="img6" class="control-label mb-10">Insurance Paper </label>
                                                         <div class="avatar-upload">
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="insurancePaper_path" id="img6Upload" accept=".png, .jpg, .jpeg"/>
@@ -309,8 +284,8 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="registration_expired_date" class="control-label mb-10">Registration Expired Date <span class="text-danger" title="Required">*</span></label>
-                                                        <input type="date" id="registration_expired_date" name="registration_expired_date" class="form-control datePicker" required/>
+                                                        <label for="registration_expired_date" class="control-label mb-10">Registration Expired Date </label>
+                                                        <input type="date" id="registration_expired_date" name="registration_expired_date" class="form-control datePicker"/>
                                                         @if($errors->has('registration_expired_date'))
                                                             <span class="text-danger"> {{ $errors->first('registration_expired_date') }}</span>
                                                         @endif
@@ -319,8 +294,8 @@
                                             </div>                                                
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <label for="status_message" class="control-label mb-10">Status Message  <span class="text-danger" title="Required">*</span></label>
-                                                    <input type="text" name="status_message" id="status_message" class="form-control" placeholder="Enter Status Message" required/>
+                                                    <label for="status_message" class="control-label mb-10">Status Message </label>
+                                                    <input type="text" name="status_message" id="status_message" class="form-control" placeholder="Enter Status Message"/>
                                                     @if($errors->has('status_message'))
                                                         <span class="text-danger"> {{ $errors->first('status_message') }}</span>
                                                     @endif
