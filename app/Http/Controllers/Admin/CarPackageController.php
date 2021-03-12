@@ -89,7 +89,7 @@ class CarPackageController extends Controller
             $title  = 'Package Approved';            
             $msg    = 'Dear '.$owner->name.', your car package ('.$car_packge->name.') approved successfully. Thanks for connecting with Quicar';                        
 
-            $helper->sendSingleNotification($id, $title, $msg); //push notificatio nsend
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
         }
 
@@ -170,7 +170,7 @@ class CarPackageController extends Controller
             $title  = 'Package Approved';            
             $msg    = 'Dear '.$owner->name.', your car package ('.$car_packge->name.') approved successfully. Thanks for connecting with Quicar';                        
 
-            $helper->sendSingleNotification($id, $title, $msg); //push notificatio nsend
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
         }
 

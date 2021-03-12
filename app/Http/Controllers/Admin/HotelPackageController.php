@@ -114,7 +114,7 @@ class HotelPackageController extends Controller
             $title  = 'Package Approved';            
             $msg    = 'Dear '.$owner->name.', your hotel package ('.$hotel_package->hotel_name.') approved successfully. Thanks for connecting with Quicar';                        
 
-            $helper->sendSingleNotification($id, $title, $msg); //push notificatio nsend
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
         }
 
@@ -217,7 +217,7 @@ class HotelPackageController extends Controller
             $title  = 'Package Approved';            
             $msg    = 'Dear '.$owner->name.', your hotel package ('.$hotel_package->hotel_name.') approved successfully. Thanks for connecting with Quicar';                        
 
-            $helper->sendSingleNotification($id, $title, $msg); //push notificatio nsend
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
         }
 

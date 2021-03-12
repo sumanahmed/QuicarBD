@@ -196,7 +196,7 @@ class CarController extends Controller
             $title  = 'Car Approved';            
             $msg    = 'Dear '.$owner->name.', your car('.$car->carRegisterNumber.') approved successfully. Thanks for connecting with Quicar';                        
 
-            $helper->sendSingleNotification($id, $title, $msg); //push notificatio nsend
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
         }
 

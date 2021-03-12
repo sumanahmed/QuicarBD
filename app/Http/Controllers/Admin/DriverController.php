@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\District;
 use App\Models\Driver;
 use App\Models\Owner;
@@ -15,9 +16,23 @@ class DriverController extends Controller
     //show all drivers
     public function index(){
         $drivers    = Driver::all();
+        return view('quicarbd.admin.driver.index', compact('drivers'));
+    }
+
+    //show create page
+    public function create(){
         $owners     = Owner::select('id','name')->where('account_status', 1)->get();
         $districts  = District::orderBy('value','ASC')->get();       
-        return view('quicarbd.admin.driver.index', compact('drivers','owners','districts'));
+        return view('quicarbd.admin.driver.create', compact('owners','districts'));
+    }
+
+    //show edit page
+    public function edit($id){
+        $driver     = Driver::find($id); 
+        $owners     = Owner::select('id','name')->where('account_status', 1)->get();
+        $districts  = District::orderBy('value','ASC')->get(); 
+        $cities     = City::where('district_id', $driver->district_id)->get();
+        return view('quicarbd.admin.driver.edit', compact('driver','owners','districts','cities'));
     }
 
     //driver store
@@ -37,7 +52,6 @@ class DriverController extends Controller
         }else{
             $driver             = new Driver();
             $driver->name       = $request->name;
-            $driver->email      = $request->email ? $request->email : Null;
             $driver->phone      = $request->phone;
             $driver->dob        = $request->dob;
             $driver->owner_id   = $request->owner_id;
@@ -87,15 +101,9 @@ class DriverController extends Controller
                 $driver->license_back_pic= $license_back_url;
             }
             if($driver->save()){
-                return Response::json([
-                    'status'    => 201,
-                    'data'      => $driver
-                ]);
+                return redirect()->route('driver.index')->with('message','Driver created successfully');
             }else{
-                return Response::json([
-                    'status'    => 403,
-                    'data'      => []
-                ]);
+                return redirect()->route('driver.index')->with('error_message','Sorry, something went wrong');
             }
         }
     }
@@ -183,15 +191,9 @@ class DriverController extends Controller
                 $driver->license_back_pic= $license_back_url;
             }
             if($driver->update()){
-                return Response::json([
-                    'status'    => 201,
-                    'data'      => $driver
-                ]);
+                return redirect()->route('driver.index')->with('message','Driver update successfully');
             }else{
-                return Response::json([
-                    'status'    => 403,
-                    'data'      => []
-                ]);
+                return redirect()->route('driver.index')->with('error_message','Sorry, something went wrong');
             }
         }
     }

@@ -85,8 +85,10 @@ Route::group(['prefix'=>'/admin/setting/tour-spot', 'middleware' => 'admin'], fu
 
 Route::group(['prefix'=>'/admin/driver', 'middleware' => 'admin'], function(){
     Route::get('/', [DriverController::class, 'index'])->name('driver.index');
+    Route::get('/create', [DriverController::class, 'create'])->name('driver.create');
     Route::post('/store', [DriverController::class, 'store'])->name('driver.store');
-    Route::post('/update', [DriverController::class, 'update'])->name('driver.update');
+    Route::get('/edit/{id}', [DriverController::class, 'edit'])->name('driver.edit');
+    Route::post('/update/{id}', [DriverController::class, 'update'])->name('driver.update');
     Route::post('/destroy', [DriverController::class, 'destroy'])->name('driver.destroy');
 });
 
