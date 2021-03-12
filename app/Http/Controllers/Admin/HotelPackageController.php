@@ -21,8 +21,9 @@ class HotelPackageController extends Controller
         $hotel_packages = HotelPackage::join('district','district.id','hotel_packages.district_id')
                                         ->join('city','city.id','hotel_packages.city_id')
                                         ->select('district.value as district_name','city.name as city_name',
-                                        'hotel_packages.id','hotel_packages.price','hotel_packages.min_price','hotel_packages.hotel_name',
-                                        'hotel_packages.max_price','hotel_packages.status')
+                                                'hotel_packages.id','hotel_packages.price',
+                                                'hotel_packages.hotel_name','hotel_packages.status'
+                                        )
                                         ->get();
         return view('quicarbd.admin.package.hotel-package.index', compact('hotel_packages'));
     }
@@ -53,8 +54,6 @@ class HotelPackageController extends Controller
             'quicar_charge' => 'required',
             'you_will_get' => 'required',
             'owner_id' => 'required',
-            'min_price' => 'required',
-            'max_price' => 'required',
             'booking_policy' => 'required',
             'cancellation_policy' => 'required',
             'hotel_image' => 'required',
@@ -62,6 +61,7 @@ class HotelPackageController extends Controller
             'hotel_check_in_time' => 'required',
             'hotel_check_out_time' => 'required',
         ]); 
+        
         $hotel_package                     = new HotelPackage();
         $hotel_package->hotel_name         = $request->hotel_name;
         $hotel_package->status             = $request->status;
@@ -76,9 +76,11 @@ class HotelPackageController extends Controller
         $hotel_package->owner_id           = $request->owner_id;
         $hotel_package->price              = $request->price;
         $hotel_package->quicar_charge      = $request->quicar_charge;
-        $hotel_package->you_will_get       = $request->you_will_get;
-        $hotel_package->min_price          = $request->min_price;
-        $hotel_package->max_price          = $request->max_price;        
+        $hotel_package->you_will_get       = $request->you_will_get;   
+        $hotel_package->cash_back_price    = isset($request->cash_back_price) ? $request->cash_back_price : 0;
+        $hotel_package->cash_back_status   = isset($request->cash_back_status) ? $request->cash_back_status : 0;
+        $hotel_package->cash_back_staring_time = isset($request->cash_back_staring_time) ? $request->cash_back_staring_time : Null;
+        $hotel_package->cash_back_ending_time  = isset($request->cash_back_ending_time) ? $request->cash_back_ending_time : Null;
         $hotel_package->booking_policy     = $request->booking_policy;
         $hotel_package->cancellation_policy= $request->cancellation_policy;
         $hotel_package->booking_contact_number= $request->booking_contact_number;
@@ -151,8 +153,6 @@ class HotelPackageController extends Controller
             'quicar_charge' => 'required',
             'you_will_get' => 'required',
             'owner_id' => 'required',
-            'min_price' => 'required',
-            'max_price' => 'required',
             'booking_policy' => 'required',
             'cancellation_policy' => 'required',
             'hotel_check_in_time' => 'required',
@@ -172,9 +172,11 @@ class HotelPackageController extends Controller
         $hotel_package->owner_id           = $request->owner_id;
         $hotel_package->price              = $request->price;
         $hotel_package->quicar_charge      = $request->quicar_charge;
-        $hotel_package->you_will_get       = $request->you_will_get;
-        $hotel_package->min_price          = $request->min_price;
-        $hotel_package->max_price          = $request->max_price;        
+        $hotel_package->you_will_get       = $request->you_will_get; 
+        $hotel_package->cash_back_price    = isset($request->cash_back_price) ? $request->cash_back_price : 0;
+        $hotel_package->cash_back_status   = isset($request->cash_back_status) ? $request->cash_back_status : 0;
+        $hotel_package->cash_back_staring_time = isset($request->cash_back_staring_time) ? $request->cash_back_staring_time : Null;
+        $hotel_package->cash_back_ending_time  = isset($request->cash_back_ending_time) ? $request->cash_back_ending_time : Null;
         $hotel_package->booking_policy     = $request->booking_policy;
         $hotel_package->cancellation_policy= $request->cancellation_policy;
         $hotel_package->booking_contact_number= $request->booking_contact_number;

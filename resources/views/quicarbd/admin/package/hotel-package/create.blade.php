@@ -175,20 +175,29 @@
                                 </div> 
                                 <div class="col-md-3">                                        
                                     <div class="form-group">
-                                        <label for="min_price" class="control-label mb-10"> Minimum Price <span class="text-danger" title="Required">*</span></label>
-                                        <input type="text" id="min_price" name="min_price" class="form-control" placeholder="Minimum Price" required>
-                                        @if($errors->has('min_price'))
-                                            <span class="text-danger"> {{ $errors->first('min_price') }}</span>
-                                        @endif
+                                        <label for="cash_back_price" class="control-label mb-10">Cash Back Price</label>
+                                        <input type="text" id="cash_back_price" name="cash_back_price" class="form-control" placeholder="Cash Back Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    </div>
+                                </div>                                         
+                                <div class="col-md-3">                                        
+                                    <div class="form-group">
+                                        <label for="cash_back_status" class="control-label mb-10">Cash Back Status </label>
+                                        <select id="cash_back_status" name="cash_back_status" class="form-control">
+                                            <option value="0">Pause</option>
+                                            <option value="1">Active</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">                                        
                                     <div class="form-group">
-                                        <label for="max_price" class="control-label mb-10"> Max Price <span class="text-danger" title="Required">*</span></label>
-                                        <input type="text" id="max_price" name="max_price" class="form-control" placeholder="Max Price" required>
-                                        @if($errors->has('max_price'))
-                                            <span class="text-danger"> {{ $errors->first('max_price') }}</span>
-                                        @endif
+                                        <label for="cash_back_staring_time" class="control-label mb-10">Cash Back Start Time</label>
+                                        <input type="datetime-local" id="cash_back_staring_time" name="cash_back_staring_time" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">                                        
+                                    <div class="form-group">
+                                        <label for="cash_back_ending_time" class="control-label mb-10">Cash Back End Time </label>
+                                        <input type="datetime-local" id="cash_back_ending_time" name="cash_back_ending_time" class="form-control">
                                     </div>
                                 </div>
                             </div>

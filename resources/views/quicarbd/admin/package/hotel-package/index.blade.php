@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Car Package')
+@section('title','Hotel Package')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -38,8 +38,7 @@
                                             <th>Name</th>
                                             <th>District</th>
                                             <th>City</th>
-                                            <th>Min Price</th>
-                                            <th>Max Price</th>
+                                            <th>Price</th>
                                             <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -49,8 +48,7 @@
                                             <th>Name</th>
                                             <th>District</th>
                                             <th>City</th>
-                                            <th>Min Price</th>
-                                            <th>Max Price</th>
+                                            <th>Price</th>
                                             <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -63,8 +61,7 @@
                                                     <td>{{ $hotel_package->hotel_name }}</td>
                                                     <td>{{ $hotel_package->district_name }}</td>
                                                     <td>{{ $hotel_package->city_name }}</td>
-                                                    <td>{{ $hotel_package->min_price }}</td>
-                                                    <td>{{ $hotel_package->max_price }}</td>
+                                                    <td>{{ $hotel_package->price }}</td>
                                                     <td>{{ $hotel_package->package_status == 0 ? 'Invisible' : 'Visible' }}</td>                          
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('hotel_package.edit', $hotel_package->id) }}" class="btn btn-xs btn-raised btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
