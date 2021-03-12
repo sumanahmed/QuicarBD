@@ -114,6 +114,9 @@
                         <li>
                             <a href="{{ route('class.index') }}">Class</a>
                         </li>
+                        <li>
+                            <a href="{{ route('color.index') }}">Color</a>
+                        </li>
                     </ul>
                 </li>
             </ul>

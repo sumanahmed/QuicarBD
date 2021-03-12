@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CarBrandController;
 use App\Http\Controllers\Admin\CarClassController;
+use App\Http\Controllers\Admin\CarColorController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CarModelController;
 use App\Http\Controllers\Admin\CarPackageController;
@@ -128,6 +129,13 @@ Route::group(['prefix'=>'/admin/class', 'middleware' => 'admin'], function(){
     Route::post('/store', [CarClassController::class, 'store'])->name('class.store');
     Route::post('/update', [CarClassController::class, 'update'])->name('class.update');
     Route::post('/destroy', [CarClassController::class, 'destroy'])->name('class.destroy');
+});
+
+Route::group(['prefix'=>'/admin/color', 'middleware' => 'admin'], function(){
+    Route::get('/', [CarColorController::class, 'index'])->name('color.index');
+    Route::post('/store', [CarColorController::class, 'store'])->name('color.store');
+    Route::post('/update', [CarColorController::class, 'update'])->name('color.update');
+    Route::post('/destroy', [CarColorController::class, 'destroy'])->name('color.destroy');
 });
 
 Route::group(['prefix'=>'/admin/hotel-amenity', 'middleware' => 'admin'], function(){
