@@ -176,7 +176,6 @@
                                                             <option value="0" @if( $car_package->status == 0) selected @endif>Pending</option>
                                                             <option value="1" @if( $car_package->status == 1) selected @endif>Success</option>
                                                             <option value="2" @if( $car_package->status == 2) selected @endif>Cancel</option>
-                                                            <option value="3" @if( $car_package->status == 3) selected @endif>Already Have a ride</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -185,8 +184,8 @@
                                                         <label for="package_status" class="control-label mb-10">Package Status <span class="text-danger" title="Required">*</span></label>
                                                         <select id="package_status" name="package_status" class="form-control" required>
                                                             <option selected disabled>Select</option>
-                                                            <option value="0" @if( $car_package->status == 0) selected @endif>Pending</option>
-                                                            <option value="1" @if( $car_package->status == 1) selected @endif>Approved</option>
+                                                            <option value="1" @if( $car_package->status == 1) selected @endif>Visible</option>
+                                                            <option value="0" @if( $car_package->status == 0) selected @endif>Invisible</option>
                                                         </select>
                                                     </div>
                                                 </div>

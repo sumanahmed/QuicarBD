@@ -170,7 +170,6 @@
                                                             <option value="0">Pending</option>
                                                             <option value="1">Success</option>
                                                             <option value="2">Cancel</option>
-                                                            <option value="3">Already Have a ride</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -178,9 +177,9 @@
                                                     <div class="form-group">
                                                         <label for="package_status" class="control-label mb-10">Package Status <span class="text-danger" title="Required">*</span></label>
                                                         <select id="package_status" name="package_status" class="form-control" required>
-                                                            <option selected disabled>Select</option>
-                                                            <option value="0">Pending</option>
-                                                            <option value="1">Approved</option>
+                                                            <option selected disabled>Select</option>                                                            
+                                                            <option value="1">Visible</option>
+                                                            <option value="0">Invisible</option>
                                                         </select>
                                                     </div>
                                                 </div>

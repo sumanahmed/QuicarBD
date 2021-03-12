@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Lib\Helper;
 use App\Models\Car;
 use App\Models\CarPackage;
 use App\Models\District;
@@ -147,7 +148,20 @@ class CarPackageController extends Controller
         $car_packge->car_id             = $request->car_id;
         $car_packge->quicar_charge      = $request->quicar_charge;
         $car_packge->terms_condition    = $request->terms_condition;
-        if($car_packge->save()){
+        
+        if ($car_packge->package_status == 1) {
+
+            $helper = new Helper(); 
+            $owner  = Owner::select('id','phone','name','n_key')->where('id', $request->owner_id)->first();
+            $id     = $owner->n_key;
+            $title  = 'Package Approved';            
+            $msg    = 'Dear '.$owner->name.', your car package ('.$car_packge->name.') approved successfully. Thanks for connecting with Quicar';                        
+
+            $helper->sendSingleNotification($id, $title, $msg); //push notificatio nsend
+            $helper->smsSend($owner->phone, $msg); // sms send
+        }
+
+        if($car_packge->update()){
             return redirect()->route('car_package.index')->with('message','Car package updated successfully');
         }else{
             return redirect()->back()->with('error_message','Sorry, something went wrong');
