@@ -120,4 +120,12 @@ class CommonController extends Controller
         $carType  = Car::select('sit_capacity')->where('id', $car_id)->first();
         return response()->json($carType->sit_capacity);
     }
+
+    /**
+     * get hotel package charge
+     */
+    public function getHotelPackageCharge ($owner_id) {
+        $hotel_package_charge  = Owner::find($owner_id)->hotel_package_charge;
+        return response()->json($hotel_package_charge);
+    }
 }

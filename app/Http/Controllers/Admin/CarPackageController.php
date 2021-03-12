@@ -80,6 +80,19 @@ class CarPackageController extends Controller
         $car_packge->car_id             = $request->car_id;
         $car_packge->quicar_charge      = $request->quicar_charge;
         $car_packge->terms_condition    = $request->terms_condition;
+        
+        if ($request->package_status == 1) {
+
+            $helper = new Helper(); 
+            $owner  = Owner::select('id','phone','name','n_key')->where('id', $request->owner_id)->first();
+            $id     = $owner->n_key;
+            $title  = 'Package Approved';            
+            $msg    = 'Dear '.$owner->name.', your car package ('.$car_packge->name.') approved successfully. Thanks for connecting with Quicar';                        
+
+            $helper->sendSingleNotification($id, $title, $msg); //push notificatio nsend
+            $helper->smsSend($owner->phone, $msg); // sms send
+        }
+
         if($car_packge->save()){
             return redirect()->route('car_package.index')->with('message','Car package added successfully');
         }else{
@@ -148,8 +161,8 @@ class CarPackageController extends Controller
         $car_packge->car_id             = $request->car_id;
         $car_packge->quicar_charge      = $request->quicar_charge;
         $car_packge->terms_condition    = $request->terms_condition;
-        
-        if ($car_packge->package_status == 1) {
+
+        if ($request->package_status == 1) {
 
             $helper = new Helper(); 
             $owner  = Owner::select('id','phone','name','n_key')->where('id', $request->owner_id)->first();
