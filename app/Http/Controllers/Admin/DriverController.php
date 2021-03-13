@@ -12,12 +12,21 @@ use Exception;
 use Illuminate\Http\Request;
 use Validator;
 use Response;
+use DB;
 
 class DriverController extends Controller
 {
     //show all drivers
-    public function index(){
-        $drivers    = Driver::all();
+    public function index(Request $request)
+    {       
+        $query  = DB::table('drivers')->select('*');
+
+        if ($request->owner_id) {
+            $query = $query->where('owner_id', $request->owner_id);
+        }
+
+        $drivers    = $query->get();
+
         return view('quicarbd.admin.driver.index', compact('drivers'));
     }
 

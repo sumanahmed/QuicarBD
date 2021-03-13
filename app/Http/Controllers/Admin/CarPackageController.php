@@ -10,16 +10,22 @@ use App\Models\District;
 use App\Models\Owner;
 use App\Models\TourSpot;
 use Illuminate\Http\Request;
+use DB;
 
 class CarPackageController extends Controller
 {
      /**
      * show car packages
      */
-    public function index(){
-        $car_packages = CarPackage::join('district','district.id','car_packages.district_id')
-                                ->select('car_packages.*','district.value as district_name')
-                                ->get();
+    public function index(Request $request){
+        $query = CarPackage::join('district','district.id','car_packages.district_id')
+                            ->select('car_packages.*','district.value as district_name');
+
+        if ($request->owner_id) {
+            $query = $query->where('owner_id', $request->owner_id);
+        }
+
+        $car_packages = $query->get();
         return view('quicarbd.admin.package.car-package.index', compact('car_packages'));
     }
 

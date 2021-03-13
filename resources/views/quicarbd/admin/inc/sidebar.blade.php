@@ -1,5 +1,8 @@
 <?php
     $pendingDriver = \App\Models\Driver::where('c_status', 0)->count('id');
+    $pendingCar = \App\Models\Car::where('status', 0)->count('id');
+    $pendingCarPackage = \App\Models\CarPackage::where('status', 0)->count('id');
+    $pendingHotelPackage = \App\Models\HotelPackage::where('status', 0)->count('id');
 ?>
 
 <div class="fixed-sidebar-left">
@@ -92,7 +95,11 @@
                             <a href="{{ route('car.create') }}">Add New Car</a>
                         </li>
                         <li>
-                            <a href="{{ route('car.index') }}">All Car <div class="pull-right"><span class="label label-warning">11</span></div></a>
+                            <a href="{{ route('car.index') }}">All Car 
+                            @if($pendingCar > 0)
+                                <div class="pull-right"><span class="label label-warning">{{ $pendingCar }}</span></div>
+                            @endif
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -131,7 +138,11 @@
                             <a href="{{ route('car_package.create') }}">Add New</a>
                         </li>
                         <li>
-                            <a href="{{ route('car_package.index') }}">All <div class="pull-right"><span class="label label-warning">11</span></div></a>
+                            <a href="{{ route('car_package.index') }}">All 
+                                @if($pendingCarPackage > 0)
+                                    <div class="pull-right"><span class="label label-warning">{{ $pendingCarPackage }}</span></div>
+                                @endif
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -142,7 +153,11 @@
                             <a href="{{ route('hotel_package.create') }}">Add New</a>
                         </li>
                         <li>
-                            <a href="{{ route('hotel_package.index') }}">All <div class="pull-right"><span class="label label-warning">11</span></div></a>
+                            <a href="{{ route('hotel_package.index') }}">All 
+                                @if($pendingHotelPackage > 0)
+                                    <div class="pull-right"><span class="label label-warning">{{ $pendingHotelPackage }}</span></div>
+                                @endif
+                            </a>
                         </li>
                     </ul>
                 </li>

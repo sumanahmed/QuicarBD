@@ -17,14 +17,21 @@ class HotelPackageController extends Controller
     /**
      * show hotel packages
      */
-    public function index(){
-        $hotel_packages = HotelPackage::join('district','district.id','hotel_packages.district_id')
+    public function index(Request $request){
+        $query = HotelPackage::join('district','district.id','hotel_packages.district_id')
                                         ->join('city','city.id','hotel_packages.city_id')
+                                        ->join('owners','owners.id','hotel_packages.owner_id')
                                         ->select('district.value as district_name','city.name as city_name',
                                                 'hotel_packages.id','hotel_packages.price',
-                                                'hotel_packages.hotel_name','hotel_packages.status'
-                                        )
-                                        ->get();
+                                                'hotel_packages.hotel_name','hotel_packages.status',
+                                                'owners.name as owner_name', 'owners.phone as owner_phone'
+                                        );
+        if ($request->owner_id) {
+            $query = $query->where('owner_id', $request->owner_id);
+        }
+
+        $hotel_packages = $query->get();
+        
         return view('quicarbd.admin.package.hotel-package.index', compact('hotel_packages'));
     }
 

@@ -45,6 +45,16 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
+                                        <label for="status" class="control-label mb-10">Status </label>                                            
+                                        <select id="status" name="status" class="form-control selectable">
+                                            <option selected disabled>Select</option>
+                                            <option value="0">Pending</option>
+                                            <option value="1">Approve</option>
+                                        </select>
+                                    </div>
+                                </div>                                    
+                                <div class="col-md-2">
+                                    <div class="form-group">
                                         <label for="carBrand" class="control-label mb-10">Car Brand </label>                                            
                                         <select id="carBrand" name="carBrand" class="form-control selectable">
                                         </select>

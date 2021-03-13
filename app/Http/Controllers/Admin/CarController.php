@@ -38,6 +38,14 @@ class CarController extends Controller
             $query = $query->where('carModel', 'like', "{$request->carModel}%");
         }
 
+        if ($request->owner_id) {
+            $query = $query->where('owner_id', $request->owner_id);
+        }
+
+        if ($request->status) {
+            $query = $query->where('status', $request->status);
+        }
+        
         $cars = isset($request->perPage) ? $query->paginate($request->perPage) : $query->paginate(10);
 
         $types      = CarType::all();

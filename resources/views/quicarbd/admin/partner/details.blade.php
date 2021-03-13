@@ -37,7 +37,7 @@
                                             <div class="sm-data-box">
                                                 <div class="container-fluid">
                                                     <div class="text-center pl-0 pr-0 data-wrap-left">
-                                                        <a href="#">
+                                                        <a href="{{ route('car.index',['owner_id'=> $partner->id ]) }}">
                                                             <span class="txt-dark block counter"><span class="counter-anim">{{ $total_car }}</span></span>
                                                             <span class="weight-500 uppercase-font block font-13">Total Car</span>
                                                         </a>
@@ -55,7 +55,7 @@
                                             <div class="sm-data-box">
                                                 <div class="container-fluid">
                                                     <div class="text-center pl-0 pr-0 data-wrap-left">
-                                                        <a href="#">
+                                                        <a href="{{ route('driver.index',['owner_id'=> $partner->id ]) }}">
                                                             <span class="txt-dark block counter"><span class="counter-anim">{{ $total_driver }}</span></span>
                                                             <span class="weight-500 uppercase-font block">Total Driver</span>
                                                         </a>
@@ -73,7 +73,7 @@
                                             <div class="sm-data-box">
                                                 <div class="container-fluid">
                                                     <div class="text-center pl-0 pr-0 data-wrap-left">
-                                                        <a href="#">
+                                                        <a href="{{ route('car_package.index',['owner_id'=> $partner->id ]) }}">
                                                             <span class="txt-dark block counter"><span class="counter-anim">{{ $total_car_package }}</span></span>
                                                             <span class="weight-500 uppercase-font block">Total Car Package</span>
                                                         </a>
@@ -91,7 +91,7 @@
                                             <div class="sm-data-box">
                                                 <div class="container-fluid">
                                                     <div class="text-center pl-0 pr-0 data-wrap-left">
-                                                        <a href="#">
+                                                        <a href="{{ route('hotel_package.index',['owner_id'=> $partner->id ]) }}">
                                                             <span class="txt-dark block counter"><span class="counter-anim">{{ $total_hotel_package }}</span></span>
                                                             <span class="weight-500 uppercase-font block">Total Hotel Package</span>
                                                         </a>
@@ -109,7 +109,7 @@
                                             <div class="sm-data-box">
                                                 <div class="container-fluid">
                                                     <div class="text-center pl-0 pr-0 data-wrap-left">
-                                                        <a href="#">
+                                                        <a href="{{ route('travel_package.index',['owner_id'=> $partner->id ]) }}">
                                                             <span class="txt-dark block counter"><span class="counter-anim">{{ $total_travel_package }}</span></span>
                                                             <span class="weight-500 uppercase-font block">Total Travel Package</span>
                                                         </a>

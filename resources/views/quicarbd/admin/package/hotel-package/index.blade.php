@@ -36,20 +36,22 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
+                                            <th>Owner</th>
                                             <th>District</th>
                                             <th>City</th>
                                             <th>Price</th>
-                                            <th>Status</th>
+                                            <th>Package Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Name</th>
+                                            <th>Owner</th>
                                             <th>District</th>
                                             <th>City</th>
                                             <th>Price</th>
-                                            <th>Status</th>
+                                            <th>Package Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -59,6 +61,7 @@
                                             @foreach($hotel_packages as $hotel_package)
                                                 <tr class="hotel-package-{{ $hotel_package->id }}">
                                                     <td>{{ $hotel_package->hotel_name }}</td>
+                                                    <td>{{ $hotel_package->owner_name }} <br/>{{ $hotel_package->owner_phone }}</td>
                                                     <td>{{ $hotel_package->district_name }}</td>
                                                     <td>{{ $hotel_package->city_name }}</td>
                                                     <td>{{ $hotel_package->price }}</td>
