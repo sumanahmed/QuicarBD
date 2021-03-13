@@ -165,10 +165,10 @@
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#travelPackage"><div class="pull-left"><span class="right-nav-text">Travel Package</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="travelPackage" class="collapse collapse-level-1 two-col-list">
                         <li>
-                            <a href="#">Add New</a>
+                            <a href="{{ route('travel_package.create') }}">Add New</a>
                         </li>
                         <li>
-                            <a href="#">All <div class="pull-right"><span class="label label-warning">11</span></div></a>
+                            <a href="{{ route('travel_package.index') }}">All <div class="pull-right"><span class="label label-warning">11</span></div></a>
                         </li>
                     </ul>
                 </li>
