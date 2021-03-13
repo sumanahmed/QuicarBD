@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Lib\Helper;
 use App\Models\City;
 use App\Models\District;
 use App\Models\Driver;
 use App\Models\Owner;
+use Exception;
 use Illuminate\Http\Request;
 use Validator;
 use Response;
@@ -221,5 +223,32 @@ class DriverController extends Controller
             'status'  => 200,
             'message' => 'Driver deleted'
         ]);
+    }
+
+    /**
+     * status update
+     */
+    public function statusUpdate (Request $request) 
+    {        
+        try {
+
+            $driver = Driver::find($request->id);
+            $partner = Owner::find($request->owner_id);
+
+            $helper = new Helper(); 
+            $id     = $partner->n_key;
+            $title  = $request->staus == 1 ? 'Approved' : 'Pending';            
+            $msg    = 'Dear '.$partner->name.', your driver ('.$driver->name.') '.$title.' successfully. Thanks for connecting with Quicar';                        
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
+            $helper->smsSend($request->phone, $msg); // sms send
+
+            $driver->c_status = $request->c_status;
+            $driver->update();
+
+        } catch (Exception $ex) {
+            return redirect()->route('driver.index')->with('error_message',$ex->getMessage());
+        }
+        
+        return redirect()->route('driver.index')->with('message','Status update successfully');
     }
 }

@@ -90,6 +90,7 @@ Route::group(['prefix'=>'/admin/driver', 'middleware' => 'admin'], function(){
     Route::get('/edit/{id}', [DriverController::class, 'edit'])->name('driver.edit');
     Route::post('/update/{id}', [DriverController::class, 'update'])->name('driver.update');
     Route::post('/destroy', [DriverController::class, 'destroy'])->name('driver.destroy');
+    Route::get('/status-update', [DriverController::class, 'statusUpdate'])->name('driver.status-update');
 });
 
 Route::group(['prefix'=>'/admin/property-type', 'middleware' => 'admin'], function(){

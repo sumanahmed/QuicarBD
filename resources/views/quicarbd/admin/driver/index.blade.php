@@ -52,8 +52,13 @@
                                                     <td>{{ $driver->email }}</td>
                                                     <td>{{ $driver->phone }}</td>
                                                     <td><img src="http://quicarbd.com/{{ $driver->driver_photo }}" style="width:80px;height:60px"/>
-                                                    <td>{{ $driver->account_status == 1 ? 'Active' : 'Inactive' }} </td>
+                                                    <td>{{ $driver->c_status == 1 ? 'Approve' : 'Pending' }} </td>
                                                     <td style="vertical-align: middle;text-align: center;">
+                                                        @if($driver->c_status == 0)
+                                                            <a href="{{ route('driver.status-update', ['id' => $driver->id, 'owner_id' => $driver->owner_id, 'c_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
+                                                        @else
+                                                            <a href="{{ route('driver.status-update', ['id' => $driver->id, 'owner_id' => $driver->owner_id, 'c_status'=> 0 ]) }}" class="btn btn-xs btn-success" title="Pending"><i class="fa fa-unlock-alt"></i></a>
+                                                        @endif
                                                         <a href="{{ route('driver.edit', $driver->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteDriver" data-target="#deleteDriverModal" data-id="{{ $driver->id }}" title="Delete"><i class="fa fa-remove"></i></button>
                                                     </td>
