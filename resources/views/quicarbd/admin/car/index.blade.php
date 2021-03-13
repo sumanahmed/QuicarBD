@@ -42,17 +42,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="status" class="control-label mb-10">Status </label>                                            
-                                        <select id="status" name="status" class="form-control selectable">
-                                            <option selected disabled>Select</option>
-                                            <option value="0">Pending</option>
-                                            <option value="1">Approve</option>
-                                        </select>
-                                    </div>
-                                </div>                                    
+                                </div>                                   
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="carBrand" class="control-label mb-10">Car Brand </label>                                            
@@ -69,6 +59,27 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
+                                        <label for="carYear" class="control-label mb-10">Car Year </label>                                            
+                                        <select id="carYear" name="carYear" class="form-control selectable">
+                                            <option selected disabled>Select</option>
+                                            @foreach($years as $year)
+                                                <option value="{{ $year->name }}">{{ $year->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="status" class="control-label mb-10">Status </label>                                            
+                                        <select id="status" name="status" class="form-control selectable">
+                                            <option selected disabled>Select</option>
+                                            <option value="0">Pending</option>
+                                            <option value="1">Approve</option>
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
                                         <label for="perPage" class="control-label mb-10">Per Page </label>                                            
                                         <select id="perPage" name="perPage" class="form-control selectable">
                                             <option value="10">10</option>
@@ -80,7 +91,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                                     </div>
@@ -95,9 +106,11 @@
                                     <thead>
                                         <tr>
                                             <th>Registration No</th>
-                                            <th>Owner Name</th>
-                                            <th>Owner Phone</th>
-                                            <th>Status</th>
+                                            <th>Owner</th>
+                                            <th>Type</th>
+                                            <th>Brand</th>
+                                            <th>Model</th>
+                                            <th>Year</th>
                                             <th>Image</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -108,9 +121,11 @@
                                             @foreach($cars as $car)
                                                 <tr class="car-{{ $car->id }}">
                                                     <td>{{ $car->carRegisterNumber }}</td>
-                                                    <td>{{ $car->owner_name }}</td>
-                                                    <td>{{ $car->owner_phone }}</td>
-                                                    <td>{{ $car->status == 0 ? 'Pending' : 'Success' }}</td>
+                                                    <td>{{ $car->owner_name }}<br/>{{ $car->owner_phone }}</td>
+                                                    <td>{{ $car->carType }}</td>
+                                                    <td>{{ $car->carBrand }}</td>
+                                                    <td>{{ $car->carModel }}</td>
+                                                    <td>{{ $car->carYear }}</td>
                                                     <th><img src="http://quicarbd.com/{{ $car->carImage }}" style="width:80px;height:60px;"/></th>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('car.edit', $car->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>

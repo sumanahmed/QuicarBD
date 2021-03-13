@@ -22,8 +22,7 @@ class CarController extends Controller
     //show all cars
     public function index(Request $request){
         $query = Car::leftjoin('owners','owners.id','cars.owner_id')
-                    ->select('cars.id','cars.carRegisterNumber','cars.carImage','cars.status',
-                            'owners.name as owner_name','owners.phone as owner_phone')
+                    ->select('cars.*','owners.name as owner_name','owners.phone as owner_phone')
                     ->orderBy('id','DESC');
 
         if ($request->carType) {
@@ -42,6 +41,10 @@ class CarController extends Controller
             $query = $query->where('owner_id', $request->owner_id);
         }
 
+        if ($request->carYear) {
+            $query = $query->where('carYear', $request->carYear);
+        }
+
         if ($request->status) {
             $query = $query->where('status', $request->status);
         }
@@ -49,7 +52,8 @@ class CarController extends Controller
         $cars = isset($request->perPage) ? $query->paginate($request->perPage) : $query->paginate(10);
 
         $types      = CarType::all();
-        return view('quicarbd.admin.car.index', compact('cars','types'));
+        $years      = Year::all();
+        return view('quicarbd.admin.car.index', compact('cars','types','years'));
     }
 
     //show create page
