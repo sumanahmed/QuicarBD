@@ -62,10 +62,20 @@
                                                     <td>{{ $partner->phone }}</td>
                                                     <td>{{ $partner->current_balance }}</td>
                                                     <td>{{ $partner->bidding_percent }}</td>
-                                                    <td>{{ $partner->current_status == 0 ? 'Offline' : 'Online' }}</td>
+                                                    @if($partner->account_status == 0)
+                                                        <td>Pending</td>
+                                                    @elseif($partner->account_status == 1)
+                                                        <td>Approve</td>
+                                                    @else
+                                                        <td>Cancel</td>
+                                                    @endif
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-success" title="Verify"><i class="fa fa-unlock-alt"></i></a>
-                                                        <a href="#" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#sendNotificationModalModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
+                                                        @if($partner->account_status == 0)
+                                                            <a href="{{ route('partner.status-update', ['id' => $partner->id, 'status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
+                                                        @else
+                                                            <a href="{{ route('partner.status-update', ['id' => $partner->id, 'status'=> 0 ]) }}" class="btn btn-xs btn-success" title="Lock"><i class="fa fa-unlock-alt"></i></a>
+                                                        @endif
+                                                        <a href="#" class="btn btn-xs btn-primary" id="sendNotification" data-toggle="modal" data-target="#sendNotificationModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
                                                         <a href="{{ route('partner.edit', $partner->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="{{ route('partner.details', $partner->id) }}" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
@@ -87,7 +97,7 @@
     </div>
     
     <!-- Notification Modal -->
-    <div id="sendNotificationModalModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="sendNotificationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

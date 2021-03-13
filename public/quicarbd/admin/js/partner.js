@@ -1,7 +1,6 @@
 //open send notification modal
-$(document).on('click', '#sendNotificationModal', function () {
-    var image = image_base_path + $(this).data('image');
-    $('#sendNotificationModalModal').modal('show');
+$(document).on('click', '#sendNotification', function () {
+    $('#sendNotificationModal').modal('show');
     $('#n_key').val($(this).data('n_key'));
     $('#phone').val($(this).data('phone'));
  });
@@ -28,17 +27,17 @@ $("#ownerNotificationSend").click(function(){
             if((response.errors)){
                 if(response.errors.title){
                     $('.errorTitle').text(response.errors.title);
-                }else{
-                    $('.errorTitle').text('');
-                }  
+                }
                 if(response.errors.message){
                     $('.errorMessage').text(response.errors.message);
-                }else{
-                    $('.errorMessage').text('');
-                }  
+                }
             }else{
-                $('#sendNotificationModalModal').modal('hide');
+                $('#n_key').val('');
+                $('#title').val('');
+                $('#message').val('');
+                $('#phone').val('');
                 toastr.success(response.message)
+                $('#sendNotificationModal').modal('hide');
             }
         }
     });

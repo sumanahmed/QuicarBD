@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Lib\Helper;
 use App\Models\Car;
 use App\Models\CarPackage;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use App\Models\City;
 use App\Models\Driver;
 use App\Models\HotelPackage;
 use App\Models\TravelPackage;
+use Exception;
 use GuzzleHttp\Client;
 use Validator;
 use Response;
@@ -201,46 +203,69 @@ class PartnerController extends Controller
     }
 
     //notification send
-    public function notificationSend(Request $request){         
+    public function notificationSend(Request $request)
+    {               
         $validators = Validator::make($request->all(),[
             'title'   => 'required',
             'message' => 'required',
             'notification' => 'required',
         ]);
+
         if($validators->fails()){
             return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
         }else{ 
-            if($request->notification == 1){ 
-                //push notification send            
-                    $id      = $request->n_key;
-                    $title   = $request->title;
-                    $body    = $request->message;
-                    $client  = new Client();
-                    $client->request("GET", "http://quicarbd.com//mobileapi/general/notification/send.php?id=".$id."&title=".$title ."&body=".$body);
-                //push notification send end
+            $helper = new Helper(); 
+            $id     = $request->n_key;
+            $title  = $request->title;
+            $body   = $request->message; 
+
+            if($request->notification == 1){      
+                                  
+                $helper->sendSinglePartnerNotification($id, $title, $body); //push notificatio nsend
+
                 return Response::json([
                     'status'    => 200,
                     'message'   => "Notification send successfully",
                 ]);
             }else{
-                //push notification send            
-                    $id      = $request->n_key;
-                    $title   = $request->title;
-                    $body    = $request->message;
-                    $client  = new Client();
-                    $client->request("GET", "http://quicarbd.com//mobileapi/general/notification/send.php?id=".$id."&title=".$title ."&body=".$body);
-                //push notification send end
+                          
+                $id      = $request->n_key;
+                $title   = $request->title;
+                $msg    = $request->message;
+                $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
+                $helper->smsSend($request->phone, $msg); // sms send
 
-                //message send
-                    $msg    = $request->message;
-                    $client = new Client();            
-                    $sms    = $client->request("GET", "http://66.45.237.70/api.php?username=01670168919&password=TVZMBN3D&number=". $request->phone ."&message=".$msg);
-                //message send end
                 return Response::json([
                     'status'    => 200,
                     'message'   => "Notification & SMS send successfully",
                 ]);
             }            
         }        
+    }
+
+    /**
+     * status update
+     */
+    public function statusUpdate (Request $request) 
+    {        
+        try {
+
+            $partner = Owner::find($request->id);
+
+            $helper = new Helper(); 
+            $id     = $partner->n_key;
+            $title  = $request->staus == 1 ? 'Account Approved' : 'Account Pending';            
+            $msg    = 'Dear '.$partner->name.', your '.$title.' successfully. Thanks for connecting with Quicar';                        
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
+            $helper->smsSend($request->phone, $msg); // sms send
+
+            $partner->account_status = $request->status;
+            $partner->update();
+
+        } catch (Exception $ex) {
+            return redirect()->route('partner.index')->with('error_message',$ex->getMessage());
+        }
+        
+        return redirect()->route('partner.index')->with('message','Status update successfully');
     }
 }

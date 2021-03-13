@@ -168,6 +168,7 @@ Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){
     Route::get('/details/{car_id}', [PartnerController::class, 'details'])->name('partner.details');
     Route::post('/notification/send', [PartnerController::class, 'notificationSend'])->name('partner.notification.send');
     Route::post('/destroy', [PartnerController::class, 'destroy'])->name('partner.destroy');
+    Route::get('/status-update', [PartnerController::class, 'statusUpdate'])->name('partner.status-update');
 });
 
 Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
