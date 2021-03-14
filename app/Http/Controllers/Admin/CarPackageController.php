@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Lib\Helper;
 use App\Models\Car;
 use App\Models\CarPackage;
+use App\Models\City;
 use App\Models\District;
 use App\Models\Owner;
 use App\Models\TourSpot;
@@ -47,7 +48,8 @@ class CarPackageController extends Controller
             'details'       => 'required',
             'district_id'   => 'required',
             'spot_id'       => 'required',
-            'starting_location'         => 'required',
+            'starting_location' => 'required',
+            'starting_city_id'  => 'required',
             'starting_location_address' => 'required',
             'owner_id'      => 'required',
             'duration'      => 'required',
@@ -68,7 +70,8 @@ class CarPackageController extends Controller
         $car_packge->details            = $request->details;
         $car_packge->district_id        = $request->district_id;
         $car_packge->spot_id            = json_encode($request->spot_id);
-        $car_packge->starting_location          = $request->starting_location;
+        $car_packge->starting_location  = $request->starting_location;
+        $car_packge->starting_city_id   = $request->starting_city_id;
         $car_packge->starting_location_address  = $request->starting_location_address;
         $car_packge->owner_id           = $request->owner_id;
         $car_packge->duration           = $request->duration;
@@ -115,10 +118,10 @@ class CarPackageController extends Controller
         $partners   = Owner::where('account_status', 1)->get();
         $spots      = TourSpot::select('id','name')->where('district_id',$car_package->district_id)->get();
         $cars       = Car::select('id','carRegisterNumber')->where('owner_id',$car_package->owner_id)->where('status', 1)->get();
-        return view('quicarbd.admin.package.car-package.edit', compact('car_package','districts','partners','spots','cars'));
+        $starting_cities= City::where('district_id', $car_package->starting_location)->get();
+        return view('quicarbd.admin.package.car-package.edit', compact('car_package','districts','partners','spots','cars','starting_cities'));
     }
-
-    
+        
     /**
      * car packages store
      */
@@ -128,7 +131,8 @@ class CarPackageController extends Controller
             'details'       => 'required',
             'district_id'   => 'required',
             'spot_id'       => 'required',
-            'starting_location'         => 'required',
+            'starting_location' => 'required',
+            'starting_city_id'  => 'required',
             'starting_location_address' => 'required',
             'owner_id'      => 'required',
             'duration'      => 'required',
@@ -149,7 +153,8 @@ class CarPackageController extends Controller
         $car_packge->details            = $request->details;
         $car_packge->district_id        = $request->district_id;
         $car_packge->spot_id            = json_encode($request->spot_id);
-        $car_packge->starting_location          = $request->starting_location;
+        $car_packge->starting_location  = $request->starting_location;
+        $car_packge->starting_city_id   = $request->starting_city_id;
         $car_packge->starting_location_address  = $request->starting_location_address;
         $car_packge->owner_id           = $request->owner_id;
         $car_packge->duration           = $request->duration;

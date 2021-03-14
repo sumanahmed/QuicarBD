@@ -98,25 +98,38 @@
                                                         <span class="text-danger errorYear"></span>
                                                     </div>
                                                 </div>                                                
-                                                <div class="col-md-3">                                        
+                                                <div class="col-md-2">                                        
                                                     <div class="form-group">
                                                         <label for="duration" class="control-label mb-10"> Duration(day) <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="duration" name="duration" class="form-control" placeholder="Duration" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">                                        
+                                                <div class="col-md-2">                                        
                                                     <div class="form-group">
                                                         <label for="starting_location" class="control-label mb-10"> Starting Location <span class="text-danger" title="Required">*</span></label>
-                                                        <input type="text" id="starting_location" name="starting_location" class="form-control" placeholder="Starting Location" required>
+                                                        <select id="starting_location" name="starting_location" class="form-control selectable" required>
+                                                            <option selected disabled>Select</option>
+                                                            @foreach($districts as $district)
+                                                                <option value="{{ $district->id }}">{{ $district->value }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">                                        
+                                                <div class="col-md-2">                                        
+                                                    <div class="form-group">
+                                                        <label for="starting_city_id" class="control-label mb-10"> Starting City <span class="text-danger" title="Required">*</span></label>                                        
+                                                        <select id="starting_city_id" name="starting_city_id" class="form-control selectable" required>
+                                                            
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">                                        
                                                     <div class="form-group">
                                                         <label for="starting_location_address" class="control-label mb-10"> Starting Location Address <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="starting_location_address" name="starting_location_address" class="form-control" placeholder="Starting Location Address" required>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">                                        
+                                                <div class="col-md-2">                                        
                                                     <div class="form-group">
                                                         <label for="total_person" class="control-label mb-10"> Total Person <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="total_person" name="total_person" class="form-control" placeholder="Total Person" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required readonly>
