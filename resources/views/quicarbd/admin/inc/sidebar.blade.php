@@ -222,5 +222,56 @@
                 </li>
             </ul>
         </li>
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#privacy"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Privacy</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="privacy" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#userPrivacy"><div class="pull-left"><span class="right-nav-text">User</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="userPrivacy" class="collapse collapse-level-1 two-col-list">
+                        <li><a href="">Terms & Condition</a></li>
+                        <li><a href="">Privacy Policy</a></li>
+                        <li><a href="">Booking Policy</a></li>
+                        <li><a href="">Payment Policy</a></li>
+                        <li><a href="">Return Policy</a></li>
+                        <li><a href="">About Us</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#partnerPrivacy"><div class="pull-left"><span class="right-nav-text">Partner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="partnerPrivacy" class="collapse collapse-level-1 two-col-list">
+                        <li><a href="">Terms & Condition</a></li>
+                        <li><a href="">Privacy Policy</a></li>
+                        <li><a href="">Booking Policy</a></li>
+                        <li><a href="">Payment Policy</a></li>
+                        <li><a href="">Return Policy</a></li>
+                        <li><a href="">About Us</a></li>
+                    </ul>
+                </li>
+                
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#policy"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Policy</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="policy" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#userCancellation"><div class="pull-left"><span class="right-nav-text">User Cancellation</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="userCancellation" class="collapse collapse-level-1 two-col-list">
+                        <li><a href="">Ride</a></li>
+                        <li><a href="">Car Package</a></li>
+                        <li><a href="">Hotel Package</a></li>
+                        <li><a href="">Travel Package</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#partnerCancellation"><div class="pull-left"><span class="right-nav-text">Partner Cancellation</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="partnerCancellation" class="collapse collapse-level-1 two-col-list">
+                        <li><a href="">Ride</a></li>
+                        <li><a href="">Car Package</a></li>
+                        <li><a href="">Hotel Package</a></li>
+                        <li><a href="">Travel Package</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
     </ul>
 </div>
