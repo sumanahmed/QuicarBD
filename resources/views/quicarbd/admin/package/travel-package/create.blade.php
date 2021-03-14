@@ -109,7 +109,7 @@
                                 </div> 
                             </div>
                             <div class="row">
-                                <div class="col-md-3">                                        
+                                <div class="col-md-2">                                        
                                     <div class="form-group">
                                         <label for="starting_location" class="control-label mb-10"> Starting Location <span class="text-danger" title="Required">*</span></label>                                        
                                         <select id="starting_location" name="starting_location" class="form-control selectable" required>
@@ -120,19 +120,27 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">                                        
+                                <div class="col-md-2">                                        
+                                    <div class="form-group">
+                                        <label for="starting_city_id" class="control-label mb-10"> Starting City <span class="text-danger" title="Required">*</span></label>                                        
+                                        <select id="starting_city_id" name="starting_city_id" class="form-control selectable" required>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">                                        
                                     <div class="form-group">
                                         <label for="starting_address" class="control-label mb-10"> Starting Address <span class="text-danger" title="Required">*</span></label>
                                         <input type="text" id="starting_address" name="starting_address" class="form-control" value="{{ old('starting_address') }}" placeholder="Starting Address" required>
                                     </div>
                                 </div>
-                                <div class="col-md-3">                                        
+                                <div class="col-md-2">                                        
                                     <div class="form-group">
                                         <label for="day_night" class="control-label mb-10"> Day Night <span class="text-danger" title="Required">*</span></label>
                                         <input type="text" id="day_night" name="day_night" class="form-control" placeholder="Day Night" value="{{ old('day_night') }}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
                                     </div>
                                 </div>
-                                <div class="col-md-3">                                        
+                                <div class="col-md-2">                                        
                                     <div class="form-group">
                                         <label for="total_person" class="control-label mb-10"> Total Person <span class="text-danger" title="Required">*</span></label>
                                         <input type="text" id="total_person" name="total_person" class="form-control" value="{{ old('total_person') }}" placeholder="Total Person" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>

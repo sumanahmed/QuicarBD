@@ -45,3 +45,14 @@ $("#destroyTravelPackage").click(function(){
         }
     });
 });
+
+$("#starting_location").change(function(){
+    var district_id = $(this).val();
+    $("#starting_city_id").empty();
+    $.get("/get-city/"+ district_id, function( data ) {
+        $("#starting_city_id").append('<option selected disabled>Select</option>');
+        for( var i = 0; i < data.length; i++){
+            $("#starting_city_id").append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
+        }            
+    });
+});

@@ -54,6 +54,7 @@ class TravelPackageController extends Controller
             'district_id' => 'required',
             //'spot_ids.*' => 'required',
             'starting_location' => 'required',
+            'starting_city_id' => 'required',
             'starting_address' => 'required',
             'day_night' => 'required',
             'total_person' => 'required',
@@ -76,6 +77,7 @@ class TravelPackageController extends Controller
         $travel_package->district_id         = $request->district_id;
         $travel_package->spot_ids            = json_encode($request->spot_ids);
         $travel_package->starting_location   = $request->starting_location;
+        $travel_package->starting_city_id    = $request->starting_city_id;
         $travel_package->starting_address    = $request->starting_address;
         $travel_package->day_night           = $request->day_night;
         $travel_package->total_person        = $request->total_person;
@@ -91,7 +93,7 @@ class TravelPackageController extends Controller
         $travel_package->travel_starting_date_timestamp        = $request->travel_starting_date_timestamp;
         $travel_package->details             = $request->details;
         $travel_package->details             = $request->details;
-        $travel_package->facilities          = json_encode($request->facilities); 
+        $travel_package->facilities          = $request->facilities; 
         $travel_package->term_and_condition  = $request->term_and_condition;
         $travel_package->owner_id            = $request->owner_id;
         $travel_package->status              = $request->status;
@@ -111,8 +113,9 @@ class TravelPackageController extends Controller
         $travel_package = TravelPackage::find($id);
         $spots          = TourSpot::where('district_id', $travel_package->district_id)->get();
         $districts      = District::all();
+        $starting_cities= City::where('district_id', $travel_package->starting_location)->get();
         $owners         = Owner::all();
-        return view('quicarbd.admin.package.travel-package.edit', compact('travel_package','spots','districts','owners'));
+        return view('quicarbd.admin.package.travel-package.edit', compact('travel_package','spots','districts','starting_cities','owners'));
     }
     
     /**
@@ -127,6 +130,7 @@ class TravelPackageController extends Controller
             'district_id' => 'required',
             //'spot_ids.*' => 'required',
             'starting_location' => 'required',
+            'starting_city_id' => 'required',
             'starting_address' => 'required',
             'day_night' => 'required',
             'total_person' => 'required',
@@ -149,6 +153,7 @@ class TravelPackageController extends Controller
         $travel_package->district_id         = $request->district_id;
         $travel_package->spot_ids            = json_encode($request->spot_ids);
         $travel_package->starting_location   = $request->starting_location;
+        $travel_package->starting_city_id    = $request->starting_city_id;
         $travel_package->starting_address    = $request->starting_address;
         $travel_package->day_night           = $request->day_night;
         $travel_package->total_person        = $request->total_person;
@@ -164,7 +169,7 @@ class TravelPackageController extends Controller
         $travel_package->travel_starting_date_timestamp        = $request->travel_starting_date_timestamp;
         $travel_package->details             = $request->details;
         $travel_package->details             = $request->details;
-        $travel_package->facilities          = json_encode($request->facilities); 
+        $travel_package->facilities          = $request->facilities; 
         $travel_package->term_and_condition  = $request->term_and_condition;
         $travel_package->owner_id            = $request->owner_id;
         $travel_package->status              = $request->status;
