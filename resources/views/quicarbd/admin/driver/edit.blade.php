@@ -151,7 +151,7 @@
                                                                 <label for="dirverPhotoUpload"><i class="fa fa-edit"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
-                                                                <div id="dirverPhotoPreview" style="background-image: url();"></div>
+                                                                <div id="dirverPhotoPreview" style="background-image: url(http://quicarbd.com/{{ $driver->driver_photo }});"></div>
                                                             </div>
                                                         </div>
                                                         @if($errors->has('driver_photo'))
@@ -168,7 +168,7 @@
                                                                 <label for="nidFrontUpload"><i class="fa fa-edit"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
-                                                                <div id="nidFrontPreview" style="background-image: url();"></div>
+                                                                <div id="nidFrontPreview" style="background-image: url(http://quicarbd.com/{{ $driver->nid_font_pic }});"></div>
                                                             </div>
                                                         </div>
                                                         @if($errors->has('nid_font_pic'))
@@ -185,7 +185,7 @@
                                                                 <label for="nidBackUpload"><i class="fa fa-edit"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
-                                                                <div id="nidBackPreview" style="background-image: url();"></div>
+                                                                <div id="nidBackPreview" style="background-image: url(http://quicarbd.com/{{ $driver->nid_back_pic }});"></div>
                                                             </div>
                                                         </div>
                                                         @if($errors->has('nid_back_pic'))
@@ -202,7 +202,7 @@
                                                                 <label for="licenseFrontUpload"><i class="fa fa-edit"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
-                                                                <div id="licenseFrontPreview" style="background-image: url();"></div>
+                                                                <div id="licenseFrontPreview" style="background-image: url(http://quicarbd.com/{{ $driver->license_font_pic }});"></div>
                                                             </div>
                                                         </div>
                                                         @if($errors->has('license_font_pic'))
@@ -219,7 +219,7 @@
                                                                 <label for="licenseBackUpload"><i class="fa fa-edit"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
-                                                                <div id="licenseBackPreview" style="background-image: url();"></div>
+                                                                <div id="licenseBackPreview" style="background-image: url(http://quicarbd.com/{{ $driver->license_back_pic }});"></div>
                                                             </div>
                                                         </div>
                                                         @if($errors->has('nid_back_pic'))

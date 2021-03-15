@@ -47,7 +47,7 @@
                                                 <tr class="user-banner-{{ $partner_banner->id }}">
                                                     <td>{{ $partner_banner->title }}</td>
                                                     <td>{{ $partner_banner->status == 1 ? 'Enable' : 'Disable' }}</td>
-                                                    <td><img src="{{ asset($partner_banner->image_Url) }}" style="width: 80px;height:50px;" /></td>
+                                                    <td><img src="{{ asset($partner_banner->image_url) }}" style="width: 80px;height:50px;" /></td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="editPartnerBanner" data-target="#editPartnerBannerModal" data-id="{{ $partner_banner->id }}"  data-title="{{ $partner_banner->title }}" data-details="{{ $partner_banner->details }}" data-status="{{ $partner_banner->status }}" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deletePartnerBanner" data-target="#deletePartnerBannerModal" data-id="{{ $partner_banner->id }}" title="Delete"><i class="fa fa-remove"></i></a>

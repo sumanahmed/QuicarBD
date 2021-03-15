@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Car')
+@section('title','Policy')
 @section('styles')
     <style>
         input[type=file] {
@@ -9,14 +9,14 @@
 @endsection
 @section('content')
 @php 
-    if($type == 1)
-       $type = 'Ride';
-    else if($type == 2)
-        $type = 'Car Package';
-    else if($type == 3)
-        $type = 'Hotel Package';
+    if($policy->type == 1)
+       $policy_type = 'Ride';
+    else if($policy->type == 2)
+        $policy_type = 'Car Package';
+    else if($policy->type == 3)
+        $policy_type = 'Hotel Package';
     else
-        $type = 'Travel Package';
+        $policy_type = 'Travel Package';
 @endphp
 <div class="container-fluid">				
 	<!-- Title -->
@@ -28,7 +28,7 @@
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Car</a></li>
-            <li class="active"><span>Add New  {{ $policy->for == 1 ? 'User' : 'Partner' }} {{ $type}} Cancellation Policy</span></li>
+            <li class="active"><span>Edit  {{ $policy->for == 1 ? 'User' : 'Partner' }} {{ $policy_type }} Cancellation Policy</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -40,7 +40,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>{{ $policy->for == 1 ? 'User' : 'Partner' }} {{ $type}} Cancellation Policy</h6> 
+                        <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>{{ $policy->for == 1 ? 'User' : 'Partner' }} {{ $policy_type }} Cancellation Policy</h6> 
                     </div>
                     <div class="clearfix"></div>
                 </div>

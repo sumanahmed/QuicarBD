@@ -10,15 +10,19 @@
 @section('content')
 @php 
     if($type == 1)
-       $privacy_type = 'Privacy Policy';
-    else if($type == 2)
-        $privacy_type = 'Booking Policy';
+        $privacy_type = 'Terms & Condition';
+    elseif($type == 2)
+        $privacy_type = 'Privacy Policy';
     else if($type == 3)
-        $privacy_type = 'Payment Policy';
+        $privacy_type = 'Booking Policy';
     else if($type == 4)
+        $privacy_type = 'Payment Policy';
+    else if($type == 5)
         $privacy_type = 'Return Policy';
-    else
+    else if($type == 6)
         $privacy_type = 'About Us';
+    else if($type == 7)
+        $privacy_type = 'Cashback Policy';
 @endphp
 <div class="container-fluid">				
 	<!-- Title -->

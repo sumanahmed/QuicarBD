@@ -13,14 +13,19 @@ class PrivacyController extends Controller
      */
     public function index(Request $request){
 
-        $privacies = Privacy::where('for', $request->for)
-                        ->where('type', $request->type)
-                        ->get();
+        // $privacies = Privacy::where('for', $request->for)
+        //                 ->where('type', $request->type)
+        //                 ->get();
 
-        $for    = $request->for;
-        $type   = $request->type;
+        // $for    = $request->for;
+        // $type   = $request->type;
 
-        return view('quicarbd.admin.privacy.index', compact('privacies','for','type'));
+        // return view('quicarbd.admin.privacy.index', compact('privacies','for','type'));
+        
+        
+        $privacy = Privacy::where('for', $request->for)
+                        ->where('type', $request->type)->first();
+        return view('quicarbd.admin.privacy.edit', compact('privacy'));
     }
 
      /**
@@ -48,7 +53,7 @@ class PrivacyController extends Controller
        $privacy->save();
 
         if($privacy->save()){
-            return redirect()->route('privacy.index',['for'=>$request->for, 'type'=>$request->type])->with('message','privacy added successfully');
+            return redirect()->route('privacy.index',['for'=>$request->for, 'type'=>$request->type])->with('message','Privacy added successfully');
         }else{
             return redirect()->back()->with('error_message','Sorry, something went wrong');
         }
@@ -78,7 +83,7 @@ class PrivacyController extends Controller
        $privacy->save();
 
         if($privacy->update()){
-            return redirect()->route('privacy.index',['for'=>$request->for, 'type'=>$request->type])->with('message','privacy added successfully');
+            return redirect()->route('privacy.index',['for'=>$request->for, 'type'=>$request->type])->with('message','Privacy updated successfully');
         }else{
             return redirect()->back()->with('error_message','Sorry, something went wrong');
         }

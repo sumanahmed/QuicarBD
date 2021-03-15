@@ -10,15 +10,19 @@
 @section('content')
 @php 
     if($privacy->type == 1)
-       $privacy_type = 'Privacy Policy';
-    else if($privacy->type == 2)
-        $privacy_type = 'Booking Policy';
+        $privacy_type = 'Terms & Condition';
+    elseif($privacy->type == 2)
+        $privacy_type = 'Privacy Policy';
     else if($privacy->type == 3)
-        $privacy_type = 'Payment Policy';
+        $privacy_type = 'Booking Policy';
     else if($privacy->type == 4)
+        $privacy_type = 'Payment Policy';
+    else if($privacy->type == 5)
         $privacy_type = 'Return Policy';
-    else
+    else if($privacy->type == 6)
         $privacy_type = 'About Us';
+    else if($privacy->type == 7)
+        $privacy_type = 'Cashback Policy';
 @endphp
 <div class="container-fluid">				
 	<!-- Title -->
@@ -30,7 +34,7 @@
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Car</a></li>
-            <li class="active"><span>Add New  {{ $privacy->for == 1 ? 'User' : 'Partner' }} {{ $privacy_type }}</span></li>
+            <li class="active"><span>Edit {{ $privacy->for == 1 ? 'User' : 'Partner' }} {{ $privacy_type }}</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -58,7 +62,7 @@
                                                 <div class="col-md-12">                                        
                                                     <div class="form-group">
                                                         <label for="description" class="control-label mb-10">Description <span class="text-danger" title="Required">*</span></label>
-                                                        <textarea id="description" name="description" placeholder="Enter Description" class="form-control" required>{{ $privacy->description }}</textarea>
+                                                        <textarea id="description" name="description" placeholder="Enter Description" rows="10" class="form-control" required>{{ $privacy->description }}</textarea>
                                                         <input type="hidden" name="for" value="{{ $privacy->for }}" />
                                                         <input type="hidden" name="type" value="{{ $privacy->type }}" />
                                                         @if($errors->has('description'))

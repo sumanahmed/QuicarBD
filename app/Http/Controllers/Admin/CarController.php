@@ -159,13 +159,13 @@ class CarController extends Controller
         $types      = CarType::all();
         $carType    = CarType::select('id')->where('name', $car->carType)->first();
         $classes    = CarClass::all();
-        $owners     = Owner::all();
+        $owner      = Owner::select('id','name')->where('id', $car->owner_id)->first();
         $brands     = CarBrand::where('car_type_id', $carType->id)->where('value', $car->carBrand)->get();
         $carBrand   = CarBrand::select('id')->where('car_type_id', $carType->id)->where('value', $car->carBrand)->first();
         $models     = CarModel::select('id','value')->where('car_type_id', $carType->id)->where('car_brand_id', $carBrand->id)->get();
         $years      = Year::all();
         $colors     = CarColor::all();
-        return view('quicarbd.admin.car.edit', compact('car','types','brands','models','years','classes','owners','colors'));
+        return view('quicarbd.admin.car.edit', compact('car','types','brands','models','years','classes','owner','colors'));
     }
 
     //car update

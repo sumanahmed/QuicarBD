@@ -233,6 +233,7 @@
                         <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>3]) }}">Booking Policy</a></li>
                         <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>4]) }}">Payment Policy</a></li>
                         <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>5]) }}">Return Policy</a></li>
+                        <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>7]) }}">Cashback Policy</a></li>
                         <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>6]) }}">About Us</a></li>
                     </ul>
                 </li>
@@ -244,6 +245,7 @@
                         <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>3]) }}">Booking Policy</a></li>
                         <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>4]) }}">Payment Policy</a></li>
                         <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>5]) }}">Return Policy</a></li>
+                        <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>7]) }}">Cashback Policy</a></li>
                         <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>6]) }}">About Us</a></li>
                     </ul>
                 </li>

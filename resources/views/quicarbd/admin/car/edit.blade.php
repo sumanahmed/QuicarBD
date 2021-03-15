@@ -55,11 +55,8 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="owner_id" class="control-label mb-10">Owner <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <select id="owner_id" name="owner_id" class="form-control selectable" required>
-                                                            <option selected disabled>Select</option>
-                                                            @foreach($owners as $owner)
-                                                                <option value="{{ $owner->id }}" @if($owner->id == $car->owner_id) selected @endif>{{ $owner->name }}</option>
-                                                            @endforeach
+                                                        <select id="owner_id" name="owner_id" class="form-control selectable" required readonly>
+                                                            <option value="{{ $owner->id }}" selected>{{ $owner->name }}</option>
                                                         </select>
                                                         @if($errors->has('owner_id'))
                                                             <span class="text-danger"> {{ $errors->first('owner_id') }}</span>
@@ -248,7 +245,7 @@
                                                         <label for="status" class="control-label mb-10">Status </label>                                            
                                                         <select id="status" name="status" class="form-control selectable">                                                            
                                                             <option value="0" @if($car->status == 0) selected @endif>Pending</option>                                                            
-                                                            <option value="1" @if($car->status == 10) selected @endif>Success</option>                                                            
+                                                            <option value="1" @if($car->status == 1) selected @endif>Success</option>                                                            
                                                             <option value="2" @if($car->status == 2) selected @endif>Cancel</option>                                                            
                                                         </select>
                                                         @if($errors->has('status'))
@@ -300,7 +297,7 @@
                                             </div>                                                
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <label for="status_message" class="control-label mb-10">Status Message </label>
+                                                    <label for="status_message" class="control-label mb-10">Status Message</label>
                                                     <input type="text" name="status_message" value="{{ $car->status_message }}" id="status_message" class="form-control" placeholder="Enter Status Message"/>
                                                     @if($errors->has('status_message'))
                                                         <span class="text-danger"> {{ $errors->first('status_message') }}</span>

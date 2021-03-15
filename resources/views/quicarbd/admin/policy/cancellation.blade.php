@@ -3,13 +3,13 @@
 @section('content')
 @php 
     if($type == 1)
-       $type = 'Ride';
+       $policy_type = 'Ride';
     else if($type == 2)
-        $type = 'Car Package';
+        $policy_type = 'Car Package';
     else if($type == 3)
-        $type = 'Hotel Package';
+        $policy_type = 'Hotel Package';
     else
-        $type = 'Travel Package';
+        $policy_type = 'Travel Package';
 @endphp
 <div class="container-fluid">				
 	<!-- Title -->
@@ -23,7 +23,7 @@
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Policy</a></li>
             <li class="active"><span>
-                All {{ $for == 1 ? 'User' : 'Partner' }} {{ $type}} Cancellation Policy</span></li>
+                All {{ $for == 1 ? 'User' : 'Partner' }} {{ $policy_type }} Cancellation Policy</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -35,7 +35,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark"> All {{ $for == 1 ? 'User' : 'Partner' }} {{ $type}} Cancellation Policy</h6>
+                        <h6 class="panel-title txt-dark"> All {{ $for == 1 ? 'User' : 'Partner' }} {{ $policy_type }} Cancellation Policy</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>

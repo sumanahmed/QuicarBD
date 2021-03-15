@@ -110,6 +110,7 @@
                                             <th>Type</th>
                                             <th>Brand</th>
                                             <th>Model</th>
+                                            <th>Status</th>
                                             <th>Year</th>
                                             <th>Image</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
@@ -125,6 +126,7 @@
                                                     <td>{{ $car->carType }}</td>
                                                     <td>{{ $car->carBrand }}</td>
                                                     <td>{{ $car->carModel }}</td>
+                                                    <td>{{ $car->status == 0 ? 'Pending' : 'Approved' }}</td>
                                                     <td>{{ $car->carYear }}</td>
                                                     <th><img src="http://quicarbd.com/{{ $car->carImage }}" style="width:80px;height:60px;"/></th>
                                                     <td style="vertical-align: middle;text-align: center;">
