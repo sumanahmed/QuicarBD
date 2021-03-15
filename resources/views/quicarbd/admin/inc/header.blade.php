@@ -20,6 +20,7 @@
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
 	<!-- Custom CSS -->
 	<link href="{{ asset('quicarbd/admin/dist/css/style.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('quicarbd/admin/dist/css/toastr.css') }}" rel="stylesheet" type="text/css">
 	@yield('styles')
 </head>
 

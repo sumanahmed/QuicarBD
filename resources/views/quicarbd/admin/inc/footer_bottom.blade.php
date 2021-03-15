@@ -29,10 +29,21 @@
 	<!-- Init JavaScript -->
 	<script src="{{ asset('quicarbd/admin/dist/js/init.js') }}"></script>
 	<script src="{{ asset('quicarbd/admin/dist/js/dashboard-data.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/dist/js/toastr.js') }}"></script>
 	<script>
 		var image_base_path = "http://quicarbd.com/";
 		//var image_base_path = "http://localhost:8000/";
 	</script>
+	@if(Session::has('error_message'))
+	    <script>
+	        toastr.error("{{ Session::get('error_message') }}")
+	    </script>
+	@endif
+	@if(Session::has('message'))
+	    <script>
+	        toastr.success("{{ Session::get('message') }}")
+	    </script>
+	@endif
 	@yield('scripts')
 </body>
 
