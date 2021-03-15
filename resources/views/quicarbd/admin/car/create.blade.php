@@ -241,9 +241,8 @@
                                                     <div class="form-group">
                                                         <label for="status" class="control-label mb-10">Status </label>                                            
                                                         <select id="status" name="status" class="form-control selectable">                                                            
-                                                            <option value="0" selected>Pending</option>                                                            
-                                                            <option value="1">Success</option>                                                            
-                                                            <option value="2">Cancel</option>                                                            
+                                                            <option value="0">Pending</option>                                                            
+                                                            <option value="1">Approve</option>                                                          
                                                         </select>
                                                         @if($errors->has('status'))
                                                             <span class="text-danger"> {{ $errors->first('status') }}</span>
@@ -317,20 +316,6 @@
                     </div>
                 </div>
             </div>	
-        </div>
-    </div>
-    
-    <!-- Delete Class Modal -->
-    <div id="deleteDriverModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content text-center">
-                <div class="modal-header">
-                    <h5 class="modal-title mb-10" id="exampleModalLabel">Are you sure to delete ?</h5>
-                    <input type="hidden" name="del_id"/>
-                    <button type="button" class="btn btn-xs btn-danger btn-raised mr-2" id="destroyDriver"><i class="fas fa-trash-alt"></i> Proceed</button>
-                    <button type="button" class="btn btn-xs btn-warning btn-raised" data-dismiss="modal" aria-label="Close"><i class="fas fa-backspace"></i> Cancel</button>
-                </div>
-            </div>
         </div>
     </div>
 </div>

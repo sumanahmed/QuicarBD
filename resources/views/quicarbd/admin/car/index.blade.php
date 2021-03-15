@@ -36,9 +36,9 @@
                                     <div class="form-group">
                                         <label for="carType" class="control-label mb-10">Car Type</label>                                            
                                         <select id="carType" name="carType" class="form-control selectable">
-                                            <option selected disabled>Select</option>
+                                            <option value="0">Select</option>
                                             @foreach($types as $type)
-                                                <option value="{{ $type->name }}">{{ $type->name }}</option>
+                                                <option value="{{ $type->name }}" @if(isset($_GET['carType']) && $type->name == $_GET['carType']) selected @endif>{{ $type->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -61,9 +61,9 @@
                                     <div class="form-group">
                                         <label for="carYear" class="control-label mb-10">Car Year </label>                                            
                                         <select id="carYear" name="carYear" class="form-control selectable">
-                                            <option selected disabled>Select</option>
+                                            <option value="0">Select</option>
                                             @foreach($years as $year)
-                                                <option value="{{ $year->name }}">{{ $year->name }}</option>
+                                                <option value="{{ $year->name }}" @if(isset($_GET['year']) && $year->name == $_GET['year']) selected @endif>{{ $year->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -72,9 +72,9 @@
                                     <div class="form-group">
                                         <label for="status" class="control-label mb-10">Status </label>                                            
                                         <select id="status" name="status" class="form-control selectable">
-                                            <option selected disabled>Select</option>
-                                            <option value="0">Pending</option>
-                                            <option value="1">Approve</option>
+                                            <option value="5">Select</option>
+                                            <option value="0" @if(isset($_GET['status']) && $_GET['status'] == 0) selected @endif>Pending</option>
+                                            <option value="1" @if(isset($_GET['status']) && $_GET['status'] == 1) selected @endif>Approve</option>
                                         </select>
                                     </div>
                                 </div> 
@@ -126,7 +126,7 @@
                                                     <td>{{ $car->carType }}</td>
                                                     <td>{{ $car->carBrand }}</td>
                                                     <td>{{ $car->carModel }}</td>
-                                                    <td>{{ $car->status == 0 ? 'Pending' : 'Approved' }}</td>
+                                                    <td>{{ $car->status == 0 ? 'Pending' : 'Approve' }}</td>
                                                     <td>{{ $car->carYear }}</td>
                                                     <th><img src="http://quicarbd.com/{{ $car->carImage }}" style="width:80px;height:60px;"/></th>
                                                     <td style="vertical-align: middle;text-align: center;">
@@ -136,7 +136,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="6" class="text-center">No Data Found</td>
+                                                <td colspan="10" class="text-center">No Data Found</td>
                                             </tr>
                                         @endif
                                     </tbody>

@@ -21,34 +21,35 @@ class CarController extends Controller
 {
     //show all cars
     public function index(Request $request){
+
         $query = Car::leftjoin('owners','owners.id','cars.owner_id')
                     ->select('cars.*','owners.name as owner_name','owners.phone as owner_phone')
-                    ->orderBy('id','DESC');
+                    ->orderBy('cars.id','DESC');
 
-        if ($request->carType) {
-            $query = $query->where('carType', 'like', "{$request->carType}%");
+        if ($request->carType && $request->carType != 0) {
+            $query = $query->where('cars.carType', 'like', "{$request->carType}%");
         }
 
         if ($request->carBrand) {
-            $query = $query->where('carBrand', 'like', "{$request->carBrand}%");
+            $query = $query->where('cars.carBrand', 'like', "{$request->carBrand}%");
         }
 
         if ($request->carModel) {
-            $query = $query->where('carModel', 'like', "{$request->carModel}%");
+            $query = $query->where('cars.carModel', 'like', "{$request->carModel}%");
         }
 
         if ($request->owner_id) {
-            $query = $query->where('owner_id', $request->owner_id);
+            $query = $query->where('cars.owner_id', $request->owner_id);
         }
 
-        if ($request->carYear) {
-            $query = $query->where('carYear', $request->carYear);
+        if ($request->carYear && $request->carYear != 0) {
+            $query = $query->where('cars.carYear', $request->carYear);
         }
 
-        if ($request->status) {
-            $query = $query->where('status', $request->status);
+        if (isset($request->status) && $request->status != 100) { 
+            $query = $query->where('cars.status', $request->status);
         }
-        
+
         $cars = isset($request->perPage) ? $query->paginate($request->perPage) : $query->paginate(10);
 
         $types      = CarType::all();
