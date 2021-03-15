@@ -248,29 +248,28 @@
                         <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>7]) }}">Cashback Policy</a></li>
                         <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>6]) }}">About Us</a></li>
                     </ul>
-                </li>
-                
+                </li>                
             </ul>
         </li>
         <li>
-            <a href="javascript:void(0);" data-toggle="collapse" data-target="#policy"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Policy</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#policy"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Cancellation Reason</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="policy" class="collapse collapse-level-1 two-col-list">
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#userCancellation"><div class="pull-left"><span class="right-nav-text">User Cancellation</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="userCancellation" class="collapse collapse-level-1 two-col-list">
-                        <li><a href="{{ route('policy.index',['for'=>1, 'type'=>1]) }}">Ride</a></li>
-                        <li><a href="{{ route('policy.index',['for'=>1, 'type'=>2]) }}">Car Package</a></li>
-                        <li><a href="{{ route('policy.index',['for'=>1, 'type'=>3]) }}">Hotel Package</a></li>
-                        <li><a href="{{ route('policy.index',['for'=>1, 'type'=>4]) }}">Travel Package</a></li>
+                        <li><a href="{{ route('reason.index',['app_type'=>1, 'type'=>0]) }}">Ride</a></li>
+                        <li><a href="{{ route('reason.index',['app_type'=>1, 'type'=>1]) }}">Car Package</a></li>
+                        <li><a href="{{ route('reason.index',['app_type'=>1, 'type'=>2]) }}">Hotel Package</a></li>
+                        <li><a href="{{ route('reason.index',['app_type'=>1, 'type'=>3]) }}">Travel Package</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#partnerCancellation"><div class="pull-left"><span class="right-nav-text">Partner Cancellation</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="partnerCancellation" class="collapse collapse-level-1 two-col-list">
-                        <li><a href="{{ route('policy.index',['for'=>2, 'type'=>1]) }}">Ride</a></li>
-                        <li><a href="{{ route('policy.index',['for'=>2, 'type'=>2]) }}">Car Package</a></li>
-                        <li><a href="{{ route('policy.index',['for'=>2, 'type'=>3]) }}">Hotel Package</a></li>
-                        <li><a href="{{ route('policy.index',['for'=>2, 'type'=>4]) }}">Travel Package</a></li>
+                        <li><a href="{{ route('reason.index',['app_type'=>2, 'type'=>0]) }}">Ride</a></li>
+                        <li><a href="{{ route('reason.index',['app_type'=>2, 'type'=>1]) }}">Car Package</a></li>
+                        <li><a href="{{ route('reason.index',['app_type'=>2, 'type'=>2]) }}">Hotel Package</a></li>
+                        <li><a href="{{ route('reason.index',['app_type'=>2, 'type'=>3]) }}">Travel Package</a></li>
                     </ul>
                 </li>
             </ul>

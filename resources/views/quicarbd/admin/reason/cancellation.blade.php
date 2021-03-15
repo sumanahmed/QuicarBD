@@ -1,21 +1,21 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Policy')
+@section('title','Cancellation Reason')
 @section('content')
 @php 
-    if($type == 1)
-       $policy_type = 'Ride';
+    if($type == 0)
+       $reason_type = 'Ride';
+    else if($type == 1)
+        $reason_type = 'Car Package';
     else if($type == 2)
-        $policy_type = 'Car Package';
+        $reason_type = 'Hotel Package';
     else if($type == 3)
-        $policy_type = 'Hotel Package';
-    else
-        $policy_type = 'Travel Package';
+        $reason_type = 'Travel Package';
 @endphp
 <div class="container-fluid">				
 	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <a href="{{ route('policy.create',['for'=>$for, 'type'=>$type]) }}"  class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
+            <a href="{{ route('reason.create',['app_type'=>$app_type, 'type'=>$type]) }}"  class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
         </div>
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
@@ -23,7 +23,7 @@
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Policy</a></li>
             <li class="active"><span>
-                All {{ $for == 1 ? 'User' : 'Partner' }} {{ $policy_type }} Cancellation Policy</span></li>
+                {{ $app_type == 1 ? 'User' : 'Partner' }} {{ $reason_type }} Cancellation Policy</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -35,7 +35,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark"> All {{ $for == 1 ? 'User' : 'Partner' }} {{ $policy_type }} Cancellation Policy</h6>
+                        <h6 class="panel-title txt-dark"> All {{ $app_type == 1 ? 'User' : 'Partner' }} {{ $reason_type }} Cancellation Policy</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -46,28 +46,31 @@
                                 <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
-                                            <th>Description</th>
+                                            <th>Name(En)</th>
+                                            <th>Name(Bn)</th>
                                             <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Description</th>
+                                            <th>Name(En)</th>
+                                            <th>Name(Bn)</th>
                                             <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="policyData">
-                                        @if(isset($policies) && count($policies) > 0)
+                                        @if(isset($reasons) && count($reasons) > 0)
                                             @php $i=1; @endphp
-                                            @foreach($policies as $policy)
-                                                <tr class="policy-{{ $policy->id }}">
-                                                    <td>{{ substr($policy->description,0,15)."..."  }}</td>
-                                                    <td>{{ $policy->status == 0 ? 'Inactive' : 'Active' }}</td>
+                                            @foreach($reasons as $reason)
+                                                <tr class="reason-{{ $reason->id }}">
+                                                    <td>{{ $reason->name }}</td>
+                                                    <td>{{ $reason->bn_name }}</td>
+                                                    <td>{{ $reason->status == 0 ? 'Inactive' : 'Active' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('policy.edit',$policy->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deletePolicy" data-target="#deletePolicyModal" data-id="{{ $policy->id }}" title="Delete"><i class="fa fa-remove"></i></a>
+                                                        <a href="{{ route('reason.edit',$reason->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deletePolicy" data-target="#deletePolicyModal" data-id="{{ $reason->id }}" title="Delete"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach

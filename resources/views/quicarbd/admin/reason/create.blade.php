@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Policy')
+@section('title','Cancellation Reason')
 @section('styles')
     <style>
         input[type=file] {
@@ -9,14 +9,14 @@
 @endsection
 @section('content')
 @php 
-    if($policy->type == 1)
-       $policy_type = 'Ride';
-    else if($policy->type == 2)
-        $policy_type = 'Car Package';
-    else if($policy->type == 3)
-        $policy_type = 'Hotel Package';
-    else
-        $policy_type = 'Travel Package';
+    if($type == 0)
+       $reason_type = 'Ride';
+    else if($type == 1)
+        $reason_type = 'Car Package';
+    else if($type == 2)
+        $reason_type = 'Hotel Package';
+    else if($type == 3)
+        $reason_type = 'Travel Package';
 @endphp
 <div class="container-fluid">				
 	<!-- Title -->
@@ -28,7 +28,7 @@
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Car</a></li>
-            <li class="active"><span>Edit  {{ $policy->for == 1 ? 'User' : 'Partner' }} {{ $policy_type }} Cancellation Policy</span></li>
+            <li class="active"><span>Add New  {{ $app_type == 1 ? 'User' : 'Partner' }} {{ $reason_type }} Cancellation Policy</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -40,7 +40,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>{{ $policy->for == 1 ? 'User' : 'Partner' }} {{ $policy_type }} Cancellation Policy</h6> 
+                        <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>{{ $app_type == 1 ? 'User' : 'Partner' }} {{ $reason_type }} Cancellation Policy</h6> 
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -49,27 +49,38 @@
                         <div class="row">
                             <div class="col-sm-12 col-xs-12">
                                 <div class="form-wrap">
-                                    <form action="{{ route('policy.update', $policy->id) }}" method="post" enctype="multipart/form-data" novalidate>
+                                    <form action="{{ route('reason.store') }}" method="post" enctype="multipart/form-data" novalidate>
                                         @csrf
                                         <div class="form-body">     
                                             <div class="row">
-                                                <div class="col-md-12">                                        
+                                                <div class="col-md-6">                                        
                                                     <div class="form-group">
-                                                        <label for="description" class="control-label mb-10">Description <span class="text-danger" title="Required">*</span></label>
-                                                        <textarea id="description" name="description" placeholder="Enter Description" class="form-control" required>{{ $policy->description }}</textarea>
-                                                        <input type="hidden" name="for" value="{{ $policy->for }}" />
-                                                        <input type="hidden" name="type" value="{{ $policy->type }}" />
-                                                        @if($errors->has('description'))
-                                                            <span class="text-danger"> {{ $errors->first('description') }}</span>
+                                                        <label for="name" class="control-label mb-10">Name <span class="text-danger" title="Required">*</span></label>
+                                                        <input type="text" id="name" name="name" placeholder="Enter Name in English" class="form-control" required />
+                                                        <input type="hidden" name="app_type" value="{{ $app_type }}" />
+                                                        <input type="hidden" name="type" value="{{ $type }}" />
+                                                        @if($errors->has('name'))
+                                                            <span class="text-danger"> {{ $errors->first('name') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-6">                                        
+                                                    <div class="form-group">
+                                                        <label for="bn_name" class="control-label mb-10">Name (Bn)<span class="text-danger" title="Required">*</span></label>
+                                                        <input type="text" id="bn_name" name="bn_name" placeholder="Enter Name in English" class="form-control" required />
+                                                        @if($errors->has('bn_name'))
+                                                            <span class="text-danger"> {{ $errors->first('bn_name') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="status" class="control-label mb-10">Status <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="status" name="status" class="form-control selectable" required>
-                                                            <option value="0" @if($policy->status == 0) selected @endif>Inactive</option>                                                           
-                                                            <option value="1" @if($policy->status == 1) selected @endif>Active</option>                                                           
+                                                            <option value="0">Inactive</option>                                                           
+                                                            <option value="1">Active</option>                                                           
                                                         </select>
                                                         @if($errors->has('status'))
                                                             <span class="text-danger"> {{ $errors->first('status') }}</span>

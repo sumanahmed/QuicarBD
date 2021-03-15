@@ -25,7 +25,7 @@ use App\Http\Controllers\Admin\TourSportController;
 use App\Http\Controllers\Admin\UserBannerController;
 use App\Http\Controllers\Admin\YearController;
 use App\Http\Controllers\Admin\PartnerController;
-use App\Http\Controllers\Admin\PolicyController;
+use App\Http\Controllers\Admin\CancellationReasonController;
 use App\Http\Controllers\Admin\PrivacyController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -224,13 +224,13 @@ Route::group(['prefix'=>'/admin/travel-package', 'middleware' => 'admin'], funct
     Route::post('/destroy', [TravelPackageController::class, 'destroy'])->name('travel_package.destroy');
 });
 
-Route::group(['prefix'=>'/admin/policy/cancellation', 'middleware' => 'admin'], function(){
-    Route::get('/', [PolicyController::class, 'index'])->name('policy.index');
-    Route::get('/create', [PolicyController::class, 'create'])->name('policy.create');
-    Route::post('/store', [PolicyController::class, 'store'])->name('policy.store');
-    Route::get('/edit/{id}', [PolicyController::class, 'edit'])->name('policy.edit');
-    Route::post('/update/{id}', [PolicyController::class, 'update'])->name('policy.update');
-    Route::post('/destroy', [PolicyController::class, 'destroy'])->name('policy.destroy');
+Route::group(['prefix'=>'/admin/reason/cancellation', 'middleware' => 'admin'], function(){
+    Route::get('/', [CancellationReasonController::class, 'index'])->name('reason.index');
+    Route::get('/create', [CancellationReasonController::class, 'create'])->name('reason.create');
+    Route::post('/store', [CancellationReasonController::class, 'store'])->name('reason.store');
+    Route::get('/edit/{id}', [CancellationReasonController::class, 'edit'])->name('reason.edit');
+    Route::post('/update/{id}', [CancellationReasonController::class, 'update'])->name('reason.update');
+    Route::post('/destroy', [CancellationReasonController::class, 'destroy'])->name('reason.destroy');
 });
 
 Route::group(['prefix'=>'/admin/privacy', 'middleware' => 'admin'], function(){
