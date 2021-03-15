@@ -3,6 +3,7 @@
     $pendingCar = \App\Models\Car::where('status', 0)->count('id');
     $pendingCarPackage = \App\Models\CarPackage::where('status', 0)->count('id');
     $pendingHotelPackage = \App\Models\HotelPackage::where('status', 0)->count('id');
+    $pendingPartner = \App\Models\Owner::where('account_status', 0)->count('id');
 ?>
 
 <div class="fixed-sidebar-left">
@@ -75,10 +76,14 @@
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#partners"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Partner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="partners" class="collapse collapse-level-1 two-col-list">
                 <li>
-                    <a href="{{ route('partner.create') }}">Add New Partner</a>
+                    <a href="{{ route('partner.create') }}">Add New</a>
                 </li>
                 <li>
-                    <a href="{{ route('partner.index') }}">All Partner</a>
+                    <a href="{{ route('partner.index') }}">All Partner 
+                        @if($pendingPartner > 0)
+                            <div class="pull-right"><span class="label label-warning">{{ $pendingPartner }}</span></div>
+                        @endif
+                    </a>
                 </li>
             </ul>
         </li>
