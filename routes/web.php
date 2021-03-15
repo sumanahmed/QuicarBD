@@ -25,6 +25,8 @@ use App\Http\Controllers\Admin\TourSportController;
 use App\Http\Controllers\Admin\UserBannerController;
 use App\Http\Controllers\Admin\YearController;
 use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\PolicyController;
+use App\Http\Controllers\Admin\PrivacyController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -220,6 +222,24 @@ Route::group(['prefix'=>'/admin/travel-package', 'middleware' => 'admin'], funct
     Route::get('/edit/{id}', [TravelPackageController::class, 'edit'])->name('travel_package.edit');
     Route::post('/update/{id}', [TravelPackageController::class, 'update'])->name('travel_package.update');
     Route::post('/destroy', [TravelPackageController::class, 'destroy'])->name('travel_package.destroy');
+});
+
+Route::group(['prefix'=>'/admin/policy/cancellation', 'middleware' => 'admin'], function(){
+    Route::get('/', [PolicyController::class, 'index'])->name('policy.index');
+    Route::get('/create', [PolicyController::class, 'create'])->name('policy.create');
+    Route::post('/store', [PolicyController::class, 'store'])->name('policy.store');
+    Route::get('/edit/{id}', [PolicyController::class, 'edit'])->name('policy.edit');
+    Route::post('/update/{id}', [PolicyController::class, 'update'])->name('policy.update');
+    Route::post('/destroy', [PolicyController::class, 'destroy'])->name('policy.destroy');
+});
+
+Route::group(['prefix'=>'/admin/privacy', 'middleware' => 'admin'], function(){
+    Route::get('/', [PrivacyController::class, 'index'])->name('privacy.index');
+    Route::get('/create', [PrivacyController::class, 'create'])->name('privacy.create');
+    Route::post('/store', [PrivacyController::class, 'store'])->name('privacy.store');
+    Route::get('/edit/{id}', [PrivacyController::class, 'edit'])->name('privacy.edit');
+    Route::post('/update/{id}', [PrivacyController::class, 'update'])->name('privacy.update');
+    Route::post('/destroy', [PrivacyController::class, 'destroy'])->name('privacy.destroy');
 });
 
 Route::group(['prefix'=>'/admin/banner', 'middleware' => 'admin'], function(){
