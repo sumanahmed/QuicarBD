@@ -85,6 +85,9 @@
                         @endif
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('partner.verification') }}">Partner Verification</a>
+                </li>
             </ul>
         </li>
         <li>

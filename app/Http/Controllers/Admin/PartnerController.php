@@ -251,4 +251,10 @@ class PartnerController extends Controller
         
         return redirect()->route('partner.index')->with('message','Status update successfully');
     }
+
+   //partner details
+   public function verification(){
+    $partners = Owner::all();
+    return view('quicarbd.admin.partner.verification', compact('partners'));
+}
 }
