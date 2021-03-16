@@ -1,5 +1,12 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','User Banner')
+@section('styles')
+    <style>
+        input[type=file] {
+            display: none;
+        }
+    </style>
+@endsection
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -76,7 +83,7 @@
                                                         <label for="out_of_app" class="control-label mb-10">Out of App <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="out_of_app" name="out_of_app" class="form-control selectable" required>
                                                             <option value="0" @if($user_banner->out_of_app == 0) selected @endif>False</option>
-                                                            <option value="1" @if($user_banner->out_of_app == 0) selected @endif>True</option>
+                                                            <option value="1" @if($user_banner->out_of_app == 1) selected @endif>True</option>
                                                         </select>
                                                         @if($errors->has('out_of_app'))
                                                             <span class="text-danger"> {{ $errors->first('out_of_app') }}</span>
@@ -86,8 +93,8 @@
                                             
                                                 <div class="col-md-8" id="clickLinke" @if($user_banner->out_of_app == 0) style="display: none;" @endif>
                                                     <div class="form-group">
-                                                        <label for="click_linke" class="control-label mb-10">click_linke <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <input type="text" class="form-control" name="click_linke" value="{{ $user_banner->click_linke }}" required>
+                                                        <label for="click_linke" class="control-label mb-10">click_linke </label>                                            
+                                                        <input type="text" class="form-control" name="click_linke" value="{{ $user_banner->click_linke }}">
                                                         @if($errors->has('click_linke'))
                                                             <span class="text-danger"> {{ $errors->first('click_linke') }}</span>
                                                         @endif
@@ -125,21 +132,29 @@
                                                         @endif
                                                     </div>
                                                 </div>     
-                                                <div class="col-md-4">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="where_go" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <input type="file" name="image_url" class="form-control" require/>
+                                                        <label for="img1" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span></label> 
+                                                        <div class="avatar-upload">
+                                                            <div class="avatar-edit">
+                                                                <input type='file' name="image_url" id="img1Upload" accept=".png, .jpg, .jpeg" required/>
+                                                                <label for="img1Upload"><i class="fa fa-edit"></i></label>
+                                                            </div>
+                                                            <div class="avatar-preview" style="width:100%">
+                                                                <div id="img1Preview" style="background-image: url(http://quicarbd.com/{{ $user_banner->image_url }});"></div>
+                                                            </div>
+                                                        </div>
                                                         @if($errors->has('image_url'))
                                                             <span class="text-danger"> {{ $errors->first('image_url') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>   
-                                            </div>   
-                                            <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="where_go" class="control-label mb-10">Description <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <textarea type="file" name="description" rows="4" class="form-control" require >{{ $user_banner->description }}</textarea>
+                                                        <label for="description" class="control-label mb-10">Description <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <textarea name="description" rows="10" class="form-control" require >{{ $user_banner->description }}</textarea>
                                                         @if($errors->has('description'))
                                                             <span class="text-danger"> {{ $errors->first('description') }}</span>
                                                         @endif

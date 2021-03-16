@@ -40,6 +40,7 @@
                                             <th>Clickable</th>                                   
                                             <th>Out of App</th>                                   
                                             <th>Where Go</th>                                   
+                                            <th>Image</th>                                   
                                         <th style="vertical-align: middle;text-align: center;">Action</th>
                                     </tr>
                                     </thead>
@@ -65,6 +66,9 @@
                                                         @elseif($user_banner->where_go == 6)
                                                             Specific Item
                                                         @endif
+                                                    </td>
+                                                    <td>
+                                                        <img src="http://quicarbd.com/{{ $user_banner->image_url }}" style="width:80px;height:60px;" />
                                                     </td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('user_banner.edit', $user_banner->id) }}" class="btn btn-xs btn-warning" id="editClass" data-id="{{ $user_banner->id }}" title="Edit"><i class="fa fa-edit"></i></a>

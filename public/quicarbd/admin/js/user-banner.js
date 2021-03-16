@@ -39,3 +39,19 @@ $("#destroyUserBanner").click(function(){
         }
     });
 });
+
+//im1 upload
+function img1(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#img1Preview').css('background-image', 'url('+e.target.result +')');
+            $('#img1Preview').hide();
+            $('#img1Preview').fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#img1Upload").change(function() {
+    img1(this);
+});

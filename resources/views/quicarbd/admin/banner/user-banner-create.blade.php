@@ -1,5 +1,12 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','User Banner')
+@section('styles')
+    <style>
+        input[type=file] {
+            display: none;
+        }
+    </style>
+@endsection
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -124,22 +131,30 @@
                                                             <span class="text-danger"> {{ $errors->first('package_id') }}</span>
                                                         @endif
                                                     </div>
-                                                </div>     
-                                                <div class="col-md-4">
+                                                </div>   
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="where_go" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <input type="file" name="image_url" class="form-control" require/>
+                                                        <label for="img1" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span></label> 
+                                                        <div class="avatar-upload">
+                                                            <div class="avatar-edit">
+                                                                <input type='file' name="image_url" id="img1Upload" accept=".png, .jpg, .jpeg" required/>
+                                                                <label for="img1Upload"><i class="fa fa-edit"></i></label>
+                                                            </div>
+                                                            <div class="avatar-preview" style="width:100%">
+                                                                <div id="img1Preview" style="background-image: url();"></div>
+                                                            </div>
+                                                        </div>
                                                         @if($errors->has('image_url'))
                                                             <span class="text-danger"> {{ $errors->first('image_url') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>   
-                                            </div>   
-                                            <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="where_go" class="control-label mb-10">Description <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <textarea type="file" name="description" rows="4" class="form-control" require > </textarea>
+                                                        <label for="description" class="control-label mb-10">Description <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <textarea name="description" rows="10" class="form-control" require ></textarea>
                                                         @if($errors->has('description'))
                                                             <span class="text-danger"> {{ $errors->first('description') }}</span>
                                                         @endif
@@ -163,21 +178,7 @@
                 </div>
             </div>	
         </div>
-    </div>
-    
-    <!-- Delete Class Modal -->
-    <div id="deleteDriverModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content text-center">
-                <div class="modal-header">
-                    <h5 class="modal-title mb-10" id="exampleModalLabel">Are you sure to delete ?</h5>
-                    <input type="hidden" name="del_id"/>
-                    <button type="button" class="btn btn-xs btn-danger btn-raised mr-2" id="destroyDriver"><i class="fas fa-trash-alt"></i> Proceed</button>
-                    <button type="button" class="btn btn-xs btn-warning btn-raised" data-dismiss="modal" aria-label="Close"><i class="fas fa-backspace"></i> Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    </div>    
 </div>
 @endsection
 @section('scripts')
