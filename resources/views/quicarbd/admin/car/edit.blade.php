@@ -268,8 +268,8 @@
                                             <div class="row">                                           
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="tax_expired_date" class="control-label mb-10">Tax Expired Date <span class="text-danger" title="Required">*</span></label>
-                                                        <input type="date" id="tax_expired_date" name="tax_expired_date" value="{{ $car->tax_expired_date }}" class="form-control datePicker" required/>
+                                                        <label for="tax_expired_date" class="control-label mb-10">Tax Expired Date</label>
+                                                        <input type="date" id="tax_expired_date" name="tax_expired_date" value="{{ $car->tax_expired_date }}" class="form-control datePicker"/>
                                                         @if($errors->has('tax_expired_date'))
                                                             <span class="text-danger"> {{ $errors->first('tax_expired_date') }}</span>
                                                         @endif
@@ -277,8 +277,8 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="fitness_expired_date" class="control-label mb-10">Fitness Expired Date <span class="text-danger" title="Required">*</span></label>
-                                                        <input type="date" id="fitness_expired_date" name="fitness_expired_date" value="{{ $car->fitness_expired_date }}" class="form-control datePicker" required/>
+                                                        <label for="fitness_expired_date" class="control-label mb-10">Fitness Expired Date</label>
+                                                        <input type="date" id="fitness_expired_date" name="fitness_expired_date" value="{{ $car->fitness_expired_date }}" class="form-control datePicker"/>
                                                         @if($errors->has('fitness_expired_date'))
                                                             <span class="text-danger"> {{ $errors->first('fitness_expired_date') }}</span>
                                                         @endif

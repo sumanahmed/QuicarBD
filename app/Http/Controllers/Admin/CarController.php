@@ -68,7 +68,7 @@ class CarController extends Controller
     }
 
     //car store
-    public function store(Request $request){ 
+    public function store(Request $request){
         $this->validate($request,[
             'carType'   => 'required',
             'carBrand'  => 'required',
@@ -170,7 +170,7 @@ class CarController extends Controller
     }
 
     //car update
-    public function update(Request $request, $id){ 
+    public function update(Request $request, $id){  
         $this->validate($request,[
             'carType'  => 'required',
             'carBrand'  => 'required',

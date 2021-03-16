@@ -71,7 +71,8 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="owner_id" class="control-label mb-10">Partner <span class="text-danger" title="Required">*</span></label>                                            
@@ -85,8 +86,7 @@
                                                             <span class="text-danger"> {{ $errors->first('owner_id') }}</span>
                                                         @endif
                                                     </div>
-                                                </div>
-                                                
+                                                </div>                                                
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="nid" class="control-label mb-10">NID No <span class="text-danger" title="Required">*</span></label>                                            
@@ -105,7 +105,9 @@
                                                         @endif
                                                     </div>
                                                 </div> 
-                                                <div class="col-md-4">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label for="district_id" class="control-label mb-10">District <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select name="district_id" id="district_id" class="form-control" required>
@@ -119,7 +121,7 @@
                                                         @endif
                                                     </div>
                                                 </div>                                    
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label for="city_id" class="control-label mb-10">City <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select name="city_id" id="city_id" class="form-control" required>   
@@ -132,7 +134,19 @@
                                                         @endif
                                                     </div>
                                                 </div>                                     
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="c_status" class="control-label mb-10">Status <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <select name="c_status" id="c_status" class="form-control" required>   
+                                                            <option value="0" @if($driver->c_status == 0) selected @endif>Pending</option>
+                                                            <option value="1" @if($driver->c_status == 1) selected @endif>Approve</option>
+                                                        </select>
+                                                        @if($errors->has('city_id'))
+                                                            <span class="text-danger"> {{ $errors->first('city_id') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>                                     
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="address" class="control-label mb-10">Address <span class="text-danger" title="Required">*</span></label>                                            
                                                         <input type="text" id="address" name="address" value="{{ $driver->address }}" placeholder="Enter Address" class="form-control" required>
@@ -141,7 +155,8 @@
                                                         @endif
                                                     </div>
                                                 </div> 
-                                                                                  
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">                                        
                                                         <label for="driverPhoto" class="control-label mb-10">Driver Photo <span class="text-danger text-bold" title="Required Field">*</span></label>                                
@@ -192,7 +207,9 @@
                                                             <span class="text-danger"> {{ $errors->first('nid_back_pic') }}</span>
                                                         @endif
                                                     </div>
-                                                </div>    
+                                                </div> 
+                                            </div> 
+                                            <div class="row">  
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="license_font_pic" class="control-label mb-10">License Front Image<span class="text-danger text-bold" title="Required Field">*</span></label>                                    
