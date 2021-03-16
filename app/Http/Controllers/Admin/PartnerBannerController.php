@@ -29,6 +29,7 @@ class PartnerBannerController extends Controller
             $partner_banner            = new HomeBannerOwner();
             $partner_banner->title     = $request->title;
             $partner_banner->details   = $request->details;
+            $partner_banner->status    = $request->status;
             if($request->hasFile('image_url')){
                 $image             = $request->file('image_url');
                 $imageName         = time().".".$image->getClientOriginalExtension();
@@ -60,9 +61,10 @@ class PartnerBannerController extends Controller
         if($validators->fails()){
             return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
         }else{
-            $partner_banner          = HomeBannerOwner::find($request->id);
-            $partner_banner->title     = $request->title;
-            $partner_banner->details   = $request->details;
+            $partner_banner             = HomeBannerOwner::find($request->id);
+            $partner_banner->title      = $request->title;
+            $partner_banner->details    = $request->details;
+            $partner_banner->status     = $request->status;
             if($request->hasFile('image_url')){
                 if(($partner_banner->image_url != null) && file_exists($partner_banner->image_url)){
                     unlink($partner_banner->image_url);

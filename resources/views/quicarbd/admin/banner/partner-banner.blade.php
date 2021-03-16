@@ -44,12 +44,12 @@
                                     <tbody>
                                         @if(isset($partner_banners) && count($partner_banners) > 0)
                                             @foreach($partner_banners as $partner_banner)
-                                                <tr class="user-banner-{{ $partner_banner->id }}">
+                                                <tr class="partner-banner-{{ $partner_banner->id }}">
                                                     <td>{{ $partner_banner->title }}</td>
-                                                    <td>{{ $partner_banner->status == 1 ? 'Enable' : 'Disable' }}</td>
-                                                    <td><img src="{{ asset($partner_banner->image_url) }}" style="width: 80px;height:50px;" /></td>
+                                                    <td>{{ $partner_banner->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                                    <td><img src="http://quicarbd.com/{{ $partner_banner->image_url }}" style="width: 80px;height:50px;" /></td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="editPartnerBanner" data-target="#editPartnerBannerModal" data-id="{{ $partner_banner->id }}"  data-title="{{ $partner_banner->title }}" data-details="{{ $partner_banner->details }}" data-status="{{ $partner_banner->status }}" title="Edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="editPartnerBanner" data-target="#editPartnerBannerModal" data-id="{{ $partner_banner->id }}"  data-title="{{ $partner_banner->title }}" data-details="{{ $partner_banner->details }}" data-image_url="{{ $partner_banner->image_url }}" data-status="{{ $partner_banner->status }}" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deletePartnerBanner" data-target="#deletePartnerBannerModal" data-id="{{ $partner_banner->id }}" title="Delete"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
@@ -94,6 +94,14 @@
                             <input type="file" name="image_url" id="image" class="form-control" required>
                             <span class="text-danger imageError"></span>
                         </div>
+                        <div class="form-group">
+                            <label for="status" class="control-label mb-10">Status <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <select id="status" class="form-control">
+                                <option value="1" selected>Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                            <span class="text-danger statusError"></span>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -119,7 +127,7 @@
                             <input type="text" name="name" id="edit_title" class="form-control"placeholder="Enter Title" required>
                             <input type="hidden" id="edit_id" />
                             <span class="text-danger nameError"></span>
-                        </div>
+                        </div>     
                         <div class="form-group">
                             <label for="edit_details" class="control-label mb-10">Details <span class="text-danger text-bold" title="Required Field">*</span></label>
                             <textarea name="details" id="edit_details" rows="4" class="form-control" placeholder="Details" required></textarea>
@@ -127,13 +135,21 @@
                         </div>
                         <div class="form-group">
                             <label for="image" class="control-label mb-10">Previous Image <span class="text-danger text-bold" title="Required Field">*</span></label>                                
-                            <img src="" id="previous_image" class="form-control" style="width:80px;height:80px;"/>
+                            <img src="" id="previous_image" class="form-control" style="width:300px;height:200px;"/>
                         </div>
                         <div class="form-group">
                             <label for="image" class="control-label mb-10">Update Image <span class="text-danger text-bold" title="Required Field">*</span></label>                                
                             <input type="file" name="image_url" id="edit_image" class="form-control">
                             <span class="text-danger imageError"></span>
-                        </div>    
+                        </div>                    
+                        <div class="form-group">
+                            <label for="edit_status" class="control-label mb-10">Status <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <select id="edit_status" class="form-control">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                            <span class="text-danger statusError"></span>
+                        </div>   
                     </form>
                 </div>
                 <div class="modal-footer">
