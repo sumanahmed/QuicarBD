@@ -1,5 +1,12 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Package Banner')
+@section('styles')
+    <style>
+        input[type=file] {
+            display: none;
+        }
+    </style>
+@endsection
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -36,17 +43,25 @@
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="img1" class="control-label mb-10">{{ $title }} <span class="text-danger" title="Required">*</span></label>                                                        
-                                                        <input type='file' name="{{ $name }}" class="form-control" accept=".png, .jpg, .jpeg" required/>
-                                                        <input type="hidden" name="type" value="{{ $type }}"/>
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="img1" class="control-label mb-10">Curren {{ $title }} Banner </label>                                                        
-                                                        <img src="{{ $name }}" class="form-control"/>
+                                                        <label for="img1" class="control-label mb-10">{{ $title }} <span class="text-danger" title="Required">*</span></label>                                                                                                                
+                                                        <div class="avatar-upload">
+                                                            <div class="avatar-edit">
+                                                                <input type='file' name="{{ $name }}" id="img1Upload" accept=".png, .jpg, .jpeg" required/>
+                                                                <label for="img1Upload"><i class="fa fa-edit"></i></label>
+                                                            </div>
+                                                            <div class="avatar-preview" style="width:100%">
+                                                                @if($type == 1)
+                                                                    <div id="img1Preview" style="background-image: url(http://quicarbd.com/{{ $banner->car_package }});"></div>
+                                                                @elseif($type == 2)
+                                                                    <div id="img1Preview" style="background-image: url(http://quicarbd.com/{{ $banner->hotel_package }});"></div> 
+                                                                @else
+                                                                    <div id="img1Preview" style="background-image: url(http://quicarbd.com/{{ $banner->travel_package }});"></div>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="type" value="{{ $type }}"/>
                                                     </div>
                                                 </div>
                                             </div>   
@@ -68,25 +83,26 @@
             </div>	
         </div>
     </div>
-    
-    <!-- Delete Class Modal -->
-    <div id="deleteDriverModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content text-center">
-                <div class="modal-header">
-                    <h5 class="modal-title mb-10" id="exampleModalLabel">Are you sure to delete ?</h5>
-                    <input type="hidden" name="del_id"/>
-                    <button type="button" class="btn btn-xs btn-danger btn-raised mr-2" id="destroyDriver"><i class="fas fa-trash-alt"></i> Proceed</button>
-                    <button type="button" class="btn btn-xs btn-warning btn-raised" data-dismiss="modal" aria-label="Close"><i class="fas fa-backspace"></i> Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/car.js') }}"></script>
     <script>
+
         $("#dashboard").addClass('active');
+
+        function img1(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#img1Preview').css('background-image', 'url('+e.target.result +')');
+                    $('#img1Preview').hide();
+                    $('#img1Preview').fadeIn(650);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#img1Upload").change(function() {
+            img1(this);
+        });
     </script>
 @endsection

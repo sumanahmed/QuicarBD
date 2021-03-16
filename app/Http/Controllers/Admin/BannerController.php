@@ -61,7 +61,7 @@ class BannerController extends Controller
                 $package_banner->hotel_package = $imageUrl;
             }
         }
-        if($request->type == 2) {
+        if($request->type == 3) {
             if($request->hasFile('travel_package')){
                 if(($package_banner->travel_package != null) && file_exists($package_banner->travel_package)){
                     unlink($package_banner->travel_package);
