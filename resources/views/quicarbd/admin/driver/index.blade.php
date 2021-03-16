@@ -36,7 +36,8 @@
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Email</th>
+                                            <th>NID</th>
+                                            <th>License No</th>
                                             <th>Phone</th>
                                             <th>Image</th>
                                             <th>Status</th>
@@ -49,7 +50,8 @@
                                             @foreach($drivers as $driver)
                                                 <tr class="driver-{{ $driver->id }}">
                                                     <td>{{ $driver->name }}</td>
-                                                    <td>{{ $driver->email }}</td>
+                                                    <td>{{ $driver->nid }}</td>
+                                                    <td>{{ $driver->license }}</td>
                                                     <td>{{ $driver->phone }}</td>
                                                     <td><img src="http://quicarbd.com/{{ $driver->driver_photo }}" style="width:80px;height:60px"/>
                                                     <td>{{ $driver->c_status == 1 ? 'Approve' : 'Pending' }} </td>
