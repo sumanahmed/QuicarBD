@@ -1,5 +1,12 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Partner')
+@section('styles')
+    <style>
+        input[type=file] {
+            display: none;
+        }
+    </style>
+@endsection
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -144,21 +151,15 @@
                                                     <input type="phone" id="phone" value="{{ $partner->phone }}" name="phone" placeholder="Enter Phone Number" class="form-control" readonly>
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="dob" class="control-label mb-10">Date of Birth <span class="text-danger" title="Required">*</span></label>                                            
-                                                    <input type="date" id="dob" value="{{ $partner->dob }}" name="dob" class="form-control datePicker" readonly>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-md-4">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="nid" class="control-label mb-10">NID No <span class="text-danger" title="Required">*</span></label>                                            
                                                     <input type="nid" id="nid" name="nid" value="{{ $partner->nid }}" placeholder="Enter NID Number" class="form-control" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="account_type" class="control-label mb-10">Account Type <span class="text-danger" title="Required">*</span></label>                                            
                                                     <select id="account_type" name="account_type" class="form-control selectable" readonly>
@@ -173,7 +174,7 @@
                                                     </select>
                                                 </div>
                                             </div>                                    
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="account_status" class="control-label mb-10">Account Status <span class="text-danger" title="Required">*</span></label>                                            
                                                     <select id="account_status" name="account_status" class="form-control selectable" readonly>
@@ -186,65 +187,15 @@
                                                         <span class="text-danger"> {{ $errors->first('account_status') }}</span>
                                                     @endif
                                                 </div>
-                                            </div>                                    
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="district" class="control-label mb-10">Disitrict <span class="text-danger" title="Required">*</span></label>                                            
-                                                    <input type="text" id="district" value="{{ $partner->district }}" name="district" class="form-control" readonly>
-                                                </div>
-                                            </div>                                    
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="city" class="control-label mb-10">City <span class="text-danger" title="Required">*</span></label>               
-                                                    <input type="text" id="city" value="{{ $partner->city }}" name="city" class="form-control" readonly>
-                                                </div>
-                                            </div>                                    
-                                            <div class="col-md-4">
+                                            </div>                              
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="service_location_district" class="control-label mb-10">Service Location Disitrict <span class="text-danger" title="Required">*</span></label>                                            
-                                                    <input type="text" id="service_location_district" value="{{ $partner->service_location_district }}" name="service_location_district" class="form-control" readonly>
+                                                    <input type="text" id="service_location_district" value="{{ $district_name }}" class="form-control" readonly>
                                                 </div>
-                                            </div>                                    
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="service_location_city" class="control-label mb-10"> Service Location City <span class="text-danger" title="Required">*</span></label>               
-                                                    <input type="text" id="service_location_city" value="{{ $partner->service_location_city }}" name="service_location_city" class="form-control" readonly>
-                                                </div>
-                                            </div>                                    
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="area" class="control-label mb-10">Area <span class="text-danger" title="Required">*</span></label>                                            
-                                                    <input type="area" id="area" name="area" value="{{ $partner->area }}" placeholder="Enter area" class="form-control" readonly>
-                                                </div>
-                                            </div> 
-                                                                                
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="img" class="control-label mb-10">Image </label>                                            
-                                                    <input type="file" name="img" class="form-control" />
-                                                    @if($errors->has('img'))
-                                                        <span class="text-danger"> {{ $errors->first('img') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="nid_font_pic" class="control-label mb-10">NID Front Pic </label>                                            
-                                                    <input type="file" name="nid_font_pic" class="form-control" />
-                                                    @if($errors->has('nid_font_pic'))
-                                                        <span class="text-danger"> {{ $errors->first('nid_font_pic') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="nid_back_pic" class="control-label mb-10">NID Back Pic </label>                                            
-                                                    <input type="file" name="nid_back_pic" class="form-control" />
-                                                    @if($errors->has('nid_back_pic'))
-                                                        <span class="text-danger"> {{ $errors->first('nid_back_pic') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>                                   
+                                            </div>                            
+                                        </div>
+                                        <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="bidding_percent" class="control-label mb-10">Bidding Percent  <span class="text-danger" title="Required">*</span></label>                                            
@@ -274,12 +225,57 @@
                                                     <label for="travel_package_charge" class="control-label mb-10">Travel Package Charge  <span class="text-danger" title="Required">*</span></label>                                            
                                                     <input type="text" id="travel_package_charge" name="travel_package_charge" value="{{ $partner->travel_package_charge }}" placeholder="Travel Package Charge" class="form-control" readonly>
                                                 </div>
-                                            </div>  
+                                            </div> 
+                                        </div>
+                                        <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <input type="reset" class="btn btn-danger" value="Cancel"/>
+                                                    <label for="img1" class="control-label mb-10">Image </label>  
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' name="img" id="img1Upload" accept=".png, .jpg, .jpeg" required/>
+                                                        </div>
+                                                        <div class="avatar-preview" style="width:100%">
+                                                            <div id="img1Preview" style="background-image: url(http://quicarbd.com/{{ $partner->img }});"></div>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('img'))
+                                                        <span class="text-danger"> {{ $errors->first('img') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="img2" class="control-label mb-10">NID Front Pic </label>   
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' name="nid_font_pic" id="img2Upload" accept=".png, .jpg, .jpeg"/>
+                                                        </div>
+                                                        <div class="avatar-preview" style="width:100%">
+                                                            <div id="img2Preview" style="background-image: url(http://quicarbd.com/{{ $partner->nid_font_pic }});"></div>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('nid_font_pic'))
+                                                        <span class="text-danger"> {{ $errors->first('nid_font_pic') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="img3" class="control-label mb-10">NID Back Pic </label>  
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <input type='file' name="nid_back_pic" id="img3Upload" accept=".png, .jpg, .jpeg"/>
+                                                        </div>
+                                                        <div class="avatar-preview" style="width:100%">
+                                                            <div id="img3Preview" style="background-image: url(http://quicarbd.com/{{ $partner->nid_back_pic }});"></div>
+                                                        </div>
+                                                    </div>
+                                                    @if($errors->has('nid_back_pic'))
+                                                        <span class="text-danger"> {{ $errors->first('nid_back_pic') }}</span>
+                                                    @endif
+                                                </div>
+                                            </div> 
                                         </div>
                                     </div>
                                 </div>

@@ -34,22 +34,18 @@ class PartnerController extends Controller
 
    //partner store
     public function store(Request $request){ 
+
         $this->validate($request, [
             'name'      => 'required',
             'email'     => 'required',
             'phone'     => 'required',
-            'dob'       => 'required',
             'nid'       => 'required',
-            'district'  => 'required',
-            'city'      => 'required',
-            'area'      => 'required',
             'account_type'          => 'required',
             'bidding_percent'       => 'required',
             'car_package_charge'    => 'required',
             'hotel_package_charge'  => 'required',
             'travel_package_charge' => 'required',
             'service_location_district' => 'required',
-            'service_location_city'     => 'required',
         ]);
 
         $owner              = new Owner();
@@ -57,16 +53,12 @@ class PartnerController extends Controller
         $owner->email       = $request->email;
         $owner->phone       = $request->phone;
         $owner->account_type= $request->account_type;
-        $owner->dob         = $request->dob;
-        $owner->nid         = $request->nid;
+        $owner->nid         = $request->nid;        
         $owner->c_lat       = 0.0000;
         $owner->c_lon       = 0.0000;
         $owner->n_key       = 0.0000;
-        $owner->service_location_district  = District::find($request->service_location_district)->value;
+        $owner->service_location_district  = $request->service_location_district;
         $owner->service_location_city      = $request->service_location_city;
-        $owner->district    = District::find($request->district)->value;
-        $owner->city        = $request->city;
-        $owner->area        = $request->area;
         $owner->bidding_percent         = $request->bidding_percent;
         $owner->car_package_charge      = $request->car_package_charge;
         $owner->hotel_package_charge    = $request->hotel_package_charge;
@@ -107,9 +99,7 @@ class PartnerController extends Controller
     public function edit($id){
         $partner    = Owner::find($id);
         $districts  = District::orderBy('value','ASC')->get();
-        $citys      = City::where('name', $partner->district)->get();
-        $service_citys      = City::where('name', $partner->service_location_district)->get();
-        return view('quicarbd.admin.partner.edit', compact('partner','districts','citys', 'service_citys'));
+        return view('quicarbd.admin.partner.edit', compact('partner','districts'));
     }
 
    //partner update
@@ -118,18 +108,13 @@ class PartnerController extends Controller
             'name'      => 'required',
             'email'     => 'required',
             'phone'     => 'required',
-            'dob'       => 'required',
             'nid'       => 'required',
-            'district'  => 'required',
-            'city'      => 'required',
-            'area'      => 'required',
             'account_type'          => 'required',
             'bidding_percent'       => 'required',
             'car_package_charge'    => 'required',
             'hotel_package_charge'  => 'required',
             'travel_package_charge' => 'required',
             'service_location_district' => 'required',
-            'service_location_city'     => 'required',
         ]);
         
         $owner              = Owner::find($id);
@@ -137,16 +122,12 @@ class PartnerController extends Controller
         $owner->email       = $request->email;
         $owner->phone       = $request->phone;
         $owner->account_type= $request->account_type;
-        $owner->dob         = $request->dob;
-        $owner->nid         = $request->nid;
+        $owner->nid         = $request->nid;        
         $owner->c_lat       = 0.0000;
         $owner->c_lon       = 0.0000;
         $owner->n_key       = 0.0000;
-        $owner->service_location_district  = District::find($request->service_location_district)->value;
+        $owner->service_location_district  = $request->service_location_district;
         $owner->service_location_city      = $request->service_location_city;
-        $owner->district    = District::find($request->district)->value;
-        $owner->city        = $request->city;
-        $owner->area        = $request->area;
         $owner->bidding_percent         = $request->bidding_percent;
         $owner->car_package_charge      = $request->car_package_charge;
         $owner->hotel_package_charge    = $request->hotel_package_charge;
@@ -193,7 +174,9 @@ class PartnerController extends Controller
 
    //partner details
     public function details($id){
-        $data['partner']        = Owner::find($id);
+        $partner                = Owner::find($id);
+        $data['partner']        = $partner;
+        $data['district_name']  = District::find($partner->service_location_district)->value;
         $data['total_car']      = Car::where('owner_id', $id)->count('id');
         $data['total_driver']   = Driver::where('owner_id', $id)->count('id');
         $data['total_car_package']      = CarPackage::where('owner_id', $id)->count('id');
