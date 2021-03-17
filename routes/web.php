@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\UserBannerController;
 use App\Http\Controllers\Admin\YearController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\CancellationReasonController;
+use App\Http\Controllers\Admin\PackageReviewController;
 use App\Http\Controllers\Admin\PrivacyController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -223,6 +224,10 @@ Route::group(['prefix'=>'/admin/travel-package', 'middleware' => 'admin'], funct
     Route::get('/edit/{id}', [TravelPackageController::class, 'edit'])->name('travel_package.edit');
     Route::post('/update/{id}', [TravelPackageController::class, 'update'])->name('travel_package.update');
     Route::post('/destroy', [TravelPackageController::class, 'destroy'])->name('travel_package.destroy');
+});
+
+Route::group(['prefix'=>'/admin/package-review', 'middleware' => 'admin'], function(){
+    Route::get('/', [PackageReviewController::class, 'index'])->name('package_review.index');
 });
 
 Route::group(['prefix'=>'/admin/reason/cancellation', 'middleware' => 'admin'], function(){

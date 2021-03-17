@@ -67,6 +67,7 @@
                                                     <td>{{ $hotel_package->price }}</td>
                                                     <td>{{ $hotel_package->package_status == 0 ? 'Invisible' : 'Visible' }}</td>                          
                                                     <td style="vertical-align: middle;text-align: center;">
+                                                        <a href="{{ route('package_review.index',['review_to' => 1, 'id' => $hotel_package->id]) }}" target="_blank" class="btn btn-xs btn-primary" title="Review"><i class="fa fa-eye"></i></a>
                                                         <a href="{{ route('hotel_package.edit', $hotel_package->id) }}" class="btn btn-xs btn-raised btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="{{ route('hotel_package.destroy', $hotel_package->id) }}" class="btn btn-xs btn-raised btn-danger" title="Delete"  data-toggle="modal" id="deleteCarPackage" data-target="#deleteHotelPackageModal" data-id="{{ $hotel_package->id }}"><i class="fa fa-remove"></i></a>
                                                     </td>

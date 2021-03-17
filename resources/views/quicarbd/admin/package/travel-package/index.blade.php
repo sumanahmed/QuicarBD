@@ -57,6 +57,7 @@
                                                         <td>Cancel</td>
                                                     @endif                                          
                                                     <td style="vertical-align: middle;text-align: center;">
+                                                        <a href="{{ route('package_review.index',['review_to' => 2, 'id' => $travel_package->id]) }}" target="_blank" class="btn btn-xs btn-primary" title="Review"><i class="fa fa-eye"></i></a>
                                                         <a href="{{ route('travel_package.edit', $travel_package->id) }}" class="btn btn-xs btn-raised btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="#" class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="deleteTravelPackage" data-target="#deleteTravelPackageModal" data-id="{{ $travel_package->id }}" title="Delete"><i class="fa fa-remove"></i></a>
                                                     </td>
