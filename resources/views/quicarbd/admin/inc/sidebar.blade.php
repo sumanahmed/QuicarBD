@@ -239,25 +239,27 @@
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#userPrivacy"><div class="pull-left"><span class="right-nav-text">User</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="userPrivacy" class="collapse collapse-level-1 two-col-list">
-                        <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>1]) }}">Terms & Condition</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>2]) }}">Privacy Policy</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>3]) }}">Booking Policy</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>4]) }}">Payment Policy</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>5]) }}">Return Policy</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>7]) }}">Cashback Policy</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>1, 'type'=>6]) }}">About Us</a></li>
+                        <li><a href="{{ route('privacy.user.edit',['for'=>1, 'type'=>1]) }}">About Us</a></li>
+                        <li><a href="{{ route('privacy.user.edit',['for'=>1, 'type'=>2]) }}">Terms of Services</a></li>
+                        <li><a href="{{ route('privacy.user.edit',['for'=>1, 'type'=>3]) }}">Privacy Policy</a></li>
+                        <li><a href="{{ route('privacy.user.edit',['for'=>1, 'type'=>4]) }}">Booking Policy</a></li>
+                        <li><a href="{{ route('privacy.user.edit',['for'=>1, 'type'=>5]) }}">Cancellation Policy</a></li>
+                        <li><a href="{{ route('privacy.user.edit',['for'=>1, 'type'=>6]) }}">Payment Policy</a></li>
+                        <li><a href="{{ route('privacy.user.edit',['for'=>1, 'type'=>7]) }}">Refund Policy</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#partnerPrivacy"><div class="pull-left"><span class="right-nav-text">Partner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="partnerPrivacy" class="collapse collapse-level-1 two-col-list">
-                        <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>1]) }}">Terms & Condition</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>2]) }}">Privacy Policy</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>3]) }}">Booking Policy</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>4]) }}">Payment Policy</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>5]) }}">Return Policy</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>7]) }}">Cashback Policy</a></li>
-                        <li><a href="{{ route('privacy.index',['for'=>2, 'type'=>6]) }}">About Us</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>1]) }}">About Us</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>2]) }}">Terms of Services</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>3]) }}">Privacy Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>4]) }}">Booking Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>5]) }}">Cancellation Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>6]) }}">Payment Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>7]) }}">Cashback Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>8]) }}">Return Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>9]) }}">Tips and Trick</a></li>
                     </ul>
                 </li>                
             </ul>

@@ -80,6 +80,23 @@
                                 </div> 
                                 <div class="col-md-2">
                                     <div class="form-group">
+                                        <label for="owner_id" class="control-label mb-10">Partner </label>                                            
+                                        <select id="owner_id" name="owner_id" class="form-control selectable">
+                                            <option value="0">Select</option>
+                                            @foreach($owners as $owner)
+                                                <option value="{{ $owner->id }}" @if(isset($_GET['owner_id']) && $owner->id == $_GET['owner_id']) selected @endif>{{ $owner->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="carRegisterNumber" class="control-label mb-10">Car Registration No </label>                                            
+                                        <input type="text" name="carRegisterNumber" @if(isset($_GET['carRegisterNumber'])) value="{{ $_GET['carRegisterNumber'] }}" @endif class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
                                         <label for="perPage" class="control-label mb-10">Per Page </label>                                            
                                         <select id="perPage" name="perPage" class="form-control selectable">
                                             <option value="10">10</option>

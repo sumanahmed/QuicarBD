@@ -240,13 +240,14 @@ Route::group(['prefix'=>'/admin/reason/cancellation', 'middleware' => 'admin'], 
     Route::post('/destroy', [CancellationReasonController::class, 'destroy'])->name('reason.destroy');
 });
 
-Route::group(['prefix'=>'/admin/privacy', 'middleware' => 'admin'], function(){
-    Route::get('/', [PrivacyController::class, 'index'])->name('privacy.index');
-    Route::get('/create', [PrivacyController::class, 'create'])->name('privacy.create');
-    Route::post('/store', [PrivacyController::class, 'store'])->name('privacy.store');
-    Route::get('/edit/{id}', [PrivacyController::class, 'edit'])->name('privacy.edit');
-    Route::post('/update/{id}', [PrivacyController::class, 'update'])->name('privacy.update');
-    Route::post('/destroy', [PrivacyController::class, 'destroy'])->name('privacy.destroy');
+Route::group(['prefix'=>'/admin/privacy/user', 'middleware' => 'admin'], function(){
+    Route::get('/edit', [PrivacyController::class, 'userEedit'])->name('privacy.user.edit');
+    Route::post('/update', [PrivacyController::class, 'userUpdate'])->name('privacy.user.update');
+});
+
+Route::group(['prefix'=>'/admin/privacy/partner', 'middleware' => 'admin'], function(){
+    Route::get('/edit', [PrivacyController::class, 'partnerEdit'])->name('privacy.partner.edit');
+    Route::post('/update', [PrivacyController::class, 'partnerUpdate'])->name('privacy.partner.update');
 });
 
 Route::group(['prefix'=>'/admin/banner', 'middleware' => 'admin'], function(){
