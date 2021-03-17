@@ -299,11 +299,14 @@ class CarController extends Controller
         $cars   = Car::join('owners','owners.id','cars.owner_id')
                     ->select('cars.*','owners.name as owner_name','owners.phone as owner_phone')
                     ->where(function($query) use ($today) {
-                        return $query   ->where('tax_expired_date', '>', $today)
-                                        ->orWhere('fitness_expired_date', '>', $today)
-                                        ->orWhere('registration_expired_date', '>', $today)
-                                        ->orWhere('insurance_expired_date', '>', $today);
-                    })                   
+                        return $query   ->where('cars.tax_expired_date', '<', $today)
+                                        ->orWhere('cars.fitness_expired_date', '<', $today)
+                                        ->orWhere('cars.registration_expired_date', '<', $today)
+                                        ->orWhere('cars.insurance_expired_date', '<', $today);
+                    }) 
+                    ->where('cars.fitness_expired_date','!=','null')
+                    ->where('cars.fitness_expired_date','!=','null')
+                    ->where('cars.registration_expired_date','!=','null')
                     ->get();
         return view('quicarbd.admin.car.expired', compact('cars'));
     }
