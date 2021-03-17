@@ -297,10 +297,7 @@ class CarController extends Controller
     public function expired(){
         $today  = date('Y-m-d');
         $cars   = Car::join('owners','owners.id','cars.owner_id')
-                    ->select('cars.id','cars.carRegisterNumber',
-                            'cars.tax_expired_date','cars.fitness_expired_date','cars.registration_expired_date',
-                            'cars.insurance_expired_date','owners.name as owner_name','owners.phone as owner_phone'
-                            )
+                    ->select('cars.*','owners.name as owner_name','owners.phone as owner_phone')
                     ->where(function($query) use ($today) {
                         return $query   ->where('tax_expired_date', '>', $today)
                                         ->orWhere('fitness_expired_date', '>', $today)
@@ -309,5 +306,18 @@ class CarController extends Controller
                     })                   
                     ->get();
         return view('quicarbd.admin.car.expired', compact('cars'));
+    }
+
+    //car expired notification send
+    public function ownerSendNotification(Request $request)
+    {        
+        $helper = new Helper(); 
+        $owner  = Owner::select('id','phone','name','n_key')->where('id', $request->owner_id)->first();
+        $id     = $owner->n_key;
+        $title  = 'Car Expired';            
+        $msg    = 'Dear '.$owner->name.', your car ('.$request->car_reg_no.') expired. Please contact with Quicar';                        
+
+        $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
+        $helper->smsSend($owner->phone, $msg); // sms send
     }
 }

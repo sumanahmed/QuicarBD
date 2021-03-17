@@ -161,6 +161,7 @@ Route::group(['prefix'=>'/admin/car', 'middleware' => 'admin'], function(){
     Route::get('/details/{car_id}', [CarController::class, 'details'])->name('car.details');
     Route::get('/expired', [CarController::class, 'expired'])->name('car.expired');
     Route::post('/destroy', [CarController::class, 'destroy'])->name('car.destroy');
+    Route::post('/owner-notification-send', [CarController::class, 'ownerSendNotification'])->name('car.destroy');
 });
 
 Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){

@@ -160,6 +160,52 @@ $("#carBrand").change(function(){
     });
 });
 
+//open send notification modal
+$(document).on('click', '#sendNotification', function () {
+    $('#sendNotificationModal').modal('show');
+    $('#n_key').val($(this).data('n_key'));
+    $('#owner_id').val($(this).data('owner_id'));
+    $('#car_reg_no').val($(this).data('car_reg_no'));
+ });
+
+ //destroy master category
+ $("#ownerNotificationSend").click(function(){
+    var title       = $('#title').val();
+    var car_reg_no  = $('#car_reg_no').val();
+    var message     = $('#message').val();
+    var notification= $('input[name=notification]:checked').val();
+    var owner_id    = $('#owner_id').val();
+    $.ajax({
+        type: 'POST',
+        url: '/admin/car/owner-notification-send',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            title       : title,
+            message     : message,
+            notification: notification,
+            owner_id    : owner_id,
+            car_reg_no  : car_reg_no,
+        },
+        success: function (response) {
+            if((response.errors)){
+                if(response.errors.title){
+                    $('.errorTitle').text(response.errors.title);
+                }
+                if(response.errors.message){
+                    $('.errorMessage').text(response.errors.message);
+                }
+            }else{
+                $('#n_key').val('');
+                $('#title').val('');
+                $('#message').val('');
+                $('#phone').val('');
+                toastr.success('Expired Message send')
+                $('#sendNotificationModal').modal('hide');
+            }
+        }
+    });
+});
+
 // $("#carModel").change(function(){
 //     var carType = $("#carType option:selected").val();
 //     var carModel = $(this).val();

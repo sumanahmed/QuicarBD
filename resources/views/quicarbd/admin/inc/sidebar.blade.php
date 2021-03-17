@@ -109,6 +109,9 @@
                             @endif
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('car.expired') }}">Expired Car</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
