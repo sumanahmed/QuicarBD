@@ -52,7 +52,7 @@ class CancellationReasonController extends Controller
         $reason->save();
 
         if($reason->save()){
-            return redirect()->route('policy.index',['app_type'=>$request->app_type, 'type'=>$request->type])->with('message','Policy added successfully');
+            return redirect()->route('reason.index',['app_type'=>$request->app_type, 'type'=>$request->type])->with('message','Cancellation reason added successfully');
         }else{
             return redirect()->back()->with('error_message','Sorry, something went wrong');
         }
@@ -93,7 +93,7 @@ class CancellationReasonController extends Controller
     }
 
     //destroy
-    public function destroy(Request $request){
+    public function destroy(Request $request){ 
         BidCancelList::find($request->id)->delete();
         return response()->json();
     }
