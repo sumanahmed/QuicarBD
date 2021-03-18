@@ -175,7 +175,7 @@
                                                                 <label for="img1Upload"><i class="fa fa-edit"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
-                                                                <div id="img1Preview" style="background-image: url(http://quicarbd.com/{{ $partner->img }});"></div>
+                                                                <div id="img1Preview" style="background-image: url(http://quicarbd.com/mobileapi/asset/owner/{{ $partner->img }});"></div>
                                                             </div>
                                                         </div>
                                                         @if($errors->has('img'))
@@ -192,7 +192,7 @@
                                                                 <label for="img2Upload"><i class="fa fa-edit"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
-                                                                <div id="img2Preview" style="background-image: url(http://quicarbd.com/{{ $partner->nid_font_pic }});"></div>
+                                                                <div id="img2Preview" style="background-image: url(http://quicarbd.com/mobileapi/asset/owner/{{ $partner->nid_font_pic }});"></div>
                                                             </div>
                                                         </div>
                                                         @if($errors->has('nid_font_pic'))
@@ -209,7 +209,7 @@
                                                                 <label for="img3Upload"><i class="fa fa-edit"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
-                                                                <div id="img3Preview" style="background-image: url(http://quicarbd.com/{{ $partner->nid_back_pic }});"></div>
+                                                                <div id="img3Preview" style="background-image: url(http://quicarbd.com/mobileapi/asset/owner/{{ $partner->nid_back_pic }});"></div>
                                                             </div>
                                                         </div>
                                                         @if($errors->has('nid_back_pic'))

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AccountTypeChargeRequest;
 use App\Http\Lib\Helper;
 use App\Models\Car;
 use App\Models\CarPackage;
@@ -63,12 +64,13 @@ class PartnerController extends Controller
         $owner->car_package_charge      = $request->car_package_charge;
         $owner->hotel_package_charge    = $request->hotel_package_charge;
         $owner->travel_package_charge   = $request->travel_package_charge;
+        $owner->account_status          = $request->account_status;
         if($request->hasFile('img')){
             $image      = $request->file('img');
             $imageName  = time().".".$image->getClientOriginalExtension();
             $directory  = '../mobileapi/asset/owner/';
             $image->move($directory, $imageName);
-            $imageUrl   = $directory.$imageName;
+            $imageUrl   = $imageName;
             $owner->img = $imageUrl;
         }
         if($request->hasFile('nid_font_pic')){
@@ -76,7 +78,7 @@ class PartnerController extends Controller
             $nidFontName  = "nidFont".time().".".$nidFont->getClientOriginalExtension();
             $directory    = '../mobileapi/asset/owner/';
             $nidFont->move($directory, $nidFontName);
-            $nidFontUrl   = $directory.$nidFontName;
+            $nidFontUrl   = $nidFontName;
             $owner->nid_font_pic = $nidFontUrl;
         }
         if($request->hasFile('nid_back_pic')){
@@ -84,7 +86,7 @@ class PartnerController extends Controller
             $nidBackName  = "nidBack".time().".".$nidBack->getClientOriginalExtension();
             $directory  = '../mobileapi/asset/owner/';
             $nidBack->move($directory, $nidBackName);
-            $nidBackUrl   = $directory.$nidBackName;
+            $nidBackUrl   = $nidBackName;
             $owner->nid_back_pic = $nidBackUrl;
         }
 
@@ -132,6 +134,7 @@ class PartnerController extends Controller
         $owner->car_package_charge      = $request->car_package_charge;
         $owner->hotel_package_charge    = $request->hotel_package_charge;
         $owner->travel_package_charge   = $request->travel_package_charge;
+        $owner->account_status          = $request->account_status;
         if($request->hasFile('img')){
             if(($owner->img != null) && file_exists($owner->img)){
                 unlink($owner->img);
@@ -140,7 +143,7 @@ class PartnerController extends Controller
             $imageName  = time().".".$image->getClientOriginalExtension();
             $directory  = '../mobileapi/asset/owner/';
             $image->move($directory, $imageName);
-            $imageUrl   = $directory.$imageName;
+            $imageUrl   = $imageName;
             $owner->img = $imageUrl;
         }
         if($request->hasFile('nid_font_pic')){
@@ -151,7 +154,7 @@ class PartnerController extends Controller
             $nidFontName  = "nidFont".time().".".$nidFont->getClientOriginalExtension();
             $directory    = '../mobileapi/asset/owner/';
             $nidFont->move($directory, $nidFontName);
-            $nidFontUrl   = $directory.$nidFontName;
+            $nidFontUrl   = $nidFontName;
             $owner->nid_font_pic = $nidFontUrl;
         }
         if($request->hasFile('nid_back_pic')){
@@ -162,7 +165,7 @@ class PartnerController extends Controller
             $nidBackName  = "nidBack".time().".".$nidBack->getClientOriginalExtension();
             $directory  = '../mobileapi/asset/owner/';
             $nidBack->move($directory, $nidBackName);
-            $nidBackUrl   = $directory.$nidBackName;
+            $nidBackUrl   = $nidBackName;
             $owner->nid_back_pic = $nidBackUrl;
         }
         if($owner->update()){
@@ -230,19 +233,19 @@ class PartnerController extends Controller
      * status update
      */
     public function statusUpdate (Request $request) 
-    {        
+    {   
         try {
 
             $partner = Owner::find($request->id);
 
             $helper = new Helper(); 
             $id     = $partner->n_key;
-            $title  = $request->staus == 1 ? 'Account Approved' : 'Account Pending';            
+            $title  = $request->account_status == 1 ? 'Account Approved' : 'Account Pending';            
             $msg    = 'Dear '.$partner->name.', your '.$title.' successfully. Thanks for connecting with Quicar';                        
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($request->phone, $msg); // sms send
 
-            $partner->account_status = $request->status;
+            $partner->account_status = $request->account_status;
             $partner->update();
 
         } catch (Exception $ex) {
@@ -252,9 +255,22 @@ class PartnerController extends Controller
         return redirect()->route('partner.index')->with('message','Status update successfully');
     }
 
-   //partner details
-   public function verification(){
-    $partners = Owner::all();
-    return view('quicarbd.admin.partner.verification', compact('partners'));
-}
+    //partner details
+    public function verification(){
+        $partners = AccountTypeChargeRequest::join('owners','owners.id','account_type_chage_request.owner_id')
+                    ->select('account_type_chage_request.id','owners.name','owners.phone','')
+                    ->where('account_type_chage_request.status', 0)
+                    ->get();
+        return view('quicarbd.admin.partner.verification', compact('partners'));
+    }
+    
+    //partner details
+    public function verify($id, $account_type)
+    {
+        $account = AccountTypeChargeRequest::find($id);
+        $account->account_type = $account_type;
+        $account->update();
+        
+        return redirect()->route('partner.verification')->with('message','Approve successfully');
+    }
 }

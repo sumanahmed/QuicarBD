@@ -73,9 +73,9 @@
                                                     @endif
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         @if($partner->account_status == 0)
-                                                            <a href="{{ route('partner.status-update', ['id' => $partner->id, 'status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
+                                                            <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
                                                         @else
-                                                            <a href="{{ route('partner.status-update', ['id' => $partner->id, 'status'=> 0 ]) }}" class="btn btn-xs btn-success" title="Lock"><i class="fa fa-unlock-alt"></i></a>
+                                                            <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 0 ]) }}" class="btn btn-xs btn-success" title="Lock"><i class="fa fa-unlock-alt"></i></a>
                                                         @endif
                                                         <a href="#" class="btn btn-xs btn-primary" id="sendNotification" data-toggle="modal" data-target="#sendNotificationModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
                                                         <a href="{{ route('partner.edit', $partner->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
