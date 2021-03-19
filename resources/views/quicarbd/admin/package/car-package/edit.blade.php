@@ -40,6 +40,9 @@
                                                     <div class="form-group">
                                                         <label for="name" class="control-label mb-10">Package Name <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="name" name="name" value="{{ $car_package->name }}" class="form-control" placeholder="Package Name" required>
+                                                        @if($errors->has('name'))
+                                                            <span class="text-danger"> {{ $errors->first('name') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -51,7 +54,9 @@
                                                                 <option value="{{ $partner->id }}" @if($car_package->owner_id == $partner->id) selected @endif>{{ $partner->name }}</option>
                                                             @endforeach
                                                         </select>
-                                                        <span class="text-danger errorYear"></span>
+                                                        @if($errors->has('owner_id'))
+                                                            <span class="text-danger"> {{ $errors->first('owner_id') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -62,24 +67,36 @@
                                                                 <option value="{{ $car->id }}" @if($car_package->car_id == $car->id) selected @endif>{{ $car->carRegisterNumber }}</option>
                                                             @endforeach
                                                         </select>
+                                                        @if($errors->has('car_id'))
+                                                            <span class="text-danger"> {{ $errors->first('car_id') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="quicar_charge" class="control-label mb-10"> Quicar Charge(%) <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="quicar_charge" name="quicar_charge" value="{{ $car_package->quicar_charge }}" class="form-control" placeholder="Quicar Charge" readonly required>
+                                                        @if($errors->has('quicar_charge'))
+                                                            <span class="text-danger"> {{ $errors->first('quicar_charge') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">                                        
                                                     <div class="form-group">
                                                         <label for="details" class="control-label mb-10"> Details <span class="text-danger" title="Required">*</span></label>                                            
                                                         <textarea class="form-control" id="details" name="details" placeholder="Details" rows="3">{{ $car_package->details }}</textarea>
+                                                        @if($errors->has('details'))
+                                                            <span class="text-danger"> {{ $errors->first('details') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">                                        
                                                     <div class="form-group">
                                                         <label for="facilities" class="control-label mb-10"> Factilites <span class="text-danger" title="Required">*</span></label>                                            
                                                         <textarea class="form-control" id="facilities" name="facilities" placeholder="Facilites" rows="3">{{ $car_package->facilities }}</textarea>
+                                                        @if($errors->has('facilities'))
+                                                            <span class="text-danger"> {{ $errors->first('facilities') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -91,6 +108,9 @@
                                                                 <option value="{{ $district->id }}" @if($district->id == $car_package->district_id) selected @endif>{{ $district->value }}</option>
                                                             @endforeach
                                                         </select>
+                                                        @if($errors->has('district_id'))
+                                                            <span class="text-danger"> {{ $errors->first('district_id') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-9">
@@ -101,13 +121,18 @@
                                                                 <option value="{{ $spot->id }}"  @if(in_array($spot->id, json_decode($car_package->spot_id))) selected @endif>{{ $spot->name }}</option>
                                                             @endforeach
                                                         </select>
-                                                        <span class="text-danger errorYear"></span>
+                                                        @if($errors->has('spot_id'))
+                                                            <span class="text-danger"> {{ $errors->first('spot_id') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>                                                
                                                 <div class="col-md-2">                                        
                                                     <div class="form-group">
                                                         <label for="duration" class="control-label mb-10"> Duration(day) <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="duration" name="duration" value="{{ $car_package->duration }}" class="form-control" placeholder="Duration" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+                                                        @if($errors->has('duration'))
+                                                            <span class="text-danger"> {{ $errors->first('duration') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">                                        
@@ -119,6 +144,9 @@
                                                                 <option value="{{ $district->id }}" @if($district->id == $car_package->starting_location) selected @endif>{{ $district->value }}</option>
                                                             @endforeach
                                                         </select>
+                                                        @if($errors->has('starting_location'))
+                                                            <span class="text-danger"> {{ $errors->first('starting_location') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">                                        
@@ -130,36 +158,54 @@
                                                                 <option value="{{ $city->id }}" @if($city->id == $car_package->starting_city_id) selected @endif>{{ $city->name }}</option>
                                                             @endforeach
                                                         </select>
+                                                        @if($errors->has('starting_city_id'))
+                                                            <span class="text-danger"> {{ $errors->first('starting_city_id') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">                                        
                                                     <div class="form-group">
                                                         <label for="starting_location_address" class="control-label mb-10"> Starting Location Address <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="starting_location_address" name="starting_location_address" value="{{ $car_package->starting_location_address }}" class="form-control" placeholder="Starting Location Address" required>
+                                                        @if($errors->has('starting_location_address'))
+                                                            <span class="text-danger"> {{ $errors->first('starting_location_address') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">                                        
                                                     <div class="form-group">
                                                         <label for="total_person" class="control-label mb-10"> Total Person <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="total_person" name="total_person" value="{{ $car_package->total_person }}" class="form-control" placeholder="Total Person" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required  readonly>
+                                                        @if($errors->has('total_person'))
+                                                            <span class="text-danger"> {{ $errors->first('total_person') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="price" class="control-label mb-10"> Price <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="price" name="price" value="{{ $car_package->price }}" class="form-control" oninput="calculateCharge()" placeholder="Price" required>
+                                                        @if($errors->has('price'))
+                                                            <span class="text-danger"> {{ $errors->first('price') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="owner_get" class="control-label mb-10">Owner Get <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="owner_get" name="owner_get" value="{{ $car_package->owner_get }}" class="form-control" placeholder="Owner Get" readonly required>
+                                                        @if($errors->has('owner_get'))
+                                                            <span class="text-danger"> {{ $errors->first('owner_get') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>       
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="cash_back_price" class="control-label mb-10">Cash Back Price </label>
                                                         <input type="text" id="cash_back_price" name="cash_back_price" value="{{ $car_package->cash_back_price }}" class="form-control" placeholder="Cash Back Price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                        @if($errors->has('cash_back_price'))
+                                                            <span class="text-danger"> {{ $errors->first('cash_back_price') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>                                         
                                                 <div class="col-md-3">                                        
@@ -170,18 +216,27 @@
                                                             <option value="0" @if( $car_package->cash_back_status == 0) selected @endif>Pause</option>
                                                             <option value="1" @if( $car_package->cash_back_status == 1) selected @endif>Active</option>
                                                         </select>
+                                                        @if($errors->has('cash_back_status'))
+                                                            <span class="text-danger"> {{ $errors->first('cash_back_status') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="cash_back_staring_time" class="control-label mb-10">Cash Back Start Time </label>
                                                         <input type="datetime-local" id="cash_back_staring_time" name="cash_back_staring_time" @if($car_package->cash_back_staring_time != null) value="{{ date('Y-m-d\TH:i:s', strtotime($car_package->cash_back_staring_time)) }}" @endif class="form-control">
+                                                        @if($errors->has('cash_back_staring_time'))
+                                                            <span class="text-danger"> {{ $errors->first('cash_back_staring_time') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="cash_back_ending_time" class="control-label mb-10">Cash Back End Time </label>
                                                         <input type="datetime-local" id="cash_back_ending_time" name="cash_back_ending_time" @if($car_package->cash_back_ending_time != null) value="{{ date('Y-m-d\TH:i:s', strtotime($car_package->cash_back_ending_time)) }}" @endif class="form-control">
+                                                        @if($errors->has('cash_back_ending_time'))
+                                                            <span class="text-danger"> {{ $errors->first('cash_back_ending_time') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">                                        
@@ -193,6 +248,9 @@
                                                             <option value="1" @if( $car_package->status == 1) selected @endif>Success</option>
                                                             <option value="2" @if( $car_package->status == 2) selected @endif>Cancel</option>
                                                         </select>
+                                                        @if($errors->has('status'))
+                                                            <span class="text-danger"> {{ $errors->first('status') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">                                        

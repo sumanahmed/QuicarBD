@@ -179,7 +179,7 @@ class PartnerController extends Controller
     public function details($id){
         $partner                = Owner::find($id);
         $data['partner']        = $partner;
-        $data['district_name']  = District::find($partner->service_location_district)->value;
+        $data['district_name']  = $partner->service_location_district;
         $data['total_car']      = Car::where('owner_id', $id)->count('id');
         $data['total_driver']   = Driver::where('owner_id', $id)->count('id');
         $data['total_car_package']      = CarPackage::where('owner_id', $id)->count('id');
@@ -190,7 +190,7 @@ class PartnerController extends Controller
 
     //notification send
     public function notificationSend(Request $request)
-    {               
+    {             
         $validators = Validator::make($request->all(),[
             'title'   => 'required',
             'message' => 'required',
@@ -207,7 +207,7 @@ class PartnerController extends Controller
 
             if($request->notification == 1){      
                                   
-                $helper->sendSinglePartnerNotification($id, $title, $body); //push notificatio nsend
+                $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
 
                 return Response::json([
                     'status'    => 200,
@@ -244,6 +244,7 @@ class PartnerController extends Controller
             $msg    = 'Dear '.$partner->name.', your '.$title.' successfully. Thanks for connecting with Quicar';                        
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($request->phone, $msg); // sms send
+            $helper->smsNotification($type = 2, $partner->id, $title, $msg); // send notification, 2=partner
 
             $partner->account_status = $request->account_status;
             $partner->update();
@@ -305,6 +306,7 @@ class PartnerController extends Controller
             $msg    = 'Dear '.$owner->name.', your account type change request approve successfully. Thanks for connecting with Quicar';
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
+            $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
 
             DB::commit();
             

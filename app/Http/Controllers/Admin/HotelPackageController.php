@@ -123,6 +123,7 @@ class HotelPackageController extends Controller
 
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
+            $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
         }
 
         if($hotel_package->save()){
@@ -226,6 +227,7 @@ class HotelPackageController extends Controller
 
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
+            $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
         }
 
         if($hotel_package->update()){

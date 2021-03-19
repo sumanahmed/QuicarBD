@@ -216,6 +216,7 @@ class CarController extends Controller
 
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
+            $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
         }
 
         if($request->hasFile('carImage')){
@@ -327,5 +328,6 @@ class CarController extends Controller
 
         $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
         $helper->smsSend($owner->phone, $msg); // sms send
+        $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
     }
 }

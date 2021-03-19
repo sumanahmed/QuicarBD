@@ -100,6 +100,7 @@ class CarPackageController extends Controller
 
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
+            $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
         }
 
         if($car_packge->save()){
@@ -183,6 +184,7 @@ class CarPackageController extends Controller
 
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
+            $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
         }
 
         if($car_packge->update()){

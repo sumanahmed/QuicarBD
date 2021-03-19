@@ -1,5 +1,8 @@
 <?php
 namespace App\Http\Lib;
+
+use App\Models\OwnerNotification;
+use App\Models\UserNotification;
 use GuzzleHttp\Client;
 
 class Helper
@@ -25,5 +28,26 @@ class Helper
     public function smsSend($phone, $msg) {
         $client = new Client();            
         $sms    = $client->request("GET", "http://66.45.237.70/api.php?username=01670168919&password=TVZMBN3D&number=". $phone ."&message=".$msg);
+    }
+
+    /**
+     * send notification
+     */
+    public function smsNotification($type, $id, $title, $msg) {
+        if($type == 1) {
+
+            $userNotification            = new UserNotification();
+            $userNotification->user_id   = $id; 
+            $userNotification->title     = $title; 
+            $userNotification->description = $msg; 
+            $userNotification->save(); 
+
+        } else {
+            $partnerNofification            = new OwnerNotification();
+            $partnerNofification->owner_id  = $id; 
+            $partnerNofification->title     = $title; 
+            $partnerNofification->description = $msg; 
+            $partnerNofification->save(); 
+        }
     }
 }
