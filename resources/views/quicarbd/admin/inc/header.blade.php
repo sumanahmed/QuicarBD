@@ -18,6 +18,7 @@
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/dropify/dist/css/dropify.min.css') }}" rel="stylesheet" type="text/css">
 	<!-- Toast CSS -->
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('quicarbd/admin/vendors/bower_components/summernote/dist/summernote.css') }}" rel="stylesheet" type="text/css">
 	<!-- Custom CSS -->
 	<link href="{{ asset('quicarbd/admin/dist/css/style.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('quicarbd/admin/dist/css/toastr.css') }}" rel="stylesheet" type="text/css">

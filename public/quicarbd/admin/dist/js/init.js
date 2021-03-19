@@ -15,6 +15,9 @@
 $(document).ready(function(){
 	goofy();
 	$('.preloader-it > .la-anim-1').addClass('la-animate');
+	$('.summernote').summernote({
+		height: 300,
+	});
 });
 /*****Ready function end*****/
 

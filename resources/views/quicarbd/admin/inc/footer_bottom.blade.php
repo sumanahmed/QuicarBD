@@ -26,6 +26,7 @@
 	<script src="{{ asset('quicarbd/admin/vendors/bower_components/dropify/dist/js/dropify.min.js') }}"></script>	
 	<!-- Toast JavaScript -->
 	<script src="{{ asset('quicarbd/admin/vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js') }}"></script>	
+	<script src="{{ asset('quicarbd/admin/vendors/bower_components/summernote/dist/summernote.min.js') }}"></script>	
 	<!-- Init JavaScript -->
 	<script src="{{ asset('quicarbd/admin/dist/js/init.js') }}"></script>
 	<script src="{{ asset('quicarbd/admin/dist/js/dashboard-data.js') }}"></script>

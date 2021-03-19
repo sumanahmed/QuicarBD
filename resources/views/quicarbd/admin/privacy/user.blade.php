@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Car')
+@section('title','User')
 @section('styles')
     <style>
         input[type=file] {
@@ -64,19 +64,19 @@
                                                     <div class="form-group">
                                                         <label for="description" class="control-label mb-10">{{ $policy_type }} <span class="text-danger" title="Required">*</span></label>
                                                         @if($type == 1)
-                                                            <textarea name="about_us" placeholder="Enter Details" rows="10" class="form-control" required>{{ $privacy->about_us }}</textarea>
+                                                            <textarea name="about_us" placeholder="Enter Details" rows="10" class="form-control summernote"required>{{ $privacy->about_us }}</textarea>
                                                         @elseif($type == 2)
-                                                            <textarea name="terms_of_services" placeholder="Enter Details" rows="10" class="form-control" required>{{ $privacy->terms_of_services }}</textarea>
+                                                            <textarea name="terms_of_services" placeholder="Enter Details" rows="10" class="form-control summernote"required>{{ $privacy->terms_of_services }}</textarea>
                                                         @elseif($type == 3)
-                                                            <textarea name="privacy_policy" placeholder="Enter Details" rows="10" class="form-control" required>{{ $privacy->privacy_policy }}</textarea>
+                                                            <textarea name="privacy_policy" placeholder="Enter Details" rows="10" class="form-control summernote"required>{{ $privacy->privacy_policy }}</textarea>
                                                         @elseif($type == 4)
-                                                            <textarea name="booking_policy" placeholder="Enter Details" rows="10" class="form-control" required>{{ $privacy->booking_policy }}</textarea>
+                                                            <textarea name="booking_policy" placeholder="Enter Details" rows="10" class="form-control summernote"required>{{ $privacy->booking_policy }}</textarea>
                                                         @elseif($type == 5)
-                                                            <textarea name="cancellation_policy" placeholder="Enter Details" rows="10" class="form-control" required>{{ $privacy->cancellation_policy }}</textarea>
+                                                            <textarea name="cancellation_policy" placeholder="Enter Details" rows="10" class="form-control summernote"required>{{ $privacy->cancellation_policy }}</textarea>
                                                         @elseif($type == 6)
-                                                            <textarea name="payment_policy" placeholder="Enter Details" rows="10" class="form-control" required>{{ $privacy->payment_policy }}</textarea>
+                                                            <textarea name="payment_policy" placeholder="Enter Details" rows="10" class="form-control summernote"required>{{ $privacy->payment_policy }}</textarea>
                                                         @elseif($type == 7)
-                                                            <textarea name="refund_policy" placeholder="Enter Details" rows="10" class="form-control" required>{{ $privacy->refund_policy }}</textarea>
+                                                            <textarea name="refund_policy" placeholder="Enter Details" rows="10" class="form-control summernote"required>{{ $privacy->refund_policy }}</textarea>
                                                         @endif
                                                         <input type="hidden" name="type" value="{{ $type }}" />
                                                     </div>
