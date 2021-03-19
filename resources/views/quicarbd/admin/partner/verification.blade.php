@@ -5,7 +5,6 @@
 	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <a href="{{ route('partner.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
         </div>
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">

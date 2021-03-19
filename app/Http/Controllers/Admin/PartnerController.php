@@ -135,7 +135,6 @@ class PartnerController extends Controller
         $owner->car_package_charge      = $request->car_package_charge;
         $owner->hotel_package_charge    = $request->hotel_package_charge;
         $owner->travel_package_charge   = $request->travel_package_charge;
-        $owner->account_status          = $request->account_status;
         if($request->hasFile('img')){
             if(($owner->img != null) && file_exists($owner->img)){
                 unlink($owner->img);
@@ -260,9 +259,6 @@ class PartnerController extends Controller
     public function verification(){
         $partners = Owner::orderBy('id','DESC')
                         ->where('account_status', 0)
-                        ->where('img', '!=', null)
-                        ->where('nid_font_pic', '!=', null)
-                        ->where('nid_back_pic', '!=', null)
                         ->get();
         return view('quicarbd.admin.partner.verification', compact('partners'));
     }
@@ -295,14 +291,13 @@ class PartnerController extends Controller
         DB::beginTransaction();
 
         try {
+            $owner = Owner::find($request->owner_id);
+            $owner->account_type = $request->which_acount;
+            $owner->update();
 
             $account = AccountTypeChargeRequest::find($request->id);
             $account->status = 1;
             $account->update();
-
-            $owner = Owner::find($request->owner_id);
-            $owner->account_type = $request->which_acount;
-            $owner->update();
 
             $helper = new Helper(); 
             $id     = $owner->n_key;

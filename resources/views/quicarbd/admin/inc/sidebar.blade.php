@@ -70,7 +70,8 @@
                 @if($pendingDriver > 0)
                     <div class="pull-right"><span class="label label-warning">{{ $pendingDriver }}</span></div>
                 @endif
-            <div class="clearfix"></div></a>
+                <div class="clearfix"></div>
+            </a>
         </li>
         <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#partners"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Partner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
@@ -79,14 +80,14 @@
                     <a href="{{ route('partner.create') }}">Add New</a>
                 </li>
                 <li>
-                    <a href="{{ route('partner.index') }}">All Partner 
+                    <a href="{{ route('partner.index') }}">All Partner </a>
+                </li>
+                <li>
+                    <a href="{{ route('partner.verification') }}">Partner Verification
                         @if($pendingPartner > 0)
                             <div class="pull-right"><span class="label label-warning">{{ $pendingPartner }}</span></div>
                         @endif
                     </a>
-                </li>
-                <li>
-                    <a href="{{ route('partner.verification') }}">Partner Verification</a>
                 </li>
                 <li>
                     <a href="{{ route('partner.account_type_change_request') }}">Account Type Change Request</a>

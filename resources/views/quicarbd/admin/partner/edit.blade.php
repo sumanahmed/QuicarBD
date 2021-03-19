@@ -72,7 +72,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="nid" class="control-label mb-10">NID No <span class="text-danger" title="Required">*</span></label>                                            
                                                         <input type="nid" id="nid" name="nid" value="{{ $partner->nid }}" placeholder="Enter NID Number" class="form-control" required>
@@ -81,7 +81,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="account_type" class="control-label mb-10">Account Type <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="account_type" name="account_type" class="form-control selectable" required>
@@ -99,20 +99,20 @@
                                                         @endif
                                                     </div>
                                                 </div>                                    
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label for="account_status" class="control-label mb-10">Account Status <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <select id="account_status" name="account_status" class="form-control selectable" required>
-                                                            <option selected disabled>Select</option>                                                            
-                                                            <option value="0" @if($partner->account_status == 0) selected @endif>Pending</option>                                                            
-                                                            <option value="1" @if($partner->account_status == 1) selected @endif>Active</option>                                                                  
-                                                        </select>
-                                                        @if($errors->has('account_status'))
-                                                            <span class="text-danger"> {{ $errors->first('account_status') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>                                    
-                                                <div class="col-md-3">
+                                                <!--<div class="col-md-3">-->
+                                                <!--    <div class="form-group">-->
+                                                <!--        <label for="account_status" class="control-label mb-10">Account Status <span class="text-danger" title="Required">*</span></label>                                            -->
+                                                <!--        <select id="account_status" name="account_status" class="form-control selectable" required>-->
+                                                <!--            <option selected disabled>Select</option>                                                            -->
+                                                <!--            <option value="0" @if($partner->account_status == 0) selected @endif>Pending</option>                                                            -->
+                                                <!--            <option value="1" @if($partner->account_status == 1) selected @endif>Active</option>                                                                  -->
+                                                <!--        </select>-->
+                                                <!--        @if($errors->has('account_status'))-->
+                                                <!--            <span class="text-danger"> {{ $errors->first('account_status') }}</span>-->
+                                                <!--        @endif-->
+                                                <!--    </div>-->
+                                                <!--</div>                                    -->
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="service_location_district" class="control-label mb-10">Service Location Disitrict <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="service_location_district" name="service_location_district" class="form-control selectable" required>
