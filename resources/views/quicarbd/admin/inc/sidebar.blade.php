@@ -88,6 +88,9 @@
                 <li>
                     <a href="{{ route('partner.verification') }}">Partner Verification</a>
                 </li>
+                <li>
+                    <a href="{{ route('partner.account_type_change_request') }}">Account Type Change Request</a>
+                </li>
             </ul>
         </li>
         <li>

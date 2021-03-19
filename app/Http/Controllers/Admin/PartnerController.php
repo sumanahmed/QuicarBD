@@ -18,6 +18,7 @@ use Exception;
 use GuzzleHttp\Client;
 use Validator;
 use Response;
+use DB;
 
 class PartnerController extends Controller
 {
@@ -272,5 +273,52 @@ class PartnerController extends Controller
         $account->update();
         
         return redirect()->route('partner.verification')->with('message','Approve successfully');
+    }
+
+    //partner account type change request list
+    public function accountTypeChangeRequest(){
+        $partners = AccountTypeChargeRequest::join('owners','owners.id','account_type_chage_request.owner_id')
+                    ->select('account_type_chage_request.id','owners.name','owners.phone','owners.account_type',
+                            'account_type_chage_request.owner_id','account_type_chage_request.which_acount as request_for'
+                        )
+                    ->where('account_type_chage_request.status', 0)
+                    ->get();
+                    
+        return view('quicarbd.admin.partner.account_type_change_request', compact('partners'));
+    }
+    
+    //partner account type change request approve
+    public function accountTypeChangeApprove(Request $request)
+    {  
+        DB::beginTransaction();
+
+        try {
+
+            $account = AccountTypeChargeRequest::find($request->id);
+            $account->status = 1;
+            $account->update();
+
+            $owner = Owner::find($request->owner_id);
+            $owner->account_type = $request->which_acount;
+            $owner->update();
+
+            $helper = new Helper(); 
+            $id     = $owner->n_key;
+            $title  = 'Account Type Change';            
+            $msg    = 'Dear '.$owner->name.', your account type change request approve successfully. Thanks for connecting with Quicar';
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
+            $helper->smsSend($owner->phone, $msg); // sms send
+
+            DB::commit();
+            
+        } catch (Exception $ex) {
+            
+            DB::rollback();
+
+            return redirect()->route('partner.account_type_change_request')
+                            ->with('error_message','Sorry, '.$ex->getMessage());
+        }
+
+        return redirect()->route('partner.account_type_change_request')->with('message','Approve successfully');
     }
 }

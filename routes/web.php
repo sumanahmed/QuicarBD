@@ -175,6 +175,8 @@ Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){
     Route::post('/destroy', [PartnerController::class, 'destroy'])->name('partner.destroy');
     Route::get('/status-update', [PartnerController::class, 'statusUpdate'])->name('partner.status-update');
     Route::get('/verification', [PartnerController::class, 'verification'])->name('partner.verification');
+    Route::get('/account-type-change-request', [PartnerController::class, 'accountTypeChangeRequest'])->name('partner.account_type_change_request');
+    Route::get('/account-type-change-approve', [PartnerController::class, 'accountTypeChangeApprove'])->name('partner.account_type_change_approve');
 });
 
 Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
