@@ -179,7 +179,7 @@
                                                     <label for="account_status" class="control-label mb-10">Account Status <span class="text-danger" title="Required">*</span></label>                                            
                                                     <select id="account_status" name="account_status" class="form-control selectable" readonly>
                                                         <option selected disabled>Select</option>                                                            
-                                                        <option value="0" @if($partner->account_status == 6) selected @endif>Pending</option>                                                            
+                                                        <option value="0" @if($partner->account_status == 0) selected @endif>Pending</option>                                                            
                                                         <option value="1" @if($partner->account_status == 1) selected @endif>Active</option>                                                            
                                                         <option value="2" @if($partner->account_status == 2) selected @endif>Cancel</option>                                                                  
                                                     </select>

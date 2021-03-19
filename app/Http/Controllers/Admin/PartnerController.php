@@ -22,9 +22,9 @@ use DB;
 
 class PartnerController extends Controller
 {
-     //show all partner
-     public function index(){
-        $partners = Owner::orderBy('id','DESC')->get();
+    //show all partner
+    public function index(){
+        $partners = Owner::orderBy('id','DESC')->where('account_status', 1)->get();
         return view('quicarbd.admin.partner.index', compact('partners'));
     }
 
@@ -34,7 +34,7 @@ class PartnerController extends Controller
         return view('quicarbd.admin.partner.create', compact('districts'));
     }
 
-   //partner store
+    //partner store
     public function store(Request $request){ 
 
         $this->validate($request, [
@@ -105,7 +105,7 @@ class PartnerController extends Controller
         return view('quicarbd.admin.partner.edit', compact('partner','districts'));
     }
 
-   //partner update
+    //partner update
     public function update(Request $request, $id){ 
         $this->validate($request, [
             'name'      => 'required',
@@ -176,7 +176,7 @@ class PartnerController extends Controller
         }
     }
 
-   //partner details
+    //partner details
     public function details($id){
         $partner                = Owner::find($id);
         $data['partner']        = $partner;
@@ -258,10 +258,12 @@ class PartnerController extends Controller
 
     //partner details
     public function verification(){
-        $partners = AccountTypeChargeRequest::join('owners','owners.id','account_type_chage_request.owner_id')
-                    ->select('account_type_chage_request.id','owners.name','owners.phone','')
-                    ->where('account_type_chage_request.status', 0)
-                    ->get();
+        $partners = Owner::orderBy('id','DESC')
+                        ->where('account_status', 0)
+                        ->where('img', '!=', null)
+                        ->where('nid_font_pic', '!=', null)
+                        ->where('nid_back_pic', '!=', null)
+                        ->get();
         return view('quicarbd.admin.partner.verification', compact('partners'));
     }
     
@@ -312,7 +314,7 @@ class PartnerController extends Controller
             DB::commit();
             
         } catch (Exception $ex) {
-            
+
             DB::rollback();
 
             return redirect()->route('partner.account_type_change_request')
