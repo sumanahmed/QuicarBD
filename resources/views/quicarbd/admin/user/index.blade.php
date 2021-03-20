@@ -63,7 +63,7 @@
                                                     <td>{{ $user->cash_back_balance }}</td>
                                                     <td>{{ $user->account_status == 0 ? 'Off' : 'On' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#userSendNotificationModal" title="Notification" data-id="{{ $user->id }}" data-phone="{{ $user->phone }}" data-n_key="{{ $user->n_key }}"><i class="fa fa-bell"></i></a>
+                                                        <a href="#" class="btn btn-xs btn-primary" id="userSendNotification" data-toggle="modal" data-target="#userSendNotificationModal" title="Notification" data-id="{{ $user->id }}" data-phone="{{ $user->phone }}" data-n_key="{{ $user->n_key }}"><i class="fa fa-bell"></i></a>
                                                         <a href="{{ route('user.details', $user->id) }}" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
@@ -97,6 +97,7 @@
                             <label for="title" class="control-label mb-10">Title <span class="text-danger text-bold" title="Required Field">*</span></label>
                             <input type="text" name="title" id="title" class="form-control"placeholder="Enter Title" required>
                             <input type="hidden" name="n_key" id="n_key" />
+                            <input type="hidden" name="id" id="id" />
                             <input type="hidden" name="phone" id="phone" />
                             <span class="errorTitle text-danger text-bold"></span>
                         </div>

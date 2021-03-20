@@ -3,6 +3,7 @@
 $(document).on('click', '#userSendNotification', function () {
     var image = image_base_path + $(this).data('image');
     $('#userSendNotificationModal').modal('show');
+    $('#id').val($(this).data('id'));
     $('#n_key').val($(this).data('n_key'));
     $('#phone').val($(this).data('phone'));
  });
@@ -10,6 +11,7 @@ $(document).on('click', '#userSendNotification', function () {
  //user notification send
 $("#userNotificationSend").click(function(){
     var n_key       = $('#n_key').val();
+    var user_id     = $('#id').val();
     var title       = $('#title').val();
     var message     = $('#message').val();
     var notification= $('input[name=notification]:checked').val();
@@ -20,6 +22,7 @@ $("#userNotificationSend").click(function(){
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             n_key       : n_key,
+            user_id     : user_id,
             title       : title,
             message     : message,
             notification: notification,

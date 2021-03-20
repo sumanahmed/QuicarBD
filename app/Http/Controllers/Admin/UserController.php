@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Lib\Helper;
 use App\Models\RideList;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -31,9 +32,8 @@ class UserController extends Controller
     }
 
     //notification send
-    public function notificationSend(Request $request){ 
-        //  http://quicarbd.com//mobileapi/general/notification/send.php
-        
+    public function notificationSend(Request $request)
+    {         
         $validators=Validator::make($request->all(),[
             'title'   => 'required',
             'message' => 'required',
@@ -42,11 +42,17 @@ class UserController extends Controller
         if($validators->fails()){
             return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
         }else{ 
+
+            $id      = $request->n_key;
+            $title   = $request->title;
+            $body    = $request->message;
+
+            $helper = new Helper();
+            $helper->smsNotification($type = 1, $request->user_id, $title, $body); // send notification, 2=partner
+
             if($request->notification == 1){ 
                 //push notification send            
-                    $id      = $request->n_key;
-                    $title   = $request->title;
-                    $body    = $request->message;
+                    
                     $client  = new Client();
                     $client->request("GET", "http://quicarbd.com//mobileapi/general/notification/send.php?id=".$id."&title=".$title ."&body=".$body);
                 //push notification send end
@@ -55,10 +61,7 @@ class UserController extends Controller
                     'message'   => "Notification send successfully",
                 ]);
             }else{
-                //push notification send            
-                    $id      = $request->n_key;
-                    $title   = $request->title;
-                    $body    = $request->message;
+                //push notification send        
                     $client  = new Client();
                     $client->request("GET", "http://quicarbd.com//mobileapi/general/notification/send.php?id=".$id."&title=".$title ."&body=".$body);
                 //push notification send end
