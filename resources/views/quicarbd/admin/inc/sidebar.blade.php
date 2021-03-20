@@ -255,15 +255,15 @@
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#partnerPrivacy"><div class="pull-left"><span class="right-nav-text">Partner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="partnerPrivacy" class="collapse collapse-level-1 two-col-list">
-                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>1]) }}">About Us</a></li>
-                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>2]) }}">Terms of Services</a></li>
-                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>3]) }}">Privacy Policy</a></li>
-                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>4]) }}">Booking Policy</a></li>
-                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>5]) }}">Cancellation Policy</a></li>
-                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>6]) }}">Payment Policy</a></li>
-                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>7]) }}">Cashback Policy</a></li>
-                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>8]) }}">Return Policy</a></li>
-                        <li><a href="{{ route('privacy.partner.edit',['for'=>2, 'type'=>9]) }}">Tips and Trick</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>0, 'type'=>1]) }}">About Us</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>0, 'type'=>2]) }}">Terms of Services</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>0, 'type'=>3]) }}">Privacy Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>0, 'type'=>4]) }}">Booking Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>0, 'type'=>5]) }}">Cancellation Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>0, 'type'=>6]) }}">Payment Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>0, 'type'=>7]) }}">Cashback Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>0, 'type'=>8]) }}">Return Policy</a></li>
+                        <li><a href="{{ route('privacy.partner.edit',['for'=>0, 'type'=>9]) }}">Tips and Trick</a></li>
                     </ul>
                 </li>                
             </ul>

@@ -190,7 +190,7 @@ class PartnerController extends Controller
 
     //notification send
     public function notificationSend(Request $request)
-    {             
+    {          
         $validators = Validator::make($request->all(),[
             'title'   => 'required',
             'message' => 'required',
@@ -200,10 +200,13 @@ class PartnerController extends Controller
         if($validators->fails()){
             return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
         }else{ 
+
             $helper = new Helper(); 
             $id     = $request->n_key;
             $title  = $request->title;
             $body   = $request->message; 
+            
+            $helper->smsNotification($type = 2, $request->owner_id, $title, $body); // send notification, 2=partner
 
             if($request->notification == 1){      
                                   
@@ -217,7 +220,7 @@ class PartnerController extends Controller
                           
                 $id      = $request->n_key;
                 $title   = $request->title;
-                $msg    = $request->message;
+                $msg     = $request->message;
                 $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
                 $helper->smsSend($request->phone, $msg); // sms send
 
@@ -225,7 +228,7 @@ class PartnerController extends Controller
                     'status'    => 200,
                     'message'   => "Notification & SMS send successfully",
                 ]);
-            }            
+            }  
         }        
     }
 

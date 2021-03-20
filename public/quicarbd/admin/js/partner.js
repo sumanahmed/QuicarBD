@@ -1,6 +1,7 @@
 //open send notification modal
 $(document).on('click', '#sendNotification', function () {
     $('#sendNotificationModal').modal('show');
+    $('#id').val($(this).data('id'));
     $('#n_key').val($(this).data('n_key'));
     $('#phone').val($(this).data('phone'));
  });
@@ -8,6 +9,7 @@ $(document).on('click', '#sendNotification', function () {
  //destroy master category
 $("#ownerNotificationSend").click(function(){
     var n_key       = $('#n_key').val();
+    var owner_id    = $('#id').val();
     var title       = $('#title').val();
     var message     = $('#message').val();
     var notification= $('input[name=notification]:checked').val();
@@ -18,6 +20,7 @@ $("#ownerNotificationSend").click(function(){
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             n_key       : n_key,
+            owner_id    : owner_id,
             title       : title,
             message     : message,
             notification: notification,

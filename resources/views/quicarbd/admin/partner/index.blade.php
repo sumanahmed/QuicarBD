@@ -112,6 +112,7 @@
                             <label for="title" class="control-label mb-10">Title <span class="text-danger text-bold" title="Required Field">*</span></label>
                             <input type="text" name="title" id="title" class="form-control"placeholder="Enter Title" required>
                             <input type="hidden" name="n_key" id="n_key" />
+                            <input type="hidden" name="id" id="id" />
                             <input type="hidden" name="phone" id="phone" />
                             <span class="errorTitle text-danger text-bold"></span>
                         </div>
