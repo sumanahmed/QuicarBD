@@ -22,7 +22,7 @@ class HotelPackageController extends Controller
                                         ->join('city','city.id','hotel_packages.city_id')
                                         ->join('owners','owners.id','hotel_packages.owner_id')
                                         ->select('district.value as district_name','city.name as city_name',
-                                                'hotel_packages.id','hotel_packages.price',
+                                                'hotel_packages.id','hotel_packages.price', 'hotel_packages.package_status',
                                                 'hotel_packages.hotel_name','hotel_packages.status',
                                                 'owners.name as owner_name', 'owners.phone as owner_phone'
                                         );
@@ -140,10 +140,10 @@ class HotelPackageController extends Controller
         $hotel_package= HotelPackage::find($id);
         $districts  = District::all();
         $cities     = City::where('district_id', $hotel_package->district_id)->get();
-        $owners     = Owner::all();
+        $owner      = Owner::find($hotel_package->owner_id)->name;
         $property_types = PropertyType::where('status', 1)->get();
         $amenities = HotelAmenity::where('status', 1)->get();
-        return view('quicarbd.admin.package.hotel-package.edit', compact('hotel_package','districts','cities','owners','property_types','amenities'));
+        return view('quicarbd.admin.package.hotel-package.edit', compact('hotel_package','districts','cities','owner','property_types','amenities'));
     }
     
     /**
