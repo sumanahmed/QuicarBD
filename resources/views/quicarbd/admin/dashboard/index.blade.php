@@ -30,7 +30,7 @@
                                     <span class="block weight-500 txt-dark font-15">{{ $total_user_active }}</span>
                                 </li>
                                 <li>
-                                    <span class="block">Inactive</span>
+                                    <span class="block">Pending</span>
                                     <span class="block weight-500 txt-dark font-15">{{ $total_user_inactive }}</span>
                                 </li>
                             </ul>
@@ -52,7 +52,7 @@
                                     wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
-                            <ul class="flex-stat mt-5">
+                            <ul class="flex-stat cars mt-5">
                                 <li>
                                     <span class="block">Total</span>
                                     <span class="block">
@@ -64,8 +64,12 @@
                                     <span class="block weight-500 txt-dark font-15">{{ $total_partner_active }}</span>
                                 </li>
                                 <li>
-                                    <span class="block">Inactive</span>
+                                    <span class="block">Pending</span>
                                     <span class="block weight-500 txt-dark font-15">{{ $total_partner_inactive }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Hold</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_partner_hold }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -98,7 +102,7 @@
                                     <span class="block weight-500 txt-dark font-15">{{ $total_driver_active }}</span>
                                 </li>
                                 <li>
-                                    <span class="block">Inactive</span>
+                                    <span class="block">Pending</span>
                                     <span class="block weight-500 txt-dark font-15">{{ $total_driver_inactive }}</span>
                                 </li>
                             </ul>
@@ -137,7 +141,7 @@
                                 </li>
                                 <li>
                                     <span class="block">Expired</span>
-                                    <span class="block weight-500 txt-dark font-15">+14.29</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_car_expired }}</span>
                                 </li>
                                 <li>
                                     <span class="block">Unverify</span>

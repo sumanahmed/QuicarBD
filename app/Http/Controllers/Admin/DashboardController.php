@@ -19,6 +19,8 @@ class DashboardController extends Controller
      */
     public function dashboard ()
     {
+		$today  = date('Y-m-d');
+
         // user summary
     	$data['total_user'] = User::count('id');
     	$data['total_user_active'] = User::where('account_status', 1)->count('id');
@@ -28,6 +30,7 @@ class DashboardController extends Controller
     	$data['total_partner'] = Owner::count('id');
     	$data['total_partner_active'] = Owner::where('account_status', 1)->count('id');
     	$data['total_partner_inactive'] = Owner::where('account_status', 0)->count('id');
+    	$data['total_partner_hold'] = Owner::where('account_status', 2)->count('id');
 
         // driver summary
     	$data['total_driver'] = Driver::count('id');
@@ -38,6 +41,16 @@ class DashboardController extends Controller
     	$data['total_car'] = Car::count('id');
     	$data['total_car_active'] = Car::where('status', 1)->count('id');
     	$data['total_car_pending'] = Car::where('status', 0)->count('id');
+		$data['total_car_expired'] = Car::where(function($query) use ($today) {
+											return $query   ->where('tax_expired_date', '<', $today)
+															->orWhere('fitness_expired_date', '<', $today)
+															->orWhere('registration_expired_date', '<', $today)
+															->orWhere('insurance_expired_date', '<', $today);
+										}) 
+										->where('fitness_expired_date','!=','null')
+										->where('fitness_expired_date','!=','null')
+										->where('registration_expired_date','!=','null')
+										->count('id');
     	$data['total_car_unverify'] = Car::where('verify', 0)->count('id');
 
         // car package summary
