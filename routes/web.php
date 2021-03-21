@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\CancellationReasonController;
 use App\Http\Controllers\Admin\PackageReviewController;
 use App\Http\Controllers\Admin\PrivacyController;
+use App\Http\Controllers\Admin\RideController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -260,4 +261,9 @@ Route::group(['prefix'=>'/admin/banner', 'middleware' => 'admin'], function(){
 Route::group(['prefix'=>'/admin/notice', 'middleware' => 'admin'], function(){
     Route::get('/packages', [NoticeController::class, 'noticePackages'])->name('notice.packages');
     Route::post('/packages/update', [NoticeController::class, 'noticePackagesUpdate'])->name('notice.packages.update');
+});
+
+Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
+    Route::get('/upcomming', [RideController::class, 'upcoming'])->name('ride.upcoming');
+    Route::get('/bidding/{id}', [RideController::class, 'bidding'])->name('ride.bidding');
 });
