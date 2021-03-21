@@ -243,7 +243,13 @@ class PartnerController extends Controller
 
             $helper = new Helper(); 
             $id     = $partner->n_key;
-            $title  = $request->account_status == 1 ? 'Account Approved' : 'Account Pending';            
+            if ($request->account_status == 1) {
+                $title = 'Account Approved';
+            } else if ($request->account_status == 2) {
+                $title = 'Account Pending';
+            } else {
+                $title = 'Hold';
+            }
             $msg    = 'Dear '.$partner->name.', your '.$title.' successfully. Thanks for connecting with Quicar';                        
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($request->phone, $msg); // sms send
@@ -262,7 +268,10 @@ class PartnerController extends Controller
     //partner details
     public function verification(){
         $partners = Owner::orderBy('id','DESC')
-                        ->where('account_status', 0)
+                        ->where(function($query) {
+                            return $query->where('account_status', 0)
+                                        ->orWhere('account_status', 2);
+                        }) 
                         ->get();
         return view('quicarbd.admin.partner.verification', compact('partners'));
     }

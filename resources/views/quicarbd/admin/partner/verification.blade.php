@@ -68,7 +68,7 @@
                                                     @elseif($partner->account_status == 1)
                                                         <td>Approve</td>
                                                     @else
-                                                        <td>Cancel</td>
+                                                        <td>Hold</td>
                                                     @endif
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>                                                                                                               
