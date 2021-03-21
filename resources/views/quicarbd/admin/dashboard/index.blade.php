@@ -4,193 +4,301 @@
     <div class="container-fluid pt-25">
         <!-- Row -->
         <div class="row">
-            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-                <div class="panel panel-default card-view panel-refresh">
-                    <div class="refresh-container">
-                        <div class="la-anim-1"></div>
-                    </div>
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <h6 class="panel-title txt-dark">user statistics</h6>
-                        </div>
-                        <div class="pull-right">
-                            <a href="#" class="pull-left inline-block refresh mr-15">
-                                <i class="zmdi zmdi-replay"></i>
-                            </a>
-                            <a href="#" class="pull-left inline-block full-screen mr-15">
-                                <i class="zmdi zmdi-fullscreen"></i>
-                            </a>
-                            <div class="pull-left inline-block dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="zmdi zmdi-more-vert"></i></a>
-                                <ul class="dropdown-menu bullet dropdown-menu-right"  role="menu">
-                                    <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-reply" aria-hidden="true"></i>Devices</a></li>
-                                    <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-share" aria-hidden="true"></i>General</a></li>
-                                    <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-trash" aria-hidden="true"></i>Referral</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="panel-wrapper collapse in">
-                        <div class="panel-body">
-                            <div id="e_chart_1" class="" style="height:300px;"></div>
-                            <ul class="flex-stat mt-40">
-                                <li>
-                                    <span class="block">Weekly Users</span>
-                                    <span class="block txt-dark weight-500 font-18"><span class="counter-anim">3,24,222</span></span>
-                                </li>
-                                <li>
-                                    <span class="block">Monthly Users</span>
-                                    <span class="block txt-dark weight-500 font-18"><span class="counter-anim">1,23,432</span></span>
-                                </li>
-                                <li>
-                                    <span class="block">Trend</span>
-                                    <span class="block">
-                                        <i class="zmdi zmdi-trending-up txt-success font-24"></i>
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                <div class="panel panel-default card-view">
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <h6 class="panel-title txt-dark">browser stats</h6>
-                        </div>
-                        <div class="pull-right">
-                            <a href="#" class="pull-left inline-block mr-15">
-                                <i class="zmdi zmdi-download"></i>
-                            </a>
-                            <a href="#" class="pull-left inline-block close-panel" data-effect="fadeOut">
-                                <i class="zmdi zmdi-close"></i>
-                            </a>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="panel-wrapper collapse in">
-                        <div class="panel-body">
-                            <div>
-                                <span class="pull-left inline-block capitalize-font txt-dark">
-                                    google chrome
-                                </span>
-                                <span class="label label-warning pull-right">50%</span>
-                                <div class="clearfix"></div>
-                                <hr class="light-grey-hr row mt-10 mb-10"/>
-                                <span class="pull-left inline-block capitalize-font txt-dark">
-                                    mozila firefox
-                                </span>
-                                <span class="label label-danger pull-right">10%</span>
-                                <div class="clearfix"></div>
-                                <hr class="light-grey-hr row mt-10 mb-10"/>
-                                <span class="pull-left inline-block capitalize-font txt-dark">
-                                    Internet explorer
-                                </span>
-                                <span class="label label-success pull-right">30%</span>
-                                <div class="clearfix"></div>
-                                <hr class="light-grey-hr row mt-10 mb-10"/>
-                                <span class="pull-left inline-block capitalize-font txt-dark">
-                                    safari
-                                </span>
-                                <span class="label label-primary pull-right">10%</span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>	
-                    </div>
-                </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                 <div class="panel panel-default card-view">
                     <div class="panel-wrapper collapse in">
                         <div class="panel-body sm-data-box-1">
-                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">customer satisfaction</span>	
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">User</span> 
                             <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
-                                <span class="counter-anim">93.13</span><span>%</span>
+                                <span class="counter-anim">{{ $total_user }}</span>
                             </div>
                             <div class="progress-anim mt-20">
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-primary
-                                    wow animated progress-animated" role="progressbar" aria-valuenow="93.12" aria-valuemin="0" aria-valuemax="100"></div>
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <ul class="flex-stat mt-5">
                                 <li>
-                                    <span class="block">Previous</span>
-                                    <span class="block weight-500 txt-dark font-15">79.82</span>
-                                </li>
-                                <li>
-                                    <span class="block">% Change</span>
-                                    <span class="block weight-500 txt-dark font-15">+14.29</span>
-                                </li>
-                                <li>
-                                    <span class="block">Trend</span>
+                                    <span class="block">Total</span>
                                     <span class="block">
-                                        <i class="zmdi zmdi-trending-up txt-dark font-20"></i>
+                                        <i class=" txt-dark font-20">{{ $total_user }}</i>
                                     </span>
+                                </li>
+                                <li>
+                                    <span class="block">Active</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_user_active }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Inactive</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_user_inactive }}</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
-                <div class="panel panel-default card-view panel-refresh">
-                    <div class="refresh-container">
-                        <div class="la-anim-1"></div>
-                    </div>
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <h6 class="panel-title txt-dark">Visit by Traffic Types</h6>
-                        </div>
-                        <div class="pull-right">
-                            <a href="#" class="pull-left inline-block refresh mr-15">
-                                <i class="zmdi zmdi-replay"></i>
-                            </a>
-                            <div class="pull-left inline-block dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="zmdi zmdi-more-vert"></i></a>
-                                <ul class="dropdown-menu bullet dropdown-menu-right"  role="menu">
-                                    <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-reply" aria-hidden="true"></i>Devices</a></li>
-                                    <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-share" aria-hidden="true"></i>General</a></li>
-                                    <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-trash" aria-hidden="true"></i>Referral</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
                     <div class="panel-wrapper collapse in">
-                        <div class="panel-body">
-                            <div id="e_chart_2" class="" style="height:202px;"></div>
-                            <hr class="light-grey-hr row mt-10 mb-15"/>
-                            <div class="label-chatrs">
-                                <div class="">
-                                    <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span class="block font-15 weight-500 mb-5">44.46% organic</span><span class="block txt-grey">356 visits</span></span>
-                                    <div id="sparkline_1" class="sp-small-chart pull-right" ></div>
-                                    <div class="clearfix"></div>
+                        <div class="panel-body sm-data-box-1">
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Partner</span> 
+                            <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
+                                <span class="counter-anim">{{ $total_partner }}</span>
+                            </div>
+                            <div class="progress-anim mt-20">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
-                            <hr class="light-grey-hr row mt-10 mb-15"/>
-                            <div class="label-chatrs">
-                                <div class="">
-                                    <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span class="block font-15 weight-500 mb-5">5.54% Refrral</span><span class="block txt-grey">36 visits</span></span>
-                                    <div id="sparkline_2" class="sp-small-chart pull-right" ></div>
-                                    <div class="clearfix"></div>
+                            <ul class="flex-stat mt-5">
+                                <li>
+                                    <span class="block">Total</span>
+                                    <span class="block">
+                                        <i class=" txt-dark font-20">{{ $total_partner }}</i>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="block">Active</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_partner_active }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Inactive</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_partner_inactive }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body sm-data-box-1">
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Driver</span> 
+                            <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
+                                <span class="counter-anim">{{ $total_driver }}</span>
+                            </div>
+                            <div class="progress-anim mt-20">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
-                            <hr class="light-grey-hr row mt-10 mb-15"/>
-                            <div class="label-chatrs">
-                                <div class="">
-                                    <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span class="block font-15 weight-500 mb-5">50% Other</span><span class="block txt-grey">245 visits</span></span>
-                                    <div id="sparkline_3" class="sp-small-chart pull-right" ></div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>	
+                            <ul class="flex-stat mt-5">
+                                <li>
+                                    <span class="block">Total</span>
+                                    <span class="block">
+                                        <i class=" txt-dark font-20">{{ $total_driver }}</i>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="block">Active</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_driver_active }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Inactive</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_driver_inactive }}</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- /Row -->
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body sm-data-box-1">
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Cars</span> 
+                            <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
+                                <span class="counter-anim">{{ $total_car }}</span>
+                            </div>
+                            <div class="progress-anim mt-20">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <ul class="flex-stat cars mt-5">
+                                <li>
+                                    <span class="block">Active</span>
+                                    <span class="block">
+                                        <i class=" txt-dark font-20">{{ $total_car_active }}</i>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="block">Pending</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_car_pending }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Expired</span>
+                                    <span class="block weight-500 txt-dark font-15">+14.29</span>
+                                </li>
+                                <li>
+                                    <span class="block">Unverify</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_car_unverify }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body sm-data-box-1">
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Car Package</span> 
+                            <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
+                                <span class="counter-anim">{{ $car_package }}</span>
+                            </div>
+                            <div class="progress-anim mt-20">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <ul class="flex-stat cars mt-5">
+                                <li>
+                                    <span class="block">Total</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $car_package }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Active</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $car_package_active }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Pending</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $car_package_pending }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Unverify</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $car_package_unverify }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body sm-data-box-1">
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Hotel Package</span> 
+                            <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
+                                <span class="counter-anim">{{ $hotel_package }}</span>
+                            </div>
+                            <div class="progress-anim mt-20">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <ul class="flex-stat cars mt-5">
+                                <li>
+                                    <span class="block">Total</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $hotel_package }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Active</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $hotel_package_active }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Pending</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $hotel_package_pending }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Unverify</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $hotel_package_unverify }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body sm-data-box-1">
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Travel Package</span> 
+                            <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
+                                <span class="counter-anim">{{ $travel_package }}</span>
+                            </div>
+                            <div class="progress-anim mt-20">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <ul class="flex-stat mt-5">
+                                <li>
+                                    <span class="block">Total</span>
+                                    <span class="block">
+                                        <i class=" txt-dark font-20">{{ $travel_package }}</i>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="block">Active</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $travel_package_active }}</span>
+                                </li>
+                                <li>
+                                    <span class="block">Pending</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $travel_package_pending }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body sm-data-box-1">
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Ride Bid</span> 
+                            <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
+                                <span class="counter-anim">100</span>
+                            </div>
+                            <div class="progress-anim mt-20">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <ul class="flex-stat cars mt-5">
+                                <li>
+                                    <span class="block">Total Bid</span>
+                                    <span class="block">
+                                        <i class=" txt-dark font-20">100</i>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="block">Complete Ride</span>
+                                    <span class="block weight-500 txt-dark font-15">79.82</span>
+                                </li>
+                                <li>
+                                    <span class="block">Cancel Ride</span>
+                                    <span class="block weight-500 txt-dark font-15">+14.29</span>
+                                </li>
+                                <li>
+                                    <span class="block">Pending Bid</span>
+                                    <span class="block weight-500 txt-dark font-15">14.29</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <!-- Row -->
         <div class="row">
@@ -215,7 +323,8 @@
                     </div>
                 </div>
             </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                 <div class="panel panel-default card-view pa-0">
                     <div class="panel-wrapper collapse in">
                         <div class="panel-body pa-0">
