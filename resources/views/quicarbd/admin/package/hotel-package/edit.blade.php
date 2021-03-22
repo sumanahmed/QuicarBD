@@ -96,7 +96,7 @@
                                         @if($errors->has('propertyType'))
                                             <span class="text-danger"> {{ $errors->first('propertyType') }}</span>
                                         @endif
-                                    </div>
+                                    </div>o
                                 </div>
                                 <div class="col-md-4">                                        
                                     <div class="form-group">
@@ -138,7 +138,7 @@
                                     <div class="form-group">
                                         <label for="owner_id" class="control-label mb-10"> Partner <span class="text-danger" title="Required">*</span></label>
                                         <select id="owner_id" name="owner_id" class="form-control" required>
-                                            <option value="$hotel_package->owner_id" selected>{{ $owner }}</option>
+                                            <option value="{{ $hotel_package->owner_id }}" selected>{{ $owner }}</option>
                                         </select>
                                         @if($errors->has('owner_id'))
                                             <span class="text-danger"> {{ $errors->first('owner_id') }}</span>

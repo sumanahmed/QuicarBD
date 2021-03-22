@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Bidding')
+@section('title','Cancel Ride')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -11,7 +11,7 @@
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Car Rent</a></li>
-            <li class="active"><span>Ride Bidding</span></li>
+            <li class="active"><span>Cancel Ride</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -23,7 +23,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">All Bid</h6>
+                        <h6 class="panel-title txt-dark">All Cancel Ride</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -34,39 +34,38 @@
                                 <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
-                                            <th>Driver</th>
-                                            <th>Car</th>
-                                            <th>Bid Amount</th>
-                                            <th>Quicar Charge</th>
-                                            <th>Owner Get</th>
-                                            <th>Status</th>
+                                            <th>User</th>
+                                            <th>Starting Area</th>
+                                            <th>Destination Area</th>
+                                            <th>Payment Status</th>
+                                            <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Driver</th>
-                                            <th>Car</th>
-                                            <th>Bid Amount</th>
-                                            <th>Quicar Charge</th>
-                                            <th>Owner Get</th>
-                                            <th>Status</th>
+                                            <th>User</th>
+                                            <th>Starting Area</th>
+                                            <th>Destination Area</th>
+                                            <th>Payment Status</th>
+                                            <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="partnerData">
-                                        @if(isset($biddings) && count($biddings) > 0)
-                                            @foreach($biddings as $bidding)
-                                                <tr class="partner-{{ $bidding->id }}">
-                                                    <td>{{ $bidding->driver_name }} <br/>{{ $bidding->driver_phone }}</td>
-                                                    <td>{{ $bidding->carRegisterNumber }}</td>
-                                                    <td>{{ $bidding->bit_amount }}</td>
-                                                    <td>{{ $bidding->quicar_charge }}</td>
-                                                    <td>{{ $bidding->you_get }}</td>
-                                                    <td>{{ getStatus($bidding->status) }}</td>
+                                        @if(isset($rides) && count($rides) > 0)
+                                            @foreach($rides as $ride)
+                                                <tr class="partner-{{ $ride->id }}">
+                                                    <td>{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</td>
+                                                    <td>{{ $ride->startig_area }}</td>
+                                                    <td>{{ $ride->destination_area }}</td>
+                                                    <td>{{ $ride->payment_status == 1 ? 'Unpaid' : 'Paid' }}</td>
+                                                    <td style="vertical-align: middle;text-align: center;">
+                                                        <a href="{{ route('ride.bidding', $ride->id) }}" class="btn btn-xs btn-info" title="Bidding"><i class="fa fa-eye"></i></a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="4" class="text-center">No Data Found</td>
+                                                <td colspan="6" class="text-center">No Data Found</td>
                                             </tr>
                                         @endif
                                     </tbody>
@@ -77,21 +76,8 @@
                 </div>
             </div>	
         </div>
-    </div>       
+    </div>
 </div>
-@php 
-    function getStatus($status) {
-       if ($status == 0) {
-        echo 'Request Send';
-       } else if ($status == 1) {
-        echo 'Request Accept';
-       } else if ($status == 2) {
-        echo 'Request Cancel';
-       } else if ($status == 3) {
-        echo 'Complete';
-       }
-    }
-@endphp
 @endsection
 @section('scripts')
     <script>

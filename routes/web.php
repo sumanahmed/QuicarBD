@@ -264,6 +264,9 @@ Route::group(['prefix'=>'/admin/notice', 'middleware' => 'admin'], function(){
 });
 
 Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
-    Route::get('/upcomming', [RideController::class, 'upcoming'])->name('ride.upcoming');
+    Route::get('/upcoming', [RideController::class, 'upcoming'])->name('ride.upcoming');
+    Route::get('/ongoing', [RideController::class, 'ongoing'])->name('ride.ongoing');
+    Route::get('/complete', [RideController::class, 'complete'])->name('ride.complete');
+    Route::get('/cancel', [RideController::class, 'cancel'])->name('ride.cancel');
     Route::get('/bidding/{id}', [RideController::class, 'bidding'])->name('ride.bidding');
 });
