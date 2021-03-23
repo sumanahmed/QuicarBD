@@ -1,7 +1,11 @@
 <?php
 namespace App\Http\Lib;
 
+use App\Models\CarType;
+use App\Models\City;
+use App\Models\District;
 use App\Models\OwnerNotification;
+use App\Models\User;
 use App\Models\UserNotification;
 use GuzzleHttp\Client;
 
@@ -49,5 +53,37 @@ class Helper
             $partnerNofification->description = $msg; 
             $partnerNofification->save(); 
         }
+    }
+
+    /**
+     * get district
+    */
+    public function getDistrict($id) 
+    {
+        return District::find($id)->value;
+    }
+
+    /**
+     * get city
+    */
+    public function getCity($id) 
+    {
+        return City::find($id)->name;
+    }
+
+    /**
+     * get city
+    */
+    public function getCarType($id) 
+    {
+        return CarType::find($id)->name;
+    }
+
+    /**
+     * get city
+    */
+    public function getUser($id) 
+    {
+        return User::find($id)->name;
     }
 }

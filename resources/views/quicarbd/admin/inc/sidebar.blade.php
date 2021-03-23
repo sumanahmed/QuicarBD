@@ -162,6 +162,7 @@
         <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#carRent"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Car Rent</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="carRent" class="collapse collapse-level-1 two-col-list">
+                <li><a href="{{ route('ride.bid_request') }}">Bid Request</a></li>
                 <li><a href="{{ route('ride.upcoming') }}">Upcoming Bid</a></li>
                 <li><a href="{{ route('ride.ongoing') }}">Ongoing Ride</a></li>
                 <li><a href="{{ route('ride.complete') }}">Completed Trip</a></li>
