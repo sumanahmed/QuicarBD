@@ -124,7 +124,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="phone" class="control-label mb-10">Payment Complete Time</label>                                            
-                                                    <input type="phone" id="phone" value="{{ date('Y-m-d H:i:s a', strtotime($ride->payment_complete_time)) }}" class="form-control" readonly>
+                                                    <input type="phone" id="phone" @if($ride->payment_complete_time != null) value="{{ date('Y-m-d H:i:s a', strtotime($ride->payment_complete_time)) }}" @endif class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -142,7 +142,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="phone" class="control-label mb-10">Accepted Bidding Time</label>                                            
-                                                    <input type="phone" id="phone" value="{{ date('Y-m-d H:i:s a', strtotime($ride->accepted_bitting_time)) }}" class="form-control" readonly>
+                                                    <input type="phone" id="phone" @if($ride->accepted_bitting_time != null) value="{{ date('Y-m-d H:i:s a', strtotime($ride->accepted_bitting_time)) }}" @endif class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">

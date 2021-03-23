@@ -37,21 +37,25 @@
                                 <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
+                                            <th>Booking Date</th>
+                                            <th>Travel Date</th>
                                             <th>User</th>
-                                            <th>Start Time</th>
-                                            <th>Starting Area</th>
-                                            <th>Destination Area</th>
-                                            <th>Payment Status</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Car Type</th>
+                                            <th>Trip Type</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Booking Date</th>
+                                            <th>Travel Date</th>
                                             <th>User</th>
-                                            <th>Start Time</th>
-                                            <th>Starting Area</th>
-                                            <th>Destination Area</th>
-                                            <th>Payment Status</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Car Type</th>
+                                            <th>Trip Type</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -59,13 +63,16 @@
                                         @if(isset($rides) && count($rides) > 0)
                                             @foreach($rides as $ride)
                                                 <tr class="partner-{{ $ride->id }}">
+                                                    <td>{{ date('Y-m-d', strtotime($ride->created_at)) }}</td>                                                  
                                                     <td>{{ date('Y-m-d', strtotime($ride->start_time)) }}</td>
-                                                    <td>{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</td>
-                                                    <td>{{ $ride->startig_area }}</td>
-                                                    <td>{{ $ride->destination_area }}</td>
-                                                    <td>{{ $ride->payment_status == 1 ? 'Unpaid' : 'Paid' }}</td>
+                                                    <td><a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a></td>  
+                                                    <td>{{ $helper->getDistrict($ride->starting_district).",".$helper->getCity($ride->starting_city).",".$ride->startig_area }}</td>
+                                                    <td>{{ $helper->getDistrict($ride->destination_district).",".$helper->getCity($ride->destination_city).",".$ride->destination_area }}</td>
+                                                    <td>{{ $helper->getCarType($ride->car_type) }}</td>
+                                                    <td>{{ $ride->rown_way == 0 ? 'No' : 'Round Way' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('ride.bidding', $ride->id) }}" class="btn btn-xs btn-info" title="Bidding"><i class="fa fa-eye"></i></a>
+                                                        <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                        <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -84,6 +91,33 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="showCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="district_id" class="control-label mb-10">District <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <select id="district_id" class="form-control" required>
+                                <option selected disabled>Reason</option>                                
+                                <option value="1">Reason One</option>                                
+                                <option value="2">Reason Two</option>                                
+                            </select>
+                            <span class="text-danger districtError"></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="create">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('scripts')
     <script>

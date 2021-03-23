@@ -15,12 +15,17 @@ class RideController extends Controller
   public function bidRequest(){
     $rides = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
-                ->select('ride_list.id','ride_list.startig_area', 'ride_list.destination_area','ride_list.payment_status',
-                        'users.name as user_name','users.phone as user_phone')
+                ->leftjoin('ride_biting','ride_list.id','ride_biting.ride_id')
+                ->select('ride_list.id','ride_list.created_at',
+                        'ride_list.starting_district','ride_list.starting_city','ride_list.startig_area', 
+                        'ride_list.destination_district','ride_list.destination_city','ride_list.destination_area',
+                        'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
+                        'users.name as user_name','users.phone as user_phone'
+                )
                 ->where('ride_list.status', 1)
                 ->orderBy('ride_list.id','DESC')
                 ->get();
-                        
+    
     return view('quicarbd.admin.ride.bid_request', compact('rides'));
   }
   /**
@@ -28,13 +33,21 @@ class RideController extends Controller
   */
   public function upcoming(){
     $rides = DB::table('ride_list')
-                ->join('users','ride_list.user_id','users.id')
-                ->select('ride_list.id','ride_list.startig_area', 'ride_list.destination_area','ride_list.payment_status',
-                        'users.name as user_name','users.phone as user_phone')
-                ->where('ride_list.status', 4)
-                ->where('ride_list.accepted_ride_bitting_id', '!=', null)
-                ->orderBy('ride_list.id','DESC')
-                ->get();
+            ->join('users','ride_list.user_id','users.id')
+            ->join('ride_biting','ride_list.id','ride_biting.accepted_ride_bitting_id')
+            ->join('owners','ride_biting.owner_id','owners.id')
+            ->join('drivers','ride_biting.driver_id','owners.id')
+            ->select('ride_list.id','ride_list.created_at',                    
+                    'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
+                    'users.name as user_name','users.phone as user_phone',
+                    'owners.name as owner_name','owners.phone as owner_phone',
+                    'drivers.name as driver_name','drivers.phone as driver_phone',
+                    'ride_biting.bit_amount'
+            )
+            ->where('ride_list.status', 4)
+            ->where('ride_list.accepted_ride_bitting_id', '!=', null)
+            ->orderBy('ride_list.id','DESC')
+            ->get();
                         
     return view('quicarbd.admin.ride.upcoming', compact('rides'));
   }
