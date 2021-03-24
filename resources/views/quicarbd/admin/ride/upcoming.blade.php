@@ -31,7 +31,7 @@
                     <div class="panel-body">
                         <div class="table-wrap">
                             <div class="table-responsive">
-                            <table id="datable_1" class="table table-hover display pb-30" >
+                                <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
                                             <th>Booking Date</th>
@@ -64,7 +64,13 @@
                                                     <td>{{ date('Y-m-d', strtotime($ride->start_time)) }}</td>
                                                     <td><a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a></td>  
                                                     <td><a href="{{ route('partner.details', $ride->owner_id) }}">{{ $ride->owner_name }} <br/>{{ $ride->owner_phone }}</a></td>  
-                                                    <td><a href="{{ route('driver.details', $ride->driver_id) }}">{{ $ride->driver_name }} <br/>{{ $ride->driver_phone }}</a></td>  
+                                                    <td>
+                                                        @if($ride->driver_id != null)
+                                                            {{ $ride->driver_name }} <br/>{{ $ride->driver_phone }}
+                                                        @else
+                                                            Not Assigned
+                                                        @endif
+                                                    </td>  
                                                     <td>{{ $ride->bit_amount }}</td>
                                                     <td>{{ $ride->rown_way == 0 ? 'No' : 'Round Way' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
@@ -88,8 +94,38 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="showCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="reason" class="control-label mb-10">District <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <select id="reason" class="form-control" required>
+                            <option selected disabled>Reason</option>                                
+                            @foreach($reasons as $reason)                                
+                                <option value="{{ $reason->name }}">{{ $reason->name }}</option>     
+                            @endforeach  
+                            <input type="hidden" name="ride_id" id="ride_id"/>                         
+                        </select>
+                        <span class="text-danger reasonError"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="sendReason">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('scripts')
+	<script src="{{ asset('quicarbd/admin/js/reason.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

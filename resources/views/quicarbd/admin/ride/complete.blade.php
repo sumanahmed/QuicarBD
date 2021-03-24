@@ -34,19 +34,29 @@
                                 <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
+                                            <th>Booking Date</th>
+                                            <th>Travel Date</th>
                                             <th>User</th>
-                                            <th>Starting Area</th>
-                                            <th>Destination Area</th>
-                                            <th>Payment Status</th>
+                                            <th>Partner</th>
+                                            <th>Review</th>
+                                            <th>Driver</th>
+                                            <th>Price</th>
+                                            <th>Car Type</th>
+                                            <th>Trip Type</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Booking Date</th>
+                                            <th>Travel Date</th>
                                             <th>User</th>
-                                            <th>Starting Area</th>
-                                            <th>Destination Area</th>
-                                            <th>Payment Status</th>
+                                            <th>Partner</th>
+                                            <th>Review</th>
+                                            <th>Driver</th>
+                                            <th>Price</th>
+                                            <th>Car Type</th>
+                                            <th>Trip Type</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -54,12 +64,17 @@
                                         @if(isset($rides) && count($rides) > 0)
                                             @foreach($rides as $ride)
                                                 <tr class="partner-{{ $ride->id }}">
-                                                    <td>{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</td>
-                                                    <td>{{ $ride->startig_area }}</td>
-                                                    <td>{{ $ride->destination_area }}</td>
-                                                    <td>{{ $ride->payment_status == 1 ? 'Unpaid' : 'Paid' }}</td>
+                                                    <td>{{ date('Y-m-d', strtotime($ride->created_at)) }}</td>                                                  
+                                                    <td>{{ date('Y-m-d', strtotime($ride->start_time)) }}</td>
+                                                    <td><a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a></td>  
+                                                    <td><a href="{{ route('partner.details', $ride->owner_id) }}">{{ $ride->owner_name }} <br/>{{ $ride->owner_phone }}</a></td>  
+                                                    <td>{{ $ride->review_give != 0 ? $ride->review_give != 0 : '' }}</td>
+                                                    <td>{{ $ride->driver_name }} <br/>{{ $ride->driver_phone }}</td>  
+                                                    <td>{{ $ride->bit_amount }}</td>
+                                                    <td>{{ $helper->getCarType($ride->car_type) }}</td>
+                                                    <td>{{ $ride->rown_way == 0 ? 'No' : 'Round Way' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('ride.bidding', $ride->id) }}" class="btn btn-xs btn-info" title="Bidding"><i class="fa fa-eye"></i></a>
+                                                        <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>                                                       
                                                     </td>
                                                 </tr>
                                             @endforeach

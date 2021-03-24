@@ -68,13 +68,14 @@
                                                     <td>{{ $bidding->you_get }}</td>
                                                     <td>{{ getStatus($bidding->status) }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('ride.details', $bidding->ride_id) }}" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                        <a href="{{ route('ride.details', $bidding->ride_id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                        <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-id="{{ $bidding->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="4" class="text-center">No Data Found</td>
+                                                <td colspan="8" class="text-center">No Data Found</td>
                                             </tr>
                                         @endif
                                     </tbody>
@@ -86,6 +87,33 @@
             </div>	
         </div>
     </div>       
+</div>
+<div class="modal fade" id="showCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="district_id" class="control-label mb-10">District <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <select id="district_id" class="form-control" required>
+                            <option selected disabled>Reason</option>                                
+                            <option value="1">Reason One</option>                                
+                            <option value="2">Reason Two</option>                                
+                        </select>
+                        <span class="text-danger districtError"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="create">Save</button>
+            </div>
+        </div>
+    </div>
 </div>
 @php 
     function getStatus($status) {

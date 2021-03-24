@@ -271,4 +271,5 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::get('/cancel', [RideController::class, 'cancel'])->name('ride.cancel');
     Route::get('/bidding/{id}', [RideController::class, 'bidding'])->name('ride.bidding');
     Route::get('/details/{ride_id}', [RideController::class, 'details'])->name('ride.details');
+    Route::post('/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');
 });

@@ -34,32 +34,50 @@
                                 <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
+                                            <th>Booking Date</th>
+                                            <th>Travel Date</th>
                                             <th>User</th>
-                                            <th>Starting Area</th>
-                                            <th>Destination Area</th>
-                                            <th>Payment Status</th>
+                                            <th>Partner</th>
+                                            <th>Cancel By</th>
+                                            <th>Total Cancel</th>
+                                            <th>Reason</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Booking Date</th>
+                                            <th>Travel Date</th>
                                             <th>User</th>
-                                            <th>Starting Area</th>
-                                            <th>Destination Area</th>
-                                            <th>Payment Status</th>
+                                            <th>Partner</th>
+                                            <th>Cancel By</th>
+                                            <th>Total Cancel</th>
+                                            <th>Reason</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="partnerData">
                                         @if(isset($rides) && count($rides) > 0)
                                             @foreach($rides as $ride)
+                                                @php 
+                                                    if ($ride->cancel_by == 0) {
+                                                        $cancelBy = 'Partner';
+                                                        $total_cancel = 0;
+                                                    } else {
+                                                        $cancelBy = 'User';
+                                                        $total_cancel = \App\Model\RideList::where('user_id', $ride->user_id)->count('id');
+                                                    }
+                                                @endphp
                                                 <tr class="partner-{{ $ride->id }}">
-                                                    <td>{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</td>
-                                                    <td>{{ $ride->startig_area }}</td>
-                                                    <td>{{ $ride->destination_area }}</td>
-                                                    <td>{{ $ride->payment_status == 1 ? 'Unpaid' : 'Paid' }}</td>
+                                                    <td>{{ date('Y-m-d', strtotime($ride->created_at)) }}</td>                                                  
+                                                    <td>{{ date('Y-m-d', strtotime($ride->start_time)) }}</td>
+                                                    <td><a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a></td>  
+                                                    <td><a href="{{ route('partner.details', $ride->owner_id) }}">{{ $ride->owner_name }} <br/>{{ $ride->owner_phone }}</a></td>  
+                                                    <td>{{ $cancelBy }}</td>
+                                                    <td>{{ $total_cancel }}</td>
+                                                    <td>reason</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('ride.bidding', $ride->id) }}" class="btn btn-xs btn-info" title="Bidding"><i class="fa fa-eye"></i></a>
+                                                        <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>                                                       
                                                     </td>
                                                 </tr>
                                             @endforeach
