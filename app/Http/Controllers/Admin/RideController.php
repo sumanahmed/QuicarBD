@@ -26,6 +26,7 @@ class RideController extends Controller
                         'users.name as user_name','users.phone as user_phone'
                 )
                 ->where('ride_list.status', 1)
+                ->where('ride_list.payment_status', 0)
                 ->orderBy('ride_list.id','DESC')
                 ->get();
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();
@@ -48,6 +49,7 @@ class RideController extends Controller
                     'ride_biting.bit_amount','ride_biting.owner_id', 'ride_biting.driver_id'
             )
             ->where('ride_list.status', 4)
+            ->where('ride_list.payment_status', 1)
             ->where('ride_list.accepted_ride_bitting_id', '!=', null)
             ->orderBy('ride_list.id','DESC')
             ->get();                   
@@ -146,8 +148,8 @@ class RideController extends Controller
     * show ride details
   */
   public function details($ride_id){
-      $ride = RideList::find($ride_id);                          
-      return view('quicarbd.admin.ride.details', compact('ride'));
+    $ride = RideList::find($ride_id);                      
+    return view('quicarbd.admin.ride.details', compact('ride'));
   }
 
   /**

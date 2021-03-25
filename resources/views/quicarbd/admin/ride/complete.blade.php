@@ -1,6 +1,9 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Complete Ride')
 @section('content')
+@php 
+    $helper = new App\Http\Lib\Helper;
+@endphp
 <div class="container-fluid">				
 	<!-- Title -->
     <div class="row heading-bg">

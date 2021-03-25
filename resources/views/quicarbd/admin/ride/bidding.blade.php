@@ -35,8 +35,8 @@
                                     <thead>
                                         <tr>
                                             <th>Partner</th>
-                                            <th>Driver</th>
                                             <th>Car</th>
+                                            <th>Next Booking</th>
                                             <th>Bid Amount</th>
                                             <th>Quicar Charge</th>
                                             <th>Owner Get</th>
@@ -47,8 +47,8 @@
                                     <tfoot>
                                         <tr>
                                             <th>Partner</th>
-                                            <th>Driver</th>
                                             <th>Car</th>
+                                            <th>Next Booking</th>
                                             <th>Bid Amount</th>
                                             <th>Quicar Charge</th>
                                             <th>Owner Get</th>
@@ -59,10 +59,16 @@
                                     <tbody id="partnerData">
                                         @if(isset($biddings) && count($biddings) > 0)
                                             @foreach($biddings as $bidding)
+                                                @php 
+                                                    $next_booking = \App\Models\RideBiting::where('owner_id', $bidding->owner_id)
+                                                                        ->where('ride_id', '!=', $bidding->ride_id)
+                                                                        ->where('status', 1)
+                                                                        ->count('id');
+                                                @endphp
                                                 <tr class="partner-{{ $bidding->id }}">
                                                     <td>{{ $bidding->owner_name }} <br/>{{ $bidding->owner_phone }}</td>
-                                                    <td>{{ $bidding->driver_name }} <br/>{{ $bidding->driver_phone }}</td>
                                                     <td>{{ $bidding->carRegisterNumber }}</td>
+                                                    <td>{{ $next_booking }}</td>
                                                     <td>{{ $bidding->bit_amount }}</td>
                                                     <td>{{ $bidding->quicar_charge }}</td>
                                                     <td>{{ $bidding->you_get }}</td>
