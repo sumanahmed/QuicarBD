@@ -209,6 +209,9 @@
                 </div>
             @endif	
             @if($ride->status == 2) 
+                @php 
+                    $cancel_reason = \App\Models\BidCancelList::find($ride->cancellation_id)->name;
+                @endphp
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
                         <div class="pull-left">
@@ -223,12 +226,6 @@
                                     <div class="form-wrap">
                                         <div class="form-body">     
                                             <div class="row">
-                                                <div class="col-md-4">                                        
-                                                    <div class="form-group">
-                                                        <label for="name" class="control-label mb-10">Ride Amount</label>
-                                                        <input type="text" id="name" name="name" value="{{ $ride_detail->bit_amount }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="phone" class="control-label mb-10">Cancel By</label>                                            
@@ -237,22 +234,42 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Quicar Charge</label>                                            
-                                                        <input type="phone" id="phone" value="{{ $ride_detail->quicar_charge }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">                                        
-                                                    <div class="form-group">
-                                                        <label for="name" class="control-label mb-10">Partner Get</label>
-                                                        <input type="text" id="name" name="name" value="{{ $ride_detail->you_get }}" class="form-control" readonly>
+                                                        <label for="phone" class="control-label mb-10">Cancel Reason</label>                                            
+                                                        <input type="phone" id="phone" value="{{ $cancel_reason }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="review_give" class="control-label mb-10">Review</label>                                            
-                                                        <input type="phone" id="review_give" @if($ride->review_give != 0) value="{{ $ride->review_give }}" @else value="No Review" @endif class="form-control" readonly>
+                                                        <label for="phone" class="control-label mb-10">Cancel Date & Time</label>                                            
+                                                        <input type="phone" id="phone" value="{{ date('Y-m-d H:i:s a', strtotime($ride->cancellation_time)) }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
+                                                @if($ride_detail != null)
+                                                    <div class="col-md-4">                                        
+                                                        <div class="form-group">
+                                                            <label for="name" class="control-label mb-10">Ride Amount</label>
+                                                            <input type="text" id="name" name="name" value="{{ $ride_detail->bit_amount }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="phone" class="control-label mb-10">Quicar Charge</label>                                            
+                                                            <input type="phone" id="phone" value="{{ $ride_detail->quicar_charge }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">                                        
+                                                        <div class="form-group">
+                                                            <label for="name" class="control-label mb-10">Partner Get</label>
+                                                            <input type="text" id="name" name="name" value="{{ $ride_detail->you_get }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="review_give" class="control-label mb-10">Review</label>                                            
+                                                            <input type="phone" id="review_give" @if($ride->review_give != 0) value="{{ $ride->review_give }}" @else value="No Review" @endif class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

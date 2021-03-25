@@ -110,7 +110,7 @@ class RideController extends Controller
   public function cancel(){
     $rides = DB::table('ride_list')
                   ->join('users','ride_list.user_id','users.id')
-                  ->join('ride_biting','ride_list.id','ride_biting.ride_id')
+                  ->leftjoin('ride_biting','ride_list.id','ride_biting.ride_id')
                   ->leftjoin('owners','ride_biting.owner_id','owners.id')
                   ->select('ride_list.id','ride_list.created_at', 'ride_list.cancel_by',
                           'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
@@ -119,10 +119,8 @@ class RideController extends Controller
                           'ride_biting.bit_amount','ride_biting.owner_id', 'ride_biting.driver_id'
                   )
                 ->where('ride_list.status', 2)
-                ->where('ride_list.accepted_ride_bitting_id', '!=', null)
                 ->orderBy('ride_list.id','DESC')
-                ->get();
-                        
+                ->get();             
     return view('quicarbd.admin.ride.cancel', compact('rides'));
   }
 

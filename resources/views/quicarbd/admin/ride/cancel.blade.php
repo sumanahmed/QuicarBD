@@ -61,18 +61,26 @@
                                             @foreach($rides as $ride)
                                                 @php 
                                                     if ($ride->cancel_by == 0) {
-                                                        $cancelBy = 'Partner';
+                                                        $cancelBy = 'User';
                                                         $total_cancel = 0;
                                                     } else {
-                                                        $cancelBy = 'User';
+                                                        $cancelBy = 'Parner';
                                                         $total_cancel = \App\Model\RideList::where('user_id', $ride->user_id)->count('id');
                                                     }
                                                 @endphp
                                                 <tr class="partner-{{ $ride->id }}">
                                                     <td>{{ date('Y-m-d', strtotime($ride->created_at)) }}</td>                                                  
                                                     <td>{{ date('Y-m-d', strtotime($ride->start_time)) }}</td>
-                                                    <td><a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a></td>  
-                                                    <td><a href="{{ route('partner.details', $ride->owner_id) }}">{{ $ride->owner_name }} <br/>{{ $ride->owner_phone }}</a></td>  
+                                                    <td>
+                                                        @if($ride->user_id != null)
+                                                            <a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a>
+                                                        @endif
+                                                    </td>  
+                                                    <td>
+                                                        @if($ride->owner_id != null)
+                                                            <a href="{{ route('partner.details', $ride->owner_id) }}">{{ $ride->owner_name }} <br/>{{ $ride->owner_phone }}</a>
+                                                        @endif
+                                                    </td>  
                                                     <td>{{ $cancelBy }}</td>
                                                     <td>{{ $total_cancel }}</td>
                                                     <td>reason</td>
