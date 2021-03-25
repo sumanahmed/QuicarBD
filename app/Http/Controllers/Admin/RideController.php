@@ -40,7 +40,7 @@ class RideController extends Controller
             ->join('users','ride_list.user_id','users.id')
             ->join('ride_biting','ride_list.id','ride_biting.ride_id')
             ->leftjoin('owners','ride_biting.owner_id','owners.id')
-            ->leftjoin('drivers','ride_biting.driver_id','owners.id')
+            ->leftjoin('drivers','ride_biting.driver_id','drivers.id')
             ->select('ride_list.id','ride_list.created_at',                    
                     'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
                     'users.name as user_name','users.phone as user_phone',
@@ -52,7 +52,7 @@ class RideController extends Controller
             ->where('ride_list.payment_status', 1)
             ->where('ride_list.accepted_ride_bitting_id', '!=', null)
             ->orderBy('ride_list.id','DESC')
-            ->get();                   
+            ->get();               
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();  
     return view('quicarbd.admin.ride.upcoming', compact('rides','reasons'));
   }
