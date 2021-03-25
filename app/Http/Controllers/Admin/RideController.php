@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Lib\Helper;
 use App\Models\BidCancelList;
 use App\Models\Owner;
+use App\Models\User;
 use App\Models\RideBiting;
 use App\Models\RideList;
 use Illuminate\Http\Request;
+use Validator;
+use Response;
+
 use DB;
 
 class RideController extends Controller
@@ -154,20 +158,60 @@ class RideController extends Controller
    * ride cancel reason send
    */
   public function reasonSend (Request $request) {
-    $this->validate($request, [
-      'reason'=>'required'
+      
+    $validators = Validator::make($request->all(),[
+        'ride_id' => 'required',
+        'reason'  => 'required'
     ]);
-
-    $partner_id = RideBiting::where('ride_id', $request->ride_id)->first();
-
-    //partner
-    $partner = Owner::find($request->id);
-    $helper = new Helper(); 
-    $id     = $partner->n_key;
-    $title  = 'Ride Cancel';
-    $msg    = 'Dear '.$partner->name.', due to '.$request->reason.' your ride cancelled. Thanks for connecting with Quicar';                        
-    $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
-    $helper->smsSend($request->phone, $msg); // sms send
-    $helper->smsNotification($type = 2, $partner->id, $title, $msg); // send notification, 2=partner
+    
+    if($validators->fails()){
+        return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+    }
+    
+    DB::beginTransaction();
+    
+    try {
+        
+        $bid = RideBiting::where('ride_id', $request->ride_id)->first();
+        
+        if ($bid != null) {
+            $partner = Owner::find($bid->owner_id);
+            $user    = User::find($bid->user_id);
+            
+            $bid->status = 2;
+            $bid->update();
+        
+        } else {
+            $user_id = RideList::find($request->ride_id)->user_id;
+            $user    = User::find($user_id);   
+        }
+    
+        $ride = RideList::find($request->ride_id);
+        $ride->status = 2;
+        $ride->update();
+        
+        $title  = 'Ride Cancel';
+        $msg    = $request->reason.'. Thanks for connecting with Quicar'; 
+        $helper = new Helper(); 
+        
+        if(isset($parnter)) {
+            $helper->sendSinglePartnerNotification($partner->n_key, $title, $msg); //push notification send to driver
+            $helper->smsNotification($type=2, $bid->owner_id, $title, $msg); // send notification, 2=partner
+        }
+        
+        if (isset($user)) {
+            $helper->sendSinglePartnerNotification($user->n_key, $title, $msg); //push notification send to user
+            $helper->smsNotification($type=1, $user->id, $title, $msg); // send notification, 1=user
+        }
+        
+    } catch (Exception $ex) {
+        
+        DB::rollback();
+        
+        $ex->getMessage();
+    }
+    
+    DB::commit();
+    
   }
 }

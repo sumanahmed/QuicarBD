@@ -78,7 +78,7 @@
                                                     <td>{{ $ride->rown_way == 0 ? 'No' : 'Round Way' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
-                                                        <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
+                                                        <a href="#" id="cancelModal" data-toggle="modal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -107,14 +107,9 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="reason" class="control-label mb-10">District <span class="text-danger text-bold" title="Required Field">*</span></label>
-                        <select id="reason" class="form-control" required>
-                            <option selected disabled>Reason</option>                                
-                            @foreach($reasons as $reason)                                
-                                <option value="{{ $reason->name }}">{{ $reason->name }}</option>     
-                            @endforeach  
-                            <input type="hidden" name="ride_id" id="ride_id"/>                         
-                        </select>
+                        <label for="reason" class="control-label mb-10">Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <textarea id="reason" class="form-control" placeholder="Enter cancel reason.."></textarea>
+                        <input type="hidden" id="ride_id" />
                         <span class="text-danger reasonError"></span>
                     </div>
                 </form>

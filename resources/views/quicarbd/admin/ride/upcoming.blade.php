@@ -104,14 +104,9 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="reason" class="control-label mb-10">District <span class="text-danger text-bold" title="Required Field">*</span></label>
-                        <select id="reason" class="form-control" required>
-                            <option selected disabled>Reason</option>                                
-                            @foreach($reasons as $reason)                                
-                                <option value="{{ $reason->name }}">{{ $reason->name }}</option>     
-                            @endforeach  
-                            <input type="hidden" name="ride_id" id="ride_id"/>                         
-                        </select>
+                        <label for="reason" class="control-label mb-10">Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <textarea id="reason" class="form-control" placeholder="Enter cancel reason.."></textarea>
+                        <input type="hidden" id="ride_id" />
                         <span class="text-danger reasonError"></span>
                     </div>
                 </form>

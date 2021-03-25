@@ -92,6 +92,19 @@
                                                     <input type="phone" id="phone" value="{{ $ride->rown_way == 0 ? 'One Way' : 'Round Trip' }}" class="form-control" readonly>
                                                 </div>
                                             </div>
+                                            @if($ride->rown_way != 0)
+                                                @php 
+                                                    $start = date_create(date('Y-m-d', strtotime($ride->start_time)));
+                                                    $end   = date_create(date('Y-m-d', strtotime($ride->return_time_for_round_way)));
+                                                    $total_day = date_diff($end,$start)->format('%a');
+                                                @endphp
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Total Day</label>                                            
+                                                        <input type="phone" id="phone" value="{{ $total_day }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                            @endif
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="phone" class="control-label mb-10">Start Time</label>                                            

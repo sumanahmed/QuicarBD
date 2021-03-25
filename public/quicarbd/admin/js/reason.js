@@ -1,5 +1,6 @@
 //open send notification modal
-$(document).on('click', '#sendNotification', function () {
+$(document).on('click', '#cancelModal', function () {
+    console.log('ride id =', $(this).data('ride_id'));
     $('#showCancelModal').modal('show');
     $('#ride_id').val($(this).data('ride_id'));
  });
@@ -7,10 +8,10 @@ $(document).on('click', '#sendNotification', function () {
  //destroy master category
 $("#sendReason").click(function(){
     var ride_id = $('#ride_id').val();
-    var reason  = $('#reason:selected').val();
+    var reason  = $('#reason').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/partner/notification/send',
+        url: '/admin/ride/cancel/reason/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             ride_id : ride_id,
@@ -18,19 +19,14 @@ $("#sendReason").click(function(){
         },
         success: function (response) {
             if((response.errors)){
-                if(response.errors.title){
-                    $('.reasonError').text(response.errors.title);
-                }
-                if(response.errors.message){
-                    $('.errorMessage').text(response.errors.message);
+                if(response.errors.reason){
+                    $('.reasonError').text(response.errors.reason);
                 }
             }else{
-                $('#n_key').val('');
-                $('#title').val('');
-                $('#message').val('');
-                $('#phone').val('');
-                toastr.success(response.message)
+                $('#reason').val('');
+                toastr.success('Cancel Successfully')
                 $('#showCancelModal').modal('hide');
+                location.reload();
             }
         }
     });
