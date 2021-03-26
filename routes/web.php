@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\UserBannerController;
 use App\Http\Controllers\Admin\YearController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\CancellationReasonController;
+use App\Http\Controllers\Admin\CarPackageRideController;
 use App\Http\Controllers\Admin\PackageReviewController;
 use App\Http\Controllers\Admin\PrivacyController;
 use App\Http\Controllers\Admin\RideController;
@@ -272,4 +273,10 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::get('/bidding/{id}', [RideController::class, 'bidding'])->name('ride.bidding');
     Route::get('/details/{ride_id}', [RideController::class, 'details'])->name('ride.details');
     Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');
+});
+
+Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], function(){
+    Route::get('/booking', [CarPackageRideController::class, 'booking'])->name('car_package_order.booking');
+    // Route::get('/details/{ride_id}', [RideController::class, 'details'])->name('car_package_order.details');
+    // Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');
 });

@@ -116,11 +116,13 @@ class RideController extends Controller
                   ->join('users','ride_list.user_id','users.id')
                   ->leftjoin('ride_biting','ride_list.id','ride_biting.ride_id')
                   ->leftjoin('owners','ride_biting.owner_id','owners.id')
+                  ->leftjoin('bit_cancel_list','ride_list.cancellation_id','bit_cancel_list.id')
                   ->select('ride_list.id','ride_list.created_at', 'ride_list.cancel_by',
                           'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
                           'users.name as user_name','users.phone as user_phone',
                           'owners.name as owner_name','owners.phone as owner_phone',
-                          'ride_biting.bit_amount','ride_biting.owner_id', 'ride_biting.driver_id'
+                          'ride_biting.bit_amount','ride_biting.owner_id', 'ride_biting.driver_id',
+                          'bit_cancel_list.name as reason'
                   )
                 ->where('ride_list.status', 2)
                 ->orderBy('ride_list.id','DESC')

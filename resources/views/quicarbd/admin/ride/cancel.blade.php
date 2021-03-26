@@ -62,10 +62,10 @@
                                                 @php 
                                                     if ($ride->cancel_by == 0) {
                                                         $cancelBy = 'User';
-                                                        $total_cancel = 0;
+                                                        $total_cancel = \App\Models\RideList::where('status', 2)->where('user_id', $ride->user_id)->count('id');
                                                     } else {
-                                                        $cancelBy = 'Parner';
-                                                        $total_cancel = \App\Model\RideList::where('user_id', $ride->user_id)->count('id');
+                                                        $cancelBy = 'Partner';
+                                                        $total_cancel = \App\Models\RideList::where('status', 2)->where('owner_id', $ride->owner_id)->count('id');
                                                     }
                                                 @endphp
                                                 <tr class="partner-{{ $ride->id }}">
@@ -83,7 +83,7 @@
                                                     </td>  
                                                     <td>{{ $cancelBy }}</td>
                                                     <td>{{ $total_cancel }}</td>
-                                                    <td>reason</td>
+                                                    <td>{{ $ride->reason != null ? $ride->reason : '' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>                                                       
                                                     </td>

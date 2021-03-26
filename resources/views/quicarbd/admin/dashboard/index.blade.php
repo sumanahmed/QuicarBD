@@ -294,7 +294,7 @@
                                     <span class="block weight-500 txt-dark font-15">{{ $total_cancelled_ride }}</span>
                                 </li>
                                 <li>
-                                    <span class="block">Pending Bid</span>
+                                    <span  class="block">Pending Bid</span>
                                     <span class="block weight-500 txt-dark font-15">{{ $total_pending_ride }}</span>
                                 </li>
                             </ul>
