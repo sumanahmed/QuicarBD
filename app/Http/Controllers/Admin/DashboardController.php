@@ -8,6 +8,8 @@ use App\Models\CarPackage;
 use App\Models\Driver;
 use App\Models\HotelPackage;
 use App\Models\Owner;
+use App\Models\RideBiting;
+use App\Models\RideList;
 use App\Models\TravelPackage;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -69,6 +71,12 @@ class DashboardController extends Controller
     	$data['travel_package'] = TravelPackage::count('id');
     	$data['travel_package_active'] = TravelPackage::where('status', 1)->count('id');
     	$data['travel_package_pending'] = TravelPackage::where('status', 0)->count('id');
+
+		//ride summary
+		$data['total_bid'] = RideBiting::count('id');
+		$data['total_complete_ride'] = RideList::where('status', 5)->count('id');
+		$data['total_cancelled_ride'] = RideList::where('status', 2)->count('id');
+		$data['total_pending_ride'] = RideBiting::where('status', 0)->count('id');
 
         return view('quicarbd.admin.dashboard.index', $data);
     }

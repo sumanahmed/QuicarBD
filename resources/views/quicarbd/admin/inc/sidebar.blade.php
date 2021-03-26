@@ -160,6 +160,30 @@
             </ul>
         </li>
         <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#packageRide"><div class="pull-left"><i class="fa fa-cube mr-20"></i><span class="right-nav-text">Package Rides</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="packageRide" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#rideCarPackage"><div class="pull-left"><span class="right-nav-text">Car Package</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="rideCarPackage" class="collapse collapse-level-1 two-col-list">
+                        <li><a href="#">Booking Request</a></li>
+                        <li><a href="#">Upcoming Trip</a></li>
+                        <li><a href="#">Ongoing Trip</a></li>
+                        <li><a href="#">Complete Trip</a></li>
+                        <li><a href="#">Cancelled Trip</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#rideHotelPackage"><div class="pull-left"><span class="right-nav-text">Hotel Package</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="rideHotelPackage" class="collapse collapse-level-1 two-col-list">
+                        <li><a href="#">Booking Request</a></li>
+                        <li><a href="#">Upcoming Booking</a></li>
+                        <li><a href="#">Complete Booking</a></li>
+                        <li><a href="#">Cancelled Booking</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#carRent"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Car Rent</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="carRent" class="collapse collapse-level-1 two-col-list">
                 <li><a href="{{ route('ride.bid_request') }}">Bid Request</a></li>

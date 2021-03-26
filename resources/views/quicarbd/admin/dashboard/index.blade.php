@@ -270,7 +270,7 @@
                         <div class="panel-body sm-data-box-1">
                             <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Ride Bid</span> 
                             <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
-                                <span class="counter-anim">100</span>
+                                <span class="counter-anim">{{ $total_bid }}</span>
                             </div>
                             <div class="progress-anim mt-20">
                                 <div class="progress">
@@ -282,20 +282,20 @@
                                 <li>
                                     <span class="block">Total Bid</span>
                                     <span class="block">
-                                        <i class=" txt-dark font-20">100</i>
+                                        <i class=" txt-dark font-20">{{ $total_bid }}</i>
                                     </span>
                                 </li>
                                 <li>
                                     <span class="block">Complete Ride</span>
-                                    <span class="block weight-500 txt-dark font-15">79.82</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_complete_ride }}</span>
                                 </li>
                                 <li>
                                     <span class="block">Cancel Ride</span>
-                                    <span class="block weight-500 txt-dark font-15">+14.29</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_cancelled_ride }}</span>
                                 </li>
                                 <li>
                                     <span class="block">Pending Bid</span>
-                                    <span class="block weight-500 txt-dark font-15">14.29</span>
+                                    <span class="block weight-500 txt-dark font-15">{{ $total_pending_ride }}</span>
                                 </li>
                             </ul>
                         </div>
