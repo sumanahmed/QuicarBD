@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Booking')
+@section('title','Upcoming')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -12,7 +12,7 @@
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Package Ride</a></li>
             <li><a href="#">Car Package</a></li>
-            <li class="active"><span>Booking</span></li>
+            <li class="active"><span>Upcoming</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -24,7 +24,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">Car Package Booking</h6>
+                        <h6 class="panel-title txt-dark">Car Package Upcoming</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -35,12 +35,13 @@
                                 <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
-                                            <th>Request Date & Time</th>
                                             <th>Travel Date & Time</th>
                                             <th>Package</th>
                                             <th>User</th>
                                             <th>Partner</th>
                                             <th>Price</th>
+                                            <th>Quicar Charge</th>
+                                            <th>Booking ID</th>
                                             <th>Car</th>
                                             <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
@@ -48,32 +49,34 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Request Date & Time</th>
                                             <th>Travel Date & Time</th>
                                             <th>Package</th>
                                             <th>User</th>
                                             <th>Partner</th>
                                             <th>Price</th>
+                                            <th>Quicar Charge</th>
+                                            <th>Booking ID</th>
                                             <th>Car</th>
                                             <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="partnerData">
-                                        @if(isset($bookings) && count($bookings) > 0)
-                                            @foreach($bookings as $booking)
-                                                <tr class="partner-{{ $booking->id }}">
-                                                    <td>{{ date('Y-m-d H:i:s a', strtotime($booking->created_at)) }}</td>                                                  
-                                                    <td>{{ date('Y-m-d H:i:s a', strtotime($booking->travel_date)) }}</td>
-                                                    <td>{{ $booking->name }}</td>
-                                                    <td><a href="{{ route('user.details', $booking->user_id) }}">{{ $booking->user_name }} <br/>{{ $booking->user_phone }}</a></td>  
-                                                    <td><a href="{{ route('partner.details', $booking->owner_id) }}">{{ $booking->owner_name }} <br/>{{ $booking->owner_phone }}</a></td>  
-                                                    <td>{{ $booking->price }}</td>
-                                                    <td>{{ $booking->carRegisterNumber }}</td>
-                                                    <td>{{ getStatus($booking->status, $booking->payment_status) }}</td>
+                                        @if(isset($upcomings) && count($upcomings) > 0)
+                                            @foreach($upcomings as $upcoming)
+                                                <tr class="partner-{{ $upcoming->id }}">                                                
+                                                    <td>{{ date('Y-m-d H:i:s a', strtotime($upcoming->travel_date)) }}</td>
+                                                    <td>{{ $upcoming->name }}</td>
+                                                    <td><a href="{{ route('user.details', $upcoming->user_id) }}">{{ $upcoming->user_name }} <br/>{{ $upcoming->user_phone }}</a></td>  
+                                                    <td><a href="{{ route('partner.details', $upcoming->owner_id) }}">{{ $upcoming->owner_name }} <br/>{{ $upcoming->owner_phone }}</a></td>  
+                                                    <td>{{ $upcoming->price }}</td>
+                                                    <td>{{ $upcoming->quicar_charge }}</td>
+                                                    <td>{{ $upcoming->booking_id }}</td>
+                                                    <td>{{ $upcoming->carRegisterNumber }}</td>
+                                                    <td>Confirmed</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('car_package_order.details', $booking->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
-                                                        <a href="#" id="carPackageCancelModal" data-toggle="modal" data-package_order_id="{{ $booking->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
+                                                        <a href="{{ route('car_package_order.details', $upcoming->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                        <a href="#" id="carPackageCancelModal" data-toggle="modal" data-package_order_id="{{ $upcoming->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -116,15 +119,6 @@
         </div>
     </div>
 </div>
-@php 
-    function getStatus($status, $paymentStatus)  {
-        if ($status == 0) {
-            echo 'Waiting for partner accept';
-        } else if ($status == 1 && $paymentStatus == 0) {
-            echo 'Accepted & waiting for user payment';
-        } 
-    }
-@endphp
 @endsection
 @section('scripts')
 	<script src="{{ asset('quicarbd/admin/js/reason.js') }}"></script>

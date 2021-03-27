@@ -31,3 +31,37 @@ $("#sendReason").click(function(){
         }
     });
 });
+
+//open send notification modal
+$(document).on('click', '#carPackageCancelModal', function () {
+    console.log('ride id =', $(this).data('ride_id'));
+    $('#showCarPackageCancelModal').modal('show');
+    $('#package_order_id').val($(this).data('package_order_id'));
+ });
+
+ //destroy master category
+$("#carPackageSendReason").click(function(){
+    var package_order_id = $('#package_order_id').val();
+    var reason  = $('#reason').val();
+    $.ajax({
+        type: 'POST',
+        url: '/admin/ride/cancel/reason/send',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            package_order_id : package_order_id,
+            reason  : reason
+        },
+        success: function (response) {
+            if((response.errors)){
+                if(response.errors.reason){
+                    $('.reasonError').text(response.errors.reason);
+                }
+            }else{
+                $('#reason').val('');
+                toastr.success('Cancel Successfully')
+                $('#showCarPackageCancelModal').modal('hide');
+                location.reload();
+            }
+        }
+    });
+});
