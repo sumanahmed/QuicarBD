@@ -171,7 +171,7 @@
                                                                 <label for="img2Upload"><i class="fa fa-edit"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
-                                                                <div id="img2Preview" style="background-image: url(http://quicarbd.com/{{ $car->carImage }});"></div>
+                                                                <div id="img2Preview" style="background-image: url(http://quicarbd.com/{{ $car->carSmartCardFont }});"></div>
                                                             </div>
                                                         </div>
                                                     </div>

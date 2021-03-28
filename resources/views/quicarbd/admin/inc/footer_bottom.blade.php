@@ -1,3 +1,6 @@
+
+<div class="overlay-dark"></div>
+<img class="img-overlay"> 
 </div>	
     <!-- jQuery -->
     <script src="{{ asset('quicarbd/admin/vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -31,6 +34,7 @@
 	<script src="{{ asset('quicarbd/admin/dist/js/init.js') }}"></script>
 	<script src="{{ asset('quicarbd/admin/dist/js/dashboard-data.js') }}"></script>
 	<script src="{{ asset('quicarbd/admin/dist/js/toastr.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/image-popup.js') }}"></script>
 	<script>
 		var image_base_path = "http://quicarbd.com/";
 		//var image_base_path = "http://localhost:8000/";
