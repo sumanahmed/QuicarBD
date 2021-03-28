@@ -155,6 +155,7 @@
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="carImage" id="img1Upload" accept=".png, .jpg, .jpeg" required/>
                                                                 <label for="img1Upload"><i class="fa fa-edit"></i></label>
+                                                                <label class="img-popup" src="http://quicarbd.com/{{ $car->carImage }}"><i class="fa fa-eye"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
                                                                 <div id="img1Preview" style="background-image: url(http://quicarbd.com/{{ $car->carImage }});"></div>
@@ -169,6 +170,7 @@
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="carSmartCardFont" id="img2Upload" accept=".png, .jpg, .jpeg"/>
                                                                 <label for="img2Upload"><i class="fa fa-edit"></i></label>
+                                                                <label class="img-popup" src="http://quicarbd.com/{{ $car->carSmartCardFont }}"><i class="fa fa-eye"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
                                                                 <div id="img2Preview" style="background-image: url(http://quicarbd.com/{{ $car->carSmartCardFont }});"></div>
@@ -183,6 +185,7 @@
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="carSmartCardBack" id="img3Upload" accept=".png, .jpg, .jpeg"/>
                                                                 <label for="img3Upload"><i class="fa fa-edit"></i></label>
+                                                                <label class="img-popup" src="http://quicarbd.com/{{ $car->carSmartCardBack }}"><i class="fa fa-eye"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
                                                                 <div id="img3Preview" style="background-image: url(http://quicarbd.com/{{ $car->carSmartCardBack }});"></div>
@@ -197,6 +200,7 @@
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="taxToken_image" id="img4Upload" accept=".png, .jpg, .jpeg"/>
                                                                 <label for="img4Upload"><i class="fa fa-edit"></i></label>
+                                                                <label class="img-popup" src="http://quicarbd.com/{{ $car->taxToken_image }}"><i class="fa fa-eye"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
                                                                 <div id="img4Preview" style="background-image: url(http://quicarbd.com/{{ $car->taxToken_image }});"></div>
@@ -211,6 +215,7 @@
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="fitnessCertificate" id="img5Upload" accept=".png, .jpg, .jpeg"/>
                                                                 <label for="img5Upload"><i class="fa fa-edit"></i></label>
+                                                                <label class="img-popup" src="http://quicarbd.com/{{ $car->fitnessCertificate }}"><i class="fa fa-eye"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
                                                                 <div id="img5Preview" style="background-image: url(http://quicarbd.com/{{ $car->fitnessCertificate }});"></div>
@@ -225,6 +230,7 @@
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="insurancePaper_path" id="img6Upload" accept=".png, .jpg, .jpeg"/>
                                                                 <label for="img6Upload"><i class="fa fa-edit"></i></label>
+                                                                <label class="img-popup" src="http://quicarbd.com/{{ $car->insurancePaper_path }}"><i class="fa fa-eye"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
                                                                 <div id="img6Preview" style="background-image: url(http://quicarbd.com/{{ $car->insurancePaper_path }});"></div>

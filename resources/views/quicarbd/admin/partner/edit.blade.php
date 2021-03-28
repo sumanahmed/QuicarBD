@@ -173,6 +173,7 @@
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="img" id="img1Upload" accept=".png, .jpg, .jpeg" required/>
                                                                 <label for="img1Upload"><i class="fa fa-edit"></i></label>
+                                                                <label class="img-popup" src="http://quicarbd.com/mobileapi/asset/owner/{{ $partner->img }}"><i class="fa fa-eye"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
                                                                 <div id="img1Preview" style="background-image: url(http://quicarbd.com/mobileapi/asset/owner/{{ $partner->img }});"></div>
@@ -190,6 +191,7 @@
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="nid_font_pic" id="img2Upload" accept=".png, .jpg, .jpeg"/>
                                                                 <label for="img2Upload"><i class="fa fa-edit"></i></label>
+                                                                <label class="img-popup" src="http://quicarbd.com/mobileapi/asset/owner/{{ $partner->nid_font_pic }}"><i class="fa fa-eye"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
                                                                 <div id="img2Preview" style="background-image: url(http://quicarbd.com/mobileapi/asset/owner/{{ $partner->nid_font_pic }});"></div>
@@ -207,6 +209,7 @@
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="nid_back_pic" id="img3Upload" accept=".png, .jpg, .jpeg"/>
                                                                 <label for="img3Upload"><i class="fa fa-edit"></i></label>
+                                                                <label class="img-popup" src="http://quicarbd.com/mobileapi/asset/owner/{{ $partner->nid_back_pic }}"><i class="fa fa-eye"></i></label>
                                                             </div>
                                                             <div class="avatar-preview" style="width:100%">
                                                                 <div id="img3Preview" style="background-image: url(http://quicarbd.com/mobileapi/asset/owner/{{ $partner->nid_back_pic }});"></div>
