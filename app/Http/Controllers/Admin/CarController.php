@@ -173,6 +173,12 @@ class CarController extends Controller
         $colors     = CarColor::all();
         return view('quicarbd.admin.car.edit', compact('car','types','brands','models','years','classes','owner','colors'));
     }
+    //show view page
+    public function show($id){
+        $car        = Car::find($id);
+        $owner = Owner::find($car->owner_id)->name;
+        return view('quicarbd.admin.car.show', compact('car','owner'));
+    }
 
     //car update
     public function update(Request $request, $id){  
