@@ -50,7 +50,7 @@ class CarController extends Controller
             $query = $query->where('cars.carYear', $request->carYear);
         }
 
-        if (isset($request->status) && $request->status != 100) { 
+        if (isset($request->status) && $request->status != 5) { 
             $query = $query->where('cars.status', $request->status);
         }
 
