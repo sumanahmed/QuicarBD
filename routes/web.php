@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\CarPackageRideController;
 use App\Http\Controllers\Admin\PackageReviewController;
 use App\Http\Controllers\Admin\PrivacyController;
 use App\Http\Controllers\Admin\RideController;
+use App\Http\Controllers\Admin\SmsNotificationController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -280,4 +281,9 @@ Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], fu
     Route::get('/upcoming', [CarPackageRideController::class, 'upcoming'])->name('car_package_order.upcoming');
     Route::get('/details/{id}', [CarPackageRideController::class, 'details'])->name('car_package_order.details');
     // Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');
+});
+
+Route::group(['prefix'=>'/admin/sms-notification', 'middleware' => 'admin'], function(){
+    Route::get('/', [SmsNotificationController::class, 'index'])->name('sms_notification.index');
+    Route::post('/send', [SmsNotificationController::class, 'send'])->name('sms_notification.send');
 });
