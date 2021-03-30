@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Lib\Helper;
+use App\Jobs\SendSmsNotification;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Owner;
@@ -27,29 +28,25 @@ class SmsNotificationController extends Controller
             'notification' => 'required',
         ]);
 
-        $helper = new Helper(); 
 
-        if($request->for == 1){
-            $users = User::where('account_status', $request->status)->get();                             
-            foreach($users as $user){
-                if($request->notification == 1){
-                    $helper->sendSinglePartnerNotification($user->n_key, $request->title, $request->message); //push notification send
-                }else{
-                    $helper->sendSinglePartnerNotification($user->n_key, $request->title, $request->message); //push notification send
-                    $helper->smsSend($user->phone, $request->message); // sms send
-                }
-            }
-        }else{
-            $owners = Owner::where('account_status', $request->status)->get();
-            foreach($owners as $owner){
-                if($request->notification == 1){                 
-                    $this->sendSinglePartnerNotification($owner->n_key, $request->title, $request->message);
-                }else{
-                    $helper->sendSinglePartnerNotification($owner->n_key, $request->title, $request->message); //push notification send
-                    $helper->smsSend($owner->phone, $request->message); // sms send                   
-                }                
-            }
-        }   
+        $details = [
+    		'for'   => $request->for,
+            'status'   => $request->status,
+            'title'   => $request->title,
+            'message' => $request->message,
+            'notification' => $request->notification,
+    	];
+    	
+    	// send all mail in the queue.
+        $job = (new SendSmsNotification($details))
+            ->delay(
+            	now()
+            	->addSeconds(2)
+            ); 
+
+        dispatch($job);
+
         return redirect()->back()->with('message','Send successfully');
+        
     }
 }

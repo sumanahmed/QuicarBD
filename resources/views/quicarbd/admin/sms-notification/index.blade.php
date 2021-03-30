@@ -4,13 +4,12 @@
 <div class="container-fluid">				
 	<!-- Title -->
     <div class="row heading-bg">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12"></div>
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-            <li><a href="#">Dashboard</a></li>
-            <li class="active"><span>SMS & Notification</span></li>
+                <li><a href="#">Dashboard</a></li>
+                <li class="active"><span>SMS & Notification</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -30,7 +29,6 @@
                     <div class="panel-body">
                         <form action="{{ route('sms_notification.send') }}" class="col-md-6" method="POST">
                             @csrf
-
                             <div class="form-group">
                                 <label for="for" class="control-label">For <span class="text-danger" title="Required">*</span></label>                                 
                                 <select id="for" name="for" class="form-control">
@@ -54,7 +52,7 @@
                             
                             <div class="form-group">
                                 <label for="message" class="control-label">Message <span class="text-danger" title="Required">*</span></label>
-                                <textarea class="form-control" name="message"  id="message" placeholder="Enter your message"></textarea>
+                                <textarea class="form-control" name="message" rows="6" id="message" placeholder="Enter your message"></textarea>
                                 <span class="errorMessage text-danger text-bold"></span>
                             </div>
                             
