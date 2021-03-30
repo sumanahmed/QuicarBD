@@ -147,6 +147,7 @@
                                                     <td>{{ $car->carYear }}</td>
                                                     <th><img src="http://quicarbd.com/{{ $car->carImage }}" style="width:80px;height:60px;"/></th>
                                                     <td style="vertical-align: middle;text-align: center;">
+                                                        <a href="{{ route('car.show', $car->id) }}" class="btn btn-xs btn-primary" title="Show"><i class="fa fa-eye"></i></a>
                                                         <a href="{{ route('car.edit', $car->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                     </td>
                                                 </tr>

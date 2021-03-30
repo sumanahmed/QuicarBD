@@ -50,7 +50,7 @@ class CarController extends Controller
             $query = $query->where('cars.carYear', $request->carYear);
         }
 
-        if (isset($request->status) && $request->status != 100) { 
+        if (isset($request->status) && $request->status != 5) { 
             $query = $query->where('cars.status', $request->status);
         }
 
@@ -172,6 +172,12 @@ class CarController extends Controller
         $years      = Year::all();
         $colors     = CarColor::all();
         return view('quicarbd.admin.car.edit', compact('car','types','brands','models','years','classes','owner','colors'));
+    }
+    //show view page
+    public function show($id){
+        $car        = Car::find($id);
+        $owner = Owner::find($car->owner_id)->name;
+        return view('quicarbd.admin.car.show', compact('car','owner'));
     }
 
     //car update
