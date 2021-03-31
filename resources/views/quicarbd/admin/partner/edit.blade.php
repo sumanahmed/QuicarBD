@@ -47,6 +47,7 @@
                                                     <div class="form-group">
                                                         <label for="name" class="control-label mb-10">Name <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="name" name="name" value="{{ $partner->name }}" placeholder="Enter Name" class="form-control" required>
+                                                        <input type="hidden" name="account_status" value="{{ $partner->account_status }}" />
                                                         @if($errors->has('name'))
                                                             <span class="text-danger"> {{ $errors->first('name') }}</span>
                                                         @endif

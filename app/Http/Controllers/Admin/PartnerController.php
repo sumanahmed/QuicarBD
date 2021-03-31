@@ -169,6 +169,9 @@ class PartnerController extends Controller
             $owner->nid_back_pic = $nidBackUrl;
         }
         if($owner->update()){
+            if(isset($request->account_status) && $request->account_status != 1) {
+                return redirect()->route('partner.verification')->with('message','Partner update successfully');
+            }
             return redirect()->route('partner.index')->with('message','Partner update successfully');
         }else{
             return redirect()->route('partner.index')->with('error_message','Sorry, something went wrong');
