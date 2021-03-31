@@ -16,7 +16,6 @@ $(document).on('click', '#driverDetail', function () {
         account_status = "On";       
     }
 
-
     $('#driverDetailModal').modal('show');
     $('#driver_name').html($(this).data('driver_name'));
     $('#driver_phone').html($(this).data('driver_phone'));
@@ -217,3 +216,32 @@ $(document).on('click', '#sendNotification', function () {
 //         }            
 //     });
 // });
+
+//open delete City modal
+$(document).on('click', '#deleteCar', function () {
+    $('#deleteCarModal').modal('show');
+    $('input[name=del_id]').val($(this).data('id'));
+ });
+
+//destroy City
+$("#destroyCar").click(function(){
+    $.ajax({
+        type: 'POST',
+        url: '/admin/car/destroy',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            id: $('input[name=del_id]').val()
+        },
+        success: function (response) {
+            console.log('response', response.status)
+            if (response.status != 403) {
+                $('#deleteCarModal').modal('hide');
+                $('.car-' + $('input[name=del_id]').val()).remove();
+                toastr.success('Car Deleted')
+            } else {
+                toastr.error(response.message)
+            }
+            
+        }
+    });
+});

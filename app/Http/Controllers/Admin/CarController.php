@@ -14,7 +14,9 @@ use App\Models\CarYear;
 use App\Models\City;
 use App\Models\District;
 use App\Models\Owner;
+use App\Models\RideBiting;
 use App\Models\Year;
+use Response;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -335,5 +337,31 @@ class CarController extends Controller
         $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
         $helper->smsSend($owner->phone, $msg); // sms send
         $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
+    }
+
+    //car destroy
+    public function destroy(Request $request)
+    {        
+        $rideBitting = RideBiting::where('car_id', $request->id)->get();
+        if ($rideBitting->count() > 0) {
+            return Response::json([
+                'status'=> 403,
+                'message' => 'Sorry, this car already used in Bidding',
+                'data'  => []
+            ]);
+        }
+        $car    = Car::select('id','owner_id','carRegisterNumber')->where('id', $request->id)->first();
+        $helper = new Helper(); 
+        $owner  = Owner::select('id','phone','name','n_key')->where('id', $car->owner_id)->first();
+        $id     = $owner->n_key;
+        $title  = 'Car Cancel';            
+        $msg    = 'Dear '.$owner->name.', your car ('.$car->carRegisterNumber.') cancelled. Please contact with Quicar';                        
+
+        $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
+        //$helper->smsSend($owner->phone, $msg); // sms send
+        $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
+
+        $car->delete();
+        return response()->json();
     }
 }
