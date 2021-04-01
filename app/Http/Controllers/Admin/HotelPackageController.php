@@ -148,6 +148,21 @@ class HotelPackageController extends Controller
     }
     
     /**
+     * show hotel packages details page
+     */
+    public function details($id){
+        $hotel_package  = HotelPackage::find($id);
+        $district       = District::find($hotel_package->district_id)->value;
+        $city       = City::find($hotel_package->city_id)->name;
+        $cities     = City::where('district_id', $hotel_package->district_id)->get();
+        $owner      = Owner::find($hotel_package->owner_id)->name;
+        $property_type = PropertyType::find($hotel_package->propertyType)->name;
+        $amenities = HotelAmenity::where('status', 1)->get();
+        $charge    = Owner::find($hotel_package->owner_id)->hotel_package_charge;
+        return view('quicarbd.admin.package.hotel-package.details', compact('hotel_package','district','city','owner','property_type','amenities','charge'));
+    }
+    
+    /**
      * hotel packages store
      */
     public function update(Request $request, $id){
