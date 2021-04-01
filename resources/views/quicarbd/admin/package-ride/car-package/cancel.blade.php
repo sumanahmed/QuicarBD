@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Upcoming')
+@section('title','Ongoing')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -12,7 +12,7 @@
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Package Ride</a></li>
             <li><a href="#">Car Package</a></li>
-            <li class="active"><span>Upcoming</span></li>
+            <li class="active"><span>Cancel</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -24,7 +24,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">Car Package Upcoming</h6>
+                        <h6 class="panel-title txt-dark">Car Package Cancel</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -40,10 +40,12 @@
                                             <th>User</th>
                                             <th>Partner</th>
                                             <th>Price</th>
-                                            <th>Quicar Charge</th>
+                                            <th>Cancel By</th>
+                                            <th>Total Cancel</th>
+                                            <th>Reason</th>
                                             <th>Booking ID</th>
                                             <th>Car</th>
-                                            <th>Status</th>
+                                            <th>Payment Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -54,29 +56,42 @@
                                             <th>User</th>
                                             <th>Partner</th>
                                             <th>Price</th>
-                                            <th>Quicar Charge</th>
+                                            <th>Cancel By</th>
+                                            <th>Total Cancel</th>
+                                            <th>Reason</th>
                                             <th>Booking ID</th>
                                             <th>Car</th>
-                                            <th>Status</th>
+                                            <th>Payment Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="partnerData">
                                         @if(isset($orders) && count($orders) > 0)
                                             @foreach($orders as $order)
+                                                @php 
+                                                    if ($order->cancel_by == 0) {
+                                                        $cancelBy = 'User';
+                                                        $total_cancel = \App\Models\CarPackageOrder::where('status', 2)->where('id', $order->id)->where('user_id', $order->user_id)->count('id');
+                                                    } else {
+                                                        $cancelBy = 'Partner';
+                                                        $total_cancel = \App\Models\CarPackageOrder::where('status', 2)->where('id', $order->id)->where('owner_id', $order->owner_id)->count('id');
+                                                    }
+                                                    $cancel_reason = \App\Models\BidCancelList::find($order->cancellation_reason)->name;
+                                                @endphp
                                                 <tr class="partner-{{ $order->id }}">                                                
                                                     <td>{{ date('Y-m-d H:i:s a', strtotime($order->travel_date)) }}</td>
                                                     <td>{{ $order->name }}</td>
                                                     <td><a href="{{ route('user.details', $order->user_id) }}">{{ $order->user_name }} <br/>{{ $order->user_phone }}</a></td>  
                                                     <td><a href="{{ route('partner.details', $order->owner_id) }}">{{ $order->owner_name }} <br/>{{ $order->owner_phone }}</a></td>  
                                                     <td>{{ $order->price }}</td>
-                                                    <td>{{ $order->quicar_charge }}</td>
+                                                    <td>{{ $order->cancel_by == 0 ? 'User' : 'Partner' }}</td>
+                                                    <td>{{ $total_cancel }}</td>
+                                                    <td>{{ $cancel_reason }}</td>
                                                     <td>{{ $order->booking_id }}</td>
                                                     <td>{{ $order->carRegisterNumber }}</td>
-                                                    <td>Confirmed</td>
+                                                    <td>{{ $order->payment_status == 1 ? 'Paid' : 'Unpaid' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('car_package_order.details', $order->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
-                                                        <a href="#" id="carPackageCancelModal" data-toggle="modal" data-package_order_id="{{ $order->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
+                                                        <a href="{{ route('car_package_order.details', $order->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>                                                        
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -95,33 +110,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="showCarPackageCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="reason" class="control-label mb-10">Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
-                        <textarea id="reason" class="form-control" placeholder="Enter cancel reason.."></textarea>
-                        <input type="hidden" id="package_order_id" />
-                        <span class="text-danger reasonError"></span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="carPackageSendReason">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/reason.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

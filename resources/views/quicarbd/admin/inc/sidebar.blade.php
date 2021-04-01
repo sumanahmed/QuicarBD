@@ -175,9 +175,9 @@
                     <ul id="rideCarPackage" class="collapse collapse-level-1 two-col-list">
                         <li><a href="{{ route('car_package_order.booking') }}">Booking Request</a></li>
                         <li><a href="{{ route('car_package_order.upcoming') }}">Upcoming Trip</a></li>
-                        <li><a href="#">Ongoing Trip</a></li>
-                        <li><a href="#">Complete Trip</a></li>
-                        <li><a href="#">Cancelled Trip</a></li>
+                        <li><a href="{{ route('car_package_order.ongoing') }}">Ongoing Trip</a></li>
+                        <li><a href="{{ route('car_package_order.complete') }}">Complete Trip</a></li>
+                        <li><a href="{{ route('car_package_order.cancel') }}">Cancelled Trip</a></li>
                     </ul>
                 </li>
                 <li>

@@ -281,6 +281,9 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
 Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], function(){
     Route::get('/booking', [CarPackageRideController::class, 'booking'])->name('car_package_order.booking');
     Route::get('/upcoming', [CarPackageRideController::class, 'upcoming'])->name('car_package_order.upcoming');
+    Route::get('/ongoing', [CarPackageRideController::class, 'ongoing'])->name('car_package_order.ongoing');
+    Route::get('/complete', [CarPackageRideController::class, 'complete'])->name('car_package_order.complete');
+    Route::get('/cancel', [CarPackageRideController::class, 'cancel'])->name('car_package_order.cancel');
     Route::get('/details/{id}', [CarPackageRideController::class, 'details'])->name('car_package_order.details');
     // Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');
 });

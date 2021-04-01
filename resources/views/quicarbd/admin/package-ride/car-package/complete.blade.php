@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Upcoming')
+@section('title','Complete')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -12,7 +12,7 @@
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Package Ride</a></li>
             <li><a href="#">Car Package</a></li>
-            <li class="active"><span>Upcoming</span></li>
+            <li class="active"><span>Complete</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -24,7 +24,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">Car Package Upcoming</h6>
+                        <h6 class="panel-title txt-dark">Car Package Complete</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -42,6 +42,7 @@
                                             <th>Price</th>
                                             <th>Quicar Charge</th>
                                             <th>Booking ID</th>
+                                            <th>Review</th>
                                             <th>Car</th>
                                             <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
@@ -56,6 +57,7 @@
                                             <th>Price</th>
                                             <th>Quicar Charge</th>
                                             <th>Booking ID</th>
+                                            <th>Review</th>
                                             <th>Car</th>
                                             <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
@@ -72,11 +74,11 @@
                                                     <td>{{ $order->price }}</td>
                                                     <td>{{ $order->quicar_charge }}</td>
                                                     <td>{{ $order->booking_id }}</td>
+                                                    <td>{{ $order->review_give }}</td>
                                                     <td>{{ $order->carRegisterNumber }}</td>
                                                     <td>Confirmed</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('car_package_order.details', $order->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
-                                                        <a href="#" id="carPackageCancelModal" data-toggle="modal" data-package_order_id="{{ $order->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
+                                                        <a href="{{ route('car_package_order.details', $order->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>                                                        
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -95,33 +97,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="showCarPackageCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="reason" class="control-label mb-10">Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
-                        <textarea id="reason" class="form-control" placeholder="Enter cancel reason.."></textarea>
-                        <input type="hidden" id="package_order_id" />
-                        <span class="text-danger reasonError"></span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="carPackageSendReason">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/reason.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>
