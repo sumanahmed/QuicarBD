@@ -232,6 +232,7 @@ Route::group(['prefix'=>'/admin/travel-package', 'middleware' => 'admin'], funct
     Route::get('/create', [TravelPackageController::class, 'create'])->name('travel_package.create');
     Route::post('/store', [TravelPackageController::class, 'store'])->name('travel_package.store');
     Route::get('/edit/{id}', [TravelPackageController::class, 'edit'])->name('travel_package.edit');
+    Route::get('/details/{id}', [TravelPackageController::class, 'details'])->name('travel_package.details');
     Route::post('/update/{id}', [TravelPackageController::class, 'update'])->name('travel_package.update');
     Route::post('/destroy', [TravelPackageController::class, 'destroy'])->name('travel_package.destroy');
 });

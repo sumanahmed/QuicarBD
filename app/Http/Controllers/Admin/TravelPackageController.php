@@ -112,11 +112,23 @@ class TravelPackageController extends Controller
     public function edit($id){
         $travel_package = TravelPackage::find($id);
         $spots          = TourSpot::where('district_id', $travel_package->district_id)->get();
-        $districts      = District::all();
-        $starting_cities= City::where('district_id', $travel_package->starting_location)->get();
-        $owners         = Owner::all();
-        $charge         = Owner::find($travel_package->owner_id)->travel_package_charge;
+        $district       = District::find($travel_package->district_id)->value;
+        $city           = City::find($hotel_package->city_id)->name;
+        $owner          = Owner::find($travel_package->owner_id)->name;
         return view('quicarbd.admin.package.travel-package.edit', compact('travel_package','spots','districts','starting_cities','owners','charge'));
+    }
+    
+    /**
+     * show hotel packages edit page
+     */
+    public function details($id){
+        $travel_package = TravelPackage::find($id);
+        $spots          = TourSpot::where('district_id', $travel_package->district_id)->get();
+        $district       = District::find($travel_package->district_id)->value;
+        $starting_location  = District::find($travel_package->starting_location)->value;
+        $starting_city      = City::find($travel_package->starting_city_id)->name;
+        $owner          = Owner::find($travel_package->owner_id)->name;
+        return view('quicarbd.admin.package.travel-package.details', compact('travel_package','spots','district','starting_location','starting_city','owner'));
     }
     
     /**
