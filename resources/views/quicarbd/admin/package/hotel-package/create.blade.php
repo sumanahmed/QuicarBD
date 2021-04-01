@@ -18,7 +18,7 @@
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Package</a></li>
-            <li class="active"><span>Add Car Package</span></li>
+            <li class="active"><span>Add Hotel or Resort Package</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -148,8 +148,9 @@
                             <div class="row">
                                 <div class="col-md-2">                                        
                                     <div class="form-group">
-                                        <label for="quicar_charge" class="control-label mb-10"> Qucar Charge(%) <span class="text-danger" title="Required">*</span></label>
-                                        <input type="text" id="quicar_charge" name="quicar_charge" class="form-control" placeholder="Quicar Charge(%)" readonly required>
+                                        <label for="quicar_charge" class="control-label mb-10"> Qucar Charge <span class="text-danger" title="Required">*</span></label>
+                                        <input type="text" id="quicar_charge" name="quicar_charge" class="form-control" placeholder="Quicar Charge" readonly required>
+                                        <input type="hidden" id="quicar_charge_percent">
                                         @if($errors->has('quicar_charge'))
                                             <span class="text-danger"> {{ $errors->first('quicar_charge') }}</span>
                                         @endif

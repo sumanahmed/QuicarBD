@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Notification')
+@section('title','Push Notification')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -9,7 +9,8 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
                 <li><a href="#">Dashboard</a></li>
-                <li class="active"><span>SMS & Notification</span></li>
+                <li><a href="#">SMS & Notification</a></li>
+                <li class="active"><span>Push Notification</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -21,13 +22,13 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">SMS & Notification</h6>
+                        <h6 class="panel-title txt-dark">Push Notification</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
                     <div class="panel-body">
-                        <form action="{{ route('sms_notification.send') }}" class="col-md-6" method="POST">
+                        <form action="{{ route('sms_notification.push_notification.send') }}" class="col-md-6" method="POST">
                             @csrf
                             <div class="form-group">
                                 <label for="for" class="control-label">For <span class="text-danger" title="Required">*</span></label>                                 
@@ -55,22 +56,10 @@
                                 <textarea class="form-control" name="message" rows="6" id="message" placeholder="Enter your message"></textarea>
                                 <span class="errorMessage text-danger text-bold"></span>
                             </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group col-md-6">                                
-                                    <input type="radio" name="notification" id="notification" value="1" checked>
-                                    <label class="col-form-label">Notification</label>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <input type="radio" name="notification" id="sms_notification" value="2">
-                                    <label class="col-form-label">SMS & Notification </label>                                
-                                </div>
-                                <span class="errorMessage text-danger text-bold"></span>
-                            </div>
 
                             <div class="form-row">
-                            <button type="submit" class="btn btn-success tx-13">Send</button>
-                            <button type="reset" class="btn btn-danger tx-13">Cancel</button>
+                                <button type="submit" class="btn btn-success tx-13">Send</button>
+                                <button type="reset" class="btn btn-danger tx-13">Cancel</button>
                             </div>
                         </form>
                     </div>

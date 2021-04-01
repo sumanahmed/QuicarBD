@@ -49,4 +49,40 @@ class SmsNotificationController extends Controller
         return redirect()->back()->with('message','Send successfully');
         
     }
+
+    //show sms notification send page
+    public function pushNotification(){
+        return view('quicarbd.admin.sms-notification.push-notification');
+    }
+
+    //send sms notification
+    public function pushNotificationSend(Request $request){
+
+        $this->validate($request,[
+            'for'   => 'required',
+            'status'   => 'required',
+            'title'   => 'required',
+            'message' => 'required'
+        ]);
+
+        $details = [
+    		'for'   => $request->for,
+            'status'   => $request->status,
+            'title'   => $request->title,
+            'message' => $request->message,
+            'notification' => 0,
+    	];
+    	
+    	// send all mail in the queue.
+        $job = (new SendSmsNotification($details))
+            ->delay(
+            	now()
+            	->addSeconds(2)
+            ); 
+
+        dispatch($job);
+
+        return redirect()->back()->with('message','Send successfully');
+        
+    }
 }

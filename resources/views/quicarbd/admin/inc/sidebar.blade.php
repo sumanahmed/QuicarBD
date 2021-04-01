@@ -65,10 +65,15 @@
             </ul>
         </li>
         <li>
-            <a href="{{ route('user.index') }}"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">User</span></div><div class="pull-right"></div>
-        </li>
-        <li>
-            <a href="{{ route('sms_notification.index') }}"><div class="pull-left"><i class="fa fa-bell mr-20"></i><span class="right-nav-text">SMS Notification</span></div><div class="pull-right"></div>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#smsNotification"><div class="pull-left"><i class="fa fa-bell mr-20"></i><span class="right-nav-text">SMS Notification</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="smsNotification" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="{{ route('sms_notification.push_notification') }}">Push Notification</a>
+                </li>
+                <li>
+                    <a href="{{ route('sms_notification.index') }}">SMS & Notification</a>
+                </li>
+            </ul>
         </li>
         <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#cars"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Cars</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>

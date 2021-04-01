@@ -74,8 +74,9 @@
                                                 </div>
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
-                                                        <label for="quicar_charge" class="control-label mb-10"> Quicar Charge(%) <span class="text-danger" title="Required">*</span></label>
+                                                        <label for="quicar_charge" class="control-label mb-10"> Quicar Charge <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="quicar_charge" name="quicar_charge" value="{{ $car_package->quicar_charge }}" class="form-control" placeholder="Quicar Charge" readonly required>
+                                                        <input type="hidden" id="quicar_charge_percent">
                                                         @if($errors->has('quicar_charge'))
                                                             <span class="text-danger"> {{ $errors->first('quicar_charge') }}</span>
                                                         @endif

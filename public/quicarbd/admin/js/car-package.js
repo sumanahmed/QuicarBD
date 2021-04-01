@@ -16,7 +16,7 @@ $("#owner_id").change(function(){
         for( var i = 0; i < response.data.length; i++) {
             $("#car_id").append('<option value="'+ response.data[i].id +'">'+ response.data[i].carRegisterNumber +'</option>');
         }            
-        $("#quicar_charge").val(response.car_package_charge);
+        $("#quicar_charge_percent").val(response.car_package_charge);
     });
 });
 
@@ -28,9 +28,11 @@ $("#car_id").change(function(){
 });
 
 function calculateCharge(){
-    var quicar_charge = $("#quicar_charge").val();
+    var quicar_charge_percent = $("#quicar_charge_percent").val();
     var price         = $("#price").val();
-    var owner_get     = parseFloat(price - (price * quicar_charge/100));
+    var quicar_charge =(price * quicar_charge_percent/100);
+    var owner_get     = parseFloat(price - quicar_charge);
+    $("#quicar_charge").val(quicar_charge);
     $("#owner_get").val(owner_get);
 }
 

@@ -46,8 +46,11 @@ class SendSmsNotification implements ShouldQueue
         if($request['for'] == 1){
             $users = User::where('account_status', $request['status'])->get();                             
             foreach($users as $user){
-                if($request['notification'] == 1){
+                if($request['notification'] == 0){
                     $helper->sendSinglePartnerNotification($user->n_key, $request['title'], $request['message']); //push notification send
+                }else if($request['notification'] == 1){
+                    $helper->sendSinglePartnerNotification($user->n_key, $request['title'], $request['message']); //push notification send
+                    $helper->smsNotification($type = 1, $user->id, $title, $msg);//bell notification
                 }else{ 
                     $helper->sendSinglePartnerNotification($user->n_key, $request['title'], $request['message']); //push notification send
                     $helper->smsSend($user->phone, $request['message']); // sms send
@@ -56,8 +59,11 @@ class SendSmsNotification implements ShouldQueue
         }else{ 
             $owners = Owner::where('account_status', $request['status'])->get();
             foreach($owners as $owner){
-                if($request['notification'] == 1){          
+                if($request['notification'] == 0){
+                    $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']); //push notification send
+                }else if($request['notification'] == 1){          
                     $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']);
+                    $helper->smsNotification($type = 12, $owner->id, $title, $msg); //bell notification
                 }else{
                     $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']); //push notification send
                     $helper->smsSend($owner->phone, $request['message']); // sms send                   

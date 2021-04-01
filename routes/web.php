@@ -287,4 +287,6 @@ Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], fu
 Route::group(['prefix'=>'/admin/sms-notification', 'middleware' => 'admin'], function(){
     Route::get('/', [SmsNotificationController::class, 'index'])->name('sms_notification.index');
     Route::post('/send', [SmsNotificationController::class, 'send'])->name('sms_notification.send');
+    Route::get('/push-notification', [SmsNotificationController::class, 'pushNotification'])->name('sms_notification.push_notification');
+    Route::post('/push-notification-send', [SmsNotificationController::class, 'pushNotificationSend'])->name('sms_notification.push_notification.send');
 });

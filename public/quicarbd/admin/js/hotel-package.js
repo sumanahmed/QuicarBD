@@ -13,14 +13,16 @@ $("#district_id").change(function(){
 $("#owner_id").change(function(){
     var owner_id = $(this).val();
     $.get("/get-hotel-package-charge/"+ owner_id, function( hotel_package_charge ) {         
-        $("#quicar_charge").val(hotel_package_charge);
+        $("#quicar_charge_percent").val(hotel_package_charge);
     });
 });
 
 function calculateCharge(){
-    var quicar_charge = $("#quicar_charge").val();
+    var quicar_charge_percent = $("#quicar_charge_percent").val();
     var price         = $("#price").val();
-    var owner_get     = parseFloat(price - (price * quicar_charge/100));
+    var quicar_charge =(price * quicar_charge_percent/100);
+    var owner_get     = parseFloat(price - quicar_charge);
+    $("#quicar_charge").val(quicar_charge);
     $("#you_will_get").val(owner_get);
 }
 
