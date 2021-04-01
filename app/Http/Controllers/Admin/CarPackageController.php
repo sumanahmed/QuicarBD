@@ -120,7 +120,8 @@ class CarPackageController extends Controller
         $spots      = TourSpot::select('id','name')->where('district_id',$car_package->district_id)->get();
         $cars       = Car::select('id','carRegisterNumber')->where('owner_id',$car_package->owner_id)->where('status', 1)->get();
         $starting_cities= City::where('district_id', $car_package->starting_location)->get();
-        return view('quicarbd.admin.package.car-package.edit', compact('car_package','districts','partners','spots','cars','starting_cities'));
+        $charge    = Owner::find($car_package->owner_id)->car_package_charge;
+        return view('quicarbd.admin.package.car-package.edit', compact('car_package','districts','partners','spots','cars','starting_cities','charge'));
     }
         
     /**

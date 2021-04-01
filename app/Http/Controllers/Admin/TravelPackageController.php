@@ -115,7 +115,8 @@ class TravelPackageController extends Controller
         $districts      = District::all();
         $starting_cities= City::where('district_id', $travel_package->starting_location)->get();
         $owners         = Owner::all();
-        return view('quicarbd.admin.package.travel-package.edit', compact('travel_package','spots','districts','starting_cities','owners'));
+        $charge         = Owner::find($travel_package->owner_id)->travel_package_charge;
+        return view('quicarbd.admin.package.travel-package.edit', compact('travel_package','spots','districts','starting_cities','owners','charge'));
     }
     
     /**

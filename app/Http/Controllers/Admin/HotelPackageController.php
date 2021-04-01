@@ -143,7 +143,8 @@ class HotelPackageController extends Controller
         $owner      = Owner::find($hotel_package->owner_id)->name;
         $property_types = PropertyType::where('status', 1)->get();
         $amenities = HotelAmenity::where('status', 1)->get();
-        return view('quicarbd.admin.package.hotel-package.edit', compact('hotel_package','districts','cities','owner','property_types','amenities'));
+        $charge    = Owner::find($hotel_package->owner_id)->hotel_package_charge;
+        return view('quicarbd.admin.package.hotel-package.edit', compact('hotel_package','districts','cities','owner','property_types','amenities','charge'));
     }
     
     /**

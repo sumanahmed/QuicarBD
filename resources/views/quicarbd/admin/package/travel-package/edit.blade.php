@@ -170,7 +170,7 @@
                                     <div class="form-group">
                                         <label for="quicar_charge" class="control-label mb-10"> Qucar Charge <span class="text-danger" title="Required">*</span></label>
                                         <input type="text" id="quicar_charge" name="quicar_charge" value="{{ $travel_package->quicar_charge }}" class="form-control" placeholder="Quicar Charge" readonly required>
-                                        <input type="hidden" id="quicar_charge_percent">
+                                        <input type="hidden" id="quicar_charge_percent" value="{{ $charge }}">
                                         @if($errors->has('quicar_charge'))
                                             <span class="text-danger"> {{ $errors->first('quicar_charge') }}</span>
                                         @endif
