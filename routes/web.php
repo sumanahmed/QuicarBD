@@ -59,6 +59,7 @@ Route::get('/get-car-model/{car_type}/{car_brand}', [CommonController::class, 'g
 Route::get('/get-car-year/{car_type}/{car_model}', [CommonController::class, 'getCarYear'])->name('admin.get_car_year'); 
 Route::get('/get-car-sit/{car_id}', [CommonController::class, 'getCarSit'])->name('admin.get_car_sit'); 
 Route::get('/get-hotel-package-charge/{owner_id}', [CommonController::class, 'getHotelPackageCharge'])->name('admin.get_hotel_package_charge'); 
+Route::get('/get-travel-package-charge/{owner_id}', [CommonController::class, 'getTravelPackageCharge'])->name('admin.get_travel_package_charge'); 
 
 Route::get('/admin',[AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/signin',[AuthController::class, 'signin'])->name('admin.signin');

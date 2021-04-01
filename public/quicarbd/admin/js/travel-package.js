@@ -10,15 +10,17 @@ $("#district_id").change(function(){
 
 $("#owner_id").change(function(){
     var owner_id = $(this).val();
-    $.get("/get-hotel-package-charge/"+ owner_id, function( hotel_package_charge ) {         
-        $("#quicar_charge").val(hotel_package_charge);
+    $.get("/get-travel-package-charge/"+ owner_id, function( travel_package_charge ) {         
+        $("#quicar_charge_percent").val(travel_package_charge);
     });
 });
 
 function calculateCharge(){
-    var quicar_charge   = $("#quicar_charge").val();
+    var quicar_charge_percent = $("#quicar_charge_percent").val();
     var cost_per_person = $("#cost_per_person").val();
-    var owner_get       = parseFloat(cost_per_person - (cost_per_person * quicar_charge/100));
+    var quicar_charge   = (cost_per_person * quicar_charge_percent/100);
+    var owner_get       = parseFloat(cost_per_person - quicar_charge);
+    $("#quicar_charge").val(quicar_charge);
     $("#owner_get_per_person").val(owner_get);
 }
 

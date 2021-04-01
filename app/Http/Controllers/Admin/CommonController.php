@@ -128,4 +128,12 @@ class CommonController extends Controller
         $hotel_package_charge  = Owner::find($owner_id)->hotel_package_charge;
         return response()->json($hotel_package_charge);
     }
+
+    /**
+     * get hotel package charge
+     */
+    public function getTravelPackageCharge ($owner_id) {
+        $travel_package_charge  = Owner::find($owner_id)->travel_package_charge;
+        return response()->json($travel_package_charge);
+    }
 }
