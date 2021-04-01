@@ -212,6 +212,7 @@ Route::group(['prefix'=>'/admin/car-package', 'middleware' => 'admin'], function
     Route::get('/create', [CarPackageController::class, 'create'])->name('car_package.create');
     Route::post('/store', [CarPackageController::class, 'store'])->name('car_package.store');
     Route::get('/edit/{id}', [CarPackageController::class, 'edit'])->name('car_package.edit');
+    Route::get('/details/{id}', [CarPackageController::class, 'details'])->name('car_package.details');
     Route::post('/update/{id}', [CarPackageController::class, 'update'])->name('car_package.update');
     Route::post('/destroy', [CarPackageController::class, 'destroy'])->name('car_package.destroy');
 });
