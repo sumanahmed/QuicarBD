@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\YearController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\CancellationReasonController;
 use App\Http\Controllers\Admin\CarPackageRideController;
+use App\Http\Controllers\Admin\HotelPackageRideController;
 use App\Http\Controllers\Admin\PackageReviewController;
 use App\Http\Controllers\Admin\PrivacyController;
 use App\Http\Controllers\Admin\RideController;
@@ -288,7 +289,16 @@ Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], fu
     Route::get('/complete', [CarPackageRideController::class, 'complete'])->name('car_package_order.complete');
     Route::get('/cancel', [CarPackageRideController::class, 'cancel'])->name('car_package_order.cancel');
     Route::get('/details/{id}', [CarPackageRideController::class, 'details'])->name('car_package_order.details');
-    // Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');
+    Route::post('/cancel/reason/send', [CarPackageRideController::class, 'reasonSend'])->name('car_package_order.reason.send');
+});
+
+Route::group(['prefix'=>'/admin/hotel-package-order', 'middleware' => 'admin'], function(){
+    Route::get('/booking', [HotelPackageRideController::class, 'booking'])->name('hotel_package_order.booking');
+    Route::get('/upcoming', [HotelPackageRideController::class, 'upcoming'])->name('hotel_package_order.upcoming');
+    Route::get('/complete', [HotelPackageRideController::class, 'complete'])->name('hotel_package_order.complete');
+    Route::get('/cancel', [HotelPackageRideController::class, 'cancel'])->name('hotel_package_order.cancel');
+    Route::get('/details/{id}', [HotelPackageRideController::class, 'details'])->name('hotel_package_order.details');
+    Route::post('/cancel/reason/send', [HotelPackageRideController::class, 'reasonSend'])->name('hotel_package_order.reason.send');
 });
 
 Route::group(['prefix'=>'/admin/sms-notification', 'middleware' => 'admin'], function(){

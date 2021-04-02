@@ -183,10 +183,10 @@
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#rideHotelPackage"><div class="pull-left"><span class="right-nav-text">Hotel Package</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="rideHotelPackage" class="collapse collapse-level-1 two-col-list">
-                        <li><a href="#">Booking Request</a></li>
-                        <li><a href="#">Upcoming Booking</a></li>
-                        <li><a href="#">Complete Booking</a></li>
-                        <li><a href="#">Cancelled Booking</a></li>
+                        <li><a href="{{ route('hotel_package_order.booking') }}">Booking Request</a></li>
+                        <li><a href="{{ route('hotel_package_order.upcoming') }}">Upcoming Trip</a></li>                        
+                        <li><a href="{{ route('hotel_package_order.complete') }}">Complete Trip</a></li>
+                        <li><a href="{{ route('hotel_package_order.cancel') }}">Cancelled Trip</a></li>
                     </ul>
                 </li>
             </ul>
