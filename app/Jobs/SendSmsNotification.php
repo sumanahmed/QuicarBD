@@ -59,10 +59,10 @@ class SendSmsNotification implements ShouldQueue
         }else{ 
             $owners = Owner::where('account_status', $request['status'])->get();
             foreach($owners as $owner){
-                if($request['notification'] == 0){
+                if($request['notification'] == 0){ 
                     $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']); //push notification send
                 }else if($request['notification'] == 1){          
-                    $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']);
+                    $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']); //push notification send
                     $helper->smsNotification($type = 2, $owner->id, $request['title'], $request['message']); //bell notification
                 }else{
                     $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']); //push notification send
