@@ -50,7 +50,7 @@ class SendSmsNotification implements ShouldQueue
                     $helper->sendSinglePartnerNotification($user->n_key, $request['title'], $request['message']); //push notification send
                 }else if($request['notification'] == 1){
                     $helper->sendSinglePartnerNotification($user->n_key, $request['title'], $request['message']); //push notification send
-                    $helper->smsNotification($type = 1, $user->id, $title, $msg);//bell notification
+                    $helper->smsNotification($type = 1, $user->id, $request['title'], $request['message']);//bell notification
                 }else{ 
                     $helper->sendSinglePartnerNotification($user->n_key, $request['title'], $request['message']); //push notification send
                     $helper->smsSend($user->phone, $request['message']); // sms send
@@ -63,7 +63,7 @@ class SendSmsNotification implements ShouldQueue
                     $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']); //push notification send
                 }else if($request['notification'] == 1){          
                     $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']);
-                    $helper->smsNotification($type = 12, $owner->id, $title, $msg); //bell notification
+                    $helper->smsNotification($type = 2, $owner->id, $request['title'], $request['message']); //bell notification
                 }else{
                     $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']); //push notification send
                     $helper->smsSend($owner->phone, $request['message']); // sms send                   
