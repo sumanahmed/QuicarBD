@@ -38,7 +38,7 @@
                                             <th>Name</th>
                                             <th>Phone</th>
                                             <th>Balance</th>
-                                            <th>Bidding Percent</th>
+                                            <th>Percentage</th>
                                             <th>Current Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -48,7 +48,7 @@
                                             <th>Name</th>
                                             <th>Phone</th>
                                             <th>Balance</th>
-                                            <th>Bidding Percent</th>
+                                            <th>Percentage</th>
                                             <th>Current Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -61,7 +61,7 @@
                                                     <td>{{ $partner->name }}</td>
                                                     <td>{{ $partner->phone }}</td>
                                                     <td>{{ $partner->current_balance }}</td>
-                                                    <td>{{ $partner->bidding_percent }}</td>
+                                                    <td>{{ "BP-".$partner->bidding_percent.", CP-".$partner->car_package_charge.", HP-".$partner->hotel_package_charge.", TP-".$partner->travel_package_charge }}</td>
                                                     @if($partner->account_status == 0 && $partner->nid_font_pic != null && $partner->nid_back_pic != null)
                                                         <td>Waiting For Approval</td>                                                    
                                                     @elseif($partner->account_status == 0)
@@ -138,20 +138,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="ownerNotificationSend">Send</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Delete Class Modal -->
-    <div id="deleteDriverModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content text-center">
-                <div class="modal-header">
-                    <h5 class="modal-title mb-10" id="exampleModalLabel">Are you sure to delete ?</h5>
-                    <input type="hidden" name="del_id"/>
-                    <button type="button" class="btn btn-xs btn-danger btn-raised mr-2" id="destroyDriver"><i class="fas fa-trash-alt"></i> Proceed</button>
-                    <button type="button" class="btn btn-xs btn-warning btn-raised" data-dismiss="modal" aria-label="Close"><i class="fas fa-backspace"></i> Cancel</button>
                 </div>
             </div>
         </div>

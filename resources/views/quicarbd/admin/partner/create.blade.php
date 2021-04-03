@@ -131,7 +131,7 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="bidding_percent" class="control-label mb-10">Bidding Percent  <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <input type="text" id="bidding_percent" name="bidding_percent" value="{{ old('bidding_percent') }}" placeholder="Bidding Percent" class="form-control" required>
+                                                        <input type="text" id="bidding_percent" name="bidding_percent" value="15" placeholder="Bidding Percent" class="form-control" required>
                                                         @if($errors->has('bidding_percent'))
                                                             <span class="text-danger"> {{ $errors->first('bidding_percent') }}</span>
                                                         @endif
