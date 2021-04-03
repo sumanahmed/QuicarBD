@@ -64,16 +64,16 @@
                                             @foreach($bookings as $booking)
                                                 <tr class="partner-{{ $booking->id }}">
                                                     <td>{{ date('Y-m-d H:i:s a', strtotime($booking->created_at)) }}</td>                                                  
-                                                    <td>{{ date('H:i:s a', strtotime($booking->hotel_check_in_time)) }}<br/>{ date('H:i:s a', strtotime($booking->hotel_check_out_time)) }}</td>
+                                                    <td>{{ date('Y-m-d H:i:s a', strtotime($booking->check_in)) }}<br/>{{ date('Y-m-d H:i:s a', strtotime($booking->check_out)) }}</td>
                                                     <td>{{ $booking->hotel_name }}</td>
-                                                    <td><a href="{{ route('user.details', $booking->user_id) }}">{{ $booking->user_name }} <br/>{{ $booking->user_phone }}</a></td>  /td>  
+                                                    <td><a href="{{ route('user.details', $booking->user_id) }}">{{ $booking->user_name }} <br/>{{ $booking->user_phone }}</a></td> 
                                                     <td>{{ $booking->price }}</td>
                                                     <td>{{ $booking->quicar_charge }}</td>
                                                     <td>{{ $booking->booking_id }}</td>
                                                     <td>{{ getStatus($booking->status, $booking->payment_status) }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('hotel_package_order.details', $booking->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
-                                                        <a href="#" id="carPackageCancelModal" data-toggle="modal" data-package_order_id="{{ $booking->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
+                                                        <a href="#" id="hotelPackageCancelModal" data-toggle="modal" data-package_order_id="{{ $booking->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -92,12 +92,12 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="showCarPackageCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+<div class="modal fade" id="showHotelPackageCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">Cancel Hotel Package</h5>
             </div>
             <div class="modal-body">
                 <form>
@@ -111,7 +111,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="carPackageSendReason">Save</button>
+                <button type="button" class="btn btn-primary" id="hotelPackageSendReason">Save</button>
             </div>
         </div>
     </div>

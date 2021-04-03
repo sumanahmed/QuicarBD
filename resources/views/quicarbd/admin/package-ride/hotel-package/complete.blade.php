@@ -42,6 +42,7 @@
                                             <th>Quicar Charge</th>
                                             <th>Booking ID</th>
                                             <th>Status</th>
+                                            <th>Review</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -62,16 +63,16 @@
                                         @if(isset($orders) && count($orders) > 0)
                                             @foreach($orders as $order)
                                                 <tr class="partner-{{ $order->id }}">
-                                                    <td>{{ date('H:i:s a', strtotime($order->hotel_check_in_time)) }}<br/>{ date('H:i:s a', strtotime($order->hotel_check_out_time)) }}</td>
+                                                    <td>{{ date('Y-m-d H:i:s a', strtotime($order->check_in)) }}<br/>{{ date('Y-m-d H:i:s a', strtotime($order->check_out)) }}</td>
                                                     <td>{{ $order->hotel_name }}</td>
-                                                    <td><a href="{{ route('user.details', $order->user_id) }}">{{ $order->user_name }} <br/>{{ $order->user_phone }}</a></td>  /td>  
+                                                    <td><a href="{{ route('user.details', $order->user_id) }}">{{ $order->user_name }} <br/>{{ $order->user_phone }}</a></td>
                                                     <td>{{ $order->price }}</td>
                                                     <td>{{ $order->quicar_charge }}</td>
                                                     <td>{{ $order->booking_id }}</td>
                                                     <td>Complete</td>
                                                     <td>{{ $order->review_give }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('hotel_package_order.details', $order->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>"fa fa-remove"></i></a>
+                                                        <a href="{{ route('hotel_package_order.details', $order->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -87,30 +88,6 @@
                     </div>
                 </div>
             </div>	
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="showCarPackageCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="reason" class="control-label mb-10">Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
-                        <textarea id="reason" class="form-control" placeholder="Enter cancel reason.."></textarea>
-                        <input type="hidden" id="package_order_id" />
-                        <span class="text-danger reasonError"></span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="carPackageSendReason">Save</button>
-            </div>
         </div>
     </div>
 </div>

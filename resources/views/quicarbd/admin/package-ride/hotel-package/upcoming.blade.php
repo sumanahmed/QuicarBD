@@ -64,9 +64,9 @@
                                             @foreach($orders as $order)
                                                 <tr class="partner-{{ $order->id }}">
                                                     <td>{{ date('Y-m-d H:i:s a', strtotime($order->created_at)) }}</td>                                                  
-                                                    <td>{{ date('H:i:s a', strtotime($order->hotel_check_in_time)) }}<br/>{ date('H:i:s a', strtotime($order->hotel_check_out_time)) }}</td>
+                                                    <td>{{ date('Y-m-d H:i:s a', strtotime($order->check_in)) }}<br/>{{ date('Y-m-d H:i:s a', strtotime($order->check_out)) }}</td>
                                                     <td>{{ $order->hotel_name }}</td>
-                                                    <td><a href="{{ route('user.details', $order->user_id) }}">{{ $order->user_name }} <br/>{{ $order->user_phone }}</a></td>  /td>  
+                                                    <td><a href="{{ route('user.details', $order->user_id) }}">{{ $order->user_name }} <br/>{{ $order->user_phone }}</a></td>
                                                     <td>{{ $order->price }}</td>
                                                     <td>{{ $order->quicar_charge }}</td>
                                                     <td>{{ $order->booking_id }}</td>
