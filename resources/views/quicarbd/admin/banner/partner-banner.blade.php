@@ -81,12 +81,12 @@
                         {{ csrf_field() }} {{ method_field('POST') }}
                         <div class="form-group">
                             <label for="name" class="control-label mb-10">Title <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <input type="text" name="title" id="title" class="form-control"placeholder="Enter Title" required>
+                            <input type="text" name="title" id="title" class="form-control" placeholder="Enter Title" required>
                             <span class="text-danger titleError"></span>
                         </div>
                         <div class="form-group">
                             <label for="details" class="control-label mb-10">Details <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <textarea name="details" id="details" rows="4" class="form-control" placeholder="Details" required></textarea>
+                            <textarea name="details" id="details" rows="4" class="form-control summernote" placeholder="Details" required></textarea>
                             <span class="text-danger detailsError"></span>
                         </div>
                         <div class="form-group">
@@ -124,13 +124,13 @@
                         {{ csrf_field() }} {{ method_field('POST') }}
                         <div class="form-group">
                             <label for="edit_title" class="control-label mb-10">Title <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <input type="text" name="name" id="edit_title" class="form-control"placeholder="Enter Title" required>
+                            <input type="text" name="name" id="edit_title" class="form-control" placeholder="Enter Title" required>
                             <input type="hidden" id="edit_id" />
                             <span class="text-danger nameError"></span>
                         </div>     
                         <div class="form-group">
                             <label for="edit_details" class="control-label mb-10">Details <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <textarea name="details" id="edit_details" rows="4" class="form-control" placeholder="Details" required></textarea>
+                            <textarea name="details" id="edit_details" rows="4" class="form-control summernote" placeholder="Details" required></textarea>
                             <span class="text-danger detailsError"></span>
                         </div>
                         <div class="form-group">

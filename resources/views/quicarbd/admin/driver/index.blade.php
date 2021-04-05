@@ -2,8 +2,8 @@
 @section('title','Driver')
 
 @section('content')
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <a href="{{ route('driver.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
@@ -102,7 +102,7 @@
                                                     <td>{{ $driver->phone }}</td>
                                                     <td><img src="http://quicarbd.com/{{ $driver->driver_photo }}" style="width:80px;height:60px"/>
                                                     <td>{{ $driver->c_status == 1 ? 'Approve' : 'Pending' }} </td>
-                                                    <td>{{ date('Y-m-d', strtotime($driver->created_at))." at ".date('H:i:s a', strtotime($driver->created_at)) }}</td>
+                                                    <td>{{ date('j M, Y', strtotime($driver->created_at))." at ".date('H:i:s a', strtotime($driver->created_at)) }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         @if($driver->c_status == 0)
                                                             <a href="{{ route('driver.status-update', ['id' => $driver->id, 'owner_id' => $driver->owner_id, 'c_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
         </div>
     </div>
 
@@ -146,7 +146,7 @@
 </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

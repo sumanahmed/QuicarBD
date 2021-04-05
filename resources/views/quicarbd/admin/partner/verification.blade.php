@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Partner')
 @section('content')
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -28,10 +28,33 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
+                    <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
+                        <form action="{{ route('partner.verification') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="name" class="control-label mb-10">Name</label>                                            
+                                        <input type="text" name="name" @if(isset($_GET['name'])) value="{{ $_GET['name'] }}" @endif placeholder="Name" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="phone" class="control-label mb-10">Phone</label>                                            
+                                        <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif placeholder="Phone" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="panel-body">
                         <div class="table-wrap">
                             <div class="table-responsive">
-                                <table id="datable_1" class="table table-hover display pb-30" >
+                                <table class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -72,8 +95,11 @@
                                                     @else
                                                         <td>Hold</td>
                                                     @endif
-                                                    <td>{{ date('Y-m-d', strtotime($partner->created_at))." at ".date('H:i:s a', strtotime($partner->created_at)) }}</td>
+                                                    <td>{{ date('j M, Y', strtotime($partner->created_at))." at ".date('H:i:s a', strtotime($partner->created_at)) }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
+                                                        @if($partner->account_status == 0 && $partner->nid_font_pic == null)
+                                                            <a href="#" class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="deletePartner" data-target="#deletePartnerModal" data-id="{{ $partner->id }}" title="Delete"><i class="fa fa-remove"></i></a>
+                                                        @endif
                                                         <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>                                                                                                               
                                                         <a href="{{ route('partner.edit', $partner->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="{{ route('partner.details', $partner->id) }}" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
@@ -87,11 +113,12 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                {{ $partners->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
         </div>
     </div>
     
@@ -139,13 +166,13 @@
     </div>
     
     <!-- Delete Class Modal -->
-    <div id="deleteDriverModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="deletePartnerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content text-center">
                 <div class="modal-header">
                     <h5 class="modal-title mb-10" id="exampleModalLabel">Are you sure to delete ?</h5>
-                    <input type="hidden" name="del_id"/>
-                    <button type="button" class="btn btn-xs btn-danger btn-raised mr-2" id="destroyDriver"><i class="fas fa-trash-alt"></i> Proceed</button>
+                    <input type="hidden" name="del_id" id="del_id" />
+                    <button type="button" class="btn btn-xs btn-danger btn-raised mr-2" id="destroyPartner"><i class="fas fa-trash-alt"></i> Proceed</button>
                     <button type="button" class="btn btn-xs btn-warning btn-raised" data-dismiss="modal" aria-label="Close"><i class="fas fa-backspace"></i> Cancel</button>
                 </div>
             </div>
@@ -154,7 +181,7 @@
 </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

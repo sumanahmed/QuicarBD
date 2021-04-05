@@ -23,8 +23,20 @@ use DB;
 class PartnerController extends Controller
 {
     //show all partner
-    public function index(){
-        $partners = Owner::orderBy('id','DESC')->where('account_status', 1)->get();
+    public function index(Request $request)
+    {
+        $query = Owner::orderBy('id','DESC')->where('account_status', 1);
+        
+        if ($request->name) {
+            $query = $query->where('name', 'like', "{$request->name}%");
+        }
+        
+        if ($request->phone) {
+            $query = $query->where('phone', $request->phone);
+        }
+        
+        $partners = $query->paginate(12);
+        
         return view('quicarbd.admin.partner.index', compact('partners'));
     }
 
@@ -269,13 +281,23 @@ class PartnerController extends Controller
     }
 
     //partner details
-    public function verification(){
-        $partners = Owner::orderBy('id','DESC')
+    public function verification(Request $request){
+        $query = Owner::orderBy('id','DESC')
                         ->where(function($query) {
                             return $query->where('account_status', 0)
                                         ->orWhere('account_status', 2);
-                        }) 
-                        ->get();
+                        });
+        
+        if ($request->name) {
+            $query = $query->where('name', 'like', "{$request->name}%");
+        }
+        
+        if ($request->phone) {
+            $query = $query->where('phone', $request->phone);
+        }
+        
+        $partners = $query->paginate(12);
+        
         return view('quicarbd.admin.partner.verification', compact('partners'));
     }
     
@@ -334,5 +356,11 @@ class PartnerController extends Controller
         }
 
         return redirect()->route('partner.account_type_change_request')->with('message','Approve successfully');
+    }
+    
+    //destroy
+    public function destroy(Request $request){
+        Owner::find($request->id)->delete();
+        return response()->json();
     }
 }

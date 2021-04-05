@@ -117,3 +117,28 @@ function img3(input) {
 $("#img3Upload").change(function() {
     img3(this);
 });
+
+
+
+//open delete Brand modal
+$(document).on('click', '#deletePartner', function () {
+    $('#deletePartnerModal').modal('show');
+    $('input[name=del_id]').val($(this).data('id'));
+ });
+
+//destroy Brand
+$("#destroyPartner").click(function(){
+    $.ajax({
+        type: 'POST',
+        url: '/admin/partner/destroy',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            id: $('input[name=del_id]').val()
+        },
+        success: function (data) {
+            $('#deleteBrandModal').modal('hide');
+            $('.partner-' + $('input[name=del_id]').val()).remove();
+            toastr.success('Partner Deleted')
+        }
+    });
+});
