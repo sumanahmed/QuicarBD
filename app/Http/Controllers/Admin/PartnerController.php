@@ -297,7 +297,9 @@ class PartnerController extends Controller
         }
         
         if ($request->account_status == 0) {
-            $query = $query->where('account_status', 0);
+            $query = $query->where('account_status', 0)
+                            ->where('nid_font_pic', '')
+                            ->where('nid_back_pic', '');
         }
         
         if ($request->account_status == 5) { 
