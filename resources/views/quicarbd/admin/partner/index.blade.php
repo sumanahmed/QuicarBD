@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Partner')
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <a href="{{ route('partner.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
@@ -40,6 +40,7 @@
                                             <th>Balance</th>
                                             <th>Percentage</th>
                                             <th>Current Status</th>
+                                            <th>Date & Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -50,6 +51,7 @@
                                             <th>Balance</th>
                                             <th>Percentage</th>
                                             <th>Current Status</th>
+                                            <th>Date & Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -71,6 +73,7 @@
                                                     @else
                                                         <td>Cancel</td>
                                                     @endif
+                                                    <td>{{ date('Y-m-d', strtotime($partner->created_at))." at ".date('H:i:s a', strtotime($partner->created_at)) }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         @if($partner->account_status == 0)
                                                             <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
@@ -95,7 +98,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
     
@@ -145,7 +148,7 @@
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

@@ -19,15 +19,28 @@ class DriverController extends Controller
     //show all drivers
     public function index(Request $request)
     {       
-        $query  = DB::table('drivers')->select('*');
+        $query  = DB::table('drivers')->orderBy('id','DESC')->select('*');
 
         if ($request->owner_id) {
             $query = $query->where('owner_id', $request->owner_id);
         }
+        
+        if ($request->license) {
+            $query = $query->where('license', $request->license);
+        }
+        
+        if ($request->nid) {
+            $query = $query->where('nid', $request->nid);
+        }
+        
+        if ($request->phone) {
+            $query = $query->where('phone', $request->phone);
+        }
 
-        $drivers    = $query->get();
-
-        return view('quicarbd.admin.driver.index', compact('drivers'));
+        $drivers = $query->paginate(12); 
+        $owners  = Owner::select('id','name')->where('account_status', 1)->get();
+ 
+        return view('quicarbd.admin.driver.index', compact('drivers','owners'));
     }
 
     //show create page
@@ -39,7 +52,7 @@ class DriverController extends Controller
 
     //show edit page
     public function edit($id){
-        $driver     = Driver::find($id); 
+        $driver     = Driver::find($id);  
         $owners     = Owner::select('id','name')->where('account_status', 1)->get();
         $districts  = District::orderBy('value','ASC')->get(); 
         $cities     = City::where('district_id', $driver->district_id)->get();

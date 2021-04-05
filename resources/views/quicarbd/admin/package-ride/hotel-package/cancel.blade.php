@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Complete')
+@section('title','Cancel')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -12,7 +12,7 @@
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Package Ride</a></li>
             <li><a href="#">Hotel Package</a></li>
-            <li class="active"><span>Complete</span></li>
+            <li class="active"><span>Cancel</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -24,7 +24,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">Hotel Package Complete</h6>
+                        <h6 class="panel-title txt-dark">Hotel Package Cancel</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>

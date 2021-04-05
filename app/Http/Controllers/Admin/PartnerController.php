@@ -39,9 +39,9 @@ class PartnerController extends Controller
 
         $this->validate($request, [
             'name'      => 'required',
-            'email'     => 'required',
-            'phone'     => 'required',
-            'nid'       => 'required',
+            'email'     => 'required|unique:owners,email',
+            'phone'     => 'required|unique:owners,phone',
+            'nid'       => 'required|unique:owners,nid',
             'account_type'          => 'required',
             'bidding_percent'       => 'required',
             'car_package_charge'    => 'required',
@@ -109,9 +109,9 @@ class PartnerController extends Controller
     public function update(Request $request, $id){ 
         $this->validate($request, [
             'name'      => 'required',
-            'email'     => 'required',
-            'phone'     => 'required',
-            'nid'       => 'required',
+            'email'     => 'required|unique:owners,email,'.$id,
+            'phone'     => 'required|unique:owners,phone,'.$id,
+            'nid'       => 'required|unique:owners,nid,'.$id,
             'account_type'          => 'required',
             'bidding_percent'       => 'required',
             'car_package_charge'    => 'required',
@@ -120,7 +120,7 @@ class PartnerController extends Controller
             'service_location_district' => 'required',
         ]);
         
-        $owner              = Owner::find($id);
+        $owner              = Owner::find($id); 
         $owner->name        = $request->name;
         $owner->email       = $request->email;
         $owner->phone       = $request->phone;
@@ -128,7 +128,7 @@ class PartnerController extends Controller
         $owner->nid         = $request->nid;        
         $owner->c_lat       = 0.0000;
         $owner->c_lon       = 0.0000;
-        $owner->n_key       = 0.0000;
+        //$owner->n_key       = strlen($owner->n_key) > 6 ? $owner-n_key : 0;
         $owner->service_location_district  = $request->service_location_district;
         $owner->service_location_city      = $request->service_location_city;
         $owner->bidding_percent         = $request->bidding_percent;

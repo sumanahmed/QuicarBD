@@ -2,8 +2,8 @@
 @section('title','Driver')
 
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <a href="{{ route('driver.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
@@ -29,10 +29,56 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
+                    <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
+                        <form action="{{ route('driver.index') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="name" class="control-label mb-10">Name</label>                                            
+                                        <input type="text" name="name" @if(isset($_GET['name'])) value="{{ $_GET['name'] }}" @endif placeholder="Name" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="license" class="control-label mb-10">Licenese No</label>                                            
+                                        <input type="text" name="license" @if(isset($_GET['license'])) value="{{ $_GET['license'] }}" @endif placeholder="License No" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="nid" class="control-label mb-10">NID</label>                                            
+                                        <input type="text" name="nid" @if(isset($_GET['nid'])) value="{{ $_GET['nid'] }}" @endif placeholder="NID" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="name" class="control-label mb-10">Phone</label>                                            
+                                        <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif placeholder="Phone" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="owner_id" class="control-label mb-10">Partner</label>                                            
+                                        <select name="owner_id" class="form-control selectable">
+                                            <option value="0">Select</option>
+                                            @foreach($owners as $owner)
+                                                <option value="{{ $owner->id }}" @if(isset($_GET['owner_Id']) && $owner->id == $_GET['owner_id']) selected @endif>{{ $owner->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="panel-body">
                         <div class="table-wrap">
                             <div class="table-responsive">
-                                <table id="datable_1" class="table table-hover display pb-30" >
+                                <table class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -41,6 +87,7 @@
                                             <th>Phone</th>
                                             <th>Image</th>
                                             <th>Status</th>
+                                            <th>Date & Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -55,6 +102,7 @@
                                                     <td>{{ $driver->phone }}</td>
                                                     <td><img src="http://quicarbd.com/{{ $driver->driver_photo }}" style="width:80px;height:60px"/>
                                                     <td>{{ $driver->c_status == 1 ? 'Approve' : 'Pending' }} </td>
+                                                    <td>{{ date('Y-m-d', strtotime($driver->created_at))." at ".date('H:i:s a', strtotime($driver->created_at)) }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         @if($driver->c_status == 0)
                                                             <a href="{{ route('driver.status-update', ['id' => $driver->id, 'owner_id' => $driver->owner_id, 'c_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
@@ -73,11 +121,12 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                {{ $drivers->links() }}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
 
@@ -97,7 +146,7 @@
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>
