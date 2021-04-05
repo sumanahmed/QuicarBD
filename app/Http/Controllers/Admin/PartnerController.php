@@ -296,6 +296,16 @@ class PartnerController extends Controller
             $query = $query->where('phone', $request->phone);
         }
         
+        if ($request->account_status == 0) {
+            $query = $query->where('account_status', 0);
+        }
+        
+        if ($request->account_status == 5) { 
+            $query = $query->where('account_status', 0)
+                            ->where('nid_font_pic', '<>', '')
+                            ->where('nid_back_pic', '<>', '');
+        }
+        
         $partners = $query->paginate(12);
         
         return view('quicarbd.admin.partner.verification', compact('partners'));

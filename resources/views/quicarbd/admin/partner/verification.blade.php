@@ -44,6 +44,16 @@
                                     </div>
                                 </div> 
                                 <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="account_status" class="control-label mb-10">Status</label>                                            
+                                        <select name="account_status" class="form-control">
+                                            <option value="100">Select</option>
+                                            <option value="0" @if(isset($_GET['account_status']) && $_GET['account_status'] == 0) selected @endif>Pending</option>    
+                                            <option value="5" @if(isset($_GET['account_status']) && $_GET['account_status'] == 5) selected @endif>Waiting for Approval</option>    
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                                     </div>
@@ -100,9 +110,10 @@
                                                         @if($partner->account_status == 0 && $partner->nid_font_pic == null)
                                                             <a href="#" class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="deletePartner" data-target="#deletePartnerModal" data-id="{{ $partner->id }}" title="Delete"><i class="fa fa-remove"></i></a>
                                                         @endif
+                                                        <a href="#" class="btn btn-xs btn-primary" id="sendNotification" data-toggle="modal" data-target="#sendNotificationModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
                                                         <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>                                                                                                               
-                                                        <a href="{{ route('partner.edit', $partner->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="{{ route('partner.details', $partner->id) }}" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                        <a href="{{ route('partner.edit', $partner->id) }}" target="_blank" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="{{ route('partner.details', $partner->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach

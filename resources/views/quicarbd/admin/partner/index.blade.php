@@ -105,8 +105,8 @@
                                                         @endif
                                                         <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 2 ]) }}" class="btn btn-xs btn-danger" title="Hold"><i class="fa fa-pause"></i></a>
                                                         <a href="#" class="btn btn-xs btn-primary" id="sendNotification" data-toggle="modal" data-target="#sendNotificationModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
-                                                        <a href="{{ route('partner.edit', $partner->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
-                                                        <a href="{{ route('partner.details', $partner->id) }}" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                        <a href="{{ route('partner.edit', $partner->id) }}" target="_blank" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="{{ route('partner.details', $partner->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
