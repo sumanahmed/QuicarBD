@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Partner')
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -129,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
     
@@ -146,6 +146,7 @@
                         <div class="form-group">
                             <label for="title" class="control-label mb-10">Title <span class="text-danger text-bold" title="Required Field">*</span></label>
                             <input type="text" name="title" id="title" class="form-control"placeholder="Enter Title" required>
+                            <input type="hidden" name="owner_id" id="owner_id" />
                             <input type="hidden" name="n_key" id="n_key" />
                             <input type="hidden" name="phone" id="phone" />
                             <span class="errorTitle text-danger text-bold"></span>
@@ -192,7 +193,7 @@
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

@@ -5,7 +5,7 @@
 	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <a href="#" data-toggle="modal" data-target="#createPartnerBannerModal" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
+            <a href="{{ route('partner_banner.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
         </div>
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
@@ -38,8 +38,8 @@
                                             <th>Title</th>                                   
                                             <th>Status</th>                                   
                                             <th>Image</th>                                    
-                                        <th style="vertical-align: middle;text-align: center;">Action</th>
-                                    </tr>
+                                            <th style="vertical-align: middle;text-align: center;">Action</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         @if(isset($partner_banners) && count($partner_banners) > 0)
@@ -49,7 +49,7 @@
                                                     <td>{{ $partner_banner->status == 1 ? 'Active' : 'Inactive' }}</td>
                                                     <td><img src="http://quicarbd.com/{{ $partner_banner->image_url }}" style="width: 80px;height:50px;" /></td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="editPartnerBanner" data-target="#editPartnerBannerModal" data-id="{{ $partner_banner->id }}"  data-title="{{ $partner_banner->title }}" data-details="{{ $partner_banner->details }}" data-image_url="{{ $partner_banner->image_url }}" data-status="{{ $partner_banner->status }}" title="Edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="{{ route('partner_banner.edit',$partner_banner->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deletePartnerBanner" data-target="#deletePartnerBannerModal" data-id="{{ $partner_banner->id }}" title="Delete"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>

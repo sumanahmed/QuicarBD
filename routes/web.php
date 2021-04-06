@@ -203,8 +203,10 @@ Route::group(['prefix'=>'/admin/user-banner', 'middleware' => 'admin'], function
 
 Route::group(['prefix'=>'/admin/partner-banner', 'middleware' => 'admin'], function(){
     Route::get('/', [PartnerBannerController::class, 'index'])->name('partner_banner.index');
+    Route::get('/create', [PartnerBannerController::class, 'create'])->name('partner_banner.create');
     Route::post('/store', [PartnerBannerController::class, 'store'])->name('partner_banner.store');
-    Route::post('/update', [PartnerBannerController::class, 'update'])->name('partner_banner.update');
+    Route::get('/edit/{id}', [PartnerBannerController::class, 'edit'])->name('partner_banner.edit');
+    Route::post('/update/{id}', [PartnerBannerController::class, 'update'])->name('partner_banner.update');
     Route::post('/destroy', [PartnerBannerController::class, 'destroy'])->name('partner_banner.destroy');
 });
 

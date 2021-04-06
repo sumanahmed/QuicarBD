@@ -86,8 +86,8 @@ $("#update").click(function (e) {
                 if(response.errors.details){
                     $('.detailsError').text(response.errors.details);
                 }                
-                if(response.errors.image){
-                    $('.imageError').text(response.errors.image);
+                if(response.errors.image_url){
+                    $('.imageError').text(response.errors.image_url);
                 }             
             }else{
                 if (response.data.status == 1) {
@@ -111,6 +111,23 @@ $("#update").click(function (e) {
             }
         }
     });
+});
+
+
+//im1 upload
+function img1(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#img1Preview').css('background-image', 'url('+e.target.result +')');
+            $('#img1Preview').hide();
+            $('#img1Preview').fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#img1Upload").change(function() {
+    img1(this);
 });
 
 //open delete PartnerBanner modal
