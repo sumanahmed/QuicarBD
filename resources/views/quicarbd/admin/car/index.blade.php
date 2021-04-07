@@ -97,6 +97,12 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
+                                        <label for="phone" class="control-label mb-10">Phone </label>                                            
+                                        <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
                                         <label for="perPage" class="control-label mb-10">Per Page </label>                                            
                                         <select id="perPage" name="perPage" class="form-control selectable">
                                             <option value="10">10</option>
@@ -161,7 +167,7 @@
                                     </tbody>
                                 </table>
 
-                                {{ $cars->links() }}
+                                {{ $cars->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>

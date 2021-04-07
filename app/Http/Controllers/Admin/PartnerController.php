@@ -259,15 +259,21 @@ class PartnerController extends Controller
             $helper = new Helper(); 
             $id     = $partner->n_key;
             if ($request->account_status == 1) {
-                $title = 'Account Approved';
+                $title  = 'Account Approved';
+                $msg    = 'Dear '.$partner->name.', Now you are a Quicar partner. Now you can add your services in Quicar platform. Call for help 01611822829. Thanks Team Quicar'; 
+            } else if ($request->account_status == 2 && !empty($partner->nid_font_pic) && !empty($partner->nid_back_pic)) {
+                $title = 'Account Pending';
+                $msg    = 'Dear '.$partner->name.', We received your documents. Please wait for approval. It may take 24 hours to approve. Call for help 01611822829. Thanks Team Quicar'; 
             } else if ($request->account_status == 2) {
                 $title = 'Account Pending';
+                $msg    = 'Dear '.$partner->name.', Your account is now active. Please complete verification with NID and your photo. Call for help 01611822829. Thanks Team Quicar'; 
             } else {
-                $title = 'Hold';
+                $title = 'Account Hold';
+                $msg    = 'Dear '.$partner->name.', Unfortunately your Quicar Partner account has been hold. Please call for further help 01611822829. Thanks Team Quicar'; 
             }
-            $msg    = 'Dear '.$partner->name.', your '.$title.' successfully. Thanks for connecting with Quicar';                        
+            
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
-            $helper->smsSend($request->phone, $msg); // sms send
+            $helper->smsSend($partner->phone, $msg); // sms send
             $helper->smsNotification($type = 2, $partner->id, $title, $msg); // send notification, 2=partner
 
             $partner->account_status = $request->account_status;

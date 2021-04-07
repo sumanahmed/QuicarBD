@@ -95,6 +95,10 @@
                                         @if(isset($drivers) && count($drivers) > 0)
                                             @php $i=1; @endphp
                                             @foreach($drivers as $driver)
+                                                @php 
+                                                    $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $driver->created_at, new DateTimeZone("UTC"));
+                                                    $formattedTime = $db_time->setTimeZone(new DateTimeZone("Asia/Dhaka"))->format('j M, Y h:i A');
+                                                @endphp
                                                 <tr class="driver-{{ $driver->id }}">
                                                     <td>{{ $driver->name }}</td>
                                                     <td>{{ $driver->nid }}</td>
@@ -102,7 +106,7 @@
                                                     <td>{{ $driver->phone }}</td>
                                                     <td><img src="http://quicarbd.com/{{ $driver->driver_photo }}" style="width:80px;height:60px"/>
                                                     <td>{{ $driver->c_status == 1 ? 'Approve' : 'Pending' }} </td>
-                                                    <td>{{ date('j M, Y', strtotime($driver->created_at))." at ".date('H:i:s a', strtotime($driver->created_at)) }}</td>
+                                                    <td>{{ $formattedTime }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         @if($driver->c_status == 0)
                                                             <a href="{{ route('driver.status-update', ['id' => $driver->id, 'owner_id' => $driver->owner_id, 'c_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
@@ -121,7 +125,7 @@
                                         @endif
                                     </tbody>
                                 </table>
-                                {{ $drivers->links() }}
+                                {{ $drivers->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>

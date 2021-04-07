@@ -14,8 +14,6 @@
 	<link rel="icon" href="favicon.ico" type="image/x-icon">	
 	<!-- Data table CSS -->
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css"/>	
-	<!-- Dropify CSS -->
-	<link href="{{ asset('quicarbd/admin/vendors/bower_components/dropify/dist/css/dropify.min.css') }}" rel="stylesheet" type="text/css">
 	<!-- Toast CSS -->
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/summernote/dist/summernote.css') }}" rel="stylesheet" type="text/css">
@@ -26,11 +24,6 @@
 </head>
 
 <body>
-	<!-- Preloader -->
-	<div class="preloader-it">
-		<div class="la-anim-1"></div>
-	</div>
-	<!-- /Preloader -->
     <div class="wrapper theme-1-active pimary-color-blue">
 		<!-- Top Menu Items -->
 		<nav class="navbar navbar-inverse navbar-fixed-top">

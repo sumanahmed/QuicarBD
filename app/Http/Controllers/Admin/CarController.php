@@ -55,6 +55,10 @@ class CarController extends Controller
         if (isset($request->status) && $request->status != 5) { 
             $query = $query->where('cars.status', $request->status);
         }
+        
+        if ($request->phone) { 
+            $query = $query->where('owners.phone', $request->phone);
+        }
 
         $cars = isset($request->perPage) ? $query->paginate($request->perPage) : $query->paginate(10);
 
@@ -190,7 +194,7 @@ class CarController extends Controller
             'carModel'  => 'required',
             'carYear'  => 'required',
             'carColor'  => 'required',
-            'carRegisterNumber'  => 'required',
+            'carRegisterNumber'     => 'required|unique:cars,carRegisterNumber,'.$id,
             'owner_id'  => 'required',
         ]);
         

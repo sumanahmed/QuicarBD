@@ -31,7 +31,6 @@ class AuthController extends Controller
     // backend admin log out
     public function logout(Request $request){
         if(Auth::guard('admin')->check()){
-            return 'logged innn';
             Auth::guard('admin')->logout();
         }
         return redirect()->route('admin.login');

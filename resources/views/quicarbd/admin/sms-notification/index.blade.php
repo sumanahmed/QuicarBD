@@ -52,7 +52,7 @@
                             
                             <div class="form-group">
                                 <label for="message" class="control-label">Message <span class="text-danger" title="Required">*</span></label>
-                                <textarea class="form-control" name="message" rows="6" id="message" placeholder="Enter your message"></textarea>
+                                <textarea class="form-control summernote" name="message" rows="6" id="message" placeholder="Enter your message"></textarea>
                                 <span class="errorMessage text-danger text-bold"></span>
                             </div>
                             

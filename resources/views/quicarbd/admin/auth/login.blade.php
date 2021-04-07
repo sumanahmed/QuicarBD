@@ -16,23 +16,16 @@
 		<link href="{{ asset('quicarbd/admin/dist/css/style.css') }}" rel="stylesheet" type="text/css">
 	</head>
 	<body>
-		<!--Preloader-->
-		<div class="preloader-it">
-			<div class="la-anim-1"></div>
-		</div>
-		<!--/Preloader-->
-		
 		<div class="wrapper pa-0">
 			<header class="sp-header">
 				<div class="sp-logo-wrap pull-left">
-					<a href="index.html">
-						<img class="brand-img mr-10" src="{{ asset('quicarbd/admin/img/logo.png') }}" alt="brand"/>
-						<span class="brand-text">Goofy</span>
+					<a href="#">
+						<img class="brand-img mr-10" src="{{ asset('quicarbd/logo.png') }}" alt="brand"/>
 					</a>
 				</div>
 				<div class="form-group mb-0 pull-right">
 					<span class="inline-block pr-10">Don't have an account?</span>
-					<a class="inline-block btn btn-primary  btn-rounded btn-outline" href="signup.html">Sign Up</a>
+					<a class="inline-block btn btn-primary  btn-rounded btn-outline" href="#">Sign Up</a>
 				</div>
 				<div class="clearfix"></div>
 			</header>
@@ -59,7 +52,7 @@
 												</div>
 												<div class="form-group">
 													<label class="pull-left control-label mb-10" for="exampleInputpwd_2">Password</label>
-													<a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="forgot-password.html">forgot password ?</a>
+													<a class="capitalize-font txt-primary block mb-10 pull-right font-12" href="#">forgot password ?</a>
 													<div class="clearfix"></div>
 													<input type="password" name="password" class="form-control" required="" id="exampleInputpwd_2" placeholder="Enter pwd">
 												</div>
@@ -83,26 +76,9 @@
 					</div>
 					<!-- /Row -->	
 				</div>
-				
 			</div>
-			<!-- /Main Content -->
-		
 		</div>
-		<!-- /#wrapper -->
-		
-		<!-- JavaScript -->
-		
-		<!-- jQuery -->
-		<script src="{{ asset('quicarbd/admin/vendors/bower_components/jquery/dist/jquery.min.js') }}"></script>
-		
 		<!-- Bootstrap Core JavaScript -->
 		<script src="{{ asset('quicarbd/admin/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-		<script src="{{ asset('quicarbd/admin/vendors/bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js') }}"></script>
-		
-		<!-- Slimscroll JavaScript -->
-		<script src="{{ asset('quicarbd/admin/dist/js/jquery.slimscroll.js') }}"></script>
-		
-		<!-- Init JavaScript -->
-		<script src="{{ asset('quicarbd/admin/dist/js/init.js') }}"></script>
 	</body>
 </html>
