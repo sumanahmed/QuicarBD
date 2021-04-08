@@ -54,13 +54,19 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="owner_id" class="control-label mb-10">Owner <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <label for="owner_id" class="control-label mb-10">Owner Name<span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="owner_id" name="owner_id" class="form-control selectable" required readonly>
                                                             <option value="{{ $owner->id }}" selected>{{ $owner->name }}</option>
                                                         </select>
                                                         @if($errors->has('owner_id'))
                                                             <span class="text-danger"> {{ $errors->first('owner_id') }}</span>
                                                         @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="owner_id" class="control-label mb-10">Owner Phone</label>                                            
+                                                        <input type="text" value="{{ $owner->phone }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
                                             </div>                                

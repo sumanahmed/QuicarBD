@@ -64,8 +64,8 @@
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="dob" class="control-label mb-10">Date of Birth <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <input type="date" id="dob" name="dob" class="form-control datePicker" required>
+                                                        <label for="dob" class="control-label mb-10">Date of Birth</label>                                            
+                                                        <input type="date" id="dob" name="dob" class="form-control datePicker">
                                                         @if($errors->has('dob'))
                                                             <span class="text-danger"> {{ $errors->first('dob') }}</span>
                                                         @endif
@@ -107,8 +107,8 @@
                                                 </div> 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="district_id" class="control-label mb-10">District <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <select name="district_id" id="district_id" class="form-control" required>
+                                                        <label for="district_id" class="control-label mb-10">District</label>                                            
+                                                        <select name="district_id" id="district_id" class="form-control">
                                                             <option selected disabled>select</option>
                                                             @foreach($districts as $district)
                                                                 <option value="{{ $district->id }}">{{ $district->value }}</option>
@@ -121,8 +121,8 @@
                                                 </div>                                    
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="city_id" class="control-label mb-10">City <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <select name="city_id" id="city_id" class="form-control" required>                                      
+                                                        <label for="city_id" class="control-label mb-10">City </label>                                            
+                                                        <select name="city_id" id="city_id" class="form-control">                                      
                                                         </select>
                                                         @if($errors->has('city_id'))
                                                             <span class="text-danger"> {{ $errors->first('city_id') }}</span>
@@ -131,8 +131,8 @@
                                                 </div>                                     
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="address" class="control-label mb-10">Address <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <input type="text" id="address" name="address" placeholder="Enter Address" class="form-control" required>
+                                                        <label for="address" class="control-label mb-10">Address </label>                                            
+                                                        <input type="text" id="address" name="address" placeholder="Enter Address" class="form-control">
                                                         @if($errors->has('address'))
                                                             <span class="text-danger"> {{ $errors->first('address') }}</span>
                                                         @endif

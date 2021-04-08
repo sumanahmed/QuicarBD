@@ -145,7 +145,7 @@
                                             @foreach($cars as $car)
                                                 <tr class="car-{{ $car->id }}">
                                                     <td>{{ $car->carRegisterNumber }}</td>
-                                                    <td>{{ $car->owner_name }}<br/>{{ $car->owner_phone }}</td>
+                                                    <td><a href="{{ route('partner.details', $car->owner_id) }}" target="_blank">{{ $car->owner_name }}<br/>{{ $car->owner_phone }}</a></td>
                                                     <td>{{ $car->carType }}</td>
                                                     <td>{{ $car->carBrand }}</td>
                                                     <td>{{ $car->carModel }}</td>
@@ -153,8 +153,8 @@
                                                     <td>{{ $car->carYear }}</td>
                                                     <th><img src="http://quicarbd.com/{{ $car->carImage }}" style="width:80px;height:60px;"/></th>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('car.show', $car->id) }}" class="btn btn-xs btn-primary" title="Show"><i class="fa fa-eye"></i></a>
-                                                        <a href="{{ route('car.edit', $car->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
+                                                        <a href="{{ route('car.show', $car->id) }}" target="_blank" class="btn btn-xs btn-primary" title="Show"><i class="fa fa-eye"></i></a>
+                                                        <a href="{{ route('car.edit', $car->id) }}" target="_blank" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <button class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="deleteCar" data-target="#deleteCarModal" data-id="{{ $car->id }}" title="Delete"><i class="fa fa-remove"></i></button>
                                                     </td>
                                                 </tr>
@@ -166,7 +166,6 @@
                                         @endif
                                     </tbody>
                                 </table>
-
                                 {{ $cars->links('pagination::bootstrap-4') }}
                             </div>
                         </div>

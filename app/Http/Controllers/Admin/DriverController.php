@@ -64,12 +64,9 @@ class DriverController extends Controller
         $this->validate($request,[
             'name'      => 'required',
             'phone'     => 'required',
-            'dob'       => 'required',
             'owner_id'  => 'required',
-            'nid'       => 'required',
-            'district_id'=> 'required',
-            'city_id'   => 'required',
-            'address'   => 'required',
+            'nid'       => 'required|unique:drivers,nid',
+            'license'   => 'required|unique:drivers,license'
         ]);
         $driver             = new Driver();
         $driver->name       = $request->name;
@@ -133,13 +130,9 @@ class DriverController extends Controller
         $this->validate($request,[
             'name'      => 'required',
             'phone'     => 'required',
-            'dob'       => 'required',
             'owner_id'  => 'required',
-            'nid'       => 'required',
-            'district_id'=> 'required',
-            'city_id'   => 'required',
-            'address'   => 'required',
-            'license'   => 'required',
+            'nid'       => 'required|unique:drivers,nid,'.$request->id,
+            'license'   => 'required|unique:drivers,license,'.$request->id,
         ]);   
 
         $driver             = Driver::find($request->id);

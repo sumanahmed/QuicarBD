@@ -49,8 +49,14 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="owner_id" class="control-label mb-10">Owner </label>                                            
-                                                    <input type="text" value="{{ $owner }}" class="form-control" readonly>
+                                                    <label for="owner_id" class="control-label mb-10">Owner Name</label>                                            
+                                                    <input type="text" value="{{ $owner->name }}" class="form-control" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="owner_id" class="control-label mb-10">Owner Phone</label>                                            
+                                                    <input type="text" value="{{ $owner->phone }}" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>                                

@@ -63,7 +63,7 @@ class CarController extends Controller
         $cars = isset($request->perPage) ? $query->paginate($request->perPage) : $query->paginate(10);
 
         $types  = CarType::all();
-        $years  = Year::all();
+        $years  = CarYear::all();
         $owners = Owner::all();
         return view('quicarbd.admin.car.index', compact('cars','types','years','owners'));
     }
@@ -74,7 +74,7 @@ class CarController extends Controller
         $colors     = CarColor::all();
         $classes    = CarClass::all();
         $owners     = Owner::where('account_status', 1)->get();
-        $years      = Year::all();
+        $years      = CarYear::all();
         return view('quicarbd.admin.car.create', compact('types','colors','classes','owners','years'));
     }
 
@@ -171,18 +171,18 @@ class CarController extends Controller
         $types      = CarType::all();
         $carType    = CarType::select('id')->where('name', $car->carType)->first();
         $classes    = CarClass::all();
-        $owner      = Owner::select('id','name')->where('id', $car->owner_id)->where('account_status', 1)->first();
+        $owner      = Owner::select('id','name','phone')->where('id', $car->owner_id)->where('account_status', 1)->first();
         $brands     = CarBrand::where('car_type_id', $carType->id)->where('value', $car->carBrand)->get();
         $carBrand   = CarBrand::select('id')->where('car_type_id', $carType->id)->where('value', $car->carBrand)->first();
         $models     = CarModel::select('id','value')->where('car_type_id', $carType->id)->where('car_brand_id', $carBrand->id)->get();
-        $years      = Year::all();
+        $years      = CarYear::all();
         $colors     = CarColor::all();
         return view('quicarbd.admin.car.edit', compact('car','types','brands','models','years','classes','owner','colors'));
     }
     //show view page
     public function show($id){
-        $car        = Car::find($id);
-        $owner = Owner::find($car->owner_id)->name;
+        $car    = Car::find($id);
+        $owner  = Owner::select('name','phone')->where('id', $car->owner_id)->first();
         return view('quicarbd.admin.car.show', compact('car','owner'));
     }
 
