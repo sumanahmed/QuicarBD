@@ -330,13 +330,28 @@ class PartnerController extends Controller
     }
 
     //partner account type change request list
-    public function accountTypeChangeRequest(){
-        $partners = AccountTypeChargeRequest::join('owners','owners.id','account_type_chage_request.owner_id')
+    public function accountTypeChangeRequest(Request $request){ 
+        $query = AccountTypeChargeRequest::join('owners','owners.id','account_type_chage_request.owner_id')
                     ->select('account_type_chage_request.id','owners.name','owners.phone','owners.account_type',
-                            'account_type_chage_request.owner_id','account_type_chage_request.which_acount as request_for'
-                        )
+                            'account_type_chage_request.owner_id','account_type_chage_request.which_acount as request_for',
+                            'account_type_chage_request.created_at')
                     ->where('account_type_chage_request.status', 0)
-                    ->get();
+                    ->orderBy('account_type_chage_request.id','DESC');
+                    
+                    
+        if ($request->name) {
+            $query = $query->where('owners.name', 'like', "{$request->name}%");
+        }
+        
+        if ($request->phone) {
+            $query = $query->where('owners.phone', $request->phone);
+        }
+        
+        if ($request->request_for != 100) { 
+            $query = $query->where('account_type_chage_request.which_acount', $request->request_for);
+        }
+        
+        $partners = $query->paginate(12);
                     
         return view('quicarbd.admin.partner.account_type_change_request', compact('partners'));
     }
@@ -374,6 +389,38 @@ class PartnerController extends Controller
         }
 
         return redirect()->route('partner.account_type_change_request')->with('message','Approve successfully');
+    }
+    
+    //partner account type change request cancel
+    public function accountTypeChangeCancel(Request $request)
+    { 
+        DB::beginTransaction();
+
+        try {
+            $owner = Owner::find($request->owner_id);
+
+            $account = AccountTypeChargeRequest::find($request->id);
+            $account->status = 0;
+            $account->update();
+
+            $helper = new Helper(); 
+            $id     = $owner->n_key;
+            $title  = 'Account Type Change Request Cancel';            
+            $msg    = 'Dear '.$owner->name.', your account type change request cacelled. Call for help 01611822829. Thanks Team Quicar';
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
+            $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
+
+            DB::commit();
+            
+        } catch (Exception $ex) {
+
+            DB::rollback();
+
+            return redirect()->route('partner.account_type_change_request')
+                            ->with('error_message','Sorry, '.$ex->getMessage());
+        }
+
+        return redirect()->route('partner.account_type_change_request')->with('message','Request cancelled successfully');
     }
     
     //destroy

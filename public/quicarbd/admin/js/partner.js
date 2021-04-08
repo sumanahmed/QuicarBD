@@ -142,3 +142,28 @@ $("#destroyPartner").click(function(){
         }
     });
 });
+
+//open request cancel modal
+$(document).on('click', '#showRequestCancel', function () {
+    $('#requestCancelModal').modal('show');
+    $('input[name=del_id]').val($(this).data('id'));
+    $('#owner_id').val($(this).data('owner_id'));
+ });
+
+//request cancel
+$("#requestCancel").click(function(){
+    $.ajax({
+        type: 'POST',
+        url: '/admin/partner/account-type-change-cancel',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            id: $('input[name=del_id]').val(),
+            owner_id: $('#owner_id').val()
+        },
+        success: function (data) {
+            $('#requestCancelModal').modal('hide');
+            $('.partner-' + $('input[name=del_id]').val()).remove();
+            toastr.success('Request cancelled')
+        }
+    });
+});

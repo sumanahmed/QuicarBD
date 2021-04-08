@@ -110,9 +110,7 @@
                                                     @endif
                                                     <td>{{ $dateTime }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        @if($partner->account_status == 0 && $partner->nid_font_pic == null)
-                                                            <a href="#" class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="deletePartner" data-target="#deletePartnerModal" data-id="{{ $partner->id }}" title="Delete"><i class="fa fa-remove"></i></a>
-                                                        @endif
+                                                        <a href="#" class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="deletePartner" data-target="#deletePartnerModal" data-id="{{ $partner->id }}" title="Delete"><i class="fa fa-remove"></i></a>
                                                         <a href="#" class="btn btn-xs btn-primary" id="sendNotification" data-toggle="modal" data-target="#sendNotificationModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
                                                         <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>                                                                                                               
                                                         <a href="{{ route('partner.edit', $partner->id) }}" target="_blank" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>

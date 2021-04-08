@@ -183,6 +183,7 @@ Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){
     Route::get('/verification', [PartnerController::class, 'verification'])->name('partner.verification');
     Route::get('/account-type-change-request', [PartnerController::class, 'accountTypeChangeRequest'])->name('partner.account_type_change_request');
     Route::get('/account-type-change-approve', [PartnerController::class, 'accountTypeChangeApprove'])->name('partner.account_type_change_approve');
+    Route::post('/account-type-change-cancel', [PartnerController::class, 'accountTypeChangeCancel'])->name('partner.account_type_change_cancel');
 });
 
 Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
