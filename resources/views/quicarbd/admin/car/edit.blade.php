@@ -8,8 +8,8 @@
     </style>
 @endsection
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -116,7 +116,7 @@
                                                         <label for="carYear" class="control-label mb-10">Car Year <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="carYear" name="carYear" class="form-control selectable" required>
                                                             @foreach($years as $year)
-                                                                <option value="{{ $year->name }}" @if($year->name == $car->carYear) selected @endif>{{ $year->name }}</option>
+                                                                <option value="{{ $year->value }}" @if($year->value == $car->carYear) selected @endif>{{ $year->value }}</option>
                                                             @endforeach
                                                         </select>
                                                         @if($errors->has('carYear'))
@@ -281,7 +281,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="tax_expired_date" class="control-label mb-10">Tax Expired Date</label>
-                                                        <input type="date" id="tax_expired_date" name="tax_expired_date" value="{{ $car->tax_expired_date }}" class="form-control datePicker"/>
+                                                        <input type="text" id="tax_expired_date" name="tax_expired_date" value="{{ $car->tax_expired_date }}" class="form-control datePicker"/>
                                                         @if($errors->has('tax_expired_date'))
                                                             <span class="text-danger"> {{ $errors->first('tax_expired_date') }}</span>
                                                         @endif
@@ -290,7 +290,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="fitness_expired_date" class="control-label mb-10">Fitness Expired Date</label>
-                                                        <input type="date" id="fitness_expired_date" name="fitness_expired_date" value="{{ $car->fitness_expired_date }}" class="form-control datePicker"/>
+                                                        <input type="text" id="fitness_expired_date" name="fitness_expired_date" value="{{ $car->fitness_expired_date }}" class="form-control datePicker"/>
                                                         @if($errors->has('fitness_expired_date'))
                                                             <span class="text-danger"> {{ $errors->first('fitness_expired_date') }}</span>
                                                         @endif
@@ -299,7 +299,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="registration_expired_date" class="control-label mb-10">Registration Expired Date </label>
-                                                        <input type="date" id="registration_expired_date" name="registration_expired_date" value="{{ $car->registration_expired_date }}" class="form-control datePicker"/>
+                                                        <input type="text" id="registration_expired_date" name="registration_expired_date" value="{{ $car->registration_expired_date }}" class="form-control datePicker"/>
                                                         @if($errors->has('registration_expired_date'))
                                                             <span class="text-danger"> {{ $errors->first('registration_expired_date') }}</span>
                                                         @endif
@@ -330,13 +330,13 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/car.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/car.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

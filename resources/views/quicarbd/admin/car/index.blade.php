@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Car')
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <a href="{{ route('car.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
@@ -63,7 +63,7 @@
                                         <select id="carYear" name="carYear" class="form-control selectable">
                                             <option value="0">Select</option>
                                             @foreach($years as $year)
-                                                <option value="{{ $year->name }}" @if(isset($_GET['year']) && $year->name == $_GET['year']) selected @endif>{{ $year->name }}</option>
+                                                <option value="{{ $year->value }}" @if(isset($_GET['year']) && $year->value == $_GET['year']) selected @endif>{{ $year->value }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -171,7 +171,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
     
@@ -191,7 +191,7 @@
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/car.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/car.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

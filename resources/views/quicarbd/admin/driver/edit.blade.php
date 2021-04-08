@@ -65,7 +65,7 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="dob" class="control-label mb-10">Date of Birth</label>                                            
-                                                        <input type="date" id="dob" name="dob" value="{{ $driver->dob }}" class="form-control datePicker">
+                                                        <input type="text" id="dob" name="dob" value="{{ $driver->dob }}" class="form-control datePicker">
                                                         @if($errors->has('dob'))
                                                             <span class="text-danger"> {{ $errors->first('dob') }}</span>
                                                         @endif
@@ -74,7 +74,7 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="c_status" class="control-label mb-10">Status <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <select id="c_status" name="c_status" class="form-control datePicker" required>
+                                                        <select id="c_status" name="c_status" class="form-control" required>
                                                             <option value="0" @if($driver->c_status == 0) selected @endif>Pending</option>    
                                                             <option value="1" @if($driver->c_status == 1) selected @endif>Active</option>    
                                                             <option value="2" @if($driver->c_status == 2) selected @endif>Cancel</option>    

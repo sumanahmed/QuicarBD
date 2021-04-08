@@ -232,13 +232,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="fitness_expired_date" class="control-label mb-10">Fitness Expired Date</label>
-                                                    <input type="date" value="{{ $car->fitness_expired_date }}" class="form-control datePicker" readonly />
+                                                    <input type="text" value="{{ $car->fitness_expired_date }}" class="form-control datePicker" readonly />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="registration_expired_date" class="control-label mb-10">Registration Expired Date </label>
-                                                    <input type="date" id="registration_expired_date" name="registration_expired_date" value="{{ $car->registration_expired_date }}" class="form-control datePicker" readonly />
+                                                    <input type="text" id="registration_expired_date" name="registration_expired_date" value="{{ $car->registration_expired_date }}" class="form-control datePicker" readonly />
                                                 </div>
                                             </div>
                                         </div>                                                

@@ -12,12 +12,10 @@
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="favicon.ico">
 	<link rel="icon" href="favicon.ico" type="image/x-icon">	
-	<!-- Data table CSS -->
-	<link href="{{ asset('quicarbd/admin/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css"/>	
-	<!-- Toast CSS -->
+	<link href="{{ asset('quicarbd/admin/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css"/>
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/summernote/dist/summernote.css') }}" rel="stylesheet" type="text/css">
-	<!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 	<link href="{{ asset('quicarbd/admin/dist/css/toastr.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('quicarbd/admin/dist/css/style.css') }}" rel="stylesheet" type="text/css">
 	@yield('styles')
