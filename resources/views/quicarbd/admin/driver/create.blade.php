@@ -65,7 +65,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="dob" class="control-label mb-10">Date of Birth</label>                                            
-                                                        <input type="text" id="dob" name="dob" class="form-control datePicker">
+                                                        <input type="date" id="dob" name="dob" class="form-control datePicker">
                                                         @if($errors->has('dob'))
                                                             <span class="text-danger"> {{ $errors->first('dob') }}</span>
                                                         @endif

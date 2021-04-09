@@ -112,19 +112,3 @@ function license_back_pic(input) {
 $("#licenseBackUpload").change(function() {
     license_back_pic(this);
 });
-
-$('#dob').daterangepicker({
-    singleDatePicker: true,
-    showDropdowns: true,
-    minYear: 1990,
-    maxYear: parseInt(moment().format('YYYY'),20),
-    autoApply: true,
-    autoUpdateInput: false,
-    locale: {
-        format: 'DD-MM-YYYY'
-    }
-}, function(chosen_date) {
-  $('#dob').val(chosen_date.format('DD-MM-YYYY'));
-});
-
-

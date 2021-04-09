@@ -21,28 +21,22 @@
 	<script src="{{ asset('quicarbd/admin/vendors/echarts-liquidfill.min.js') }}"></script>	
 	<!-- Toast JavaScript -->
 	<script src="{{ asset('quicarbd/admin/vendors/bower_components/summernote/dist/summernote.min.js') }}"></script>
+	<script>
+		$(function() {
+			"use strict";
+			$('.summernote').summernote({
+				height: 300,
+			});
+		});
+	</script>
 	<!-- Init JavaScript -->
 	<script src="{{ asset('quicarbd/admin/dist/js/init.js') }}"></script>
 	<script src="{{ asset('quicarbd/admin/dist/js/dashboard-data.js') }}"></script>
 	<script src="{{ asset('quicarbd/admin/dist/js/toastr.js') }}"></script>
 	<script src="{{ asset('quicarbd/admin/js/image-popup.js') }}"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>	
 	<script>
-		var image_base_path = "http://quicarbd.com/";
-		//var image_base_path = "http://localhost:8000/";
-		
-            // $('.datePicker').daterangepicker({
-            //     singleDatePicker: true,
-            //     showDropdowns: true,
-            //     minYear: 1990,
-            //     maxYear: parseInt(moment().format('YYYY'),20),
-            //     autoApply: true,
-            //     //autoUpdateInput: false
-            //     locale: {
-            //         format: 'DD-MM-YYYY'
-            //     }
-            // });
+		var image_base_path = "http://quicarbd.com/";		
+		//var image_base_path = "http://localhost:8000/";		
 	</script>
 	@if(Session::has('error_message'))
 	    <script>
