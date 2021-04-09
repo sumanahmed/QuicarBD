@@ -119,7 +119,10 @@ $('#dob').daterangepicker({
     minYear: 1990,
     maxYear: parseInt(moment().format('YYYY'),20),
     autoApply: true,
-    autoUpdateInput: false
+    autoUpdateInput: false,
+    locale: {
+        format: 'DD-MM-YYYY'
+    }
 }, function(chosen_date) {
   $('#dob').val(chosen_date.format('DD-MM-YYYY'));
 });
