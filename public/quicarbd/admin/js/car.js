@@ -245,3 +245,37 @@ $("#destroyCar").click(function(){
         }
     });
 });
+
+
+$('#tax_expired_date').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    minYear: 1990,
+    maxYear: parseInt(moment().format('YYYY'),20),
+    autoApply: true,
+    autoUpdateInput: false
+}, function(chosen_date) {
+  $('#tax_expired_date').val(chosen_date.format('DD-MM-YYYY'));
+});
+
+$('#fitness_expired_date').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    minYear: 1990,
+    maxYear: parseInt(moment().format('YYYY'),20),
+    autoApply: true,
+    autoUpdateInput: false
+}, function(chosen_date) {
+  $('#fitness_expired_date').val(chosen_date.format('DD-MM-YYYY'));
+});
+
+$('#registration_expired_date').daterangepicker({
+    singleDatePicker: true,
+    showDropdowns: true,
+    minYear: 1990,
+    maxYear: parseInt(moment().format('YYYY'),20),
+    autoApply: true,
+    autoUpdateInput: false
+}, function(chosen_date) {
+  $('#registration_expired_date').val(chosen_date.format('DD-MM-YYYY'));
+});

@@ -104,10 +104,10 @@ class CarController extends Controller
         $car->owner_id          = $request->owner_id;
         $car->status_message    = $request->status_message;
         $car->sit_capacity      = $request->sit_capacity;
-        $car->tax_expired_date          = $request->tax_expired_date;
-        $car->fitness_expired_date      = $request->fitness_expired_date;
-        $car->registration_expired_date = $request->registration_expired_date;
-        $car->insurance_expired_date    = $request->insurance_expired_date;
+        $car->tax_expired_date          = isset($request->tax_expired_date) ? date('Y-m-d', strtotime($request->tax_expired_date)) : Null;
+        $car->fitness_expired_date      = isset($request->fitness_expired_date) ? date('Y-m-d', strtotime($request->fitness_expired_date)) : Null;
+        $car->registration_expired_date = isset($request->registration_expired_date) ? date('Y-m-d', strtotime($request->registration_expired_date)) : Null;
+        $car->insurance_expired_date    = isset($request->insurance_expired_date) ? date('Y-m-d', strtotime($request->insurance_expired_date)) : Null;
         $car->status    = $request->status;
         $car->verify    = $request->verify;
         if($request->hasFile('carImage')){
@@ -182,12 +182,12 @@ class CarController extends Controller
     //show view page
     public function show($id){
         $car    = Car::find($id);
-        $owner  = Owner::select('name','phone')->where('id', $car->owner_id)->first();
+        $owner  = Owner::select('id','name','phone')->where('id', $car->owner_id)->first();
         return view('quicarbd.admin.car.show', compact('car','owner'));
     }
 
     //car update
-    public function update(Request $request, $id){  
+    public function update(Request $request, $id){ 
         $this->validate($request,[
             'carType'  => 'required',
             'carBrand'  => 'required',
@@ -211,10 +211,10 @@ class CarController extends Controller
         $car->carServieLocation = 'test';
         $car->owner_id          = $request->owner_id;
         $car->status_message    = $request->status_message;        
-        $car->tax_expired_date          = $request->tax_expired_date;
-        $car->fitness_expired_date      = $request->fitness_expired_date;
-        $car->registration_expired_date = $request->registration_expired_date;
-        $car->insurance_expired_date    = $request->insurance_expired_date;
+        $car->tax_expired_date          = isset($request->tax_expired_date) ? date('Y-m-d', strtotime($request->tax_expired_date)) : Null;
+        $car->fitness_expired_date      = isset($request->fitness_expired_date) ? date('Y-m-d', strtotime($request->fitness_expired_date)) : Null;
+        $car->registration_expired_date = isset($request->registration_expired_date) ? date('Y-m-d', strtotime($request->registration_expired_date)) : Null;
+        $car->insurance_expired_date    = isset($request->insurance_expired_date) ? date('Y-m-d', strtotime($request->insurance_expired_date)) : Null;
         $car->status    = $request->status;
         $car->verify    = $request->verify;
 

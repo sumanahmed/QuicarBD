@@ -96,7 +96,7 @@ class CarPackageController extends Controller
             $owner  = Owner::select('id','phone','name','n_key')->where('id', $request->owner_id)->first();
             $id     = $owner->n_key;
             $title  = 'Package Approved';            
-            $msg    = 'Dear '.$owner->name.', your car package ('.$car_packge->name.') approved successfully. Thanks for connecting with Quicar';                        
+            $msg    = 'Dear '.$owner->name.', your car package ('.$car_packge->name.') has been approved. You will get a booking request soon. Happy Travel Team Quicar';                        
 
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
@@ -195,8 +195,8 @@ class CarPackageController extends Controller
             $helper = new Helper(); 
             $owner  = Owner::select('id','phone','name','n_key')->where('id', $request->owner_id)->first();
             $id     = $owner->n_key;
-            $title  = 'Package Approved';            
-            $msg    = 'Dear '.$owner->name.', your car package ('.$car_packge->name.') approved successfully. Thanks for connecting with Quicar';                        
+            $title  = 'Package Approved';   
+            $msg    = 'Dear '.$owner->name.', your car package ('.$car_packge->name.') has been approved. You will get a booking request soon. Happy Travel Team Quicar';                                              
 
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send

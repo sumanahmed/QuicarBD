@@ -32,16 +32,17 @@
 		var image_base_path = "http://quicarbd.com/";
 		//var image_base_path = "http://localhost:8000/";
 		
-            $('.datePicker').daterangepicker({
-                singleDatePicker: true,
-                showDropdowns: true,
-                minYear: 1990,
-                maxYear: parseInt(moment().format('YYYY'),20),
-                autoApply: true,
-                locale: {
-                    format: 'DD-MM-YYYY'
-                }
-            });
+            // $('.datePicker').daterangepicker({
+            //     singleDatePicker: true,
+            //     showDropdowns: true,
+            //     minYear: 1990,
+            //     maxYear: parseInt(moment().format('YYYY'),20),
+            //     autoApply: true,
+            //     //autoUpdateInput: false
+            //     locale: {
+            //         format: 'DD-MM-YYYY'
+            //     }
+            // });
 	</script>
 	@if(Session::has('error_message'))
 	    <script>

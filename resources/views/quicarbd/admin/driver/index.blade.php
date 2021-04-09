@@ -62,8 +62,18 @@
                                         <select name="owner_id" class="form-control selectable">
                                             <option value="0">Select</option>
                                             @foreach($owners as $owner)
-                                                <option value="{{ $owner->id }}" @if(isset($_GET['owner_Id']) && $owner->id == $_GET['owner_id']) selected @endif>{{ $owner->name }}</option>
+                                                <option value="{{ $owner->id }}" @if(isset($_GET['owner_id']) && $owner->id == $_GET['owner_id']) selected @endif>{{ $owner->name }}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="c_status" class="control-label mb-10">Status</label>                                            
+                                        <select name="c_status" class="form-control">
+                                            <option value="100">Select</option>
+                                            <option value="0" @if(isset($_GET['c_status']) && $_GET['c_status'] == 0) selected @endif>Pending</option>
+                                            <option value="1" @if(isset($_GET['c_status']) && $_GET['c_status'] == 1) selected @endif>Approved</option>
                                         </select>
                                     </div>
                                 </div> 

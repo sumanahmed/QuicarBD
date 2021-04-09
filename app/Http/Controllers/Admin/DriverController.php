@@ -18,7 +18,7 @@ class DriverController extends Controller
 {
     //show all drivers
     public function index(Request $request)
-    {       
+    {     
         $query  = DB::table('drivers')->orderBy('id','DESC')->select('*');
 
         if ($request->owner_id) {
@@ -35,6 +35,10 @@ class DriverController extends Controller
         
         if ($request->phone) {
             $query = $query->where('phone', $request->phone);
+        }
+        
+        if (isset($request->c_status) && $request->c_status != 100) {
+            $query = $query->where('c_status', $request->c_status);
         }
 
         $drivers = $query->paginate(12); 
