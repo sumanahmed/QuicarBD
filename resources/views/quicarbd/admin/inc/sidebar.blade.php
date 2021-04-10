@@ -302,6 +302,42 @@
                     </ul>
                 </li>
             </ul>
+        </li>        
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#accounts"><div class="pull-left"><i class="fa fa-usd mr-20"></i><span class="right-nav-text">Accounts</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="accounts" class="collapse collapse-level-1 two-col-list">                
+                <li>
+                    <a href="{{ route('accounts.income') }}">Income</a>
+                </li>
+                <li>
+                    <a href="{{ route('accounts.refund') }}">Refund</a>
+                </li>
+                <li>
+                    <a href="#">Expense</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#balance"><div class="pull-left"><span class="right-nav-text">Balance</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="balance" class="collapse collapse-level-1 two-col-list">
+                        <li>
+                            <a href="{{ route('accounts.user-balance') }}">User</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('accounts.partner-balance') }}">Partner</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('accounts.withdraw') }}">Withdraw</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#report"><div class="pull-left"><span class="right-nav-text">Report</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="report" class="collapse collapse-level-1 two-col-list">
+                        <li>
+                            <a href="#">Summary</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </li>
     </ul>
 </div>

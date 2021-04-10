@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountsController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CarBrandController;
@@ -309,4 +310,12 @@ Route::group(['prefix'=>'/admin/sms-notification', 'middleware' => 'admin'], fun
     Route::post('/send', [SmsNotificationController::class, 'send'])->name('sms_notification.send');
     Route::get('/push-notification', [SmsNotificationController::class, 'pushNotification'])->name('sms_notification.push_notification');
     Route::post('/push-notification-send', [SmsNotificationController::class, 'pushNotificationSend'])->name('sms_notification.push_notification.send');
+});
+
+Route::group(['prefix'=>'/admin/accounts', 'middleware' => 'admin'], function(){
+    Route::get('/income', [AccountsController::class, 'income'])->name('accounts.income');
+    Route::get('/refund', [AccountsController::class, 'refund'])->name('accounts.refund');
+    Route::get('/user-balance', [AccountsController::class, 'userBalance'])->name('accounts.user-balance');
+    Route::get('/partner-balance', [AccountsController::class, 'partnerBalance'])->name('accounts.partner-balance');
+    Route::get('/withdraw', [AccountsController::class, 'withdraw'])->name('accounts.withdraw');
 });
