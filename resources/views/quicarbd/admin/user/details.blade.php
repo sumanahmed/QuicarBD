@@ -139,19 +139,9 @@
                                                 <tr class="ride-{{ $ride->id }}">
                                                     <td>{{ $ride->startig_area.", ".$ride->starting_city.", ".$ride->starting_district }}</td>
                                                     <td>{{ $ride->destination_area.", ".$ride->destination_city.", ".$ride->destination_district }}</td>
-                                                    @if($ride->status == 1)
-                                                        <td>Waiting for bit</td>
-                                                    @elseif($ride->status == 2)
-                                                        <td>Cancel</td>
-                                                    @elseif($ride->status == 3)
-                                                        <td>Request Start</td>
-                                                    @elseif($ride->status == 4)
-                                                        <td>Bid Accepted</td>
-                                                    @elseif($ride->status == 5)
-                                                        <td>Completed</td>
-                                                    @endif
+                                                    <td>{{ getStatus($ride->status) }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                        <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -170,6 +160,21 @@
         </div>
     </div>    
 </div>
+@php 
+    function getStatus($status) {
+       if ($status == 1) {
+        echo 'Waiting for Bid';
+       } else if ($status == 2) {
+        echo 'Cancel Request';
+       } else if ($status == 3) {
+        echo 'Start Request';
+       } else if ($status == 4) {
+        echo 'Bit Accepted';
+       } else if ($status == 5) {
+        echo 'Completed';
+       }
+    }
+@endphp
 @endsection
 @section('scripts')
 	<script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>

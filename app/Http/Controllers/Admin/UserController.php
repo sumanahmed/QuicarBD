@@ -10,12 +10,25 @@ use App\Models\User;
 use GuzzleHttp\Client;
 use Validator;
 use Response;
+use DB;
 
 class UserController extends Controller
 {
     //show all users
-    public function index(){
-        $users = User::all();
+    public function index(Request $request)
+    {
+        $query = DB::table('users')->select('*');
+
+        if ($request->name) {
+            $query = $query->where('name', 'like', "{$request->name}%");
+        }
+        
+        if ($request->phone) {
+            $query = $query->where('phone', $request->phone);
+        }
+        
+        $users = $query->paginate(12);
+
         return view('quicarbd.admin.user.index', compact('users'));
     }
 

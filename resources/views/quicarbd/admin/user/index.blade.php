@@ -28,10 +28,33 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
+                    <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
+                        <form action="{{ route('user.index') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="name" class="control-label mb-10">Name</label>                                            
+                                        <input type="text" name="name" @if(isset($_GET['name'])) value="{{ $_GET['name'] }}" @endif placeholder="Name" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="phone" class="control-label mb-10">Phone</label>                                            
+                                        <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif placeholder="Phone" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="panel-body">
                         <div class="table-wrap">
                             <div class="table-responsive">
-                                <table id="datable_1" class="table table-hover display pb-30" >
+                                <table class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -63,8 +86,8 @@
                                                     <td>{{ $user->cash_back_balance }}</td>
                                                     <td>{{ $user->account_status == 0 ? 'Off' : 'On' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-primary" id="userSendNotification" data-toggle="modal" data-target="#userSendNotificationModal" title="Notification" data-id="{{ $user->id }}" data-phone="{{ $user->phone }}" data-n_key="{{ $user->n_key }}"><i class="fa fa-bell"></i></a>
-                                                        <a href="{{ route('user.details', $user->id) }}" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                        <!-- <a href="#" class="btn btn-xs btn-primary" id="userSendNotification" data-toggle="modal" data-target="#userSendNotificationModal" title="Notification" data-id="{{ $user->id }}" data-phone="{{ $user->phone }}" data-n_key="{{ $user->n_key }}"><i class="fa fa-bell"></i></a> -->
+                                                        <a href="{{ route('user.details', $user->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -75,6 +98,7 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                {{ $users->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>

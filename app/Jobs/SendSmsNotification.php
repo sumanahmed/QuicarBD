@@ -35,8 +35,7 @@ class SendSmsNotification implements ShouldQueue
      */
     public function handle()
     {
-        $helper = new Helper(); 
-        
+        $helper = new Helper();
         $request['for']         = $this->details['for'];
         $request['title']       = $this->details['title'];
         $request['message']     = $this->details['message'];
@@ -44,37 +43,38 @@ class SendSmsNotification implements ShouldQueue
         $request['users']       = $this->details['users'];
         $request['owners']      = $this->details['owners'];
 
-        if($request['for'] == 1){                          
-            foreach($request['users'] as $user){
-                if($request['notification'] == 0){
-
+        if($request['for'] == 1){   
+            if($request['notification'] == 0){
+                foreach($request['users'] as $user){
                     $helper->sendSinglePartnerNotification($user->n_key, $request['title'], $request['message']); //push notification send
-
-                } else if($request['notification'] == 1){
-
+                }
+                
+            } else if($request['notification'] == 1){
+                foreach($request['users'] as $user){
                     $helper->smsNotification($type = 1, $user->id, $request['title'], $request['message']); //bell notification
-
-                } else if($request['notification'] == 2){
-
+                }
+            } else if($request['notification'] == 2){
+                foreach($request['users'] as $user){
                     $helper->smsNotification($type = 1, $user->id, $request['title'], $request['message']); //bell notification
                     $helper->smsSend($user->phone, $request['message']); // sms send
                 }
             }
-        }else{ 
-            foreach($request['owners'] as $owner){
-                if($request['notification'] == 0){ 
-
+        } else { 
+            if($request['notification'] == 0){ 
+                foreach($request['owners'] as $owner){
                     $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']); //push notification send
+                }
 
-                } else if($request['notification'] == 1){   
-
+            } else if($request['notification'] == 1){   
+                foreach($request['owners'] as $owner){
                     $helper->smsNotification($type = 2, $owner->id, $request['title'], $request['message']); //bell notification
+                }
 
-                } else if($request['notification'] == 2){ 
-                    
+            } else if($request['notification'] == 2){ 
+                foreach($request['owners'] as $owner){
                     $helper->smsNotification($type = 2, $owner->id, $request['title'], $request['message']); //bell notification
-                    $helper->smsSend($owner->phone, $request['message']); // sms send                   
-                }                
+                    $helper->smsSend($owner->phone, $request['message']); // sms send       
+                }
             }
         }   
     }

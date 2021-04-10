@@ -22,8 +22,7 @@
             <i class="zmdi zmdi-more"></i>
         </li>
         <li>
-            <a href="javascript:void(0);" data-toggle="collapse" data-target="#setting"><div class="pull-left"><i class="fa fa-cog mr-20"></i><span class="right-nav-text">Settings</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
-            <ul id="setting" class="collapse collapse-level-1 two-col-list">
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#setting"><div class="pull-left"><i class="fa fa-cog mr-20"></i><span class="right-nav-text">Settings</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>            <ul id="setting" class="collapse collapse-level-1 two-col-list">
                 <li>
                     <a href="{{ route('setting.district.index') }}">District</a>
                 </li>
@@ -36,7 +35,10 @@
             </ul>
         </li>
         <li>
-            <a href="{{ route('driver.index') }}" data-toggle="collapse" data-target="#driver"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Driver</span></div><div class="pull-right"></div>
+            <a href="{{ route('user.index') }}"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">User</span></div><div class="pull-right"></div><div class="clearfix"></div></a>
+        </li>
+        <li>
+            <a href="{{ route('driver.index') }}"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Driver</span></div><div class="pull-right"></div>
                 @if($pendingDriver > 0)
                     <div class="pull-right"><span class="label label-warning">{{ $pendingDriver }}</span></div>
                 @endif
