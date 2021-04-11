@@ -84,11 +84,23 @@
                                         </tr>
                                     </tfoot>
                                     <tbody id="carData">
-                                        <tr>
-                                            <td colspan="9" class="text-center">No Data Found</td>
-                                        </tr>
+                                        @foreach($refunds as $refund)
+                                            <tr>
+                                                <td>{{ date('d M, Y', strtotime($refund->created_at)) }}</td>
+                                                <td>{{ getPaymentType($refund->income_from) }}</td>
+                                                <td>{{ $refund->booking_id }}</td>
+                                                <td>{{ $refund->tnx_id }}</td>
+                                                <td>{{ $refund->phone }}</td>
+                                                <td>{{ $refund->refund_percentage != 0 ? $refund->amount * (100 / $refund->refund_percentage) : '' }}</td>
+                                                <td>{{ $refund->refund_percentage }}</td>
+                                                <td>{{ $refund->amount }}</td>
+                                                <td>{{ $refund->cashback }}</td>
+                                                <td>action</td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
+                                {{ $refunds->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>
@@ -97,4 +109,23 @@
         </div>
     </div>
 </div>
+@php 
+    function getPaymentType($income_from) {
+        if ($income_from == 1) {
+            echo "Ride";
+        } elseif ($income_from == 2) {
+            echo "Car Package";
+        } elseif ($income_from == 3) {
+            echo "Hotel Package";
+        } elseif ($income_from == 4) {
+            echo "Travel Package";
+        } elseif ($income_from == 5) {
+            echo "Bonus";
+        } elseif ($income_from == 6) {
+            echo "Incentive";
+        } elseif ($income_from == 7) {
+            echo "Cashback";
+        }
+    }
+@endphp
 @endsection

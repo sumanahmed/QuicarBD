@@ -33,14 +33,20 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
+                                        <label class="control-label mb-10">Phone</label>                                            
+                                        <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif placeholder="Enter Phone.." class="form-control" />
+                                    </div>
+                                </div>  
+                                <div class="col-md-2">
+                                    <div class="form-group">
                                         <label class="control-label mb-10">Start Date</label>                                            
-                                        <input type="date" name="start_date" class="form-control" />
+                                        <input type="date" name="start_date" @if(isset($_GET['start_date'])) value="{{ $_GET['start_date'] }}" @endif class="form-control" />
                                     </div>
                                 </div>  
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="control-label mb-10">End Date</label>                                            
-                                        <input type="date" name="end_date" class="form-control" />
+                                        <input type="date" name="end_date" @if(isset($_GET['end_date'])) value="{{ $_GET['end_date'] }}" @endif  class="form-control" />
                                     </div>
                                 </div>  
                                 <div class="col-md-2">
@@ -63,7 +69,6 @@
                                             <th>Trnx ID</th>
                                             <th>Phone</th>
                                             <th>Payment Method</th>
-                                            <th>Status</th>
                                             <th>Amount</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -76,17 +81,26 @@
                                             <th>Trnx ID</th>
                                             <th>Phone</th>
                                             <th>Payment Method</th>
-                                            <th>Status</th>
                                             <th>Amount</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="carData">
-                                        <tr>
-                                            <td colspan="9" class="text-center">No Data Found</td>
-                                        </tr>
+                                        @foreach($incomes as $income)
+                                            <tr>
+                                                <td>{{ date('d M, Y', strtotime($income->created_at)) }}</td>
+                                                <td>{{ getPaymentType($income->income_from) }}</td>
+                                                <td>{{ $income->booking_id }}</td>
+                                                <td>{{ $income->tnx_id }}</td>
+                                                <td>{{ $income->phone }}</td>
+                                                <td>payment method</td>
+                                                <td>{{ $income->amount }}</td>
+                                                <td>action</td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
+                                {{ $incomes->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>
@@ -95,4 +109,23 @@
         </div>
     </div>
 </div>
+@php 
+    function getPaymentType($income_from) {
+        if ($income_from == 1) {
+            echo "Ride";
+        } elseif ($income_from == 2) {
+            echo "Car Package";
+        } elseif ($income_from == 3) {
+            echo "Hotel Package";
+        } elseif ($income_from == 4) {
+            echo "Travel Package";
+        } elseif ($income_from == 5) {
+            echo "Bonus";
+        } elseif ($income_from == 6) {
+            echo "Incentive";
+        } elseif ($income_from == 7) {
+            echo "Cashback";
+        }
+    }
+@endphp
 @endsection

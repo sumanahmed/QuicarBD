@@ -318,4 +318,6 @@ Route::group(['prefix'=>'/admin/accounts', 'middleware' => 'admin'], function(){
     Route::get('/user-balance', [AccountsController::class, 'userBalance'])->name('accounts.user-balance');
     Route::get('/partner-balance', [AccountsController::class, 'partnerBalance'])->name('accounts.partner-balance');
     Route::get('/withdraw', [AccountsController::class, 'withdraw'])->name('accounts.withdraw');
+    Route::post('/withdraw-cancel', [AccountsController::class, 'withdrawCancel'])->name('accounts.withdraw.cancel');
+    Route::post('/withdraw-accept', [AccountsController::class, 'withdrawAccept'])->name('accounts.withdraw.accept');
 });

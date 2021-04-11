@@ -46,7 +46,7 @@
                                 </select>
                             </div>                            
                             <div class="form-group">
-                                <label for="category" class="control-label mb-10">Category <span class="text-danger" title="Required">*</span></label>                                    
+                                <label for="category" class="control-label mb-10">Category </label>                                    
                                 <select id="category" name="category" class="form-control">
                                     <option selected disabled>Select</option>
                                     <option value="1">Car</option>
