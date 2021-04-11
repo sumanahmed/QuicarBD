@@ -25,14 +25,18 @@ class PartnerController extends Controller
     //show all partner
     public function index(Request $request)
     {
-        $query = Owner::orderBy('id','DESC')->where('account_status', 1);
+        $query = DB::table('owners')
+                ->leftjoin('district','owners.service_location_district','district.id')
+                ->select('owners.*','district.value as district_name')
+                ->orderBy('owners.id','DESC')
+                ->where('owners.account_status', 1);
         
         if ($request->name) {
-            $query = $query->where('name', 'like', "{$request->name}%");
+            $query = $query->where('owners.name', 'like', "{$request->name}%");
         }
         
         if ($request->phone) {
-            $query = $query->where('phone', $request->phone);
+            $query = $query->where('owners.phone', $request->phone);
         }
         
         $partners = $query->paginate(12);
