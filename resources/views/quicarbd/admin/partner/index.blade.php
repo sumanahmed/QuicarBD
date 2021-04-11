@@ -62,7 +62,7 @@
                                             <th>Phone</th>
                                             <th>Balance</th>
                                             <th>Percentage</th>
-                                            <th>Current Status</th>
+                                            <th>Service Location</th>
                                             <th>Date & Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -73,7 +73,7 @@
                                             <th>Phone</th>
                                             <th>Balance</th>
                                             <th>Percentage</th>
-                                            <th>Current Status</th>
+                                            <th>Service Location</th>
                                             <th>Date & Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -90,15 +90,7 @@
                                                     <td>{{ $partner->phone }}</td>
                                                     <td>{{ $partner->current_balance }}</td>
                                                     <td>{{ "BP-".$partner->bidding_percent.", CP-".$partner->car_package_charge.", HP-".$partner->hotel_package_charge.", TP-".$partner->travel_package_charge }}</td>
-                                                    @if($partner->account_status == 0 && $partner->nid_font_pic != null && $partner->nid_back_pic != null)
-                                                        <td>Waiting For Approval</td>                                                    
-                                                    @elseif($partner->account_status == 0)
-                                                        <td>Pending</td>
-                                                    @elseif($partner->account_status == 1)
-                                                        <td>Approve</td>
-                                                    @else
-                                                        <td>Cancel</td>
-                                                    @endif
+                                                    <td>{{ $partner->district_name }}</td>    
                                                     <td>{{ $dateTime }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         @if($partner->account_status == 0)
