@@ -3,7 +3,19 @@
 @section('content')
 @php 
     $helper = new App\Http\Lib\Helper;
-    $ride_detail = \App\Models\RideBiting::select('ride_biting.*','cars.carRegisterNumber')->leftjoin('cars','ride_biting.car_id','cars.id')->where('ride_id', $ride->id)->first();
+    if ($ride->status == 4) {
+        $ride_detail = \App\Models\RideBiting::select('ride_biting.*','cars.carRegisterNumber')
+                    ->join('cars','ride_biting.car_id','cars.id')
+                    ->where('ride_biting.ride_id', $ride->id)
+                    ->where('ride_biting.id', $ride->accepted_ride_bitting_id)
+                    ->first();
+    } else {
+        $ride_detail = \App\Models\RideBiting::select('ride_biting.*','cars.carRegisterNumber')
+                    ->join('cars','ride_biting.car_id','cars.id')
+                    ->where('ride_biting.ride_id', $ride->id)
+                    ->first();
+    }
+    
 @endphp
 <div class="container-fluid">				
 	<!-- Title -->
@@ -155,22 +167,24 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="phone" class="control-label mb-10">Driver Cost Bear</label>                                            
-                                                    <input type="phone" id="phone" value="{{ $ride->driver_cost_bear == 0 ? 'No' : 'Yes' }}" class="form-control" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
                                                     <label for="phone" class="control-label mb-10">Car Registration Number</label>                                            
                                                     <input type="phone" id="phone" @if($ride_detail != null) value="{{ $ride_detail->carRegisterNumber }}" @endif class="form-control" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="phone" class="control-label mb-10">Car Cost Bear</label>                                            
-                                                    <input type="phone" id="phone" value="{{ $ride->car_all_cost_bear == 0 ? 'Car Body Rent Only' : 'Including All Cost' }}" class="form-control" readonly>
+                                            @if($ride->rown_way == 1)
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Driver Cost Bear</label>                                            
+                                                        <input type="phone" id="phone" value="{{ $ride->driver_cost_bear == 0 ? 'No' : 'Yes' }}" class="form-control" readonly>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Car Cost Bear</label>                                            
+                                                        <input type="phone" id="phone" value="{{ $ride->car_all_cost_bear == 0 ? 'Car Body Rent Only' : 'Including All Cost' }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

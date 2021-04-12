@@ -31,10 +31,39 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
+                    <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
+                        <form action="{{ route('ride.bid_request') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10">Phone</label>                                            
+                                        <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif placeholder="Enter Phone.." class="form-control" />
+                                    </div>
+                                </div>  
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10">Booking Date</label>                                            
+                                        <input type="date" name="booking_date" @if(isset($_GET['booking_date'])) value="{{ $_GET['booking_date'] }}" @endif class="form-control" />
+                                    </div>
+                                </div>  
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10">Travel Date</label>                                            
+                                        <input type="date" name="travel_date" @if(isset($_GET['travel_date'])) value="{{ $_GET['travel_date'] }}" @endif  class="form-control" />
+                                    </div>
+                                </div>    
+                                <div class="col-md-2">
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="panel-body">
                         <div class="table-wrap">
                             <div class="table-responsive">
-                                <table id="datable_1" class="table table-hover display pb-30" >
+                                <table class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
                                             <th>Booking Date</th>
@@ -66,16 +95,20 @@
                                             @foreach($rides as $ride)
                                                 @php
                                                     $total_bid = \App\Models\RideBiting::where('ride_id',$ride->id)->count('id');
+                                                    $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->created_at, new DateTimeZone("UTC"));
+                                                    $bookingDate = $db_time->setTimeZone(new DateTimeZone("Asia/Dhaka"))->format('j M, Y h:i A');
+                                                    $db_travel = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
+                                                    $travelDate = $db_travel->setTimeZone(new DateTimeZone("Asia/Dhaka"))->format('j M, Y h:i A');
                                                 @endphp
                                                 <tr class="partner-{{ $ride->id }}">
-                                                    <td>{{ date('Y-m-d', strtotime($ride->created_at)) }}</td>                                                  
-                                                    <td>{{ date('Y-m-d', strtotime($ride->start_time)) }}</td>
+                                                    <td>{{ $bookingDate }}</td>                                                  
+                                                    <td>{{ $travelDate }}</td>
                                                     <td><a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a></td>  
                                                     <td>{{ $helper->getDistrict($ride->starting_district).",".$helper->getCity($ride->starting_city).",".$ride->startig_area }}</td>
                                                     <td>{{ $helper->getDistrict($ride->destination_district).",".$helper->getCity($ride->destination_city).",".$ride->destination_area }}</td>
                                                     <td><a target="_blank" class="btn btn-xs btn-warning" href="{{ route('ride.bidding', $ride->id) }}">{{ $total_bid }}</a></td>
                                                     <td>{{ $helper->getCarType($ride->car_type) }}</td>
-                                                    <td>{{ $ride->rown_way == 0 ? 'No' : 'Round Way' }}</td>
+                                                    <td>{{ $ride->rown_way == 0 ? 'One Way' : 'Round Way' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                         <a href="#" id="cancelModal" data-toggle="modal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
@@ -89,6 +122,7 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                {{ $rides->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>

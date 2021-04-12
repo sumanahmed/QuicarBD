@@ -51,6 +51,7 @@ class SendSmsNotification implements ShouldQueue
                 
             } else if($request['notification'] == 1){
                 foreach($request['users'] as $user){
+                    $helper->sendSinglePartnerNotification($user->n_key, $request['title'], $request['message']); //push notification send
                     $helper->smsNotification($type = 1, $user->id, $request['title'], $request['message']); //bell notification
                 }
             } else if($request['notification'] == 2){
@@ -67,6 +68,7 @@ class SendSmsNotification implements ShouldQueue
 
             } else if($request['notification'] == 1){   
                 foreach($request['owners'] as $owner){
+                    $helper->sendSinglePartnerNotification($owner->n_key, $request['title'], $request['message']); //push notification send
                     $helper->smsNotification($type = 2, $owner->id, $request['title'], $request['message']); //bell notification
                 }
 

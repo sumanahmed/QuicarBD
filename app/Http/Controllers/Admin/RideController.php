@@ -20,8 +20,8 @@ class RideController extends Controller
   /**
     * show bid request
   */
-  public function bidRequest(){
-    $rides = DB::table('ride_list')
+  public function bidRequest(Request $request){
+    $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
                 ->select('ride_list.id','ride_list.created_at',
                         'ride_list.starting_district','ride_list.starting_city','ride_list.startig_area', 
@@ -31,8 +31,22 @@ class RideController extends Controller
                 )
                 ->where('ride_list.status', 1)
                 ->where('ride_list.payment_status', 0)
-                ->orderBy('ride_list.id','DESC')
-                ->get();
+                ->orderBy('ride_list.id','DESC');
+                
+    if ($request->phone) { 
+        $query = $query->where('users.phone', $request->phone);
+    }  
+    
+    if ($request->booking_date) {
+        $query = $query->whereDate('ride_list.created_at', date('Y-m-d', strtotime($request->booking_date)));
+    }
+    
+    if ($request->travel_date) {
+        $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
+    }
+                
+    $rides = $query->paginate(12);
+    
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();
     return view('quicarbd.admin.ride.bid_request', compact('rides','reasons'));
   }
@@ -52,7 +66,8 @@ class RideController extends Controller
                     'drivers.name as driver_name','drivers.phone as driver_phone',
                     'ride_biting.bit_amount','ride_biting.owner_id', 'ride_biting.driver_id'
             )
-            ->where('ride_list.status', 4)
+            ->where('ride_list.status', 4) //4 mean bit accept
+            ->where('ride_biting.status', 1) // 1 mean bit accept
             ->where('ride_list.payment_status', 1)
             ->where('ride_list.accepted_ride_bitting_id', '!=', null)
             ->orderBy('ride_list.id','DESC')
@@ -152,7 +167,7 @@ class RideController extends Controller
     * show ride details
   */
   public function details($ride_id){
-    $ride = RideList::find($ride_id);                      
+    $ride = RideList::find($ride_id);                   
     return view('quicarbd.admin.ride.details', compact('ride'));
   }
 
