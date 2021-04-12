@@ -9,6 +9,7 @@ use App\Models\Owner;
 use App\Models\User;
 use App\Models\RideBiting;
 use App\Models\RideList;
+use App\Models\UserAccount;
 use Illuminate\Http\Request;
 use Validator;
 use Response;
@@ -190,6 +191,7 @@ class RideController extends Controller
     try {
         
         $bid = RideBiting::where('ride_id', $request->ride_id)->first();
+        $ride = RideList::find($request->ride_id);
      
         if ($bid != null) {
             $partner = Owner::find($bid->owner_id);
@@ -203,12 +205,50 @@ class RideController extends Controller
             $user    = User::find($user_id);   
         }
     
-        $ride = RideList::find($request->ride_id);
-        $ride->status = 2;
+        if ($ride->status == 4 && $ride->payment_status == 1) {
+
+          $bittings = RideBiting::where('ride_id', $request->ride_id)
+                                ->where('id', '!=', $ride->accepted_ride_bitting_id)
+                                ->get();
+
+          foreach ($bittings as $bitting) {
+
+            $tmpBitting = RideBiting::find($bitting->id);
+            $tmpBitting->status = 0;
+            $tmpBitting->update();
+
+          }
+
+          $user_account = UserAccount::where('tnx_id', $ride->tnx_id)->first();
+          
+          if ($user_account != null) {
+            
+            $user = User::find($user_account->user_id);
+            $user->balance = ($user->balance + $user_account->adjust_quicar_balance + $user_account->discount + $user_account->online_payment);
+            $user->cash_back_balance = ($user->cash_back_balance + $user_account->adjust_cashback);
+            $user->update();
+
+            $userAccount = new UserAccount();
+            $userAccount->amount          = ($user_account->adjust_quicar_balance + $user_account->discount + $user_account->online_payment + $user_account->adjust_cashback);
+            $userAccount->adjust_cashback = $user_account->adjust_cashback;
+            $userAccount->adjust_quicar_balance = $user_account->adjust_quicar_balance;
+            $userAccount->discount        = $user_account->discount;
+            $userAccount->online_payment  = $user_account->online_payment;
+            $userAccount->tnx_id          = time();
+            $userAccount->type            = 1;
+            $userAccount->income_from     = 1;
+            $userAccount->history_id      = $ride->id;
+            $userAccount->reason          = 'Ride advance payment return in cancel';
+            $userAccount->user_id         = $ride->user_id;
+            $userAccount->save();
+          }
+        }
+
+        $ride->status = $ride->status != 4 ? 2 : 1;
         $ride->update();
         
         $title  = 'Ride Cancel';
-        $msg    = $request->reason.'. Thanks for connecting with Quicar'; 
+        $msg    = $request->reason; 
         $helper = new Helper(); 
         
         if(isset($parnter)) {
@@ -229,6 +269,7 @@ class RideController extends Controller
     }
     
     DB::commit();
+    return response()->json();
     
   }
 }
