@@ -301,9 +301,7 @@ class RideController extends Controller
         }
 
         $ride->status = $ride->status != 4 ? 2 : 1;
-        if ($ride->status == 4) {
-          $ride->payment_status = 0;
-        }
+        $ride->payment_status = $ride->status != 4 ? $ride->payment_status : 0;
         $ride->update();
         
         $title  = 'Ride Cancel';
