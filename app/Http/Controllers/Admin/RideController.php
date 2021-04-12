@@ -35,15 +35,15 @@ class RideController extends Controller
                 ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 
-        $query = $query->where('users.phone', $request->phone);
+      $query = $query->where('users.phone', $request->phone);
     }  
     
     if ($request->booking_date) {
-        $query = $query->whereDate('ride_list.created_at', date('Y-m-d', strtotime($request->booking_date)));
+      $query = $query->whereDate('ride_list.created_at', date('Y-m-d', strtotime($request->booking_date)));
     }
     
     if ($request->travel_date) {
-        $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
+      $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
     }
                 
     $rides = $query->paginate(12);
@@ -54,8 +54,8 @@ class RideController extends Controller
   /**
     * show upcoming bid rides
   */
-  public function upcoming(){
-    $rides = DB::table('ride_list')
+  public function upcoming(Request $request){
+    $query = DB::table('ride_list')
             ->join('users','ride_list.user_id','users.id')
             ->join('ride_biting','ride_list.id','ride_biting.ride_id')
             ->leftjoin('owners','ride_biting.owner_id','owners.id')
@@ -71,8 +71,22 @@ class RideController extends Controller
             ->where('ride_biting.status', 1) // 1 mean bit accept
             ->where('ride_list.payment_status', 1)
             ->where('ride_list.accepted_ride_bitting_id', '!=', null)
-            ->orderBy('ride_list.id','DESC')
-            ->get();               
+            ->orderBy('ride_list.id','DESC');
+                
+    if ($request->phone) { 
+      $query = $query->where('users.phone', $request->phone);
+    }  
+    
+    if ($request->booking_date) {
+      $query = $query->whereDate('ride_list.created_at', date('Y-m-d', strtotime($request->booking_date)));
+    }
+    
+    if ($request->travel_date) {
+      $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
+    }
+                
+    $rides = $query->paginate(12);  
+
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();  
     return view('quicarbd.admin.ride.upcoming', compact('rides','reasons'));
   }
@@ -80,8 +94,8 @@ class RideController extends Controller
   /**
     * show ongoing rides
   */
-  public function ongoing(){
-    $rides = DB::table('ride_list')
+  public function ongoing(Request $request){
+    $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
                 ->join('ride_biting','ride_list.id','ride_biting.ride_id')
                 ->leftjoin('owners','ride_biting.owner_id','owners.id')
@@ -95,8 +109,22 @@ class RideController extends Controller
                 )
                 ->where('ride_list.status', 3)
                 ->where('ride_list.accepted_ride_bitting_id', '!=', null)
-                ->orderBy('ride_list.id','DESC')
-                ->get();                        
+                ->orderBy('ride_list.id','DESC');
+                
+    if ($request->phone) { 
+      $query = $query->where('users.phone', $request->phone);
+    }  
+    
+    if ($request->booking_date) {
+      $query = $query->whereDate('ride_list.created_at', date('Y-m-d', strtotime($request->booking_date)));
+    }
+    
+    if ($request->travel_date) {
+      $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
+    }
+                
+    $rides = $query->paginate(12);
+
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();  
     return view('quicarbd.admin.ride.ongoing', compact('rides','reasons'));
   }
@@ -104,8 +132,8 @@ class RideController extends Controller
   /**
     * show complete rides
   */
-  public function complete(){
-    $rides = DB::table('ride_list')
+  public function complete(Request $request){
+    $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
                 ->join('ride_biting','ride_list.id','ride_biting.ride_id')
                 ->leftjoin('owners','ride_biting.owner_id','owners.id')
@@ -119,16 +147,30 @@ class RideController extends Controller
                 )
                 ->where('ride_list.status', 5)
                 ->where('ride_list.accepted_ride_bitting_id', '!=', null)
-                ->orderBy('ride_list.id','DESC')
-                ->get();                     
+                ->orderBy('ride_list.id','DESC');
+                
+    if ($request->phone) { 
+      $query = $query->where('users.phone', $request->phone);
+    }  
+    
+    if ($request->booking_date) {
+      $query = $query->whereDate('ride_list.created_at', date('Y-m-d', strtotime($request->booking_date)));
+    }
+    
+    if ($request->travel_date) {
+      $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
+    }
+                
+    $rides = $query->paginate(12);  
+
     return view('quicarbd.admin.ride.complete', compact('rides'));
   }
 
   /**
     * show cancel rides
   */
-  public function cancel(){
-    $rides = DB::table('ride_list')
+  public function cancel(Request $request){
+    $query = DB::table('ride_list')
                   ->join('users','ride_list.user_id','users.id')
                   ->leftjoin('ride_biting','ride_list.id','ride_biting.ride_id')
                   ->leftjoin('owners','ride_biting.owner_id','owners.id')
@@ -141,8 +183,22 @@ class RideController extends Controller
                           'bit_cancel_list.name as reason'
                   )
                 ->where('ride_list.status', 2)
-                ->orderBy('ride_list.id','DESC')
-                ->get();             
+                ->orderBy('ride_list.id','DESC');
+                
+    if ($request->phone) { 
+      $query = $query->where('users.phone', $request->phone);
+    }  
+    
+    if ($request->booking_date) {
+      $query = $query->whereDate('ride_list.created_at', date('Y-m-d', strtotime($request->booking_date)));
+    }
+    
+    if ($request->travel_date) {
+      $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
+    }
+                
+    $rides = $query->paginate(12);  
+
     return view('quicarbd.admin.ride.cancel', compact('rides'));
   }
 
@@ -245,6 +301,9 @@ class RideController extends Controller
         }
 
         $ride->status = $ride->status != 4 ? 2 : 1;
+        if ($ride->status == 4) {
+          $ride->payment_status = 0;
+        }
         $ride->update();
         
         $title  = 'Ride Cancel';

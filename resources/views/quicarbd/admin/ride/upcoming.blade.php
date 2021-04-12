@@ -27,11 +27,40 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="panel-wrapper collapse in">
+                <div class="panel-wrapper collapse in">       
+                    <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
+                        <form action="{{ route('ride.upcoming') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10">Phone</label>                                            
+                                        <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif placeholder="Enter Phone.." class="form-control" />
+                                    </div>
+                                </div>  
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10">Booking Date</label>                                            
+                                        <input type="date" name="booking_date" @if(isset($_GET['booking_date'])) value="{{ $_GET['booking_date'] }}" @endif class="form-control" />
+                                    </div>
+                                </div>  
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10">Travel Date</label>                                            
+                                        <input type="date" name="travel_date" @if(isset($_GET['travel_date'])) value="{{ $_GET['travel_date'] }}" @endif  class="form-control" />
+                                    </div>
+                                </div>    
+                                <div class="col-md-2">
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="panel-body">
                         <div class="table-wrap">
                             <div class="table-responsive">
-                                <table id="datable_1" class="table table-hover display pb-30" >
+                                <table class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
                                             <th>Booking Date</th>
@@ -92,6 +121,7 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                {{ $rides->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>
