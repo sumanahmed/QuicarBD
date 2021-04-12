@@ -75,7 +75,6 @@
                                                     <td>{{ $ride->rown_way == 0 ? 'No' : 'Round Way' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
-                                                        <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -94,39 +93,4 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="showCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="reason" class="control-label mb-10">District <span class="text-danger text-bold" title="Required Field">*</span></label>
-                        <select id="reason" class="form-control" required>
-                            <option selected disabled>Reason</option>                                
-                            @foreach($reasons as $reason)                                
-                                <option value="{{ $reason->name }}">{{ $reason->name }}</option>     
-                            @endforeach  
-                            <input type="hidden" name="ride_id" id="ride_id"/>                         
-                        </select>
-                        <span class="text-danger reasonError"></span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="sendReason">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
-@section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/reason.js') }}"></script>
-    <script>
-        $("#dashboard").addClass('active');
-    </script>
 @endsection
