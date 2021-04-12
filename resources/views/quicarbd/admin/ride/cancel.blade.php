@@ -67,10 +67,15 @@
                                                         $cancelBy = 'Partner';
                                                         $total_cancel = \App\Models\RideList::where('status', 2)->where('owner_id', $ride->owner_id)->count('id');
                                                     }
+                                                    
+                                                    $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->created_at, new DateTimeZone("UTC"));
+                                                    $bookingDate = $db_time->format('j M, Y h:i A');
+                                                    $db_travel = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
+                                                    $travelDate = $db_travel->format('j M, Y h:i A');
                                                 @endphp
                                                 <tr class="partner-{{ $ride->id }}">
-                                                    <td>{{ date('Y-m-d', strtotime($ride->created_at)) }}</td>                                                  
-                                                    <td>{{ date('Y-m-d', strtotime($ride->start_time)) }}</td>
+                                                    <td>{{ $bookingDate }}</td>                                                  
+                                                    <td>{{ $travelDate }}</td>
                                                     <td>
                                                         @if($ride->user_id != null)
                                                             <a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a>

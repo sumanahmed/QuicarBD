@@ -59,9 +59,15 @@
                                     <tbody id="partnerData">
                                         @if(isset($rides) && count($rides) > 0)
                                             @foreach($rides as $ride)
+                                                @php
+                                                    $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->created_at, new DateTimeZone("UTC"));
+                                                    $bookingDate = $db_time->format('j M, Y h:i A');
+                                                    $db_travel = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
+                                                    $travelDate = $db_travel->format('j M, Y h:i A');
+                                                @endphp
                                                 <tr class="partner-{{ $ride->id }}">
-                                                    <td>{{ date('Y-m-d', strtotime($ride->created_at)) }}</td>                                                  
-                                                    <td>{{ date('Y-m-d', strtotime($ride->start_time)) }}</td>
+                                                    <td>{{ $bookingDate }}</td>                                                  
+                                                    <td>{{ $travelDate }}</td>
                                                     <td><a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a></td>  
                                                     <td><a href="{{ route('partner.details', $ride->owner_id) }}">{{ $ride->owner_name }} <br/>{{ $ride->owner_phone }}</a></td>  
                                                     <td>
@@ -72,10 +78,10 @@
                                                         @endif
                                                     </td>  
                                                     <td>{{ $ride->bit_amount }}</td>
-                                                    <td>{{ $ride->rown_way == 0 ? 'No' : 'Round Way' }}</td>
+                                                    <td>{{ $ride->rown_way == 0 ? 'One Way' : 'Round Way' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
-                                                        <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
+                                                        <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach

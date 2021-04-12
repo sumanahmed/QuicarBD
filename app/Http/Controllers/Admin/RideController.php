@@ -190,7 +190,7 @@ class RideController extends Controller
     try {
         
         $bid = RideBiting::where('ride_id', $request->ride_id)->first();
-        
+     
         if ($bid != null) {
             $partner = Owner::find($bid->owner_id);
             $user    = User::find($bid->user_id);

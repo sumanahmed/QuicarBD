@@ -107,7 +107,7 @@
                                             @foreach($drivers as $driver)
                                                 @php 
                                                     $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $driver->created_at, new DateTimeZone("UTC"));
-                                                    $formattedTime = $db_time->setTimeZone(new DateTimeZone("Asia/Dhaka"))->format('j M, Y h:i A');
+                                                    $formattedTime = $db_time->format('j M, Y h:i A');
                                                 @endphp
                                                 <tr class="driver-{{ $driver->id }}">
                                                     <td>{{ $driver->name }}</td>

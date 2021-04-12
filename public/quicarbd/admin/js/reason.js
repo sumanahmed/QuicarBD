@@ -26,7 +26,7 @@ $("#sendReason").click(function(){
                 $('#reason').val('');
                 toastr.success('Cancel Successfully')
                 $('#showCancelModal').modal('hide');
-                location.reload();
+                //location.reload();
             }
         }
     });

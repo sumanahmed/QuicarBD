@@ -96,9 +96,9 @@
                                                 @php
                                                     $total_bid = \App\Models\RideBiting::where('ride_id',$ride->id)->count('id');
                                                     $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->created_at, new DateTimeZone("UTC"));
-                                                    $bookingDate = $db_time->setTimeZone(new DateTimeZone("Asia/Dhaka"))->format('j M, Y h:i A');
+                                                    $bookingDate = $db_time->format('j M, Y h:i A');
                                                     $db_travel = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
-                                                    $travelDate = $db_travel->setTimeZone(new DateTimeZone("Asia/Dhaka"))->format('j M, Y h:i A');
+                                                    $travelDate = $db_travel->format('j M, Y h:i A');
                                                 @endphp
                                                 <tr class="partner-{{ $ride->id }}">
                                                     <td>{{ $bookingDate }}</td>                                                  

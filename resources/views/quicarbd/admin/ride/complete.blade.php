@@ -66,9 +66,15 @@
                                     <tbody id="partnerData">
                                         @if(isset($rides) && count($rides) > 0)
                                             @foreach($rides as $ride)
+                                                @php
+                                                    $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->created_at, new DateTimeZone("UTC"));
+                                                    $bookingDate = $db_time->format('j M, Y h:i A');
+                                                    $db_travel = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
+                                                    $travelDate = $db_travel->format('j M, Y h:i A');
+                                                @endphp
                                                 <tr class="partner-{{ $ride->id }}">
-                                                    <td>{{ date('Y-m-d', strtotime($ride->created_at)) }}</td>                                                  
-                                                    <td>{{ date('Y-m-d', strtotime($ride->start_time)) }}</td>
+                                                    <td>{{ $bookingDate }}</td>                                                  
+                                                    <td>{{ $travelDate }}</td>
                                                     <td><a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a></td>  
                                                     <td><a href="{{ route('partner.details', $ride->owner_id) }}">{{ $ride->owner_name }} <br/>{{ $ride->owner_phone }}</a></td>  
                                                     <td>{{ $ride->review_give != 0 ? $ride->review_give != 0 : '' }}</td>
