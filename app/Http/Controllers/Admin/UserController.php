@@ -61,29 +61,18 @@ class UserController extends Controller
             $body    = $request->message;
 
             $helper = new Helper();
-            $helper->smsNotification($type = 1, $request->user_id, $title, $body); // send notification, 2=partner
 
             if($request->notification == 1){ 
-                //push notification send            
-                    
-                    $client  = new Client();
-                    $client->request("GET", "http://quicarbd.com//mobileapi/general/notification/send.php?id=".$id."&title=".$title ."&body=".$body);
-                //push notification send end
+                $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
+                $helper->smsNotification($type = 1, $request->user_id, $title, $body); // bell notification, 1=user
                 return Response::json([
                     'status'    => 200,
                     'message'   => "Notification send successfully",
                 ]);
             }else{
-                //push notification send        
-                    $client  = new Client();
-                    $client->request("GET", "http://quicarbd.com//mobileapi/general/notification/send.php?id=".$id."&title=".$title ."&body=".$body);
-                //push notification send end
-
-                //message send
-                    $msg    = $request->message;
-                    $client = new Client();            
-                    $sms    = $client->request("GET", "http://66.45.237.70/api.php?username=01670168919&password=TVZMBN3D&number=". $request->phone ."&message=".$msg);
-                //message send end
+                $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
+                $helper->smsNotification($type = 1, $request->user_id, $title, $body); // bell notification, 1=user
+                $helper->smsSend($request->phone, $body); // sms send
                 return Response::json([
                     'status'    => 200,
                     'message'   => "Notification & SMS send successfully",
@@ -96,6 +85,10 @@ class UserController extends Controller
     public function details($id){
         $data['user']   = User::find($id);
         $data['rides']  = RideList::where('user_id', $id)->get();
+        $data['total_ride'] = RideList::where('user_id', $id)->count('id');
+        $data['total_car_pacakage_booking'] = DB::table('car_package_order')->where('user_id', $id)->count('id');
+        $data['total_hotel_pacakage_booking'] = DB::table('hotel_package_order')->where('user_id', $id)->count('id');
+        $data['total_travel_pacakage_booking'] = DB::table('travel_packages_order')->where('user_id', $id)->count('id');
         return view('quicarbd.admin.user.details', $data);
     }
 }

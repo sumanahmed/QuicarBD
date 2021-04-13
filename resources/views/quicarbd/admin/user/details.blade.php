@@ -28,6 +28,80 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="panel panel-default card-view pa-0">
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body pa-0">
+                                        <div class="sm-data-box">
+                                            <div class="container-fluid">
+                                                <div class="text-center pl-0 pr-0 data-wrap-left">
+                                                    <a href="#">
+                                                        <span class="txt-dark block counter"><span class="counter-anim">{{ $total_ride }}</span></span>
+                                                        <span class="weight-500 uppercase-font block font-13">Total Ride</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                            <div class="panel panel-default card-view pa-0">
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body pa-0">
+                                        <div class="sm-data-box">
+                                            <div class="container-fluid">
+                                                <div class="text-center pl-0 pr-0 data-wrap-left">
+                                                    <a href="#">
+                                                        <span class="txt-dark block counter"><span class="counter-anim">{{ $total_car_pacakage_booking }}</span></span>
+                                                        <span class="weight-500 uppercase-font block">Total Car Package Booking</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                    
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                            <div class="panel panel-default card-view pa-0">
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body pa-0">
+                                        <div class="sm-data-box">
+                                            <div class="container-fluid">
+                                                <div class="text-center pl-0 pr-0 data-wrap-left">
+                                                    <a href="#">
+                                                        <span class="txt-dark block counter"><span class="counter-anim">{{ $total_hotel_pacakage_booking }}</span></span>
+                                                        <span class="weight-500 uppercase-font block">Total Hotel Package Booking</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>   
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                            <div class="panel panel-default card-view pa-0">
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body pa-0">
+                                        <div class="sm-data-box">
+                                            <div class="container-fluid">
+                                                <div class="text-center pl-0 pr-0 data-wrap-left">
+                                                    <a href="#">
+                                                        <span class="txt-dark block counter"><span class="counter-anim">{{ $total_travel_pacakage_booking }}</span></span>
+                                                        <span class="weight-500 uppercase-font block">Total Travel Package Booking</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-sm-12 col-xs-12">

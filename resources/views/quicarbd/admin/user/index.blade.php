@@ -61,7 +61,6 @@
                                             <th>Phone</th>
                                             <th>Balance</th>
                                             <th>CashBack Balance</th>
-                                            <th>Account Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -71,7 +70,6 @@
                                             <th>Phone</th>
                                             <th>Balance</th>
                                             <th>CashBack Balance</th>
-                                            <th>Account Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -84,9 +82,8 @@
                                                     <td>{{ $user->phone }}</td>
                                                     <td>{{ $user->balance }}</td>
                                                     <td>{{ $user->cash_back_balance }}</td>
-                                                    <td>{{ $user->account_status == 0 ? 'Off' : 'On' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <!-- <a href="#" class="btn btn-xs btn-primary" id="userSendNotification" data-toggle="modal" data-target="#userSendNotificationModal" title="Notification" data-id="{{ $user->id }}" data-phone="{{ $user->phone }}" data-n_key="{{ $user->n_key }}"><i class="fa fa-bell"></i></a> -->
+                                                         <a href="#" class="btn btn-xs btn-primary" id="userSendNotification" data-toggle="modal" data-target="#userSendNotificationModal" title="Notification" data-id="{{ $user->id }}" data-phone="{{ $user->phone }}" data-n_key="{{ $user->n_key }}"><i class="fa fa-bell"></i></a> 
                                                         <a href="{{ route('user.details', $user->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
