@@ -192,6 +192,7 @@ Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
     Route::get('/status/update', [UserController::class, 'create'])->name('user.status.update');
     Route::get('/details/{user_id}', [UserController::class, 'details'])->name('user.details');
     Route::post('/notification/send', [UserController::class, 'notificationSend'])->name('user.notification.send');
+    Route::get('/log/{id}', [UserController::class, 'log'])->name('user.log');
 });
 
 Route::group(['prefix'=>'/admin/user-banner', 'middleware' => 'admin'], function(){
@@ -283,7 +284,7 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::get('/cancel', [RideController::class, 'cancel'])->name('ride.cancel');
     Route::get('/bidding/{id}', [RideController::class, 'bidding'])->name('ride.bidding');
     Route::get('/details/{ride_id}', [RideController::class, 'details'])->name('ride.details');
-    Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');
+    Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');    
 });
 
 Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], function(){

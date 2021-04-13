@@ -91,4 +91,19 @@ class UserController extends Controller
         $data['total_travel_pacakage_booking'] = DB::table('travel_packages_order')->where('user_id', $id)->count('id');
         return view('quicarbd.admin.user.details', $data);
     }
+
+    //user log
+    public function log($id){
+        $query = DB::table('user_log')
+                    ->leftjoin('users','user_log.user_id','users.id')
+                    ->select('user_log.*','users.name','users.phone')
+                    ->where('user_log.user_id', $id)
+                    ->orderBy('user_log.id','DESC');
+        
+        $logs = $query->paginate(12);
+        
+        $user_name = User::find($id)->name;
+
+        return view('quicarbd.admin.user.log', compact('logs','user_name'));
+    }
 }
