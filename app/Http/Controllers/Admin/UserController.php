@@ -8,6 +8,12 @@ use App\Models\RideList;
 use Illuminate\Http\Request;
 use App\Models\User;
 use GuzzleHttp\Client;
+use App\Models\CarPackage;
+use App\Models\HotelPackage;
+use App\Models\TravelPackage;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Validator;
 use Response;
 use DB;
@@ -94,16 +100,35 @@ class UserController extends Controller
 
     //user log
     public function log($id){
-        $query = DB::table('user_log')
+        $user_logs = DB::table('user_log')
                     ->leftjoin('users','user_log.user_id','users.id')
-                    ->select('user_log.*','users.name','users.phone')
+                    ->leftjoin('car_packages','user_log.product_id','car_packages.id')
+                    ->leftjoin('hotel_packages','user_log.product_id','hotel_packages.id')
+                    ->leftjoin('travel_packages','user_log.product_id','travel_packages.id')
+                    ->select('user_log.*','users.name','users.phone',
+                        DB::raw('(CASE 
+                            WHEN user_log.product_type = "1" THEN car_packages.name 
+                            WHEN user_log.product_type = "2" THEN hotel_packages.hotel_name
+                            WHEN user_log.product_type = "3" THEN travel_packages.tour_name
+                            ELSE "Others" 
+                            END) as product_name'
+                        )
+                    )
                     ->where('user_log.user_id', $id)
                     ->orderBy('user_log.id','DESC');
         
-        $logs = $query->paginate(12);
+        $logs = $user_logs->paginate(12);
         
         $user_name = User::find($id)->name;
 
         return view('quicarbd.admin.user.log', compact('logs','user_name'));
+    }
+    
+    //pagiante user log
+    public function paginate($items, $perPage = 12, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

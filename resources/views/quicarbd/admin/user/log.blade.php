@@ -39,6 +39,8 @@
                                             <th>Device</th>
                                             <th>Page</th>
                                             <th>Car Rent Page</th>
+                                            <th>Product Type</th>
+                                            <th>Product</th>
                                             <th>Visit Time</th>
                                         </tr>
                                     </thead>
@@ -49,6 +51,8 @@
                                             <th>Device</th>
                                             <th>Page</th>
                                             <th>Car Rent Page</th>
+                                            <th>Product Type</th>
+                                            <th>Product</th>
                                             <th>Visit Time</th>
                                         </tr>
                                     </tfoot>
@@ -64,6 +68,8 @@
                                                 <td>{{ $log->device }}</td>
                                                 <td>{{ $log->page }}</td>
                                                 <td>{{ $log->car_rental_page == 0 ? 'No' : 'Yes' }}</td>
+                                                <td>{{ productType($log->product_type) }}</td>
+                                                <td>{{ $log->product_name }}</td>
                                                 <td>{{ $visit_time }}</td>
                                             </tr>
                                         @endforeach
@@ -78,4 +84,17 @@
         </div>
     </div>
 </div>
+@php 
+    function productType($product_type) {
+        if ($product_type == 1) {
+            echo "Car Package";   
+        } elseif ($product_type == 2) {
+            echo "Hotel Package";   
+        } elseif ($product_type == 3) {
+            echo "Travel Package";   
+        } else {
+            echo "Others";
+        }
+    }
+@endphp
 @endsection
