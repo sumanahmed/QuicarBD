@@ -192,6 +192,7 @@ Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
     Route::get('/status/update', [UserController::class, 'create'])->name('user.status.update');
     Route::get('/details/{user_id}', [UserController::class, 'details'])->name('user.details');
     Route::post('/notification/send', [UserController::class, 'notificationSend'])->name('user.notification.send');
+    Route::get('/user-log', [UserController::class, 'userLogList'])->name('user.user_log_list');
     Route::get('/log/{id}', [UserController::class, 'log'])->name('user.log');
 });
 

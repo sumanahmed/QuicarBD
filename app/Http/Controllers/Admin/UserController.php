@@ -97,6 +97,31 @@ class UserController extends Controller
         $data['total_travel_pacakage_booking'] = DB::table('travel_packages_order')->where('user_id', $id)->count('id');
         return view('quicarbd.admin.user.details', $data);
     }
+    
+    //show all users
+    public function userLogList(Request $request)
+    {
+        $query = DB::table('user_log')
+                    ->join('users','user_log.user_id','users.id')
+                    ->select('user_log.visit_time','users.id','users.n_key','users.name','users.phone')
+                    ->distinct();
+
+        if ($request->name) {
+            $query = $query->where('users.name', 'like', "{$request->name}%");
+        }
+        
+        if ($request->phone) {
+            $query = $query->where('users.phone', $request->phone);
+        }
+        
+        if ($request->visit_date) { 
+            $query = $query->whereDate('user_log.visit_time', date('Y-m-d', strtotime($request->visit_date)));
+        }
+        
+        $users = $query->paginate(12);
+
+        return view('quicarbd.admin.user.log-list', compact('users'));
+    }
 
     //user log
     public function log($id){
@@ -122,13 +147,5 @@ class UserController extends Controller
         $user_name = User::find($id)->name;
 
         return view('quicarbd.admin.user.log', compact('logs','user_name'));
-    }
-    
-    //pagiante user log
-    public function paginate($items, $perPage = 12, $page = null, $options = [])
-    {
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

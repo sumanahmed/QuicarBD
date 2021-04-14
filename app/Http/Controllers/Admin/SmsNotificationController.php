@@ -57,8 +57,13 @@ class SmsNotificationController extends Controller
                 if ($request['car'] == 1) { // all car account partner
 
                     $owners = Owner::select('id','phone','n_key')
-                                ->where('account_status', $request['status'])
-                                ->where('account_type', $request['car'])
+                                ->where('account_status', $request['status'])                                                                  
+                                ->where(function ($query) {
+                                    $query->where('account_type', '=', 0)
+                                          ->orWhere('account_type', '=', 3)
+                                          ->orWhere('account_type', '=', 4)
+                                          ->orWhere('account_type', '=', 6);
+                                })
                                 ->get();
 
                 } else if ($request['car'] == 2) { // no car 
@@ -84,7 +89,12 @@ class SmsNotificationController extends Controller
                 if ($request['hotel'] == 1) {
                     $owners = Owner::select('id','phone','n_key')
                                     ->where('account_status', $request['status'])
-                                    ->where('account_type', 1)
+                                    ->where(function ($query) {
+                                        $query->where('account_type', '=', 1)
+                                              ->orWhere('account_type', '=', 3)
+                                              ->orWhere('account_type', '=', 4)
+                                              ->orWhere('account_type', '=', 5);
+                                    })
                                     ->get();
                 } else if ($request['hotel'] == 2) {                  
                     $owners = Owner::leftjoin('hotel_packages','owners.id','hotel_packages.owner_id')
@@ -96,8 +106,13 @@ class SmsNotificationController extends Controller
             } else if ($request['category'] == 3) { // 3 mean category travel
                 if ($request['travel'] == 1) {
                     $owners = Owner::select('id','phone','n_key')
-                                    ->where('account_status', $request['status'])
-                                    ->where('account_type', 2)
+                                    ->where('account_status', $request['status'])                                    
+                                    ->where(function ($query) {
+                                        $query->where('account_type', '=', 2)
+                                              ->orWhere('account_type', '=', 4)
+                                              ->orWhere('account_type', '=', 5)
+                                              ->orWhere('account_type', '=', 6);
+                                    })
                                     ->get();
                 } else if ($request['travel'] == 2) {                  
                     $owners = Owner::leftjoin('travel_packages','owners.id','travel_packages.owner_id')

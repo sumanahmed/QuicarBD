@@ -46,11 +46,11 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="request_for" class="control-label mb-10">Request For</label>                                            
-                                        <select name="request_for" class="form-control">
+                                        <select name="which_acount" class="form-control">
                                             <option value="100">Select</option>
-                                            <option value="0" @if(isset($_GET['request_for']) && $_GET['request_for'] == 0) selected @endif>Car</option>    
-                                            <option value="1" @if(isset($_GET['request_for']) && $_GET['request_for'] == 1) selected @endif>Hotel</option>    
-                                            <option value="2" @if(isset($_GET['request_for']) && $_GET['request_for'] == 2) selected @endif>Travel</option>    
+                                            <option value="0" @if(isset($_GET['which_acount']) && $_GET['which_acount'] == 0) selected @endif>Car</option>    
+                                            <option value="1" @if(isset($_GET['which_acount']) && $_GET['which_acount'] == 1) selected @endif>Hotel</option>    
+                                            <option value="2" @if(isset($_GET['which_acount']) && $_GET['which_acount'] == 2) selected @endif>Travel</option>    
                                         </select>
                                     </div>
                                 </div> 
@@ -91,17 +91,17 @@
                                             @foreach($partners as $partner)
                                                 @php 
                                                     $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $partner->created_at, new DateTimeZone("UTC"));
-                                                    $dateTime = $db_time->setTimeZone(new DateTimeZone("Asia/Dhaka"))->format('j M, Y h:i A');
+                                                    $dateTime = $db_time->format('j M, Y h:i A');
                                                 @endphp
                                                 <tr class="partner-{{ $partner->id }}">
                                                     <td>{{ $partner->name }}</td>
                                                     <td>{{ $partner->phone }}</td>
                                                     <td>{{ checkAccountType($partner->account_type) }}</td>
-                                                    <td>{{ requestFor($partner->request_for) }}</td>
+                                                    <td>{{ requestFor($partner->which_acount) }}</td>
                                                     <td>{{ $dateTime }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="#" class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="showRequestCancel" data-target="#requestCancelModal" data-id="{{ $partner->id }}" data-owner_id="{{ $partner->owner_id }}" title="Cancel"><i class="fa fa-remove"></i></a>
-                                                        <a href="{{ route('partner.account_type_change_approve',['id'=>$partner->id,'which_acount'=>$partner->request_for,'owner_id'=>$partner->owner_id]) }}" 
+                                                        <a href="{{ route('partner.account_type_change_approve',['id'=>$partner->id,'which_acount'=>$partner->which_acount,'owner_id'=>$partner->owner_id]) }}" 
                                                         class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
                                                     </td>
                                                 </tr>

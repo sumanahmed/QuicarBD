@@ -334,14 +334,15 @@ class PartnerController extends Controller
     }
 
     //partner account type change request list
-    public function accountTypeChangeRequest(Request $request){ 
-        $query = AccountTypeChargeRequest::join('owners','owners.id','account_type_chage_request.owner_id')
+    public function accountTypeChangeRequest(Request $request)
+    {
+        $query = DB::table('account_type_chage_request')
+                    ->leftjoin('owners','account_type_chage_request.owner_id','owners.id')
                     ->select('account_type_chage_request.id','owners.name','owners.phone','owners.account_type',
-                            'account_type_chage_request.owner_id','account_type_chage_request.which_acount as request_for',
+                            'account_type_chage_request.owner_id','account_type_chage_request.which_acount',
                             'account_type_chage_request.created_at')
                     ->where('account_type_chage_request.status', 0)
-                    ->orderBy('account_type_chage_request.id','DESC');
-                    
+                    ->orderBy('account_type_chage_request.id', 'DESC');            
                     
         if ($request->name) {
             $query = $query->where('owners.name', 'like', "{$request->name}%");
@@ -351,11 +352,11 @@ class PartnerController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
-        if ($request->request_for != 100) { 
-            $query = $query->where('account_type_chage_request.which_acount', $request->request_for);
+        if (isset($request->which_acount) && $request->which_acount != 100) { 
+            $query = $query->where('account_type_chage_request.which_acount', $request->which_acount);
         }
         
-        $partners = $query->paginate(12);
+        $partners = $query->paginate(12); 
                     
         return view('quicarbd.admin.partner.account_type_change_request', compact('partners'));
     }
@@ -367,7 +368,7 @@ class PartnerController extends Controller
 
         try {
             $owner = Owner::find($request->owner_id);
-            $owner->account_type = $request->which_acount;
+            $owner->account_type = $this->getNewAccountType($owner->account_type, $request->which_acount, $request->owner_id);
             $owner->update();
 
             $account = AccountTypeChargeRequest::find($request->id);
@@ -377,7 +378,7 @@ class PartnerController extends Controller
             $helper = new Helper(); 
             $id     = $owner->n_key;
             $title  = 'Account Type Change';            
-            $msg    = 'Dear '.$owner->name.', your account type change request approve successfully. Thanks for connecting with Quicar';
+            $msg    = 'Dear '.$owner->name.', your account type change request approve successfully. Thanks Team Quicar';
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send
             $helper->smsNotification($type = 2, $owner->id, $title, $msg); // send notification, 2=partner
@@ -393,6 +394,48 @@ class PartnerController extends Controller
         }
 
         return redirect()->route('partner.account_type_change_request')->with('message','Approve successfully');
+    }
+    
+    //change account type
+    public function getNewAccountType ($current_type, $change_type, $owner_id) 
+    {
+        if ($change_type == 1) {  //want to go in hotel package
+            if ($current_type == 0) { //current account in car    
+                return 3; //3 mean car & hotel
+            } elseif ($current_type == 2) { //current account in travel    
+                return 5; //mean hotel & travel
+            } elseif ($current_type == 4) { //current account in car, hotel & travel    
+                return 1; // mean car
+            } elseif ($current_type == 5) { //current account in hotel & travel    
+                return 4; // mean car
+            } elseif ($current_type == 6) { //current account in car & travel    
+                return 1; // mean car
+            }
+        } elseif ($change_type == 2) { //want to go in travel package
+            if ($current_type == 0) { //current account in car    
+                return 6; // mean travel
+            } elseif ($current_type == 1) { //current account in hotel    
+                return 5; //mean hotel & travel
+            } elseif ($current_type == 4) { //current account in car, hotel & travel    
+                return 2; //mean hotel
+            } elseif ($current_type == 5) { //current account in hotel & travel    
+                return 4; //mean car
+            } elseif ($current_type == 6) { //current account in car & travel    
+                return 2; //mean car
+            }
+        } elseif ($change_type == 0) { //want to go in car package
+            if ($current_type == 1) { //current account in hotel    
+                return 3; // mean travel
+            } elseif ($current_type == 2) { //current account in hotel    
+                return 6; //mean car & travel
+            } elseif ($current_type == 4) { //current account in car, hotel & travel    
+                return 0; //mean car
+            } elseif ($current_type == 5) { //current account in hotel & travel    
+                return 4; //mean car
+            } elseif ($current_type == 6) { //current account in car & travel    
+                return 0; //mean car
+            }
+        }
     }
     
     //partner account type change request cancel

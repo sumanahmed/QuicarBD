@@ -38,6 +38,9 @@
             <a href="{{ route('user.index') }}"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">User</span></div><div class="pull-right"></div><div class="clearfix"></div></a>
         </li>
         <li>
+            <a href="{{ route('user.user_log_list') }}"><div class="pull-left"><i class="fa fa-history mr-20"></i><span class="right-nav-text">User Log</span></div><div class="pull-right"></div><div class="clearfix"></div></a>
+        </li>
+        <li>
             <a href="{{ route('driver.index') }}"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Driver</span></div><div class="pull-right"></div>
                 @if($pendingDriver > 0)
                     <div class="pull-right"><span class="label label-warning">{{ $pendingDriver }}</span></div>
