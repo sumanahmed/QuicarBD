@@ -70,6 +70,8 @@
                                             <th>Driver</th>
                                             <th>Price</th>
                                             <th>Trip Type</th>
+                                            <th>Car Type</th>
+                                            <th>Registration No</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -82,6 +84,8 @@
                                             <th>Driver</th>
                                             <th>Price</th>
                                             <th>Trip Type</th>
+                                            <th>Car Type</th>
+                                            <th>Registration No</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -108,6 +112,8 @@
                                                     </td>  
                                                     <td>{{ $ride->bit_amount }}</td>
                                                     <td>{{ $ride->rown_way == 0 ? 'One Way' : 'Round Way' }}</td>
+                                                    <td>{{ $ride->car_type_name }}</td>
+                                                    <td>{{ $ride->carRegisterNumber }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                         <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>

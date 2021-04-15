@@ -201,7 +201,6 @@
             <ul id="carRent" class="collapse collapse-level-1 two-col-list">
                 <li><a href="{{ route('ride.bid_request') }}">Bid Request</a></li>
                 <li><a href="{{ route('ride.upcoming') }}">Upcoming Ride</a></li>
-                <li><a href="{{ route('ride.ongoing') }}">Ongoing Ride</a></li>
                 <li><a href="{{ route('ride.complete') }}">Completed Trip</a></li>
                 <li><a href="{{ route('ride.cancel') }}">Cancelled Trip</a></li>
             </ul>

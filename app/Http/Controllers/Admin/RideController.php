@@ -56,10 +56,12 @@ class RideController extends Controller
     * show upcoming bid rides
   */
   public function upcoming(Request $request){
-    //$current_date_time = Carbon::now()->toDateTimeString(); 
+    $current_date_time = Carbon::now()->toDateTimeString(); 
     $query = DB::table('ride_list')
             ->join('users','ride_list.user_id','users.id')
             ->join('ride_biting','ride_list.id','ride_biting.ride_id')
+            ->leftjoin('cars','ride_biting.car_id','cars.id')
+            ->leftjoin('car_types','ride_list.car_type','car_types.id')
             ->leftjoin('owners','ride_biting.owner_id','owners.id')
             ->leftjoin('drivers','ride_biting.driver_id','drivers.id')
             ->select('ride_list.id','ride_list.created_at',                    
@@ -67,13 +69,13 @@ class RideController extends Controller
                     'users.name as user_name','users.phone as user_phone',
                     'owners.name as owner_name','owners.phone as owner_phone',
                     'drivers.name as driver_name','drivers.phone as driver_phone',
-                    'ride_biting.bit_amount','ride_biting.owner_id', 'ride_biting.driver_id'
+                    'ride_biting.bit_amount','ride_biting.owner_id', 'ride_biting.driver_id',
+                    'cars.carRegisterNumber','car_types.name as car_type_name'
             )
             ->where('ride_list.status', 4) //4 mean bit accept
             ->where('ride_biting.status', 1) // 1 mean bit accept
-            ->where('ride_list.payment_status', 1)
             ->where('ride_list.accepted_ride_bitting_id', '!=', null)
-            //->where('ride_list.start_time', '>', $current_date_time)
+            ->where('ride_list.start_time', '>', $current_date_time)
             //->whereDate('ride_list.start_time', '>', date('Y-m-d'))
             ->orderBy('ride_list.id','DESC');
                 
@@ -95,48 +97,12 @@ class RideController extends Controller
     return view('quicarbd.admin.ride.upcoming', compact('rides','reasons'));
   }
 
-  /**
-    * show ongoing rides
-  */
-  public function ongoing(Request $request){
-    $query = DB::table('ride_list')
-                ->join('users','ride_list.user_id','users.id')
-                ->join('ride_biting','ride_list.id','ride_biting.ride_id')
-                ->leftjoin('owners','ride_biting.owner_id','owners.id')
-                ->leftjoin('drivers','ride_biting.driver_id','owners.id')
-                ->select('ride_list.id','ride_list.created_at',                    
-                        'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
-                        'users.name as user_name','users.phone as user_phone',
-                        'owners.name as owner_name','owners.phone as owner_phone',
-                        'drivers.name as driver_name','drivers.phone as driver_phone',
-                        'ride_biting.bit_amount','ride_biting.owner_id', 'ride_biting.driver_id'
-                )
-                ->where('ride_list.status', 3)
-                ->where('ride_list.accepted_ride_bitting_id', '!=', null)
-                ->orderBy('ride_list.id','DESC');
-                
-    if ($request->phone) { 
-      $query = $query->where('users.phone', $request->phone);
-    }  
-    
-    if ($request->booking_date) {
-      $query = $query->whereDate('ride_list.created_at', date('Y-m-d', strtotime($request->booking_date)));
-    }
-    
-    if ($request->travel_date) {
-      $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
-    }
-                
-    $rides = $query->paginate(12);
-
-    $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();  
-    return view('quicarbd.admin.ride.ongoing', compact('rides','reasons'));
-  }
 
   /**
     * show complete rides
   */
   public function complete(Request $request){
+    $current_date_time = Carbon::now()->toDateTimeString();
     $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
                 ->join('ride_biting','ride_list.id','ride_biting.ride_id')
@@ -149,8 +115,9 @@ class RideController extends Controller
                         'drivers.name as driver_name','drivers.phone as driver_phone',
                         'ride_biting.bit_amount','ride_biting.owner_id', 'ride_biting.driver_id'
                 )
-                ->where('ride_list.status', 5)
+                ->where('ride_list.status', 4)
                 ->where('ride_list.accepted_ride_bitting_id', '!=', null)
+                ->where('ride_list.start_time', '<', $current_date_time)
                 ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 
