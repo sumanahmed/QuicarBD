@@ -33,6 +33,7 @@ use App\Http\Controllers\Admin\PackageReviewController;
 use App\Http\Controllers\Admin\PrivacyController;
 use App\Http\Controllers\Admin\RideController;
 use App\Http\Controllers\Admin\SmsNotificationController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -311,6 +312,13 @@ Route::group(['prefix'=>'/admin/sms-notification', 'middleware' => 'admin'], fun
     Route::post('/send', [SmsNotificationController::class, 'send'])->name('sms_notification.send');
     Route::get('/push-notification', [SmsNotificationController::class, 'pushNotification'])->name('sms_notification.push_notification');
     Route::post('/push-notification-send', [SmsNotificationController::class, 'pushNotificationSend'])->name('sms_notification.push_notification.send');
+});
+
+
+Route::group(['prefix'=>'/admin/message', 'middleware' => 'admin'], function(){
+    Route::get('/partner', [MessageController::class, 'partnerMessage'])->name('message.partner');
+    Route::get('/user', [MessageController::class, 'userMessage'])->name('message.user');
+    Route::post('/reply', [MessageController::class, 'reply'])->name('message.reply');
 });
 
 Route::group(['prefix'=>'/admin/accounts', 'middleware' => 'admin'], function(){

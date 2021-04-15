@@ -11,7 +11,7 @@
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Message</a></li>
-            <li class="active"><span>Partner</span></li>
+            <li class="active"><span>User</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -23,7 +23,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">Partner Messages</h6>
+                        <h6 class="panel-title txt-dark">User Messages</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -74,22 +74,22 @@
                                         </tr>
                                     </tfoot>
                                     <tbody id="partnerData">
-                                        @foreach($partners as $partner)
-                                            <tr class="message-{{ $partner->id }}">
-                                                <td>{{ $partner->name }}</td>
-                                                <td>{{ $partner->phone }}</td>
-                                                <td>{{ $partner->message }}</td>
-                                                <td>{{ $partner->status == 0 ? 'Unread' : 'Read' }}</td>
+                                        @foreach($users as $user)
+                                            <tr class="message-{{ $user->id }}">
+                                                <td>{{ $user->name }}</td>
+                                                <td>{{ $user->phone }}</td>
+                                                <td>{{ $user->message }}</td>
+                                                <td>{{ $user->status == 0 ? 'Unread' : 'Read' }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">
-                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyMessage" data-id="{{ $partner->id }}" data-message="{{ $partner->message }}" data-sender_id="{{ $partner->sender_id }}" data-type="2" title="Reply"><i class="fa fa-reply"></i></a>
-                                                    <a href="{{ route('partner.details', $partner->sender_id) }}" target="_blank" class="btn btn-xs btn-info" title="Partner Details"><i class="fa fa-eye"></i></a>
-                                                    <button href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteFeedback" data-target="#deleteFeedbackModal" data-id="{{ $partner->id }}" title="Delete"><i class="fa fa-remove"></i></button>
+                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyMessage" data-id="{{ $user->id }}" data-message="{{ $user->message }}" data-sender_id="{{ $user->sender_id }}" data-type="2" title="Reply"><i class="fa fa-reply"></i></a>
+                                                    <a href="'/admin/user/details/'+ $user->sender_id" target="_blank" class="btn btn-xs btn-info" title="User Details"><i class="fa fa-eye"></i></a>
+                                                    <button href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteFeedback" data-target="#deleteFeedbackModal" data-id="{{ $user->id }}" title="Delete"><i class="fa fa-remove"></i></button>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{ $partners->links('pagination::bootstrap-4') }}
+                                {{ $users->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>
@@ -112,6 +112,7 @@
                         <input type="hidden" id="id" />
                         <input type="hidden" id="sender_id" />
                         <input type="hidden" id="type" />
+                            
                         <div class="form-group">
                             <label for="message" class="control-label mb-10">Reply <span class="text-danger text-bold" title="Required Field">*</span></label>
                             <textarea class="form-control" name="message" id="reply" placeholder="Enter your reply"></textarea>
