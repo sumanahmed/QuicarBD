@@ -74,6 +74,7 @@
                                             <th>Total Bid</th>
                                             <th>Car Type</th>
                                             <th>Trip Type</th>
+                                            <th>Visible Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -87,6 +88,7 @@
                                             <th>Total Bid</th>
                                             <th>Car Type</th>
                                             <th>Trip Type</th>
+                                            <th>Visible Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -99,6 +101,10 @@
                                                     $bookingDate = $db_time->format('j M, Y h:i A');
                                                     $db_travel = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
                                                     $travelDate = $db_travel->format('j M, Y h:i A');
+                                                    if ($ride->ride_visiable_time != null) {
+                                                        $db_ride_visiable_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->ride_visiable_time, new DateTimeZone("UTC"));
+                                                        $ride_visiable_time = $db_ride_visiable_time->format('j M, Y h:i A');
+                                                    }
                                                 @endphp
                                                 <tr class="partner-{{ $ride->id }}">
                                                     <td>{{ $bookingDate }}</td>                                                  
@@ -109,6 +115,7 @@
                                                     <td><a target="_blank" class="btn btn-xs btn-warning" href="{{ route('ride.bidding', $ride->id) }}">{{ $total_bid }}</a></td>
                                                     <td>{{ $helper->getCarType($ride->car_type) }}</td>
                                                     <td>{{ $ride->rown_way == 0 ? 'One Way' : 'Round Way' }}</td>
+                                                    <td>{{ $ride->ride_visiable_time != null ? $ride_visiable_time : '' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                         <a href="#" id="cancelModal" data-toggle="modal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>

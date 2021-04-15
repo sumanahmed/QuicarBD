@@ -11,6 +11,7 @@ use App\Models\RideBiting;
 use App\Models\RideList;
 use App\Models\UserAccount;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Validator;
 use Response;
 
@@ -28,7 +29,7 @@ class RideController extends Controller
                         'ride_list.starting_district','ride_list.starting_city','ride_list.startig_area', 
                         'ride_list.destination_district','ride_list.destination_city','ride_list.destination_area',
                         'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
-                        'users.name as user_name','users.phone as user_phone'
+                        'ride_list.ride_visiable_time','users.name as user_name','users.phone as user_phone'
                 )
                 ->where('ride_list.status', 1)
                 ->where('ride_list.payment_status', 0)
@@ -55,6 +56,7 @@ class RideController extends Controller
     * show upcoming bid rides
   */
   public function upcoming(Request $request){
+    //$current_date_time = Carbon::now()->toDateTimeString(); 
     $query = DB::table('ride_list')
             ->join('users','ride_list.user_id','users.id')
             ->join('ride_biting','ride_list.id','ride_biting.ride_id')
@@ -71,6 +73,8 @@ class RideController extends Controller
             ->where('ride_biting.status', 1) // 1 mean bit accept
             ->where('ride_list.payment_status', 1)
             ->where('ride_list.accepted_ride_bitting_id', '!=', null)
+            //->where('ride_list.start_time', '>', $current_date_time)
+            //->whereDate('ride_list.start_time', '>', date('Y-m-d'))
             ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 
@@ -137,7 +141,7 @@ class RideController extends Controller
                 ->join('users','ride_list.user_id','users.id')
                 ->join('ride_biting','ride_list.id','ride_biting.ride_id')
                 ->leftjoin('owners','ride_biting.owner_id','owners.id')
-                ->leftjoin('drivers','ride_biting.driver_id','owners.id')
+                ->leftjoin('drivers','ride_biting.driver_id','drivers.id')
                 ->select('ride_list.id','ride_list.created_at', 'ride_list.review_give'                   ,
                         'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
                         'users.name as user_name','users.phone as user_phone',
@@ -263,17 +267,17 @@ class RideController extends Controller
     
         if ($ride->status == 4 && $ride->payment_status == 1) {
 
-          $bittings = RideBiting::where('ride_id', $request->ride_id)
-                                ->where('id', '!=', $ride->accepted_ride_bitting_id)
-                                ->get();
+        //   $bittings = RideBiting::where('ride_id', $request->ride_id)
+        //                         ->where('id', '!=', $ride->accepted_ride_bitting_id)
+        //                         ->get();
 
-          foreach ($bittings as $bitting) {
+        //   foreach ($bittings as $bitting) {
 
-            $tmpBitting = RideBiting::find($bitting->id);
-            $tmpBitting->status = 0;
-            $tmpBitting->update();
+        //     $tmpBitting = RideBiting::find($bitting->id);
+        //     $tmpBitting->status = 0;
+        //     $tmpBitting->update();
 
-          }
+        //   }
 
           $user_account = UserAccount::where('tnx_id', $ride->tnx_id)->first();
           
@@ -300,8 +304,7 @@ class RideController extends Controller
           }
         }
 
-        $ride->status = $ride->status != 4 ? 2 : 1;
-        $ride->payment_status = $ride->status != 4 ? $ride->payment_status : 0;
+        $ride->status = 2;
         $ride->update();
         
         $title  = 'Ride Cancel';
@@ -309,7 +312,7 @@ class RideController extends Controller
         $helper = new Helper(); 
         
         if(isset($parnter)) {
-            $helper->sendSinglePartnerNotification($partner->n_key, $title, $msg); //push notification send to driver
+            $helper->sendSinglePartnerNotification($partner->n_key, $title, $msg); //push notification send to partner
             $helper->smsNotification($type=2, $bid->owner_id, $title, $msg); // send notification, 2=partner
         }
         

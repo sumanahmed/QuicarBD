@@ -106,11 +106,11 @@
                                                     <td>{{ $travelDate }}</td>
                                                     <td><a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a></td>  
                                                     <td><a href="{{ route('partner.details', $ride->owner_id) }}">{{ $ride->owner_name }} <br/>{{ $ride->owner_phone }}</a></td>  
-                                                    <td>{{ $ride->review_give != 0 ? $ride->review_give != 0 : '' }}</td>
+                                                    <td>{{ $ride->review_give }}</td>
                                                     <td>{{ $ride->driver_name }} <br/>{{ $ride->driver_phone }}</td>  
                                                     <td>{{ $ride->bit_amount }}</td>
                                                     <td>{{ $helper->getCarType($ride->car_type) }}</td>
-                                                    <td>{{ $ride->rown_way == 0 ? 'No' : 'Round Way' }}</td>
+                                                    <td>{{ $ride->rown_way == 0 ? 'One Way' : 'Round Way' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>                                                       
                                                     </td>

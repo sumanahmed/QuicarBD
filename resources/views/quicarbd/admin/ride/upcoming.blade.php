@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Upcoming Bid')
+@section('title','Upcoming Ride')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -11,7 +11,7 @@
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Car Rent</a></li>
-            <li class="active"><span>Upcoming Bid</span></li>
+            <li class="active"><span>Upcoming Ride</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
