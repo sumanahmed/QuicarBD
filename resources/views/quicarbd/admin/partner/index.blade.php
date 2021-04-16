@@ -100,6 +100,7 @@
                                                         @endif
                                                         <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 2 ]) }}" class="btn btn-xs btn-danger" title="Hold"><i class="fa fa-pause"></i></a>
                                                         <a href="#" class="btn btn-xs btn-primary" id="sendNotification" data-toggle="modal" data-target="#sendNotificationModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
+                                                        <a href="#" class="btn btn-xs btn-primary" id="partnerBalanceAdd" data-toggle="modal" title="Balance" data-id="{{ $partner->id }}" data-current_balance="{{ $partner->current_balance }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-usd"></i></a> 
                                                         <a href="{{ route('partner.edit', $partner->id) }}" target="_blank" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="{{ route('partner.details', $partner->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
@@ -160,6 +161,38 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="ownerNotificationSend">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Balance ADD Modal -->
+    <div id="partnerBalanceAddModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title" id="exampleModalLabel1">Add Balance</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="title" class="control-label mb-10">Current Balance </label>
+                            <input type="text" name="balance" id="balance" class="form-control" readonly>
+                            <input type="hidden" name="n_key" id="n_key" />
+                            <input type="hidden" name="id" id="id" />
+                            <span class="errorTitle text-danger text-bold"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="control-label mb-10">Add Balance <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <input type="text" name="add_balance" id="add_balance" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            <span class="errorAddBalance text-danger text-bold"></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addBalance">Send</button>
                 </div>
             </div>
         </div>

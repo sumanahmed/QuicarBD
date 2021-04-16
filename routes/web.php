@@ -186,6 +186,7 @@ Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){
     Route::get('/account-type-change-request', [PartnerController::class, 'accountTypeChangeRequest'])->name('partner.account_type_change_request');
     Route::get('/account-type-change-approve', [PartnerController::class, 'accountTypeChangeApprove'])->name('partner.account_type_change_approve');
     Route::post('/account-type-change-cancel', [PartnerController::class, 'accountTypeChangeCancel'])->name('partner.account_type_change_cancel');
+    Route::post('/balance/add', [PartnerController::class, 'balanceAdd'])->name('partner.balance.add');
 });
 
 Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
@@ -193,6 +194,7 @@ Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
     Route::get('/status/update', [UserController::class, 'create'])->name('user.status.update');
     Route::get('/details/{user_id}', [UserController::class, 'details'])->name('user.details');
     Route::post('/notification/send', [UserController::class, 'notificationSend'])->name('user.notification.send');
+    Route::post('/balance/add', [UserController::class, 'balanceAdd'])->name('user.balance.add');
     Route::get('/user-log', [UserController::class, 'userLogList'])->name('user.user_log_list');
     Route::get('/log/{id}', [UserController::class, 'log'])->name('user.log');
 });

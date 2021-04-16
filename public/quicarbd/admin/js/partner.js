@@ -167,3 +167,44 @@ $("#requestCancel").click(function(){
         }
     });
 });
+
+
+
+//open balance add modal
+$(document).on('click', '#partnerBalanceAdd', function () {
+    $('#partnerBalanceAddModal').modal('show');
+    $('input[name="id"]').val($(this).data('id'));
+    $('input[name="n_key"]').val($(this).data('n_key'));
+    $('input[name="balance"]').val($(this).data('current_balance'));
+ });
+
+//user balance add
+$("#addBalance").click(function(){
+    var id          = $('input[name="id"]').val();
+    var n_key       = $('input[name="n_key"]').val();
+    var balance     = $('input[name="balance"]').val();
+    var add_balance = $('input[name="add_balance"]').val();
+    
+    $.ajax({
+        type: 'POST',
+        url: '/admin/partner/balance/add',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            id          : id,
+            n_key       : n_key,
+            balance     : balance,
+            add_balance : add_balance,
+        },
+        success: function (response) {
+            if((response.errors)){
+                if(response.errors.add_balance){
+                    $('.errorAddBalance').text(response.errors.add_balance);
+                } 
+            }else{
+                $('#partnerBalanceAddModal').modal('hide');
+                toastr.success(response.message)
+                location.reload();
+            }
+        }
+    });
+});

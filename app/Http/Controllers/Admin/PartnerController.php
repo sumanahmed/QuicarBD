@@ -475,4 +475,35 @@ class PartnerController extends Controller
         Owner::find($request->id)->delete();
         return response()->json();
     }
+    
+    //balance add
+    public function balanceAdd(Request $request)
+    {       
+        $validators=Validator::make($request->all(),[
+            'id'   => 'required',
+            'balance' => 'required',
+            'add_balance' => 'required',
+            'n_key' => 'required',
+        ]);
+        
+        if($validators->fails()){
+            return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+        }
+        
+        $partner = Owner::find($request->id); 
+        $partner->current_balance = ($partner->current_balance + $request->add_balance); 
+        $partner->update();
+
+        $id      = $request->n_key;
+        $title   = "New balance add";
+        $body    = "New balance ". $request->add_balance ." with your current balance. Thanks Team Quicar";
+
+        $helper = new Helper();
+        $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
+        
+        return Response::json([
+            'status'    => 200,
+            'message'   => "Balance added successfully",
+        ]);  
+    }
 }
