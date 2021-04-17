@@ -66,6 +66,7 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Phone</th>
+                                            <th>Visit Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -73,16 +74,21 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Phone</th>
+                                            <th>Visit Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="userData">
                                         @if(isset($users) && count($users) > 0)
-                                            @php $i=1; @endphp
                                             @foreach($users as $user)
+                                                @php 
+                                                    $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $user->visit_time, new DateTimeZone("UTC"));
+                                                    $visit_time = $db_time->format('j M, Y h:i A');
+                                                @endphp
                                                 <tr class="user-{{ $user->id }}">
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->phone }}</td>
+                                                    <td>{{ $visit_time }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('user.log', $user->id) }}" target="_blank" class="btn btn-xs btn-warning" title="User Log" ><i class="fa fa-history"></i></a> 
                                                         <a href="#" class="btn btn-xs btn-primary" id="userSendNotification" data-toggle="modal" data-target="#userSendNotificationModal" title="Notification" data-id="{{ $user->id }}" data-phone="{{ $user->phone }}" data-n_key="{{ $user->n_key }}"><i class="fa fa-bell"></i></a> 

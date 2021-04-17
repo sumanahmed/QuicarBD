@@ -12,6 +12,7 @@ use App\Models\RideBiting;
 use App\Models\RideList;
 use App\Models\TravelPackage;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -22,6 +23,7 @@ class DashboardController extends Controller
     public function dashboard ()
     {
 		$today  = date('Y-m-d');
+		$current_date_time = Carbon::now()->toDateTimeString();
 
         // user summary
     	$data['total_user'] = User::count('id');
@@ -73,10 +75,14 @@ class DashboardController extends Controller
     	$data['travel_package_pending'] = TravelPackage::where('status', 0)->count('id');
 
 		//ride summary
-		$data['total_bid'] = RideBiting::count('id');
-		$data['total_complete_ride'] = RideList::where('status', 5)->count('id');
+		$data['total_bid_request'] = RideList::where('status', 1)->count('id');
+        $data['total_upcoming_ride'] = RideList::where('status', 4)
+                                                ->where('start_time', '>', $current_date_time)
+                                                ->count('id');
+		$data['total_complete_ride'] = RideList::where('status', 4)
+                                                ->where('start_time', '<', $current_date_time)
+                                                ->count('id');	
 		$data['total_cancelled_ride'] = RideList::where('status', 2)->count('id');
-		$data['total_pending_ride'] = RideBiting::where('status', 0)->count('id');
 
         return view('quicarbd.admin.dashboard.index', $data);
     }

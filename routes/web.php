@@ -63,6 +63,8 @@ Route::get('/get-car-year/{car_type}/{car_model}', [CommonController::class, 'ge
 Route::get('/get-car-sit/{car_id}', [CommonController::class, 'getCarSit'])->name('admin.get_car_sit'); 
 Route::get('/get-hotel-package-charge/{owner_id}', [CommonController::class, 'getHotelPackageCharge'])->name('admin.get_hotel_package_charge'); 
 Route::get('/get-travel-package-charge/{owner_id}', [CommonController::class, 'getTravelPackageCharge'])->name('admin.get_travel_package_charge'); 
+Route::get('/sms/list', [CommonController::class, 'smsList'])->name('admin.sms_list'); 
+Route::post('/sms/store', [CommonController::class, 'smsStore'])->name('admin.sms_store'); 
 
 Route::get('/admin',[AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/signin',[AuthController::class, 'signin'])->name('admin.signin');

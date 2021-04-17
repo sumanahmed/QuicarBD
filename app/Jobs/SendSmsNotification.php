@@ -38,15 +38,15 @@ class SendSmsNotification implements ShouldQueue
         $helper = new Helper();
         $request['for']         = $this->details['for'];
         $request['title']       = $this->details['title'];
-        $request['message']     = $this->details['message'];
+        $request['message']     = strip_tags($this->details['message']);
         $request['notification']= $this->details['notification'];
         $request['users']       = $this->details['users'];
         $request['owners']      = $this->details['owners'];
-
+        
         if($request['for'] == 1){   
             if($request['notification'] == 0){
                 foreach($request['users'] as $user){
-                    $helper->sendSinglePartnerNotification($user->n_key, $request['title'], $request['message']); //push notification send
+                    $helper->sendSinglePartnerNotification($user->n_key, $request['title'], strip_tags($request['message'])); //push notification send
                 }
                 
             } else if($request['notification'] == 1){

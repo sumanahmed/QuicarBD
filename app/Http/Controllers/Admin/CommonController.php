@@ -10,8 +10,10 @@ use App\Models\CarType;
 use App\Models\CarYear;
 use App\Models\City;
 use App\Models\Owner;
+use App\Models\SMS;
 use App\Models\TourSpot;
 use Illuminate\Http\Request;
+use DB;
 use Response;
 
 class CommonController extends Controller
@@ -135,5 +137,24 @@ class CommonController extends Controller
     public function getTravelPackageCharge ($owner_id) {
         $travel_package_charge  = Owner::find($owner_id)->travel_package_charge;
         return response()->json($travel_package_charge);
+    }
+
+    /**
+     * get sms list
+     */
+    public function smsList ($owner_id) {
+        $sms  = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
+        return response()->json($sms);
+    }
+
+    /**
+     * sms store
+     */
+    public function smsStore (Request $request) {
+        $sms = new SMS();
+        $sms->title   = $request->title;
+        $sms->message = $request->message;
+        $sms->save();
+        return response()->json($sms);
     }
 }

@@ -45,10 +45,28 @@
                                     </div>
                                 </div> 
                                 <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="service_location_district" class="control-label mb-10">Service Location</label>                                            
+                                        <select name="service_location_district" class="form-control">
+                                            <option value="0">Select</option>
+                                            @foreach($districts as $district)
+                                                <option value="{{ $district->id }}" @if(isset($_GET['service_location_district']) && $district->id == $_GET['service_location_district']) selected @endif>{{ $district->name }} </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                                     </div>
                                 </div>
+                                @if($total_partner > 0)
+                                    <div class="col-md-2">
+                                        <div class="form-group" style="margin-top:30px;">
+                                            Total Partner : {{ $total_partner }}
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </form>
                     </div>

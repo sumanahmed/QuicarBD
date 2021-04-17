@@ -39,9 +39,21 @@ class PartnerController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
+        if ($request->service_location_district) {
+            $query = $query->where('owners.service_location_district', $request->service_location_district);
+        }
+        
         $partners = $query->paginate(12);
         
-        return view('quicarbd.admin.partner.index', compact('partners'));
+        if ($request->service_location_district) {
+            $total_partner = count($partners);
+        } else {
+            $total_partner = 0;
+        }
+        
+        $districts = DB::table('district')->select('id','value as name')->orderBy('value','ASC')->get();
+        
+        return view('quicarbd.admin.partner.index', compact('partners','districts','total_partner'));
     }
 
     //show create page
