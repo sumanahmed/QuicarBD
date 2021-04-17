@@ -92,6 +92,18 @@
                                     <span class="text-danger"> {{ $errors->first('travel') }}</span>
                                 @endif
                             </div>
+                            <div class="form-group" id="carTypeDropdown" style="display: none;">
+                                <label for="car_type_id" class="control-label mb-10">Car Type </label>                                    
+                                <select id="car_type_id" name="car_type_id" class="form-control">
+                                    <option selected disabled>Select</option>
+                                    @foreach($car_types as $car_type)
+                                        <option value="{{ $car_type->name }}">{{ $car_type->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('car_type_id'))
+                                    <span class="text-danger"> {{ $errors->first('car_type_id') }}</span>
+                                @endif
+                            </div>
                             <div class="form-group">
                                 <label for="title" class="control-label mb-10">Title <span class="text-danger" title="Required">*</span></label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title">
@@ -115,24 +127,37 @@
 @endsection
 @section('scripts')
     <script>
-        $("#category").change(function(){ 
+        $("#category").change(function(){   // 1st
+        
             var category = $("#category :selected").val();
+            
             if (category == 1) {
                 $("#carDropdown").show();
                 $("#hotelDropdown").hide();                
                 $("#travelDropdown").hide();
             } else if (category == 2) {
-                $("#hotelDropdown").show();
-                $("#carDropdown").hide();                
+                $("#hotelDropdown").show();              
+                $("#carTypeDropdown").hide();                
                 $("#travelDropdown").hide();
             } else if (category == 3) {
                 $("#travelDropdown").show();
-                $("#carDropdown").hide();
+                $("#carTypeDropdown").hide();
                 $("#hotelDropdown").hide();
             } else {
-                $("#carDropdown").hide();
                 $("#hotelDropdown").hide();                
+                $("#carTypeDropdown").hide();                
                 $("#travelDropdown").hide();
+            }
+        });
+        
+        $("#car").change(function(){
+            
+            var car = $("#car :selected").val();
+            
+            if (car == 1) {
+                $("#carTypeDropdown").show();
+            } else {
+                $("#carTypeDropdown").hide();
             }
         });
     </script>

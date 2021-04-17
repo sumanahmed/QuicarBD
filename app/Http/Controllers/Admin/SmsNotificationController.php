@@ -9,17 +9,19 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\Owner;
 use App\Models\User;
+use DB;
 
 class SmsNotificationController extends Controller
 {
     //show sms notification send page
     public function index(){
-        return view('quicarbd.admin.sms-notification.index');
+        $car_types = DB::table('car_types')->select('*')->get(); 
+        return view('quicarbd.admin.sms-notification.index', compact('car_types'));
     }
 
     //send sms notification
     public function send(Request $request)
-    { 
+    {  
         $this->validate($request,[
             'for'       => 'required',
             'status'    => 'required',
@@ -28,22 +30,24 @@ class SmsNotificationController extends Controller
             'notification' => 'required',
         ]);
 
-        if ($request->category == 1) {
-            $this->validate($request,[
-                'car'   => 'required'
-            ]);
-        }
-
-        if ($request->category == 2) {
-            $this->validate($request,[
-                'hotel'  => 'required'
-            ]);
-        }
-
-        if ($request->category == 3) {
-            $this->validate($request,[
-                'travel'  => 'required'
-            ]);
+        if ($request->for == 2) {
+            if ($request->category == 1) {
+                $this->validate($request,[
+                    'car'   => 'required'
+                ]);
+            }
+    
+            if ($request->category == 2) {
+                $this->validate($request,[
+                    'hotel'  => 'required'
+                ]);
+            }
+    
+            if ($request->category == 3) {
+                $this->validate($request,[
+                    'travel'  => 'required'
+                ]);
+            }
         }
 
         if($request['for'] == 1){ // 1 mean user
@@ -56,7 +60,20 @@ class SmsNotificationController extends Controller
 
                 if ($request['car'] == 1) { // all car account partner
 
-                    $owners = Owner::select('id','phone','n_key')
+                    if (isset($request['car_type_id'])) { 
+                        $owners = Owner::select('owners.id','owners.phone','owners.n_key')
+                                ->leftjoin('cars','owners.id','cars.owner_id')
+                                ->where('account_status', $request['status'])                                                                  
+                                ->where(function ($query) {
+                                    $query->where('owners.account_type', '=', 0)
+                                          ->orWhere('owners.account_type', '=', 3)
+                                          ->orWhere('owners.account_type', '=', 4)
+                                          ->orWhere('owners.account_type', '=', 6);
+                                })
+                                ->where('cars.carType', $request['car_type_id'])
+                                ->get(); 
+                    } else {
+                        $owners = Owner::select('id','phone','n_key')
                                 ->where('account_status', $request['status'])                                                                  
                                 ->where(function ($query) {
                                     $query->where('account_type', '=', 0)
@@ -65,6 +82,7 @@ class SmsNotificationController extends Controller
                                           ->orWhere('account_type', '=', 6);
                                 })
                                 ->get();
+                    }
 
                 } else if ($request['car'] == 2) { // no car 
                     $owners = Owner::leftjoin('cars','owners.id','cars.owner_id')
@@ -146,6 +164,7 @@ class SmsNotificationController extends Controller
 
     //show sms notification send page
     public function pushNotification(){
-        return view('quicarbd.admin.sms-notification.push-notification');
+        $car_types = DB::table('car_types')->select('*')->get();
+        return view('quicarbd.admin.sms-notification.push-notification', compact('car_types'));
     }
 }
