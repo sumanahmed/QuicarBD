@@ -65,6 +65,7 @@ Route::get('/get-hotel-package-charge/{owner_id}', [CommonController::class, 'ge
 Route::get('/get-travel-package-charge/{owner_id}', [CommonController::class, 'getTravelPackageCharge'])->name('admin.get_travel_package_charge'); 
 Route::get('/sms/list', [CommonController::class, 'smsList'])->name('admin.sms_list'); 
 Route::post('/sms/store', [CommonController::class, 'smsStore'])->name('admin.sms_store'); 
+Route::post('/sms/destroy', [CommonController::class, 'smsDestroy'])->name('admin.sms_destroy'); 
 
 Route::get('/admin',[AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/signin',[AuthController::class, 'signin'])->name('admin.signin');
@@ -316,6 +317,8 @@ Route::group(['prefix'=>'/admin/sms-notification', 'middleware' => 'admin'], fun
     Route::post('/send', [SmsNotificationController::class, 'send'])->name('sms_notification.send');
     Route::get('/push-notification', [SmsNotificationController::class, 'pushNotification'])->name('sms_notification.push_notification');
     Route::post('/push-notification-send', [SmsNotificationController::class, 'pushNotificationSend'])->name('sms_notification.push_notification.send');
+    Route::get('/global-notification', [SmsNotificationController::class, 'globalNotification'])->name('sms_notification.global_notification');
+    Route::post('/global-notification-send', [SmsNotificationController::class, 'globalNotificationSend'])->name('sms_notification.global_notification.send');
 });
 
 

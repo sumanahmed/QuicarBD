@@ -118,6 +118,15 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
+                            <label for="sms" class="control-label mb-10">Select Message </label>
+                            <select class="form-control" name="sms" id="sms">
+                                <option value="0">Select</option>
+                                @foreach($sms as $tmp)
+                                    <option value="{{ $tmp->id }}">{{ $tmp->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="title" class="control-label mb-10">Title <span class="text-danger text-bold" title="Required Field">*</span></label>
                             <input type="text" name="title" id="title" class="form-control"placeholder="Enter Title" required>
                             <input type="hidden" name="n_key" id="n_key" />
@@ -127,7 +136,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message" class="control-label mb-10">Message <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <textarea class="form-control" name="message"  id="message" placeholder="Enter your message"></textarea>
+                            <textarea class="form-control sms_message" name="message" id="message" placeholder="Enter your message"></textarea>
                             <span class="errorMessage text-danger text-bold"></span>
                         </div>
                         <div class="form-row">
@@ -144,12 +153,13 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="userNotificationSend">Send</button>
+                    <button type="button" class="btn btn-xs btn-danger" id="smsDelete">Delete</button>
+                    <button type="button" class="btn btn-xs btn-success" id="smsDraftSave">Save as Draft</button>
+                    <button type="button" class="btn btn-xs btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-xs btn-primary" id="userNotificationSend">Send</button>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     
     <!-- Balance ADD Modal -->
@@ -183,7 +193,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 @endsection
 @section('scripts')
 	<script src="{{ asset('quicarbd/admin/js/user.js') }}"></script>

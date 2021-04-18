@@ -52,8 +52,9 @@ class PartnerController extends Controller
         }
         
         $districts = DB::table('district')->select('id','value as name')->orderBy('value','ASC')->get();
+        $sms   = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
         
-        return view('quicarbd.admin.partner.index', compact('partners','districts','total_partner'));
+        return view('quicarbd.admin.partner.index', compact('partners','districts','total_partner','sms'));
     }
 
     //show create page
@@ -331,8 +332,9 @@ class PartnerController extends Controller
         }
         
         $partners = $query->paginate(12);
+        $sms      = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
         
-        return view('quicarbd.admin.partner.verification', compact('partners'));
+        return view('quicarbd.admin.partner.verification', compact('partners','sms'));
     }
     
     //partner details

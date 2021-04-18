@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Lib\Helper;
 use App\Jobs\SendSmsNotification;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 use Validator;
 use App\Models\Owner;
 use App\Models\User;
@@ -166,5 +167,34 @@ class SmsNotificationController extends Controller
     public function pushNotification(){
         $car_types = DB::table('car_types')->select('*')->get();
         return view('quicarbd.admin.sms-notification.push-notification', compact('car_types'));
+    }
+    
+        //show sms notification send page
+    public function globalNotification(){ 
+        return view('quicarbd.admin.sms-notification.global-notification');
+    }
+
+    //send sms notification
+    public function globalNotificationSend(Request $request)
+    {  
+        $this->validate($request,[
+            'for'       => 'required',
+            'title'     => 'required',
+            'message'   => 'required'
+        ]);
+       
+        $title  = $request->title;
+        $body   = strip_tags($request->message);
+
+        if ($request['for'] == 1) { // 1 mean user
+            $client = new Client();
+            $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar");
+            
+        } else { // 2 mean partner
+            $client = new Client();
+            $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner");
+        }
+
+        return redirect()->back()->with('message','Send successfully');        
     }
 }

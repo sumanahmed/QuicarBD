@@ -11,6 +11,7 @@ use GuzzleHttp\Client;
 use App\Models\CarPackage;
 use App\Models\HotelPackage;
 use App\Models\TravelPackage;
+use App\Models\SMS;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -34,8 +35,9 @@ class UserController extends Controller
         }
         
         $users = $query->paginate(12);
+        $sms   = SMS::select('id','title','message')->orderBy('id','DESC')->get();
 
-        return view('quicarbd.admin.user.index', compact('users'));
+        return view('quicarbd.admin.user.index', compact('users','sms'));
     }
 
     //status update
@@ -150,8 +152,9 @@ class UserController extends Controller
         }
         
         $users = $query->paginate(12);
-
-        return view('quicarbd.admin.user.log-list', compact('users'));
+        $sms   = SMS::select('id','title','message')->orderBy('id','DESC')->get();
+        
+        return view('quicarbd.admin.user.log-list', compact('users','sms'));
     }
 
     //user log

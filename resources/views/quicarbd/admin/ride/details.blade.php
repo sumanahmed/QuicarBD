@@ -165,12 +165,14 @@
                                                     <input type="phone" id="phone" @if($ride->accepted_bitting_time != null) value="{{ date('Y-m-d H:i:s a', strtotime($ride->accepted_bitting_time)) }}" @endif class="form-control" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="phone" class="control-label mb-10">Car Registration Number</label>                                            
-                                                    <input type="phone" id="phone" @if($ride_detail != null) value="{{ $ride_detail->carRegisterNumber }}" @endif class="form-control" readonly>
+                                            @if($ride->status == 4)
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Car Registration Number</label>                                            
+                                                        <input type="phone" id="phone" @if($ride_detail != null) value="{{ $ride_detail->carRegisterNumber }}" @endif class="form-control" readonly>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                             @if($ride->rown_way == 1)
                                                 <div class="col-md-4">
                                                     <div class="form-group">

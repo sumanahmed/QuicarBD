@@ -23,6 +23,7 @@ class RideController extends Controller
     * show bid request
   */
   public function bidRequest(Request $request){
+    $current_date_time = Carbon::now()->toDateTimeString();
     $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
                 ->select('ride_list.id','ride_list.created_at',
@@ -33,6 +34,7 @@ class RideController extends Controller
                 )
                 ->where('ride_list.status', 1)
                 ->where('ride_list.payment_status', 0)
+                ->where('ride_list.start_time', '<=', $current_date_time)
                 ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 

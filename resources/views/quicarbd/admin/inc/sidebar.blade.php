@@ -78,6 +78,9 @@
                 <li>
                     <a href="{{ route('sms_notification.index') }}">SMS & Notification</a>
                 </li>
+                <li>
+                    <a href="{{ route('sms_notification.global_notification') }}">Global Notification</a>
+                </li>
             </ul>
         </li>
         <li>

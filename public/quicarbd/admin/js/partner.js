@@ -11,7 +11,7 @@ $("#ownerNotificationSend").click(function(){
     var n_key       = $('#n_key').val();
     var owner_id    = $('#owner_id').val();
     var title       = $('#title').val();
-    var message     = $('#message').val();
+    var message     = $('.sms_message').val();
     var notification= $('input[name=notification]:checked').val();
     var phone       = $('#phone').val();
     $.ajax({

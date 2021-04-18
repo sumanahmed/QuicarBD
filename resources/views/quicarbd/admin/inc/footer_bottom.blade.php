@@ -48,6 +48,63 @@
 	        toastr.success("{{ Session::get('message') }}")
 	    </script>
 	@endif
+	<script>
+	    $("#sms").change(function(){
+            var smsId = $("#sms option:selected").val();
+            if (smsId == 0) {
+                $("#title").val('');
+                $(".sms_message").val('');
+            } else {
+                $.get("/sms/list?id="+ smsId, function( data ) {
+                    $("#title").val(data[0].title);
+                    $(".sms_message").val(data[0].message);
+                });
+            }
+        });
+        
+        $("#smsDraftSave").click(function (e) {
+            e.preventDefault();
+            var smsId   = $("#sms option:selected").val();
+            var title   = $("#title").val();
+            var message = $(".sms_message").val();
+            $.ajax({
+                type:'POST',
+                url: '/sms/store',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                data: {
+                    id : smsId,
+                    title : title,
+                    message : message,
+                },
+                success:function(response){
+                    if (response.status == 201) {
+                        toastr.success('SMS Added.');
+                    } else {
+                        toastr.error('Already added');
+                    }
+                }
+            });
+        });
+        
+        $("#smsDelete").click(function (e) {
+            e.preventDefault();
+            var smsId   = $("#sms option:selected").val();
+            $.ajax({
+                type:'POST',
+                url: '/sms/destroy',
+                headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+                data: {
+                    id : smsId
+                },
+                success:function(response){
+                    $("#sms").val(0);
+                    $("#title").val('');
+                    $(".sms_message").val('');
+                    toastr.error('SMS Deleted');
+                }
+            });
+        });
+	</script>
 	@yield('scripts')
 </body>
 
