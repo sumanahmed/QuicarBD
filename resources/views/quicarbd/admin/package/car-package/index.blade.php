@@ -29,10 +29,45 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
+                    
+                    <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
+                        <form action="{{ route('car_package.index') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="name" class="control-label mb-10">Name</label>                                            
+                                        <input type="text" name="name" @if(isset($_GET['name'])) value="{{ $_GET['name'] }}" @endif placeholder="Name" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="price" class="control-label mb-10">Price</label>                                            
+                                        <input type="text" name="price" @if(isset($_GET['price'])) value="{{ $_GET['price'] }}" @endif placeholder="Price" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="district_id" class="control-label mb-10">District</label>                                            
+                                        <select name="district_id" class="form-control">
+                                            <option value="0">Select</option>
+                                            @foreach($districts as $district)
+                                                <option value="{{ $district->id }}" @if(isset($_GET['district_id']) && $district->id == $_GET['district_id']) selected @endif>{{ $district->name }} </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="panel-body">
                         <div class="table-wrap">
                             <div class="table-responsive">
-                                <table id="datable_1" class="table table-hover display pb-30" >
+                                <table  class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -78,6 +113,7 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                {{ $car_packages->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>

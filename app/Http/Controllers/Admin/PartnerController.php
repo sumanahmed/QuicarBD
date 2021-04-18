@@ -39,6 +39,10 @@ class PartnerController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
+        if ($request->nid) {
+            $query = $query->where('owners.nid', $request->nid);
+        }
+        
         if ($request->service_location_district) {
             $query = $query->where('owners.service_location_district', $request->service_location_district);
         }
@@ -317,6 +321,10 @@ class PartnerController extends Controller
         
         if ($request->phone) {
             $query = $query->where('phone', $request->phone);
+        }
+        
+        if ($request->nid) {
+            $query = $query->where('nid', $request->nid);
         }
         
         if ($request->account_status == 0) {

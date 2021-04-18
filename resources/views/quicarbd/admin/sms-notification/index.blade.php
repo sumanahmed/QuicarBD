@@ -108,6 +108,18 @@
                                     <span class="text-danger"> {{ $errors->first('car_type_id') }}</span>
                                 @endif
                             </div>
+                            <div class="form-group" id="serviceLocationDropdown" style="display: none;">
+                                <label for="service_location_district" class="control-label mb-10">Service Location </label>                                    
+                                <select id="service_location_district" name="service_location_district" class="form-control">
+                                    <option selected disabled>Select</option>
+                                    @foreach($districts as $district)
+                                        <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('car_type_id'))
+                                    <span class="text-danger"> {{ $errors->first('car_type_id') }}</span>
+                                @endif
+                            </div>
                             <div class="form-group">
                                 <label for="title" class="control-label mb-10">Title <span class="text-danger" title="Required">*</span></label>
                                 <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title" required>
@@ -171,8 +183,10 @@
             
             if (car == 1) {
                 $("#carTypeDropdown").show();
+                $("#serviceLocationDropdown").show();
             } else {
                 $("#carTypeDropdown").hide();
+                $("#serviceLocationDropdown").hide();
             }
         });
     </script>

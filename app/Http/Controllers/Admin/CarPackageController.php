@@ -19,15 +19,31 @@ class CarPackageController extends Controller
      * show car packages
      */
     public function index(Request $request){
-        $query = CarPackage::join('district','district.id','car_packages.district_id')
-                            ->select('car_packages.*','district.value as district_name');
-
-        if ($request->owner_id) {
-            $query = $query->where('owner_id', $request->owner_id);
+        $query = DB::table('car_packages')
+                    ->join('district','district.id','car_packages.district_id')
+                    ->select('car_packages.*','district.value as district_name')
+                    ->orderBy('car_packages.id','DESC');
+                    
+        if ($request->name) {
+            $query = $query->where('car_packages.name', 'like', "{$request->name}%");
         }
 
-        $car_packages = $query->get();
-        return view('quicarbd.admin.package.car-package.index', compact('car_packages'));
+        if ($request->owner_id) {
+            $query = $query->where('car_packages.owner_id', $request->owner_id);
+        }
+        
+        if ($request->district_id) {
+            $query = $query->where('car_packages.district_id', $request->district_id);
+        }
+        
+        if ($request->price) {
+            $query = $query->where('car_packages.price', $request->price);
+        }
+
+        $car_packages = $query->paginate(12);
+        $districts = DB::table('district')->select('id','value as name')->orderBy('value','ASC')->get();
+        
+        return view('quicarbd.admin.package.car-package.index', compact('car_packages','districts'));
     }
 
     /**
@@ -195,8 +211,8 @@ class CarPackageController extends Controller
             $helper = new Helper(); 
             $owner  = Owner::select('id','phone','name','n_key')->where('id', $request->owner_id)->first();
             $id     = $owner->n_key;
-            $title  = 'Package Approved';   
-            $msg    = 'Dear '.$owner->name.', your car package ('.$car_packge->name.') has been approved. You will get a booking request soon. Happy Travel Team Quicar';                                              
+            $title  = 'Package Approved';            
+            $msg    = 'Dear '.$owner->name.', your car package ('.$car_packge->name.') has been approved. You will get a booking request soon. Happy Travel Team Quicar';                        
 
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($owner->phone, $msg); // sms send

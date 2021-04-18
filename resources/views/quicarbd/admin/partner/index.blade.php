@@ -46,6 +46,12 @@
                                 </div> 
                                 <div class="col-md-2">
                                     <div class="form-group">
+                                        <label for="nid" class="control-label mb-10">NID</label>                                            
+                                        <input type="text" name="nid" @if(isset($_GET['nid'])) value="{{ $_GET['nid'] }}" @endif placeholder="NID" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
                                         <label for="service_location_district" class="control-label mb-10">Service Location</label>                                            
                                         <select name="service_location_district" class="form-control">
                                             <option value="0">Select</option>

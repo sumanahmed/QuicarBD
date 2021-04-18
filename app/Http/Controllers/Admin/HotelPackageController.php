@@ -11,6 +11,7 @@ use App\Models\City;
 use App\Models\HotelAmenity;
 use App\Models\Owner;
 use App\Models\PropertyType;
+use DB;
 
 class HotelPackageController extends Controller
 {
@@ -18,21 +19,35 @@ class HotelPackageController extends Controller
      * show hotel packages
      */
     public function index(Request $request){
-        $query = HotelPackage::join('district','district.id','hotel_packages.district_id')
+        $query = DB::table('hotel_packages')->join('district','district.id','hotel_packages.district_id')
                                         ->join('city','city.id','hotel_packages.city_id')
                                         ->join('owners','owners.id','hotel_packages.owner_id')
                                         ->select('district.value as district_name','city.name as city_name',
                                                 'hotel_packages.id','hotel_packages.price', 'hotel_packages.package_status',
                                                 'hotel_packages.hotel_name','hotel_packages.status',
                                                 'owners.name as owner_name', 'owners.phone as owner_phone'
-                                        );
-        if ($request->owner_id) {
-            $query = $query->where('owner_id', $request->owner_id);
+                                        )
+                                ->orderBy('hotel_packages.id','DESC');
+        if ($request->hotel_name) {
+            $query = $query->where('hotel_packages.hotel_name', 'like', "{$request->hotel_name}%");
         }
 
-        $hotel_packages = $query->get();
+        if ($request->owner_id) {
+            $query = $query->where('hotel_packages.owner_id', $request->owner_id);
+        }
         
-        return view('quicarbd.admin.package.hotel-package.index', compact('hotel_packages'));
+        if ($request->district_id) {
+            $query = $query->where('hotel_packages.district_id', $request->district_id);
+        }
+        
+        if ($request->price) {
+            $query = $query->where('hotel_packages.price', $request->price);
+        }
+
+        $hotel_packages = $query->paginate(12);
+        $districts = DB::table('district')->select('id','value as name')->orderBy('value','ASC')->get();
+        
+        return view('quicarbd.admin.package.hotel-package.index', compact('hotel_packages','districts'));
     }
 
     /**
@@ -256,8 +271,8 @@ class HotelPackageController extends Controller
     /**
      * delete hotel package
      */
-    public function destroy($id){
-        $hotel_package = HotelPackage::find($id);
+    public function destroy(Request $request){
+        $hotel_package = HotelPackage::find($request->id);
 
         if(($hotel_package->hotel_image != null) && file_exists($hotel_package->hotel_image)){
             unlink($hotel_package->hotel_image);
@@ -269,6 +284,6 @@ class HotelPackageController extends Controller
 
         $hotel_package->delete();
 
-        return redirect()->route('backend.hotel.package.index')->with('message','Hotel package deleted successfully');
+        return response()->json();
     }
 }

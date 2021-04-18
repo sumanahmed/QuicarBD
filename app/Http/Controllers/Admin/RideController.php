@@ -23,7 +23,7 @@ class RideController extends Controller
     * show bid request
   */
   public function bidRequest(Request $request){
-    $current_date_time = Carbon::now()->toDateTimeString();
+    $current_date_time = Carbon::now()->toDateTimeString(); 
     $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
                 ->select('ride_list.id','ride_list.created_at',
@@ -34,7 +34,7 @@ class RideController extends Controller
                 )
                 ->where('ride_list.status', 1)
                 ->where('ride_list.payment_status', 0)
-                ->where('ride_list.start_time', '<=', $current_date_time)
+                ->where('ride_list.ride_visiable_time', '>', $current_date_time)
                 ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 
@@ -152,10 +152,10 @@ class RideController extends Controller
                           'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
                           'users.name as user_name','users.phone as user_phone',
                           'owners.name as owner_name','owners.phone as owner_phone',
-                          'ride_biting.bit_amount','ride_biting.owner_id', 'ride_biting.driver_id',
-                          'bit_cancel_list.name as reason'
+                          'ride_biting.owner_id','bit_cancel_list.name as reason'
                   )
                 ->where('ride_list.status', 2)
+                ->distinct('ride_biting.owner_id')
                 ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 
