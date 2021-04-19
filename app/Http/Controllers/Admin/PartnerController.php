@@ -50,7 +50,7 @@ class PartnerController extends Controller
         $partners = $query->paginate(12);
         
         if ($request->service_location_district) {
-            $total_partner = count($partners);
+            $total_partner = DB::table('owners')->where('service_location_district',$request->service_location_district)->count('id');
         } else {
             $total_partner = 0;
         }
