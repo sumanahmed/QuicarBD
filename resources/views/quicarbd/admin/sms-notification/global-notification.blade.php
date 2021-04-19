@@ -31,6 +31,15 @@
                         <form action="{{ route('sms_notification.global_notification.send') }}" class="col-md-6" method="POST">
                             @csrf
                             <div class="form-group">
+                                <label for="sms" class="control-label mb-10">Select Message </label>
+                                <select class="form-control" name="sms" id="sms">
+                                    <option value="0">Select</option>
+                                    @foreach($sms as $tmp)
+                                        <option value="{{ $tmp->id }}">{{ $tmp->title }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="for" class="control-label mb-10">For <span class="text-danger" title="Required">*</span></label>                                 
                                 <select id="for" name="for" class="form-control">
                                     <option value="1">User</option>
@@ -46,12 +55,14 @@
                             </div>                            
                             <div class="form-group">
                                 <label for="message" class="control-label mb-10">Message <span class="text-danger" title="Required">*</span></label>
-                                <textarea class="form-control summernote" name="message" rows="6" id="message" placeholder="Enter your message"  required></textarea>
+                                <textarea class="form-control sms_message" name="message" rows="6" id="message" placeholder="Enter your message"  required></textarea>
                                 <span class="errorMessage text-danger text-bold"></span>
                             </div>     
                             <div class="form-row">
-                                <button type="submit" class="btn btn-success tx-13">Send</button>
-                                <button type="reset" class="btn btn-danger tx-13">Cancel</button>
+                                <button type="button" class="btn btn-xs btn-danger" id="smsDelete">Delete</button>
+                                <button type="button" class="btn btn-xs btn-warning" id="smsDraftSave">Save as Draft</button>
+                                <button type="submit" class="btn btn-xs btn-success tx-13">Send</button>
+                                <button type="reset" class="btn btn-xs btn-danger tx-13">Cancel</button>
                             </div>
                         </form>
                     </div>

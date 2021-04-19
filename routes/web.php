@@ -284,6 +284,7 @@ Route::group(['prefix'=>'/admin/notice', 'middleware' => 'admin'], function(){
 });
 
 Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
+    Route::get('/bid-expired-ride', [RideController::class, 'bidExpiredRide'])->name('ride.bid_expired_ride');
     Route::get('/bid-request', [RideController::class, 'bidRequest'])->name('ride.bid_request');
     Route::get('/upcoming', [RideController::class, 'upcoming'])->name('ride.upcoming');
     Route::get('/complete', [RideController::class, 'complete'])->name('ride.complete');
@@ -291,6 +292,7 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::get('/bidding/{id}', [RideController::class, 'bidding'])->name('ride.bidding');
     Route::get('/details/{ride_id}', [RideController::class, 'details'])->name('ride.details');
     Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');    
+    Route::post('/update-visible-time', [RideController::class, 'updateVisibleTime'])->name('ride.update_visible_time');    
 });
 
 Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], function(){

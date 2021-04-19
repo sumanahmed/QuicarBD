@@ -43,7 +43,7 @@
                                         @csrf
                                         <div class="form-body">     
                                             <div class="row">
-                                                <div class="col-md-4">                                        
+                                                <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="title" class="control-label mb-10"> Title <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="title" name="title" placeholder="Title" value="{{ $user_banner->title }}" class="form-control" required>
@@ -52,7 +52,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">                                        
+                                                <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="status" class="control-label mb-10">Status <span class="text-danger" title="Required">*</span></label>
                                                         <select name="status" id="status" class="form-control selectable">
@@ -64,7 +64,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">                                        
+                                                <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="clickable" class="control-label mb-10">Clickable <span class="text-danger" title="Required">*</span></label>
                                                         <select name="clickable" id="clickable" class="form-control selectable">
@@ -75,8 +75,17 @@
                                                             <span class="text-danger"> {{ $errors->first('clickable') }}</span>
                                                         @endif
                                                     </div>
-                                                </div>
-                                            </div>                                
+                                                </div>    
+                                                <div class="col-md-3">                                        
+                                                    <div class="form-group">
+                                                        <label for="serial" class="control-label mb-10">Serial <span class="text-danger" title="Required">*</span></label>
+                                                        <input type text="" name="serial" value="{{ $user_banner->serial }}"  class="form-control" required>
+                                                        @if($errors->has('serial'))
+                                                            <span class="text-danger"> {{ $errors->first('serial') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div> 
+                                            </div>                           
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">

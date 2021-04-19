@@ -14,7 +14,7 @@
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Car Rent</a></li>
-            <li class="active"><span>Bid Request</span></li>
+            <li class="active"><span>Expired Request</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -26,7 +26,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">All Bid Request</h6>
+                        <h6 class="panel-title txt-dark">All Expired Request</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -118,8 +118,7 @@
                                                     <td>{{ $ride->ride_visiable_time != null ? $ride_visiable_time : '' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
-                                                        <a href="#" id="changeVisibleTime" data-toggle="modal" data-ride_id="{{ $ride->id }}" data-ride_visiable_time="{{ $ride_visiable_time }}" class="btn btn-xs btn-primary" title="Change Visible Time"><i class="fa fa-clock-o"></i></a>
-                                                        <a href="#" id="cancelModal" data-toggle="modal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
+                                                        <!--<a href="#" id="cancelModal" data-toggle="modal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>-->
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -136,34 +135,6 @@
                     </div>
                 </div>
             </div>	
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="changeVisibleTimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="reason" class="control-label mb-10">Visible Time <span class="text-danger text-bold" title="Required Field">*</span></label>
-                        <input type="text" id="ride_visiable_time" class="form-control" readonly/>
-                        <input type="hidden" id="ride_id" />
-                    </div>
-                    <div class="form-group">
-                        <label for="reason" class="control-label mb-10">New Visible Time <span class="text-danger text-bold" title="Required Field">*</span></label>
-                        <input type="datetime-local" id="new_visiable_time" class="form-control"/>
-                        <span class="text-danger errorNewVisibleTime"></span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="updateRideVisibleTime">Update</button>
-            </div>
         </div>
     </div>
 </div>

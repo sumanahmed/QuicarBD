@@ -1,8 +1,7 @@
 $(document).on('click', '#replyMessage', function () {
-    console.log('message = ', $(this).data('message'))
     $('#replyMessageModal').modal('show');
     $('#id').val($(this).data('id'));
-    $('#message').val($(this).data('message'));
+    $('.send_message').val($(this).data('message'));
     $('#sender_id').val($(this).data('sender_id'));
     $('#type').val($(this).data('type'));
  });

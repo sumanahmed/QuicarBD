@@ -41,6 +41,7 @@
                                             <th>Out of App</th>                                   
                                             <th>Where Go</th>                                   
                                             <th>Image</th>                                   
+                                            <th>Serial</th>                                   
                                         <th style="vertical-align: middle;text-align: center;">Action</th>
                                     </tr>
                                     </thead>
@@ -52,25 +53,14 @@
                                                     <td>{{ $user_banner->status == 1 ? 'Enable' : 'Disable' }}</td>
                                                     <td>{{ $user_banner->clickable == 1 ? 'True' : 'False' }}</td>
                                                     <td>{{ $user_banner->out_of_app == 1 ? 'True' : 'False' }}</td>
-                                                    <td>
-                                                        @if($user_banner->where_go == 1)
-                                                            Detail Page
-                                                        @elseif($user_banner->where_go == 2)
-                                                            Car Package Home Page
-                                                        @elseif($user_banner->where_go == 3)
-                                                            Hotel Package Home Page
-                                                        @elseif($user_banner->where_go == 4)
-                                                            Travel Package Home Page
-                                                        @elseif($user_banner->where_go == 5)
-                                                            Car Rental Page
-                                                        @elseif($user_banner->where_go == 6)
-                                                            Specific Item
-                                                        @endif
-                                                    </td>
+                                                    <td>{{ getWhereGo($user_banner->where_go) }}</td>
                                                     <td>
                                                         <img src="http://quicarbd.com/{{ $user_banner->image_url }}" style="width:80px;height:60px;" />
                                                     </td>
+                                                    <td>{{ $user_banner->serial }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
+                                                        <a href="{{ route('user_banner.up',$user_banner->id) }}" class="btn btn-xs btn-info" title="Up"><i class="fa fa-angle-up"></i></a>
+                                                        <a href="{{ route('user_banner.down',$user_banner->id) }}" class="btn btn-xs btn-success" title="Down"><i class="fa fa-angle-down"></i></a>
                                                         <a href="{{ route('user_banner.edit', $user_banner->id) }}" class="btn btn-xs btn-warning" id="editClass" data-id="{{ $user_banner->id }}" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteUserBanner" data-target="#deleteUserBannerModal" data-id="{{ $user_banner->id }}" title="Delete"><i class="fa fa-remove"></i></a>
                                                     </td>
@@ -105,6 +95,23 @@
         </div>
     </div>
 </div>
+@php 
+    function getWhereGo($where_go) {
+        if ($where_go == 1) {
+            echo "Detail Page";
+        } elseif ($where_go == 2) {
+            echo "Car Package Home Page";
+        } elseif ($where_go == 3) {
+            echo "Hotel Package Home Page";
+        } elseif ($where_go == 4) {
+            echo "Travel Package Home Page";
+        } elseif ($where_go == 5) {
+            echo "Car Rental Page";
+        } elseif ($where_go == 6) {
+            echo "Specific Item";
+        }
+    }
+@endphp
 @endsection
 @section('scripts')
 	<script src="{{ asset('quicarbd/admin/js/user-banner.js') }}"></script>

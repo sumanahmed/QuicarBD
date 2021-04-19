@@ -22,6 +22,41 @@ class RideController extends Controller
   /**
     * show bid request
   */
+  public function bidExpiredRide(Request $request){
+    $current_date_time = Carbon::now()->toDateTimeString(); 
+    $query = DB::table('ride_list')
+                ->join('users','ride_list.user_id','users.id')
+                ->select('ride_list.id','ride_list.created_at',
+                        'ride_list.starting_district','ride_list.starting_city','ride_list.startig_area', 
+                        'ride_list.destination_district','ride_list.destination_city','ride_list.destination_area',
+                        'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
+                        'ride_list.ride_visiable_time','users.name as user_name','users.phone as user_phone'
+                )
+                ->where('ride_list.status', 1)
+                ->where('ride_list.payment_status', 0)
+                ->where('ride_list.ride_visiable_time', '<', $current_date_time)
+                ->orderBy('ride_list.id','DESC');
+                
+    if ($request->phone) { 
+      $query = $query->where('users.phone', $request->phone);
+    }  
+    
+    if ($request->booking_date) {
+      $query = $query->whereDate('ride_list.created_at', date('Y-m-d', strtotime($request->booking_date)));
+    }
+    
+    if ($request->travel_date) {
+      $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
+    }
+                
+    $rides = $query->paginate(12);
+    
+    $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();
+    return view('quicarbd.admin.ride.expired_ride', compact('rides','reasons'));
+  }  /**
+    * show bid request
+  */
+  
   public function bidRequest(Request $request){
     $current_date_time = Carbon::now()->toDateTimeString(); 
     $query = DB::table('ride_list')
@@ -57,6 +92,7 @@ class RideController extends Controller
   /**
     * show upcoming bid rides
   */
+  
   public function upcoming(Request $request){
     $current_date_time = Carbon::now()->toDateTimeString(); 
     $query = DB::table('ride_list')
@@ -98,7 +134,6 @@ class RideController extends Controller
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();  
     return view('quicarbd.admin.ride.upcoming', compact('rides','reasons'));
   }
-
 
   /**
     * show complete rides
@@ -155,7 +190,7 @@ class RideController extends Controller
                           'ride_biting.owner_id','bit_cancel_list.name as reason'
                   )
                 ->where('ride_list.status', 2)
-                ->distinct('ride_biting.owner_id')
+                ->distinct('ride_biting.ride_id')
                 ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 
@@ -298,6 +333,34 @@ class RideController extends Controller
     }
     
     DB::commit();
+    return response()->json();
+    
+  }
+  
+  /**
+   * update bid request ride visible time
+   */
+  public function updateVisibleTime (Request $request) {
+      
+    $validators = Validator::make($request->all(),[
+        'ride_id' => 'required',
+        'ride_visiable_time'  => 'required'
+    ]);
+    
+    if($validators->fails()){
+        return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+    }
+    
+    try {
+        
+        $ride = RideList::find($request->ride_id);
+        $ride->ride_visiable_time = $request->ride_visiable_time;
+        $ride->update();
+        
+    } catch (Exception $ex) {
+        $ex->getMessage();
+    }
+    
     return response()->json();
     
   }

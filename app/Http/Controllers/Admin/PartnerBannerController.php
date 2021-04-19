@@ -12,7 +12,7 @@ class PartnerBannerController extends Controller
 {
     //show use banner
     public function index(){
-        $partner_banners = HomeBannerOwner::orderBy('id','DESC')->get();
+        $partner_banners = HomeBannerOwner::orderBy('serial','ASC')->get();
         return view('quicarbd.admin.banner.partner-banner', compact('partner_banners'));
     }    
     
@@ -26,7 +26,8 @@ class PartnerBannerController extends Controller
         $this->validate($request,[
             'title'     => 'required',
             'details'   => 'required',
-            'image_url' => 'required'
+            'image_url' => 'required',
+            'serial'    => 'required|unique:home_banner_owner,serial',
         ]);
     
         $partner_banner            = new HomeBannerOwner();
@@ -59,6 +60,7 @@ class PartnerBannerController extends Controller
         $this->validate($request,[
             'title'     => 'required',
             'details'   => 'required',
+            'serial'    => 'required|unique:home_banner_owner,serial,'.$id,
         ]);
         
         $partner_banner             = HomeBannerOwner::find($request->id);
@@ -91,5 +93,43 @@ class PartnerBannerController extends Controller
         }
         $partner_banner->delete();
         return response()->json();
+    }
+    
+    //up
+    public function up($id){ 
+        $current_banner = HomeBannerOwner::find($id);
+        $up_banner = HomeBannerOwner::where('serial', '<', $current_banner->serial)->first();
+        if ($up_banner != null) {
+            $tmpUpBannerSerial = $up_banner->serial;
+            $up_banner->serial = $current_banner->serial;
+            $up_banner->update();
+            
+            $current_banner->serial = $tmpUpBannerSerial;
+            $current_banner->update();
+            
+            return redirect()->route('partner_banner.index')->with('message','Banner updated successfully');
+        }
+        
+        return redirect()->back()->with('error_message','Something went wrong');
+        
+    }
+     
+    //down
+    public function down($id){ 
+        $current_banner = HomeBannerOwner::find($id);
+        $up_banner = HomeBannerOwner::where('serial', '>', $current_banner->serial)->orderBy('serial','ASC')->first();
+        if ($up_banner != null) {
+            $tmpUpBannerSerial = $up_banner->serial;
+            $up_banner->serial = $current_banner->serial;
+            $up_banner->update();
+            
+            $current_banner->serial = $tmpUpBannerSerial;
+            $current_banner->update();
+            
+            return redirect()->route('partner_banner.index')->with('message','Banner updated successfully');
+        }
+        
+        return redirect()->back()->with('error_message','Something went wrong');
+        
     }
 }

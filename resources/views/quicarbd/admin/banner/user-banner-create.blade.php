@@ -43,7 +43,7 @@
                                         @csrf
                                         <div class="form-body">     
                                             <div class="row">
-                                                <div class="col-md-4">                                        
+                                                <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="title" class="control-label mb-10"> Title <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="title" name="title" placeholder="Title" class="form-control" required>
@@ -52,7 +52,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">                                        
+                                                <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="status" class="control-label mb-10">Status <span class="text-danger" title="Required">*</span></label>
                                                         <select name="status" id="status" class="form-control selectable">
@@ -64,7 +64,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">                                        
+                                                <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="clickable" class="control-label mb-10">Clickable <span class="text-danger" title="Required">*</span></label>
                                                         <select name="clickable" id="clickable" class="form-control selectable">
@@ -73,6 +73,15 @@
                                                         </select>
                                                         @if($errors->has('clickable'))
                                                             <span class="text-danger"> {{ $errors->first('clickable') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">                                        
+                                                    <div class="form-group">
+                                                        <label for="serial" class="control-label mb-10">Serial <span class="text-danger" title="Required">*</span></label>
+                                                        <input type text="" name="serial"  class="form-control" required>
+                                                        @if($errors->has('serial'))
+                                                            <span class="text-danger"> {{ $errors->first('serial') }}</span>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -178,7 +187,21 @@
                 </div>
             </div>	
         </div>
-    </div>    
+    </div>
+    
+    <!-- Delete Class Modal -->
+    <div id="deleteDriverModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h5 class="modal-title mb-10" id="exampleModalLabel">Are you sure to delete ?</h5>
+                    <input type="hidden" name="del_id"/>
+                    <button type="button" class="btn btn-xs btn-danger btn-raised mr-2" id="destroyDriver"><i class="fas fa-trash-alt"></i> Proceed</button>
+                    <button type="button" class="btn btn-xs btn-warning btn-raised" data-dismiss="modal" aria-label="Close"><i class="fas fa-backspace"></i> Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @section('scripts')

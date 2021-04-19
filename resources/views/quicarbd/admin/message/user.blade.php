@@ -59,7 +59,7 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Phone</th>
-                                            <th>Message</th>
+                                            <th>Date & Time</th>
                                             <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -68,17 +68,21 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Phone</th>
-                                            <th>Message</th>
+                                            <th>Date & Time</th>
                                             <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="partnerData">
                                         @foreach($users as $user)
+                                            @php 
+                                                $date_time = DateTime::createFromFormat('Y-m-d H:i:s', $user->created_at, new DateTimeZone("UTC"));
+                                                $msg_time = $date_time->format('j M, Y h:i A');
+                                            @endphp
                                             <tr class="message-{{ $user->id }}">
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->phone }}</td>
-                                                <td>{{ $user->message }}</td>
+                                                <td>{{ $msg_time }}</td>
                                                 <td>{{ $user->status == 0 ? 'Unread' : 'Read' }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">
                                                     <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyMessage" data-id="{{ $user->id }}" data-message="{{ $user->message }}" data-sender_id="{{ $user->sender_id }}" data-type="2" title="Reply"><i class="fa fa-reply"></i></a>
@@ -108,14 +112,17 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        
                         <input type="hidden" id="id" />
                         <input type="hidden" id="sender_id" />
                         <input type="hidden" id="type" />
-                            
+                        <div class="form-group">
+                            <label for="message" class="control-label mb-10">Message <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <textarea class="form-control send_message" name="send_message" id="send_message" placeholder="Enter your reply" readonly></textarea>
+                            <span class="errorReply text-danger text-bold"></span>
+                        </div>
                         <div class="form-group">
                             <label for="message" class="control-label mb-10">Reply <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <textarea class="form-control" name="message" id="reply" placeholder="Enter your reply"></textarea>
+                            <textarea class="form-control" name="reply" id="reply" placeholder="Enter your reply"></textarea>
                             <span class="errorReply text-danger text-bold"></span>
                         </div>
                     </form>

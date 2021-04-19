@@ -207,6 +207,17 @@ class DriverController extends Controller
             $driver->license_back_pic= $license_back_url;
         }
         if($driver->update()){
+            
+            if ($request->c_status == 1) {
+                $partner = Owner::find($driver->owner_id);
+                $helper = new Helper(); 
+                $id     = $partner->n_key;
+                $title  = $request->c_status == 1 ? 'Driver Approved' : 'Driver Pending';            
+                $msg    = 'Dear '.$partner->name.', your driver ('.$driver->name.') '.$title.' successfully. Thanks Team Quicar';                        
+                $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
+                $helper->smsSend($request->phone, $msg); // sms send
+            }
+            
             return redirect()->route('driver.index')->with('message','Driver update successfully');
         }else{
             return redirect()->route('driver.index')->with('error_message','Sorry, something went wrong');
@@ -242,7 +253,7 @@ class DriverController extends Controller
      * status update
      */
     public function statusUpdate (Request $request) 
-    {        
+    {       
         try {
 
             $driver = Driver::find($request->id);
@@ -250,8 +261,8 @@ class DriverController extends Controller
 
             $helper = new Helper(); 
             $id     = $partner->n_key;
-            $title  = $request->staus == 1 ? 'Approved' : 'Pending';            
-            $msg    = 'Dear '.$partner->name.', your driver ('.$driver->name.') '.$title.' successfully. Thanks for connecting with Quicar';                        
+            $title  = $request->staus == 1 ? 'Driver Approved' : 'Driver Pending';            
+            $msg    = 'Dear '.$partner->name.', your driver ('.$driver->name.') '.$title.' successfully. Thanks Team Quicar';                        
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($request->phone, $msg); // sms send
 
