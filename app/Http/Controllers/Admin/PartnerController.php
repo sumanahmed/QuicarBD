@@ -221,6 +221,7 @@ class PartnerController extends Controller
         $data['total_car_package']      = CarPackage::where('owner_id', $id)->count('id');
         $data['total_hotel_package']    = HotelPackage::where('owner_id', $id)->count('id');
         $data['total_travel_package']   = TravelPackage::where('owner_id', $id)->count('id');
+        $data['accounts']   = DB::table('owner_account')->where('owner_id', $id)->orderBy('id','DESC')->get();
         return view('quicarbd.admin.partner.details', $data);
     }
 

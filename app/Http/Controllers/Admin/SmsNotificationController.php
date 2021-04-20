@@ -148,7 +148,7 @@ class SmsNotificationController extends Controller
                 }
             }
         }
-dd('yess');
+
         $details = [
     		'for'           => $request->for,
             'title'         => $request->title,

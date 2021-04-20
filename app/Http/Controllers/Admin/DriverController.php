@@ -212,8 +212,17 @@ class DriverController extends Controller
                 $partner = Owner::find($driver->owner_id);
                 $helper = new Helper(); 
                 $id     = $partner->n_key;
-                $title  = $request->c_status == 1 ? 'Driver Approved' : 'Driver Pending';            
-                $msg    = 'Dear '.$partner->name.', your driver ('.$driver->name.') '.$title.' successfully. Thanks Team Quicar';                        
+                if ($request->c_status == 1) {
+                    $title  = 'Driver Approved';            
+                    $msg    = 'Dear '.$partner->name.', your driver ('.$driver->name.') '.' Approved successfully.Call for help 01611822829. Thanks Team Quicar'; 
+                } elseif ($request->c_status == 0) {
+                    $title  = 'Driver Pending';            
+                    $msg    = 'Dear '.$partner->name.', sorry your driver ('.$driver->name.') '.' Pending. Call for help 01611822829. Thanks Team Quicar'; 
+                } elseif ($request->c_status == 2) { 
+                    $title  = 'Driver Cancelled';            
+                    $msg    = 'Dear '.$partner->name.', sorry your driver ('.$driver->name.') '.' Cancelled. Call for help 01611822829. Thanks Team Quicar'; 
+                }       
+                                       
                 $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
                 $helper->smsSend($request->phone, $msg); // sms send
             }
@@ -253,7 +262,7 @@ class DriverController extends Controller
      * status update
      */
     public function statusUpdate (Request $request) 
-    {       
+    {      
         try {
 
             $driver = Driver::find($request->id);
@@ -261,8 +270,16 @@ class DriverController extends Controller
 
             $helper = new Helper(); 
             $id     = $partner->n_key;
-            $title  = $request->staus == 1 ? 'Driver Approved' : 'Driver Pending';            
-            $msg    = 'Dear '.$partner->name.', your driver ('.$driver->name.') '.$title.' successfully. Thanks Team Quicar';                        
+            if ($request->c_status == 1) {
+                $title  = 'Driver Approved';            
+                $msg    = 'Dear '.$partner->name.', your driver ('.$driver->name.') '.' Approved successfully.Call for help 01611822829. Thanks Team Quicar'; 
+            } elseif ($request->c_status == 0) {
+                $title  = 'Driver Pending';            
+                $msg    = 'Dear '.$partner->name.', sorry your driver ('.$driver->name.') '.' Pending. Call for help 01611822829. Thanks Team Quicar'; 
+            } elseif ($request->c_status == 2) { 
+                $title  = 'Driver Cancelled';            
+                $msg    = 'Dear '.$partner->name.', sorry your driver ('.$driver->name.') '.' Cancelled. Call for help 01611822829. Thanks Team Quicar'; 
+            }                        
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($request->phone, $msg); // sms send
 

@@ -209,6 +209,8 @@ Route::group(['prefix'=>'/admin/user-banner', 'middleware' => 'admin'], function
     Route::get('/edit/{id}', [UserBannerController::class, 'edit'])->name('user_banner.edit');
     Route::post('/update/{id}', [UserBannerController::class, 'update'])->name('user_banner.update');
     Route::post('/destroy', [UserBannerController::class, 'destroy'])->name('user_banner.destroy');
+    Route::get('/up/{id}', [UserBannerController::class, 'up'])->name('user_banner.up');
+    Route::get('/down/{id}', [UserBannerController::class, 'down'])->name('user_banner.down');
 });
 
 Route::group(['prefix'=>'/admin/partner-banner', 'middleware' => 'admin'], function(){
@@ -218,6 +220,8 @@ Route::group(['prefix'=>'/admin/partner-banner', 'middleware' => 'admin'], funct
     Route::get('/edit/{id}', [PartnerBannerController::class, 'edit'])->name('partner_banner.edit');
     Route::post('/update/{id}', [PartnerBannerController::class, 'update'])->name('partner_banner.update');
     Route::post('/destroy', [PartnerBannerController::class, 'destroy'])->name('partner_banner.destroy');
+    Route::get('/up/{id}', [PartnerBannerController::class, 'up'])->name('partner_banner.up');
+    Route::get('/down/{id}', [PartnerBannerController::class, 'down'])->name('partner_banner.down');
 });
 
 Route::group(['prefix'=>'/admin/car-package', 'middleware' => 'admin'], function(){
@@ -293,6 +297,7 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::get('/details/{ride_id}', [RideController::class, 'details'])->name('ride.details');
     Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');    
     Route::post('/update-visible-time', [RideController::class, 'updateVisibleTime'])->name('ride.update_visible_time');    
+    Route::post('/notification/send', [RideController::class, 'notificationSend'])->name('ride.notification_send');    
 });
 
 Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], function(){

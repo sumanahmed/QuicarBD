@@ -128,6 +128,7 @@ class UserController extends Controller
         $data['total_car_pacakage_booking'] = DB::table('car_package_order')->where('user_id', $id)->count('id');
         $data['total_hotel_pacakage_booking'] = DB::table('hotel_package_order')->where('user_id', $id)->count('id');
         $data['total_travel_pacakage_booking'] = DB::table('travel_packages_order')->where('user_id', $id)->count('id');
+        $data['accounts'] = DB::table('user_account')->where('user_id', $id)->orderBy('id','DESC')->get();
         return view('quicarbd.admin.user.details', $data);
     }
     

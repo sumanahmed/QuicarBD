@@ -11,8 +11,14 @@ use Response;
 class DistrictController extends Controller
 {
     //show district
-    public function index(){
-        $districts = District::all();
+    public function index(Request $request){
+        $query = District::orderBy('id','DESC');
+        
+        if ($request->value) {
+            $query = $query->where('value', 'like', "{$request->value}%")
+                           ->orWhere('bn_name', 'like', "{$request->value}%");
+        }  
+        $districts = $query->paginate(12);
         return view('quicarbd.admin.setting.district.index', compact('districts'));
     }
 

@@ -12,10 +12,20 @@ use Response;
 class CityController extends Controller
 {
      //show city
-     public function index(){
-        $citys      = City::join('district','district.id','city.district_id')
-                            ->select('city.*','district.value as district_name')
-                            ->get();
+     public function index(Request $request){
+        $query  = City::join('district','district.id','city.district_id')
+                            ->select('city.*','district.value as district_name');
+        
+        if ($request->name) {
+            $query = $query->where('city.name', 'like', "{$request->name}%")
+                           ->orWhere('city.bn_name', 'like', "{$request->name}%");
+        }         
+        
+        if ($request->district_id) {
+            $query = $query->where('city.district_id', $request->district_id);
+        } 
+        
+        $citys = $query->paginate(12);
 
         $districts  = District::orderBy('value','ASC')->get();
         return view('quicarbd.admin.setting.city.index', compact('citys','districts'));

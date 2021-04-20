@@ -97,7 +97,7 @@ class RideController extends Controller
     $current_date_time = Carbon::now()->toDateTimeString(); 
     $query = DB::table('ride_list')
             ->join('users','ride_list.user_id','users.id')
-            ->join('ride_biting','ride_list.id','ride_biting.ride_id')
+            ->join('ride_biting','ride_list.accepted_ride_bitting_id','ride_biting.id')
             ->leftjoin('cars','ride_biting.car_id','cars.id')
             ->leftjoin('car_types','ride_list.car_type','car_types.id')
             ->leftjoin('owners','ride_biting.owner_id','owners.id')
@@ -114,7 +114,6 @@ class RideController extends Controller
             ->where('ride_biting.status', 1) // 1 mean bit accept
             ->where('ride_list.accepted_ride_bitting_id', '!=', null)
             ->where('ride_list.start_time', '>', $current_date_time)
-            //->whereDate('ride_list.start_time', '>', date('Y-m-d'))
             ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 
@@ -142,7 +141,7 @@ class RideController extends Controller
     $current_date_time = Carbon::now()->toDateTimeString();
     $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
-                ->join('ride_biting','ride_list.id','ride_biting.ride_id')
+                ->join('ride_biting','ride_list.accepted_ride_bitting_id','ride_biting.id')
                 ->leftjoin('owners','ride_biting.owner_id','owners.id')
                 ->leftjoin('drivers','ride_biting.driver_id','drivers.id')
                 ->select('ride_list.id','ride_list.created_at', 'ride_list.review_give'                   ,
@@ -174,23 +173,20 @@ class RideController extends Controller
     return view('quicarbd.admin.ride.complete', compact('rides'));
   }
 
+
   /**
     * show cancel rides
   */
   public function cancel(Request $request){
     $query = DB::table('ride_list')
                   ->join('users','ride_list.user_id','users.id')
-                  ->leftjoin('ride_biting','ride_list.id','ride_biting.ride_id')
-                  ->leftjoin('owners','ride_biting.owner_id','owners.id')
                   ->leftjoin('bit_cancel_list','ride_list.cancellation_id','bit_cancel_list.id')
                   ->select('ride_list.id','ride_list.created_at', 'ride_list.cancel_by',
                           'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
-                          'users.name as user_name','users.phone as user_phone',
-                          'owners.name as owner_name','owners.phone as owner_phone',
-                          'ride_biting.owner_id','bit_cancel_list.name as reason'
+                          'users.name as user_name','users.phone as user_phone','bit_cancel_list.name as reason',
+                          'ride_list.cancellation_id'
                   )
                 ->where('ride_list.status', 2)
-                ->distinct('ride_biting.ride_id')
                 ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 
@@ -271,18 +267,6 @@ class RideController extends Controller
     
         if ($ride->status == 4 && $ride->payment_status == 1) {
 
-        //   $bittings = RideBiting::where('ride_id', $request->ride_id)
-        //                         ->where('id', '!=', $ride->accepted_ride_bitting_id)
-        //                         ->get();
-
-        //   foreach ($bittings as $bitting) {
-
-        //     $tmpBitting = RideBiting::find($bitting->id);
-        //     $tmpBitting->status = 0;
-        //     $tmpBitting->update();
-
-        //   }
-
           $user_account = UserAccount::where('tnx_id', $ride->tnx_id)->first();
           
           if ($user_account != null) {
@@ -308,7 +292,10 @@ class RideController extends Controller
           }
         }
 
-        $ride->status = 2;
+        $ride->status           = 2;
+        $ride->cancel_by        = 2; // 2 mean admin
+        $ride->cancel_reason    = $request->reason; 
+        $ride->cancellation_time= date('Y-m-d H:i:s'); 
         $ride->update();
         
         $title  = 'Ride Cancel';

@@ -29,10 +29,27 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
+                    <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
+                        <form action="{{ route('setting.district.index') }}" method="get">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10">Name</label>                                            
+                                        <input type="text" name="value" @if(isset($_GET['value'])) value="{{ $_GET['value'] }}" @endif placeholder="Enter Name.." class="form-control" />
+                                    </div>
+                                </div>  
+                                <div class="col-md-2">
+                                    <div class="form-group" style="margin-top:30px;">
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="panel-body">
                         <div class="table-wrap">
                             <div class="table-responsive">
-                                <table id="datable_1" class="table table-hover display pb-30" >
+                                <table class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>                                  
                                             <th>Name</th>                                   

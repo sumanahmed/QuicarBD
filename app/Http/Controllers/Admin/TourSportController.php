@@ -12,10 +12,20 @@ use Response;
 class TourSportController extends Controller
 {
     //show tour spot
-    public function index(){
-        $spots      = TourSpot::join('district','district.id','tour_spot.district_id')
-                        ->select('tour_spot.*','district.value as district_name')
-                        ->get(); 
+    public function index(Request $request){
+        $query  = TourSpot::join('district','district.id','tour_spot.district_id')
+                        ->select('tour_spot.*','district.value as district_name'); 
+                        
+        if ($request->name) {
+            $query = $query->where('tour_spot.name', 'like', "{$request->name}%")
+                           ->orWhere('tour_spot.bn_name', 'like', "{$request->name}%");
+        }         
+        
+        if ($request->district_id) {
+            $query = $query->where('tour_spot.district_id', $request->district_id);
+        } 
+        
+        $spots = $query->paginate(12);
 
         $districts  = District::orderBy('value','ASC')->get();
         return view('quicarbd.admin.setting.tour-spot.index', compact('spots','districts'));

@@ -231,6 +231,63 @@
                     </div>
                 </div>
             </div>	
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>User Account History</h6> 
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table id="datable_1" class="table table-hover display pb-30" >
+                                    <thead>
+                                        <tr>
+                                            <th>Amount</th>
+                                            <th>TnxID</th>
+                                            <th>Booking ID</th>
+                                            <th>Type</th>
+                                            <th>Income From</th>
+                                            <th>Reason</th>
+                                            <th>Date & Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Amount</th>
+                                            <th>TnxID</th>
+                                            <th>Booking ID</th>
+                                            <th>Type</th>
+                                            <th>Income From</th>
+                                            <th>Reason</th>
+                                            <th>Date & Time</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach($accounts as $account)
+                                            @php 
+                                                $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $account->created_at, new DateTimeZone("UTC"));
+                                                $formattedTime = $db_time->format('j M, Y h:i A');
+                                            @endphp
+                                            <tr>
+                                                <td>{{ $account->amount }}</td>
+                                                <td>{{ $account->tnx_id }}</td>
+                                                <td>{{ $account->booking_id }}</td>
+                                                <td>{{ $account->type == 0 ? 'Debit' : 'Credit' }}</td>
+                                                <td>{{ incomeFrom($account->income_from) }}</td>
+                                                <td>{{ $account->reason }}</td>
+                                                <td>{{ $formattedTime }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>	
         </div>
     </div>    
 </div>
@@ -246,6 +303,24 @@
         echo 'Bit Accepted';
        } else if ($status == 5) {
         echo 'Completed';
+       }
+    }    
+    
+    function incomeFrom($type) {
+       if ($type == 1) {
+        echo 'Ride';
+       } else if ($type == 2) {
+        echo 'Car Package';
+       } else if ($type == 3) {
+        echo 'Hotel Package';
+       } else if ($type == 4) {
+        echo 'Travel Package';
+       } else if ($type == 5) {
+        echo 'Bonous';
+       } else if ($type == 6) {
+        echo 'Incentive';
+       } else if ($type == 7) {
+        echo 'Cashback';
        }
     }
 @endphp
