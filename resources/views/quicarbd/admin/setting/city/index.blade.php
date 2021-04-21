@@ -89,6 +89,7 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                {{ $citys->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>

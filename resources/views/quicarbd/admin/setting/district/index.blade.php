@@ -76,6 +76,7 @@
                                         @endif
                                     </tbody>
                                 </table>
+                                {{ $districts->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>
