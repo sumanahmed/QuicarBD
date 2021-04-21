@@ -56,34 +56,29 @@
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody id="partnerData">
-                                        @if(isset($biddings) && count($biddings) > 0)
-                                            @foreach($biddings as $bidding)
-                                                @php 
-                                                    $next_booking = \App\Models\RideBiting::where('owner_id', $bidding->owner_id)
-                                                                        ->where('ride_id', '!=', $bidding->ride_id)
-                                                                        ->where('status', 1)
-                                                                        ->count('id');
-                                                @endphp
-                                                <tr class="partner-{{ $bidding->id }}">
-                                                    <td>{{ $bidding->owner_name }} <br/>{{ $bidding->owner_phone }}</td>
-                                                    <td>{{ $bidding->carRegisterNumber }}</td>
-                                                    <td>{{ $next_booking }}</td>
-                                                    <td>{{ $bidding->bit_amount }}</td>
-                                                    <td>{{ $bidding->quicar_charge }}</td>
-                                                    <td>{{ $bidding->you_get }}</td>
-                                                    <td>{{ getStatus($bidding->status) }}</td>
-                                                    <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('ride.details', $bidding->ride_id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
-                                                        <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-id="{{ $bidding->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="8" class="text-center">No Data Found</td>
+                                    <tbody>
+                                        @foreach($biddings as $bidding)
+                                            @php 
+                                                $next_booking = \App\Models\RideBiting::where('owner_id', $bidding->owner_id)
+                                                                    ->where('ride_id', '!=', $bidding->ride_id)
+                                                                    ->where('status', 1)
+                                                                    ->count('id');
+                                            @endphp
+                                            <tr class="partner-{{ $bidding->id }}">
+                                                <td>{{ $bidding->owner_name }} <br/>{{ $bidding->owner_phone }}</td>
+                                                <td>{{ $bidding->carRegisterNumber }}</td>
+                                                <td>{{ $next_booking }}</td>
+                                                <td>{{ $bidding->bit_amount }}</td>
+                                                <td>{{ $bidding->quicar_charge }}</td>
+                                                <td>{{ $bidding->you_get }}</td>
+                                                <td>{{ getStatus($bidding->status) }}</td>
+                                                <td style="vertical-align: middle;text-align: center;">
+                                                    <a href="{{ route('ride.details', $bidding->ride_id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                    <a href="#" id="bidAmountChange" data-toggle="modal" data-id="{{ $bidding->id }}" data-bit_amount="{{ $bidding->bit_amount }}" data-quicar_charge="{{ $bidding->quicar_charge }}" data-you_get="{{ $bidding->you_get }}" class="btn btn-xs btn-primary" title="Cancel"><i class="fa fa-usd"></i></a>
+                                                    <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-id="{{ $bidding->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
+                                                </td>
                                             </tr>
-                                        @endif
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -94,17 +89,46 @@
         </div>
     </div>       
 </div>
+<div class="modal fade" id="bidAmountChangeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="exampleModalLabel1">Update Bid Amount</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="district_id" class="control-label mb-10">Bid Amount </label>
+                        <input type="text" id="bit_amount" class="form-control" readonly>
+                        <input type="hidden" id="bid_id" />
+                        <input type="hidden" id="quicar_charge" />
+                        <input type="hidden" id="you_get" />
+                    </div>
+                    <div class="form-group">
+                        <label for="new_bit_amount" class="control-label mb-10">New Bid Amount <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <input type="text" id="new_bit_amount" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updateBidAmount">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="showCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">Cancel Bid</h5>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="district_id" class="control-label mb-10">District <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <label for="district_id" class="control-label mb-10">Reasone <span class="text-danger text-bold" title="Required Field">*</span></label>
                         <select id="district_id" class="form-control" required>
                             <option selected disabled>Reason</option>                                
                             <option value="1">Reason One</option>                                
@@ -136,6 +160,7 @@
 @endphp
 @endsection
 @section('scripts')
+	<script src="{{ asset('quicarbd/admin/js/bidding.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

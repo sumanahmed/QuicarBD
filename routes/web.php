@@ -298,6 +298,7 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');    
     Route::post('/update-visible-time', [RideController::class, 'updateVisibleTime'])->name('ride.update_visible_time');    
     Route::post('/notification/send', [RideController::class, 'notificationSend'])->name('ride.notification_send');    
+    Route::post('/update-bid-amount', [RideController::class, 'updateBidAmount'])->name('ride.update_bid_amount');    
 });
 
 Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], function(){
