@@ -141,6 +141,33 @@
             </ul>
         </li>
         <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#coupons"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Coupon</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="coupons" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#userCoupon"><div class="pull-left"><span class="right-nav-text">User</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="userCoupon" class="collapse collapse-level-1 two-col-list">
+                        <li>
+                            <a href="{{ route('coupon.index', ['coupon_for' => 1]) }}">Coupon List</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('coupon.usedList', ['coupon_for' => 1]) }}">Used List</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#partnerCoupon"><div class="pull-left"><span class="right-nav-text">Partner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+                    <ul id="partnerCoupon" class="collapse collapse-level-1 two-col-list">
+                        <li>
+                            <a href="{{ route('coupon.index', ['coupon_for' => 2]) }}">Coupon List</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('coupon.usedList', ['coupon_for' => 2]) }}">Used List</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#packages"><div class="pull-left"><i class="fa fa-cube mr-20"></i><span class="right-nav-text">Packages</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="packages" class="collapse collapse-level-1 two-col-list">
                 <li>

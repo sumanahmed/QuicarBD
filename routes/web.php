@@ -35,6 +35,7 @@ use App\Http\Controllers\Admin\RideController;
 use App\Http\Controllers\Admin\SmsNotificationController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CouponController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -173,6 +174,16 @@ Route::group(['prefix'=>'/admin/car', 'middleware' => 'admin'], function(){
     Route::get('/expired', [CarController::class, 'expired'])->name('car.expired');
     Route::post('/destroy', [CarController::class, 'destroy'])->name('car.destroy');
     Route::post('/owner-notification-send', [CarController::class, 'ownerSendNotification'])->name('car.destroy');
+});
+
+Route::group(['prefix'=>'/admin/coupon', 'middleware' => 'admin'], function(){
+    Route::get('/', [CouponController::class, 'index'])->name('coupon.index');
+    Route::get('/create', [CouponController::class, 'create'])->name('coupon.create');
+    Route::post('/store', [CouponController::class, 'store'])->name('coupon.store');
+    Route::get('/edit/{id}', [CouponController::class, 'edit'])->name('coupon.edit');
+    Route::post('/update/{coupon_id}', [CouponController::class, 'update'])->name('coupon.update');
+    Route::post('/destroy', [CouponController::class, 'destroy'])->name('coupon.destroy');
+    Route::get('/used-list', [CouponController::class, 'usedList'])->name('coupon.usedList');
 });
 
 Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){
