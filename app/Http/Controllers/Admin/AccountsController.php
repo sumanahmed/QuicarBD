@@ -77,12 +77,12 @@ class AccountsController extends Controller
     {
         $start_date = isset($request->start_date) ? date('Y-m-d', strtotime($request->start_date)) : date('Y-m-d', strtotime('-30 days'));
         $end_date   = isset($request->end_date) ? date('Y-m-d', strtotime($request->end_date)) : date('Y-m-d');
-        
+     
         $query = DB::table('users')
                     ->select('users.id','users.name','users.phone','users.balance','users.cash_back_balance')                    
                     ->whereDate('created_at','>=', $start_date)
                     ->whereDate('created_at','<=', $end_date)
-                    ->whereDate('account_status', 1)
+                    ->where('account_status', 1)
                     ->orderBy('id','DESC');
 
         if ($request->name) {
