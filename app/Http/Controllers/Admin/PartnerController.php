@@ -42,15 +42,21 @@ class PartnerController extends Controller
         if ($request->nid) {
             $query = $query->where('owners.nid', $request->nid);
         }
-        
+      
         if ($request->service_location_district) {
             $query = $query->where('owners.service_location_district', $request->service_location_district);
+        }
+        
+        if ($request->service_location_district == null) {
+            $query = $query->where('owners.service_location_district', '=', '');
         }
         
         $partners = $query->paginate(12);
         
         if ($request->service_location_district) {
             $total_partner = DB::table('owners')->where('service_location_district',$request->service_location_district)->count('id');
+        } elseif ($request->service_location_district == null) {
+            $total_partner = DB::table('owners')->where('service_location_district', '=', '')->count('id');
         } else {
             $total_partner = 0;
         }

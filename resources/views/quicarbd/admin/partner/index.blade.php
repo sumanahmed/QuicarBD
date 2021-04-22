@@ -55,6 +55,7 @@
                                         <label for="service_location_district" class="control-label mb-10">Service Location</label>                                            
                                         <select name="service_location_district" class="form-control">
                                             <option value="0">Select</option>
+                                            <option value="">Empty</option>
                                             @foreach($districts as $district)
                                                 <option value="{{ $district->id }}" @if(isset($_GET['service_location_district']) && $district->id == $_GET['service_location_district']) selected @endif>{{ $district->name }} </option>
                                             @endforeach
@@ -175,7 +176,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message" class="control-label mb-10">Message <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <textarea class="form-control sms_message" name="message" id="message" placeholder="Enter your message"></textarea>
+                            <textarea class="form-control sms_message" name="message"  id="message" placeholder="Enter your message"></textarea>
                             <span class="errorMessage text-danger text-bold"></span>
                         </div>
                         <div class="form-row">

@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Car')
 @section('content')
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <a href="{{ route('car.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
@@ -119,6 +119,11 @@
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                                     </div>
                                 </div>
+                                @if($total_car_type_car > 0)
+                                    <div class="col-md-2">
+                                        <div class="form-group" style="margin-top:30px;">Total ({{ $_GET['carType'] }}) : {{ $total_car_type_car }}</div>
+                                    </div>
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -171,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
         </div>
     </div>
     
@@ -191,7 +196,7 @@
 </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('quicarbd/admin/js/car.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/car.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

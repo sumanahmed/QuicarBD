@@ -18,6 +18,7 @@ use App\Models\RideBiting;
 use App\Models\Year;
 use Response;
 use Illuminate\Http\Request;
+use DB;
 
 class CarController extends Controller
 {
@@ -59,13 +60,20 @@ class CarController extends Controller
         if ($request->phone) { 
             $query = $query->where('owners.phone', $request->phone);
         }
+        
+        if ($request->carType) { 
+            $total_car_type_car = DB::table('cars')->where('carType', $request->carType)->count('id'); 
+        } else {
+            $total_car_type_car = 0;
+        }
 
         $cars = isset($request->perPage) ? $query->paginate($request->perPage) : $query->paginate(10);
 
         $types  = CarType::all();
         $years  = CarYear::all();
         $owners = Owner::all();
-        return view('quicarbd.admin.car.index', compact('cars','types','years','owners'));
+        
+        return view('quicarbd.admin.car.index', compact('cars','types','years','owners','total_car_type_car'));
     }
 
     //show create page

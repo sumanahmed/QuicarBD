@@ -348,10 +348,24 @@
                     </ul>
                 </li>
             </ul>
-        </li>        
+        </li> 
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#withdraw"><div class="pull-left"><i class="fa fa-exclamation-triangle mr-20"></i><span class="right-nav-text">Withdraw</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="withdraw" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="{{ route('withdraw.pending') }}">Pending</a>
+                </li>
+                <li>
+                    <a href="{{ route('withdraw.complete') }}">Complete</a>
+                </li>
+                <li>
+                    <a href="{{ route('withdraw.cancel') }}">Cancel</a>
+                </li>
+            </ul>
+        </li>       
         <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#accounts"><div class="pull-left"><i class="fa fa-usd mr-20"></i><span class="right-nav-text">Accounts</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
-            <ul id="accounts" class="collapse collapse-level-1 two-col-list">                
+            <ul id="accounts" class="collapse collapse-level-1 two-col-list">  
                 <li>
                     <a href="{{ route('accounts.income') }}">Income</a>
                 </li>

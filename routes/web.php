@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\SmsNotificationController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -345,6 +346,13 @@ Route::group(['prefix'=>'/admin/message', 'middleware' => 'admin'], function(){
     Route::get('/partner', [MessageController::class, 'partnerMessage'])->name('message.partner');
     Route::get('/user', [MessageController::class, 'userMessage'])->name('message.user');
     Route::post('/reply', [MessageController::class, 'reply'])->name('message.reply');
+});
+
+Route::group(['prefix'=>'/admin/withdraw', 'middleware' => 'admin'], function(){
+    Route::get('/pending', [WithdrawController::class, 'pending'])->name('withdraw.pending');
+    Route::get('/complete', [WithdrawController::class, 'complete'])->name('withdraw.complete');
+    Route::get('/cancel', [WithdrawController::class, 'cancel'])->name('withdraw.cancel');
+    Route::post('/approve', [WithdrawController::class, 'approve'])->name('withdraw.approve');
 });
 
 Route::group(['prefix'=>'/admin/accounts', 'middleware' => 'admin'], function(){
