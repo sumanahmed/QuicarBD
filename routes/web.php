@@ -34,6 +34,7 @@ use App\Http\Controllers\Admin\PrivacyController;
 use App\Http\Controllers\Admin\RideController;
 use App\Http\Controllers\Admin\SmsNotificationController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\ComplainController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\WithdrawController;
@@ -341,11 +342,16 @@ Route::group(['prefix'=>'/admin/sms-notification', 'middleware' => 'admin'], fun
     Route::post('/global-notification-send', [SmsNotificationController::class, 'globalNotificationSend'])->name('sms_notification.global_notification.send');
 });
 
-
 Route::group(['prefix'=>'/admin/message', 'middleware' => 'admin'], function(){
     Route::get('/partner', [MessageController::class, 'partnerMessage'])->name('message.partner');
     Route::get('/user', [MessageController::class, 'userMessage'])->name('message.user');
     Route::post('/reply', [MessageController::class, 'reply'])->name('message.reply');
+});
+
+Route::group(['prefix'=>'/admin/complain', 'middleware' => 'admin'], function(){
+    Route::get('/partner', [ComplainController::class, 'partnerComplain'])->name('complain.partner');
+    Route::get('/user', [ComplainController::class, 'userComplain'])->name('complain.user');
+    Route::post('/reply', [ComplainController::class, 'reply'])->name('complain.reply');
 });
 
 Route::group(['prefix'=>'/admin/withdraw', 'middleware' => 'admin'], function(){

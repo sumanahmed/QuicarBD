@@ -95,6 +95,17 @@
             </ul>
         </li>
         <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#complain"><div class="pull-left"><i class="fa fa-envelope mr-20"></i><span class="right-nav-text">Complain</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="complain" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="{{ route('complain.partner') }}">Partner</a>
+                </li>
+                <li>
+                    <a href="{{ route('complain.user') }}">User</a>
+                </li>
+            </ul>
+        </li>
+        <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#cars"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Cars</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="cars" class="collapse collapse-level-1 two-col-list">
                 <li>
