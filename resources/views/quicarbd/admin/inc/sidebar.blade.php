@@ -32,6 +32,9 @@
                 <li>
                     <a href="{{ route('setting.tour_spot.index') }}">Tour Spot</a>
                 </li>
+                <li>
+                    <a href="{{ route('setting.user-app.edit') }}">User App</a>
+                </li>
             </ul>
         </li>
         <li>

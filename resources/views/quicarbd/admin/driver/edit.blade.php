@@ -8,8 +8,8 @@
     </style>
 @endsection
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-md-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -74,7 +74,7 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="c_status" class="control-label mb-10">Status <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <select id="c_status" name="c_status" class="form-control" required>
+                                                        <select id="c_status" name="c_status" class="form-control datePicker" required>
                                                             <option value="0" @if($driver->c_status == 0) selected @endif>Pending</option>    
                                                             <option value="1" @if($driver->c_status == 1) selected @endif>Active</option>    
                                                             <option value="2" @if($driver->c_status == 2) selected @endif>Cancel</option>    
@@ -250,6 +250,15 @@
                                                         @endif
                                                     </div>
                                                 </div>  
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="license_epxired_date" class="control-label mb-10">License Expired Date <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <input type="date" id="license_epxired_date" name="license_epxired_date" value="{{ $driver->license_epxired_date }}" class="form-control" required>
+                                                        @if($errors->has('license_epxired_date'))
+                                                            <span class="text-danger"> {{ $errors->first('license_epxired_date') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
@@ -266,13 +275,13 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>    
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

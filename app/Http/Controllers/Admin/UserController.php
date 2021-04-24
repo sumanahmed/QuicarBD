@@ -12,6 +12,7 @@ use App\Models\CarPackage;
 use App\Models\HotelPackage;
 use App\Models\TravelPackage;
 use App\Models\SMS;
+use App\Models\UserAppSetting;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -137,8 +138,12 @@ class UserController extends Controller
     {
         $query = DB::table('user_log')
                     ->join('users','user_log.user_id','users.id')
-                    ->select('user_log.visit_time','users.id','users.n_key','users.name','users.phone')
+                    ->select('user_log.visit_time','user_log.user_id','users.id','users.n_key','users.name','users.phone')
                     ->distinct();
+                    
+        // $query = DB::table('user_log')
+        //             ->select('user_log.visit_time','user_log.user_id')
+        //             ->groupBy('user_log.visit_time','user_log.user_id');
 
         if ($request->name) {
             $query = $query->where('users.name', 'like', "{$request->name}%");
@@ -182,5 +187,53 @@ class UserController extends Controller
         $user_name = User::find($id)->name;
 
         return view('quicarbd.admin.user.log', compact('logs','user_name'));
+    }
+    
+    //user app settting edit
+    public function userAppSettingEdit()
+    {
+        $setting = UserAppSetting::find(1);
+        return view('quicarbd.admin.setting.user-app', compact('setting'));
+    }    
+    
+    //user app settting update
+    public function userAppSettingUpdate(Request $request)
+    {
+        $this->validate($request,[
+            'bonus_getting_message'     => 'required',
+            'signup_bobus'              => 'required',
+            'amount'                    => 'required',
+            'marketing_dialog_title'    => 'required',
+            'marketing_dialog_show'     => 'required',
+            'max_adv_booking_ride'      => 'required',
+        ]);
+    
+        $user_app                           = UserAppSetting::find(1);
+        $user_app->bonus_getting_message    = $request->bonus_getting_message;
+        $user_app->signup_bobus             = $request->signup_bobus;
+        $user_app->amount                   = $request->amount;
+        $user_app->marketing_dialog_title   = $request->marketing_dialog_title;
+        $user_app->marketing_dialog_show    = $request->marketing_dialog_show;
+        $user_app->max_adv_booking_ride     = $request->max_adv_booking_ride;
+        
+        if($request->hasFile('marketing_banner_image')){
+            
+            if(($user_app->image_url != null) && file_exists($user_app->marketing_banner_image)){
+                unlink($user_app->marketing_banner_image);
+            }
+            
+            $image             = $request->file('marketing_banner_image');
+            $imageName         = time().".".$image->getClientOriginalExtension();
+            $directory         = '../mobileapi/asset/marketing-banner/';
+            $image->move($directory, $imageName);
+            $imageUrl          = $imageName;
+            $user_app->marketing_banner_image = "http://quicarbd.com/mobileapi/asset/marketing-banner/".$imageUrl;
+        }
+        
+        if ($user_app->update()) {
+            return redirect()->route('setting.user-app.edit')->with('message','Updated successfully');
+        } else {
+            return redirect()->back();
+        }
     }
 }

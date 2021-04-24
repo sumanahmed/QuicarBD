@@ -78,6 +78,11 @@ Route::group(['prefix'=>'/admin', 'middleware' => 'admin'], function(){
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 });
 
+Route::group(['prefix'=>'/admin/setting/user-app', 'middleware' => 'admin'], function(){
+    Route::get('/edit', [UserController::class, 'userAppSettingEdit'])->name('setting.user-app.edit');
+    Route::post('/update', [UserController::class, 'userAppSettingUpdate'])->name('setting.user-app.update');
+});
+
 Route::group(['prefix'=>'/admin/setting/district', 'middleware' => 'admin'], function(){
     Route::get('/', [DistrictController::class, 'index'])->name('setting.district.index');
     Route::post('/store', [DistrictController::class, 'store'])->name('setting.district.store');

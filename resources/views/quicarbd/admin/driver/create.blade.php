@@ -8,8 +8,8 @@
     </style>
 @endsection
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-md-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -223,7 +223,16 @@
                                                             <span class="text-danger"> {{ $errors->first('nid_back_pic') }}</span>
                                                         @endif
                                                     </div>
-                                                </div>  
+                                                </div> 
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="license_epxired_date" class="control-label mb-10">License Expired Date <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <input type="date" id="license_epxired_date" name="license_epxired_date" class="form-control" required>
+                                                        @if($errors->has('license_epxired_date'))
+                                                            <span class="text-danger"> {{ $errors->first('license_epxired_date') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
@@ -240,13 +249,13 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>    
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

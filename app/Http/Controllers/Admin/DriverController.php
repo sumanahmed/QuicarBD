@@ -70,7 +70,8 @@ class DriverController extends Controller
             'phone'     => 'required',
             'owner_id'  => 'required',
             'nid'       => 'required|unique:drivers,nid',
-            'license'   => 'required|unique:drivers,license'
+            'license'   => 'required|unique:drivers,license',
+            'license_epxired_date'   => 'required'
         ]);
         $driver             = new Driver();
         $driver->name       = $request->name;
@@ -81,6 +82,7 @@ class DriverController extends Controller
         $driver->district_id= $request->district_id;
         $driver->city_id    = $request->city_id;
         $driver->license    = $request->license;  
+        $driver->license_epxired_date    = date('Y-m-d', strtotime($request->license_epxired_date));  
         $driver->address    = $request->address;  
         if($request->driver_photo){
             $image          = $request->file('driver_photo');
@@ -137,6 +139,7 @@ class DriverController extends Controller
             'owner_id'  => 'required',
             'nid'       => 'required|unique:drivers,nid,'.$request->id,
             'license'   => 'required|unique:drivers,license,'.$request->id,
+            'license_epxired_date'   => 'required'
         ]);   
 
         $driver             = Driver::find($request->id);
@@ -150,6 +153,7 @@ class DriverController extends Controller
         $driver->city_id    = $request->city_id;
         $driver->address    = $request->address;   
         $driver->license    = $request->license; 
+        $driver->license_epxired_date    = date('Y-m-d', strtotime($request->license_epxired_date));  
         $driver->c_status   = $request->c_status; 
         if($request->driver_photo){
             if($driver->driver_photo != null && file_exists($driver->driver_photo)){

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ReportList;
+use App\Models\User;
+use App\Models\Owner;
 use App\Http\Lib\Helper;
 use Response;
 use DB;
@@ -63,8 +65,12 @@ class ComplainController extends Controller
         $msg    = $request->reply;
         
         if ($request->type == 1) { //user
+            $id = User::find($request->sender_id)->n_key;
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
             $helper->smsNotification($type = 1, $request->sender_id, $title, $msg); // send notification, 1=user
         } else {
+            $id = Owner::find($request->sender_id)->n_key;
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
             $helper->smsNotification($type = 2, $request->sender_id, $title, $msg); // send notification, 2=partner
         }
         
