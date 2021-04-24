@@ -44,6 +44,8 @@ class CouponController extends Controller
             'coupon' => 'required',
             'status' => 'required',
             'type'   => 'required',
+            'spacifice_user'  => 'required',
+            'how_many_use'  => 'required',
             'start'  => 'required',
             'end'    => 'required',
         ]);
@@ -76,8 +78,19 @@ class CouponController extends Controller
         $coupon->percentage = isset($request->percentage) ? $request->percentage : 0;
         $coupon->amount     = isset($request->amount) ? $request->amount : 0;
         $coupon->spacifice_user = $request->spacifice_user;
+        $coupon->how_many_use   = $request->how_many_use;
+        $coupon->total_use      = $request->how_many_use;
         $coupon->user_id        = isset($request->user_id) ? $request->user_id : 0;
         $coupon->upto_amount    = isset($request->upto_amount) ? $request->upto_amount : 0;
+        
+        if($request->hasFile('image')){
+            $image             = $request->file('image');
+            $imageName         = time().".".$image->getClientOriginalExtension();
+            $directory         = '../mobileapi/asset/coupon/';
+            $image->move($directory, $imageName);
+            $imageUrl          = $imageName;
+            $coupon->image   = "http://quicarbd.com/mobileapi/asset/coupon/".$imageUrl;
+        }
         
         if($coupon->save()){
             return redirect()->route('coupon.index',['coupon_for' => $request->coupon_for]);
@@ -99,6 +112,8 @@ class CouponController extends Controller
             'coupon' => 'required',
             'status' => 'required',
             'type'   => 'required',
+            'spacifice_user'  => 'required',
+            'how_many_use'  => 'required',
             'start'  => 'required',
             'end'    => 'required',
         ]);
@@ -131,8 +146,24 @@ class CouponController extends Controller
         $coupon->percentage = isset($request->percentage) ? $request->percentage : 0;
         $coupon->amount     = isset($request->amount) ? $request->amount : 0;
         $coupon->spacifice_user = $request->spacifice_user;
+        $coupon->how_many_use   = $request->how_many_use;
+        $coupon->total_use      = $request->how_many_use;
         $coupon->user_id        = isset($request->user_id) ? $request->user_id : 0;
         $coupon->upto_amount    = isset($request->upto_amount) ? $request->upto_amount : 0;
+        
+        if($request->hasFile('image')){
+            
+            if(($coupon->image != null) && file_exists($coupon->image)){
+                unlink($coupon->image);
+            }
+            
+            $image             = $request->file('image');
+            $imageName         = time().".".$image->getClientOriginalExtension();
+            $directory         = '../mobileapi/asset/coupon/';
+            $image->move($directory, $imageName);
+            $imageUrl          = $imageName;
+            $coupon->image = "http://quicarbd.com/mobileapi/asset/coupon/".$imageUrl;
+        }
         
         if($coupon->update()){
             return redirect()->route('coupon.index',['coupon_for' => $request->coupon_for]);

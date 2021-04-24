@@ -1,5 +1,12 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Coupon')
+@section('styles')
+    <style>
+        input[type=file] {
+            display: none;
+        }
+    </style>
+@endsection
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -92,7 +99,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="spacifice_user" class="control-label mb-10">Specific User </label>                                            
+                                                        <label for="spacifice_user" class="control-label mb-10">Specific User <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="spacifice_user" name="spacifice_user" class="form-control selectable">                                                            
                                                             <option value="0">Global</option>                                                            
                                                             <option value="1">Specific User</option>                                                          
@@ -103,21 +110,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-4" id="showUser" style="display:none">
-                                                    <div class="form-group">
-                                                        <label for="user_id" class="control-label mb-10">Users </label>                                            
-                                                        <select id="user_id" name="user_id" class="form-control">                                                            
-                                                            <option value="0">Select</option>  
-                                                            @foreach($users as $user)
-                                                                <option value="{{ $user->id }}">{{ $user->name }}</option>                                                             
-                                                            @endforeach
-                                                        </select>
-                                                        @if($errors->has('user_id'))
-                                                            <span class="text-danger"> {{ $errors->first('user_id') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div>                                          
+                                            <div class="row">                                         
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="start" class="control-label mb-10">Start <span class="text-danger" title="Required">*</span></label>
@@ -145,7 +138,49 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                            </div>       
+                                            </div>                             
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="img1" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span></label> 
+                                                        <div class="avatar-upload">
+                                                            <div class="avatar-edit">
+                                                                <input type='file' name="image" id="img1Upload" accept=".png, .jpg, .jpeg" required/>
+                                                                <label for="img1Upload"><i class="fa fa-edit" style="color:#000"></i></label>
+                                                            </div>
+                                                            <div class="avatar-preview" style="width:100%">
+                                                                <div id="img1Preview" style="background-image: url();"></div>
+                                                            </div>
+                                                        </div>
+                                                        @if($errors->has('image'))
+                                                            <span class="text-danger"> {{ $errors->first('image') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div> 
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="how_many_use" class="control-label mb-10">How Many Use <span class="text-danger" title="Required">*</span></label>                                                        
+                                                        <input type='text' name="how_many_use" id="how_many_use" value="{{ old('how_many_use') }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required/>
+                                                        @if($errors->has('amount'))
+                                                            <span class="text-danger"> {{ $errors->first('how_many_use') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" id="showUser" style="display:none">
+                                                    <div class="form-group">
+                                                        <label for="user_id" class="control-label mb-10">Users </label>                                            
+                                                        <select id="user_id" name="user_id" class="form-control">                                                            
+                                                            <option value="0">Select</option>  
+                                                            @foreach($users as $user)
+                                                                <option value="{{ $user->id }}">{{ $user->name }}</option>                                                             
+                                                            @endforeach
+                                                        </select>
+                                                        @if($errors->has('user_id'))
+                                                            <span class="text-danger"> {{ $errors->first('user_id') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div> 
+                                            </div> 
                                             <div class="row" style="margin-top:10px;">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -174,9 +209,28 @@
             
             if(spacifice_user == 1) {
                 $("#showUser").show();
+                $("#how_many_use").val(1);
+                $("#how_many_use").prop("readOnly", "true");
             } else {
                 $("#showUser").hide();
+                $("#how_many_use").attr("readOnly", false);
+                $("#how_many_use").val('');
             }
+        });
+                
+        function img1(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#img1Preview').css('background-image', 'url('+e.target.result +')');
+                    $('#img1Preview').hide();
+                    $('#img1Preview').fadeIn(650);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#img1Upload").change(function() {
+            img1(this);
         });
     </script>
 @endsection
