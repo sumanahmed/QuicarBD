@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Cancel Ride')
 @section('content')
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -48,7 +48,17 @@
                                         <label class="control-label mb-10">Travel Date</label>                                            
                                         <input type="date" name="travel_date" @if(isset($_GET['travel_date'])) value="{{ $_GET['travel_date'] }}" @endif  class="form-control" />
                                     </div>
-                                </div>    
+                                </div>   
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="payment_status" class="control-label mb-10">Payment Wise</label>                                            
+                                        <select name="payment_status" class="form-control">
+                                            <option value="10000">Select</option>
+                                            <option value="0" @if(isset($_GET['payment_status']) && $_GET['payment_status'] == 0) selected @endif>Before Payment</option>
+                                            <option value="1" @if(isset($_GET['payment_status']) && $_GET['payment_status'] == 1) selected @endif>After Payment</option>
+                                        </select>
+                                    </div>
+                                </div> 
                                 <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
@@ -132,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
         </div>
     </div>
 </div>

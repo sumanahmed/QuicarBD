@@ -369,7 +369,8 @@ Route::group(['prefix'=>'/admin/withdraw', 'middleware' => 'admin'], function(){
 });
 
 Route::group(['prefix'=>'/admin/accounts', 'middleware' => 'admin'], function(){
-    Route::get('/income', [AccountsController::class, 'income'])->name('accounts.income');
+    Route::get('/summary', [AccountsController::class, 'summary'])->name('accounts.summary');
+    Route::get('/transaction', [AccountsController::class, 'transaction'])->name('accounts.transaction');
     Route::get('/refund', [AccountsController::class, 'refund'])->name('accounts.refund');
     Route::get('/user-balance', [AccountsController::class, 'userBalance'])->name('accounts.user-balance');
     Route::get('/partner-balance', [AccountsController::class, 'partnerBalance'])->name('accounts.partner-balance');

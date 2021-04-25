@@ -260,13 +260,17 @@ class RideController extends Controller
                   ->select('ride_list.id','ride_list.created_at', 'ride_list.cancel_by',
                           'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
                           'users.name as user_name','users.phone as user_phone','bit_cancel_list.name as reason',
-                          'ride_list.cancellation_bit_id','ride_list.cancellation_id'
+                          'ride_list.cancellation_bit_id','ride_list.cancellation_id','ride_list.payment_status'
                   )
                 ->where('ride_list.status', 2)
                 ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 
       $query = $query->where('users.phone', $request->phone);
+    }    
+    
+    if ($request->payment_status) { 
+      $query = $query->where('ride_list.payment_status', $request->payment_status);
     }  
     
     if ($request->booking_date) {

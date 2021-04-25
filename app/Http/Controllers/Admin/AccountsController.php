@@ -14,9 +14,26 @@ use DB;
 class AccountsController extends Controller
 {
     /**
-     * show income
+     * show summary
      */
-    public function income (Request $request)
+    public function summary()
+    {
+        
+        $debit  = DB::table('user_account')->where('type', 0)->sum('amount');
+        $credit = DB::table('user_account')->where('type', 0)->sum('amount');
+        
+        $data['user_balance']   = DB::table('users')->sum('balance'); 
+        $data['user_cashback']  = DB::table('users')->sum('cash_back_balance');
+        $data['partner_balance']= DB::table('owners')->sum('current_balance');
+        $data['quicar_income']  = $debit - $credit;
+        
+        return view('quicarbd.admin.accounts.summary', $data);
+    }    
+    
+    /**
+     * show transaction
+     */
+    public function transaction (Request $request)
     {
         $start_date = isset($request->start_date) ? date('Y-m-d', strtotime($request->start_date)) : date('Y-m-d', strtotime('-30 days'));
         $end_date   = isset($request->end_date) ? date('Y-m-d', strtotime($request->end_date)) : date('Y-m-d');
@@ -24,7 +41,7 @@ class AccountsController extends Controller
         $query = DB::table('user_account')
                     ->leftjoin('users','user_account.user_id','users.id')
                     ->select('user_account.*','users.phone')
-                    ->where('user_account.type', 0)
+                    // ->where('user_account.type', 0)
                     ->where('user_account.advance_payment', 1)
                     ->whereDate('user_account.created_at','>=', $start_date)
                     ->whereDate('user_account.created_at','<=', $end_date)
@@ -34,9 +51,9 @@ class AccountsController extends Controller
             $query = $query->where('users.phone', $request->phone);
         }
 
-        $incomes = $query->paginate(12);
+        $transactions = $query->paginate(12);
         
-        return view('quicarbd.admin.accounts.income', compact('incomes'));
+        return view('quicarbd.admin.accounts.transaction', compact('transactions'));
     }
 
     /**

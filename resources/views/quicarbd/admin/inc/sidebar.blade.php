@@ -4,6 +4,7 @@
     $pendingCarPackage = \App\Models\CarPackage::where('status', 0)->count('id');
     $pendingHotelPackage = \App\Models\HotelPackage::where('status', 0)->count('id');
     $pendingPartner = \App\Models\Owner::where('account_status', 0)->count('id');
+    $pendingRide = \App\Models\RideList::where('status', 0)->count('id');
 ?>
 
 <div class="fixed-sidebar-left">
@@ -255,7 +256,13 @@
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#carRent"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Car Rent</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="carRent" class="collapse collapse-level-1 two-col-list">
                 <li><a href="{{ route('ride.bid_expired_ride') }}">Expired Request</a></li>
-                <li><a href="{{ route('ride.pending') }}">Pending</a></li>
+                <li>
+                    <a href="{{ route('ride.pending') }}">Pending
+                        @if($pendingRide > 0)
+                            <div class="pull-right"><span class="label label-warning">{{ $pendingRide }}</span></div>
+                        @endif
+                    </a>
+                </li>
                 <li><a href="{{ route('ride.bid_request') }}">Bid Request</a></li>
                 <li><a href="{{ route('ride.upcoming') }}">Upcoming Ride</a></li>
                 <li><a href="{{ route('ride.complete') }}">Completed Trip</a></li>
@@ -382,7 +389,10 @@
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#accounts"><div class="pull-left"><i class="fa fa-usd mr-20"></i><span class="right-nav-text">Accounts</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="accounts" class="collapse collapse-level-1 two-col-list">  
                 <li>
-                    <a href="{{ route('accounts.income') }}">Income</a>
+                    <a href="{{ route('accounts.summary') }}">Summary</a>
+                </li>
+                <li>
+                    <a href="{{ route('accounts.transaction') }}">Transactions</a>
                 </li>
                 <li>
                     <a href="{{ route('accounts.refund') }}">Refund</a>

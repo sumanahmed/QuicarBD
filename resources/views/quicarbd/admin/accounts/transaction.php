@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Income')
+@section('title','Transaction')
 @section('content')
 <div class="container-fluid">               
     <!-- Title -->
@@ -11,7 +11,7 @@
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Accounts</a></li>
-            <li class="active"><span>Income</span></li>
+            <li class="active"><span>Transaction History</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -23,13 +23,13 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">All Income</h6>
+                        <h6 class="panel-title txt-dark">All Transaction History</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
                     <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
-                        <form action="{{ route('accounts.income') }}" method="get">
+                        <form action="{{ route('accounts.transaction') }}" method="get">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -92,24 +92,24 @@
                                         </tr>
                                     </tfoot>
                                     <tbody id="carData">
-                                        @foreach($incomes as $income)
+                                        @foreach($transactions as $transaction)
                                             <tr>
-                                                <td>{{ date('d M, Y', strtotime($income->created_at)) }}</td>
-                                                <td>{{ getPaymentType($income->income_from) }}</td>
-                                                <td>{{ $income->booking_id }}</td>
-                                                <td>{{ $income->tnx_id }}</td>
-                                                <td>{{ $income->phone }}</td>
-                                                <td>{{ $income->adjust_cashback }}</td>
-                                                <td>{{ $income->discount }}</td>
-                                                <td>{{ $income->adjust_quicar_balance }}</td>
-                                                <td>{{ $income->online_payment }}</td>
-                                                <td>{{ $income->amount }}</td>
+                                                <td>{{ date('d M, Y', strtotime($transaction->created_at)) }}</td>
+                                                <td>{{ getPaymentType($transaction->income_from) }}</td>
+                                                <td>{{ $transaction->booking_id }}</td>
+                                                <td>{{ $transaction->tnx_id }}</td>
+                                                <td>{{ $transaction->phone }}</td>
+                                                <td>{{ $transaction->adjust_cashback }}</td>
+                                                <td>{{ $transaction->discount }}</td>
+                                                <td>{{ $transaction->adjust_quicar_balance }}</td>
+                                                <td>{{ $transaction->online_payment }}</td>
+                                                <td>{{ $transaction->amount }}</td>
                                                 <td>payment method</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                {{ $incomes->links('pagination::bootstrap-4') }}
+                                {{ $transactions->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>
@@ -119,20 +119,20 @@
     </div>
 </div>
 @php 
-    function getPaymentType($income_from) {
-        if ($income_from == 1) {
+    function getPaymentType($transaction_from) {
+        if ($transaction_from == 1) {
             echo "Ride";
-        } elseif ($income_from == 2) {
+        } elseif ($transaction_from == 2) {
             echo "Car Package";
-        } elseif ($income_from == 3) {
+        } elseif ($transaction_from == 3) {
             echo "Hotel Package";
-        } elseif ($income_from == 4) {
+        } elseif ($transaction_from == 4) {
             echo "Travel Package";
-        } elseif ($income_from == 5) {
+        } elseif ($transaction_from == 5) {
             echo "Bonus";
-        } elseif ($income_from == 6) {
+        } elseif ($transaction_from == 6) {
             echo "Incentive";
-        } elseif ($income_from == 7) {
+        } elseif ($transaction_from == 7) {
             echo "Cashback";
         }
     }
