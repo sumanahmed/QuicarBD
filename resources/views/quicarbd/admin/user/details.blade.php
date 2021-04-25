@@ -245,6 +245,8 @@
                                 <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
+                                            <th>Adjust Quicar Balance</th>
+                                            <th>Online Payment</th>
                                             <th>Amount</th>
                                             <th>TnxID</th>
                                             <th>Booking ID</th>
@@ -256,6 +258,8 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Adjust Quicar Balance</th>
+                                            <th>Online Payment</th>
                                             <th>Amount</th>
                                             <th>TnxID</th>
                                             <th>Booking ID</th>
@@ -272,6 +276,8 @@
                                                 $formattedTime = $db_time->format('j M, Y h:i A');
                                             @endphp
                                             <tr>
+                                                <td>{{ $account->adjust_quicar_balance }}</td>
+                                                <td>{{ $account->online_payment }}</td>
                                                 <td>{{ $account->amount }}</td>
                                                 <td>{{ $account->tnx_id }}</td>
                                                 <td>{{ $account->booking_id }}</td>

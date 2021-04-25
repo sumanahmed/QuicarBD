@@ -68,9 +68,12 @@
                                             <th>Booking ID</th>
                                             <th>Trnx ID</th>
                                             <th>Phone</th>
-                                            <th>Payment Method</th>
+                                            <th>Adjust CashBack</th>
+                                            <th>Discount</th>
+                                            <th>Adjust Quicar Balance</th>
+                                            <th>Online Payment</th>
                                             <th>Amount</th>
-                                            <th style="vertical-align: middle;text-align: center;">Action</th>
+                                            <th>Payment Method</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -80,9 +83,12 @@
                                             <th>Booking ID</th>
                                             <th>Trnx ID</th>
                                             <th>Phone</th>
-                                            <th>Payment Method</th>
+                                            <th>Adjust CashBack</th>
+                                            <th>Discount</th>
+                                            <th>Adjust Quicar Balance</th>
+                                            <th>Online Payment</th>
                                             <th>Amount</th>
-                                            <th style="vertical-align: middle;text-align: center;">Action</th>
+                                            <th>Payment Method</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="carData">
@@ -93,9 +99,12 @@
                                                 <td>{{ $income->booking_id }}</td>
                                                 <td>{{ $income->tnx_id }}</td>
                                                 <td>{{ $income->phone }}</td>
-                                                <td>payment method</td>
+                                                <td>{{ $income->adjust_cashback }}</td>
+                                                <td>{{ $income->discount }}</td>
+                                                <td>{{ $income->adjust_quicar_balance }}</td>
+                                                <td>{{ $income->online_payment }}</td>
                                                 <td>{{ $income->amount }}</td>
-                                                <td>action</td>
+                                                <td>payment method</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

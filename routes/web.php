@@ -307,6 +307,8 @@ Route::group(['prefix'=>'/admin/notice', 'middleware' => 'admin'], function(){
 
 Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::get('/bid-expired-ride', [RideController::class, 'bidExpiredRide'])->name('ride.bid_expired_ride');
+    Route::get('/pending', [RideController::class, 'pending'])->name('ride.pending');
+    Route::get('/approve/{id}', [RideController::class, 'approve'])->name('ride.approve');
     Route::get('/bid-request', [RideController::class, 'bidRequest'])->name('ride.bid_request');
     Route::get('/upcoming', [RideController::class, 'upcoming'])->name('ride.upcoming');
     Route::get('/complete', [RideController::class, 'complete'])->name('ride.complete');

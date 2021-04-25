@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Cancel Ride')
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -66,7 +66,6 @@
                                             <th>Booking Date</th>
                                             <th>Travel Date</th>
                                             <th>User</th>
-                                            <th>Partner</th>
                                             <th>Cancel By</th>
                                             <th>Total Cancel</th>
                                             <th>Reason</th>
@@ -78,7 +77,6 @@
                                             <th>Booking Date</th>
                                             <th>Travel Date</th>
                                             <th>User</th>
-                                            <th>Partner</th>
                                             <th>Cancel By</th>
                                             <th>Total Cancel</th>
                                             <th>Reason</th>
@@ -92,9 +90,13 @@
                                                     if ($ride->cancel_by == 0) {
                                                         $cancelBy = 'User';
                                                         $total_cancel = \App\Models\RideList::where('status', 2)->where('user_id', $ride->user_id)->count('id');
-                                                    } else {
+                                                    } elseif ($ride->cancel_by == 1) {
                                                         $cancelBy = 'Partner';
-                                                        $total_cancel = \App\Models\RideList::where('status', 2)->where('owner_id', $ride->owner_id)->count('id');
+                                                        $owner_id = \App\Models\RideBiting::find($ride->cancellation_bit_id)->owner_id;
+                                                        $total_cancel = \App\Models\RideBiting::where('status', 2)->where('owner_id', $owner_id)->count('id');
+                                                    } elseif ($ride->cancel_by == 2) {
+                                                        $cancelBy     = 'Admin';
+                                                        $total_cancel = \App\Models\RideList::where('status', 2)->where('cancel_by', 2)->count('id');
                                                     }
                                                     
                                                     $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->created_at, new DateTimeZone("UTC"));
@@ -109,12 +111,7 @@
                                                         @if($ride->user_id != null)
                                                             <a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a>
                                                         @endif
-                                                    </td>  
-                                                    <td>
-                                                        @if($ride->owner_id != null)
-                                                            <a href="{{ route('partner.details', $ride->owner_id) }}">{{ $ride->owner_name }} <br/>{{ $ride->owner_phone }}</a>
-                                                        @endif
-                                                    </td>  
+                                                    </td>   
                                                     <td>{{ $cancelBy }}</td>
                                                     <td>{{ $total_cancel }}</td>
                                                     <td>{{ $ride->reason != null ? $ride->reason : '' }}</td>
@@ -135,7 +132,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
 </div>
