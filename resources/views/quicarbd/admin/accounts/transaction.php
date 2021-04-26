@@ -50,6 +50,16 @@
                                     </div>
                                 </div>  
                                 <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="type" class="control-label mb-10">Type</label>                                            
+                                        <select name="type" class="form-control">
+                                            <option value="100">Select</option>
+                                            <option value="0" @if(isset($_GET['type']) && $_GET['type'] == 0) selected @endif>Debit</option>
+                                            <option value="1" @if(isset($_GET['type']) && $_GET['type'] == 1) selected @endif>Credit</option>
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                                     </div>
@@ -65,10 +75,10 @@
                                         <tr>
                                             <th>Date</th>
                                             <th>Type</th>
-                                            <th>Booking ID</th>
+                                            <th>Reason</th>
                                             <th>Trnx ID</th>
                                             <th>Phone</th>
-                                            <th>Adjust CashBack</th>
+                                            <th>Tnx Type</th>
                                             <th>Discount</th>
                                             <th>Adjust Quicar Balance</th>
                                             <th>Online Payment</th>
@@ -80,10 +90,10 @@
                                         <tr>
                                             <th>Date</th>
                                             <th>Type</th>
-                                            <th>Booking ID</th>
+                                            <th>Reason</th>
                                             <th>Trnx ID</th>
                                             <th>Phone</th>
-                                            <th>Adjust CashBack</th>
+                                            <th>Tnx Type</th>
                                             <th>Discount</th>
                                             <th>Adjust Quicar Balance</th>
                                             <th>Online Payment</th>
@@ -96,10 +106,10 @@
                                             <tr>
                                                 <td>{{ date('d M, Y', strtotime($transaction->created_at)) }}</td>
                                                 <td>{{ getPaymentType($transaction->income_from) }}</td>
-                                                <td>{{ $transaction->booking_id }}</td>
+                                                <td>{{ $transaction->reason }}</td>
                                                 <td>{{ $transaction->tnx_id }}</td>
                                                 <td>{{ $transaction->phone }}</td>
-                                                <td>{{ $transaction->adjust_cashback }}</td>
+                                                <td>{{ $transaction->type == 0 ? 'Debit' : 'Credit' }}</td>
                                                 <td>{{ $transaction->discount }}</td>
                                                 <td>{{ $transaction->adjust_quicar_balance }}</td>
                                                 <td>{{ $transaction->online_payment }}</td>

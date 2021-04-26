@@ -20,7 +20,7 @@ class AccountsController extends Controller
     {
         
         $debit  = DB::table('user_account')->where('type', 0)->sum('amount');
-        $credit = DB::table('user_account')->where('type', 0)->sum('amount');
+        $credit = DB::table('user_account')->where('type', 1)->sum('amount');
         
         $data['user_balance']   = DB::table('users')->sum('balance'); 
         $data['user_cashback']  = DB::table('users')->sum('cash_back_balance');
@@ -42,13 +42,17 @@ class AccountsController extends Controller
                     ->leftjoin('users','user_account.user_id','users.id')
                     ->select('user_account.*','users.phone')
                     // ->where('user_account.type', 0)
-                    ->where('user_account.advance_payment', 1)
+                    //->where('user_account.advance_payment', 1)
                     ->whereDate('user_account.created_at','>=', $start_date)
                     ->whereDate('user_account.created_at','<=', $end_date)
                     ->orderBy('user_account.id','DESC');
 
         if ($request->phone) {
             $query = $query->where('users.phone', $request->phone);
+        }        
+        
+        if (isset($request->type) && $request->type != 100) {
+            $query = $query->where('user_account.type', $request->type);
         }
 
         $transactions = $query->paginate(12);

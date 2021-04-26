@@ -4,8 +4,8 @@
 @php 
     $helper = new App\Http\Lib\Helper;
 @endphp
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -120,6 +120,7 @@
                                                         <!--<a href="#" class="btn btn-xs btn-primary" id="rideSendNotification" data-toggle="modal" title="Notification" data-user_id="{{ $ride->user_id }}" data-ride_id="{{ $ride->id }}"><i class="fa fa-bell"></i></a> -->
                                                         <a href="{{ route('ride.approve', $ride->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-check"></i></a> 
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                        <a href="#" id="changeVisibleTime" data-toggle="modal" data-ride_id="{{ $ride->id }}" data-ride_visiable_time="{{ $ride_visiable_time }}" class="btn btn-xs btn-primary" title="Change Visible Time"><i class="fa fa-clock-o"></i></a>
                                                         <a href="#" id="cancelModal" data-toggle="modal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
@@ -136,7 +137,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
 </div>
@@ -201,6 +202,34 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="changeVisibleTimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="exampleModalLabel1">Update Visible TIme</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="reason" class="control-label mb-10">Visible Time <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <input type="text" id="ride_visiable_time" class="form-control" readonly/>
+                        <input type="hidden" id="ride_id" />
+                    </div>
+                    <div class="form-group">
+                        <label for="reason" class="control-label mb-10">New Visible Time <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <input type="datetime-local" id="new_visiable_time" class="form-control"/>
+                        <span class="text-danger errorNewVisibleTime"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updateRideVisibleTime">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="showCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -227,7 +256,7 @@
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/reason.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/reason.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>
