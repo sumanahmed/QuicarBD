@@ -67,17 +67,29 @@
                                             <th>Percentage</th>                                     
                                             <th>Amount</th>                                     
                                             <th>Upto Amount</th>                                     
+                                            <th>Start</th>                                     
+                                            <th>End</th>                                     
+                                            <th>Total Use</th>                                     
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="allCoupon">
                                         @foreach($coupons as $coupon)
+                                            @php 
+                                                $start_time = DateTime::createFromFormat('Y-m-d H:i:s', $coupon->start, new DateTimeZone("UTC"));
+                                                $start = $start_time->format('j M, Y h:i A');
+                                                $end_time = DateTime::createFromFormat('Y-m-d H:i:s', $coupon->end, new DateTimeZone("UTC"));
+                                                $end = $end_time->format('j M, Y h:i A');
+                                            @endphp
                                             <tr class="coupon-{{ $coupon->id }}">
                                                 <td>{{ $coupon->coupon }}</td>
                                                 <td>{{ $coupon->type == 1 ? 'Percentage' : 'Amount' }}</td>
                                                 <td>{{ $coupon->percentage }}</td>
                                                 <td>{{ $coupon->amount }}</td>
                                                 <td>{{ $coupon->upto_amount }}</td>
+                                                <td>{{ $start }}</td>
+                                                <td>{{ $end }}</td>
+                                                <td>{{ $coupon->total_use }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">
                                                     <a href="{{ route('coupon.edit', $coupon->id) }}" class="btn btn-xs btn-raised btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                     <a href="#" class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="deleteCoupon" data-target="#deleteCouponModal" data-id="{{ $coupon->id }}" title="Delete"><i class="fa fa-remove"></i></a>
