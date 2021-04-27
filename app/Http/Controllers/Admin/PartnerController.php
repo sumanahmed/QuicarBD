@@ -14,6 +14,7 @@ use App\Models\City;
 use App\Models\Driver;
 use App\Models\HotelPackage;
 use App\Models\TravelPackage;
+use App\Models\PartnerAppSetting;
 use Exception;
 use GuzzleHttp\Client;
 use Validator;
@@ -534,5 +535,69 @@ class PartnerController extends Controller
             'status'    => 200,
             'message'   => "Balance added successfully",
         ]);  
+    }
+    
+        
+    //partner app settting edit
+    public function partnerAppSettingEdit()
+    {
+        $setting = PartnerAppSetting::find(1);
+        return view('quicarbd.admin.setting.partner-app', compact('setting'));
+    }    
+    
+    //partner app settting update
+    public function partnerAppSettingUpdate(Request $request)
+    {
+        $this->validate($request,[
+            'trip_count'                => 'required',
+            'bonous'                    => 'required',
+            'date'                      => 'required',
+            'time'                      => 'required',
+            'info'                      => 'required',
+            'app_vertion_code'          => 'required',
+            'app_vertion_name'          => 'required',
+            'mandatory_update'          => 'required',
+            'bidding_percent'           => 'required',
+            'car_package_charge'        => 'required',
+            'hotel_package_charge'      => 'required',
+            'travel_package_charge'     => 'required',
+            'direct_contact_number'     => 'required',
+            'direct_contact_number_for_user'  => 'required',
+            'office_address'            => 'required',
+            'facebook_link'             => 'required',
+            'twitter_link'              => 'required',
+            'user_app_version_code'     => 'required',
+            'user_app_mandatory_audate' => 'required',
+        ]);
+    
+        $partner_app                        = PartnerAppSetting::find(1);
+        $partner_app->trip_count            = $request->trip_count;
+        $partner_app->bonous                = $request->bonous;
+        $partner_app->date                  = $request->date;
+        $partner_app->time                  = $request->time;
+        $partner_app->api                   = $request->api;
+        $partner_app->info   = $request->info;
+        $partner_app->app_vertion_code      = $request->app_vertion_code;
+        $partner_app->app_vertion_name      = $request->app_vertion_name;
+        $partner_app->whats_new_in_update   = $request->whats_new_in_update;
+        $partner_app->mandatory_update      = $request->mandatory_update;
+        $partner_app->download_url          = $request->download_url;
+        $partner_app->bidding_percent       = $request->bidding_percent;
+        $partner_app->car_package_charge    = $request->car_package_charge;
+        $partner_app->hotel_package_charge  = $request->hotel_package_charge;
+        $partner_app->travel_package_charge = $request->travel_package_charge;
+        $partner_app->direct_contact_number = $request->direct_contact_number;
+        $partner_app->direct_contact_number_for_user = $request->direct_contact_number_for_user;
+        $partner_app->office_address        = $request->office_address;
+        $partner_app->facebook_link         = $request->facebook_link;
+        $partner_app->twitter_link          = $request->twitter_link;
+        $partner_app->user_app_version_code = $request->user_app_version_code;
+        $partner_app->user_app_version_name = $request->user_app_version_name;
+        $partner_app->user_app_mandatory_audate = $request->user_app_mandatory_audate;
+        if ($partner_app->update()) {
+            return redirect()->route('setting.partner-app.edit')->with('message','Updated successfully');
+        } else {
+            return redirect()->back();
+        }
     }
 }

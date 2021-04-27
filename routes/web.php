@@ -78,9 +78,19 @@ Route::group(['prefix'=>'/admin', 'middleware' => 'admin'], function(){
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 });
 
+Route::group(['prefix'=>'/admin/setting/user-app-info', 'middleware' => 'admin'], function(){
+    Route::get('/edit', [UserController::class, 'userAppInfoEdit'])->name('setting.user-app-info.edit');
+    Route::post('/update', [UserController::class, 'userAppInfoUpdate'])->name('setting.user-app-info.update');
+});
+
 Route::group(['prefix'=>'/admin/setting/user-app', 'middleware' => 'admin'], function(){
     Route::get('/edit', [UserController::class, 'userAppSettingEdit'])->name('setting.user-app.edit');
     Route::post('/update', [UserController::class, 'userAppSettingUpdate'])->name('setting.user-app.update');
+});
+
+Route::group(['prefix'=>'/admin/setting/partner-app', 'middleware' => 'admin'], function(){
+    Route::get('/edit', [PartnerController::class, 'partnerAppSettingEdit'])->name('setting.partner-app.edit');
+    Route::post('/update', [PartnerController::class, 'partnerAppSettingUpdate'])->name('setting.partner-app.update');
 });
 
 Route::group(['prefix'=>'/admin/setting/district', 'middleware' => 'admin'], function(){
@@ -303,6 +313,8 @@ Route::group(['prefix'=>'/admin/banner', 'middleware' => 'admin'], function(){
 Route::group(['prefix'=>'/admin/notice', 'middleware' => 'admin'], function(){
     Route::get('/packages', [NoticeController::class, 'noticePackages'])->name('notice.packages');
     Route::post('/packages/update', [NoticeController::class, 'noticePackagesUpdate'])->name('notice.packages.update');
+    Route::get('/partner-app', [NoticeController::class, 'noticePartnerApp'])->name('notice.partner_app');
+    Route::post('/partner-app/update', [NoticeController::class, 'noticePartnerAppUpdate'])->name('notice.partner_app.update');
 });
 
 Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){

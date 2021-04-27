@@ -12,6 +12,7 @@ use App\Models\CarPackage;
 use App\Models\HotelPackage;
 use App\Models\TravelPackage;
 use App\Models\SMS;
+use App\Models\UserAppInformation;
 use App\Models\UserAppSetting;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -189,6 +190,37 @@ class UserController extends Controller
         return view('quicarbd.admin.user.log', compact('logs','user_name'));
     }
     
+    //user app information edit
+    public function userAppInfoEdit()
+    {
+        $setting = UserAppInformation::find(1);
+        return view('quicarbd.admin.setting.user-app-info', compact('setting'));
+    }    
+    
+    //user app information update
+    public function userAppInfoUpdate(Request $request)
+    {
+        $this->validate($request,[
+            'forceUpdate'       => 'required',
+            'updateDate'        => 'required',
+            'latestVersionName' => 'required',
+            'latestVersionCode' => 'required',
+            'whatsNew'          => 'required'
+        ]);
+    
+        $user_app                   = UserAppInformation::find(1);
+        $user_app->forceUpdate      = $request->forceUpdate;
+        $user_app->updateDate       = date('Y-m-d', strtotime($request->updateDate));
+        $user_app->latestVersionName= $request->latestVersionName;
+        $user_app->latestVersionCode= $request->latestVersionCode;
+        $user_app->whatsNew         = $request->whatsNew;
+        if ($user_app->update()) {
+            return redirect()->route('setting.user-app-info.edit')->with('message','Updated successfully');
+        } else {
+            return redirect()->back();
+        }
+    }  
+    
     //user app settting edit
     public function userAppSettingEdit()
     {
@@ -206,6 +238,7 @@ class UserController extends Controller
             'marketing_dialog_title'    => 'required',
             'marketing_dialog_show'     => 'required',
             'max_adv_booking_ride'      => 'required',
+            'automatice_ride_approved'  => 'required',
         ]);
     
         $user_app                           = UserAppSetting::find(1);
@@ -215,6 +248,7 @@ class UserController extends Controller
         $user_app->marketing_dialog_title   = $request->marketing_dialog_title;
         $user_app->marketing_dialog_show    = $request->marketing_dialog_show;
         $user_app->max_adv_booking_ride     = $request->max_adv_booking_ride;
+        $user_app->automatice_ride_approved = $request->automatice_ride_approved;
         
         if($request->hasFile('marketing_banner_image')){
             

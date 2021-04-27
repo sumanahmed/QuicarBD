@@ -34,7 +34,13 @@
                     <a href="{{ route('setting.tour_spot.index') }}">Tour Spot</a>
                 </li>
                 <li>
-                    <a href="{{ route('setting.user-app.edit') }}">User App</a>
+                    <a href="{{ route('setting.user-app-info.edit') }}">User App Info</a>
+                </li>                
+                <li>
+                    <a href="{{ route('setting.user-app.edit') }}">User App Settings</a>
+                </li>
+                <li>
+                    <a href="{{ route('setting.partner-app.edit') }}">Parnter App Settings</a>
                 </li>
             </ul>
         </li>
@@ -294,6 +300,9 @@
                 </li>
                 <li>
                     <a href="{{ route('notice.packages', ['type' => 3]) }}">Travel Package</a>
+                </li>
+                <li>
+                    <a href="{{ route('notice.partner_app') }}">Parnter App</a>
                 </li>
             </ul>
         </li>

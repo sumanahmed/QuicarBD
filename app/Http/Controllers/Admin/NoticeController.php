@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserAppNotice;
+use App\Models\PartnerAppNotice;
 use Illuminate\Http\Request;
 
 class NoticeController extends Controller
@@ -54,5 +55,23 @@ class NoticeController extends Controller
         $package_notice->update();
 
         return redirect()->route('notice.packages',['type' => $request->type]);
+    }
+    
+     /**
+     * show notice partner app
+     */
+    public function noticePartnerApp(Request $request) 
+    {
+        $notice = PartnerAppNotice::find(1);
+        return view('quicarbd.admin.notice.partner-app',compact('notice'));
+    }
+
+    public function noticePartnerAppUpdate(Request $request)
+    {  
+        $notice = PartnerAppNotice::find(1);
+        $notice->homepage = $request->homepage;
+        $notice->update();
+
+        return redirect()->route('notice.partner_app')->with('message','Update successfully');
     }
 }
