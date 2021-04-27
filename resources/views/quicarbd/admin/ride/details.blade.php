@@ -29,8 +29,8 @@
     $current_date_time = \Carbon\Carbon::now()->toDateTimeString();
     
 @endphp
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-md-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -192,6 +192,12 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Accepted Bid Amount</label>                                            
+                                                        <input type="phone" value="{{ $ride_detail->bit_amount }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
                                                         <label for="phone" class="control-label mb-10">Car Registration Number</label>                                            
                                                         <input type="phone" @if($ride_detail != null) value="{{ $ride_detail->carRegisterNumber }}" @endif class="form-control" readonly>
                                                     </div>
@@ -218,7 +224,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
             @if($ride->start_time < $current_date_time) 
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
@@ -260,7 +266,7 @@
                         </div>
                     </div>
                 </div>
-            @endif	
+            @endif  
             @if($ride->status == 2) 
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
@@ -349,7 +355,7 @@
                         </div>
                     </div>
                 </div>
-            @endif	
+            @endif  
             
             @php 
                 $bittings = \App\Models\RideBiting::select('ride_biting.*','cars.carRegisterNumber',

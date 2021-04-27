@@ -33,3 +33,30 @@ $("#updateBidAmount").click(function(){
         }
     });
 });
+
+//open bid cancel modal
+$(document).on('click', '#bidCancelModal', function () {
+    $('#showCancelModal').modal('show');
+    $('#bid_id').val($(this).data('id'));
+ });
+
+//bid cancel
+$("#sendCancelReason").click(function(){
+    
+    var id          = $('#bid_id').val()
+    var cancel_reason   = $('#cancel_reason').val()
+    
+    $.ajax({
+        type: 'POST',
+        url: '/admin/ride/bid-cancel',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            id: id,
+            cancel_reason: cancel_reason
+        },
+        success: function (data) {
+            toastr.success('Bid Cancelled')
+            //location.reload();
+        }
+    });
+});

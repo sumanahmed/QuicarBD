@@ -408,7 +408,7 @@ class RideController extends Controller
    * update bid request ride visible time
    */
   public function updateVisibleTime (Request $request) {
-      
+   
     $validators = Validator::make($request->all(),[
         'ride_id' => 'required',
         'ride_visiable_time'  => 'required'
@@ -530,6 +530,34 @@ class RideController extends Controller
         $bidding->you_get       = $you_get;
         $bidding->update();
         
+    } catch (Exception $ex) {
+        $ex->getMessage();
+    }
+    return response()->json();
+  }    
+  
+  /**
+   * Bid Cancel
+   */
+  public function bidCancel(Request $request) 
+  {
+    $validators = Validator::make($request->all(),[
+        'id'            => 'required',
+        'cancel_reason' => 'required'
+    ]);
+   
+    if($validators->fails()){
+        return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+    }
+    
+    try {
+        
+        $bidding = RideBiting::find($request->id);
+        if ($bidding->status != 1) {
+            $bidding->status        = 2;
+            $bidding->cancel_reason = $request->cancel_reason;
+            $bidding->update();
+        }
     } catch (Exception $ex) {
         $ex->getMessage();
     }

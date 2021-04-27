@@ -75,7 +75,7 @@
                                                 <td style="vertical-align: middle;text-align: center;">
                                                     <a href="{{ route('ride.details', $bidding->ride_id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     <a href="#" id="bidAmountChange" data-toggle="modal" data-id="{{ $bidding->id }}" data-bit_amount="{{ $bidding->bit_amount }}" data-quicar_charge="{{ $bidding->quicar_charge }}" data-you_get="{{ $bidding->you_get }}" class="btn btn-xs btn-primary" title="Cancel"><i class="fa fa-usd"></i></a>
-                                                    <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-id="{{ $bidding->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
+                                                    <a href="#" id="bidCancelModal" data-toggle="modal" data-id="{{ $bidding->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -128,19 +128,15 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="district_id" class="control-label mb-10">Reasone <span class="text-danger text-bold" title="Required Field">*</span></label>
-                        <select id="district_id" class="form-control" required>
-                            <option selected disabled>Reason</option>                                
-                            <option value="1">Reason One</option>                                
-                            <option value="2">Reason Two</option>                                
-                        </select>
-                        <span class="text-danger districtError"></span>
+                        <label for="cancel_reason" class="control-label mb-10">Reasone <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <textarea id="cancel_reason" name="cancel_reason" class="form-control" required></textarea>
+                        <span class="text-danger errorCancelReason"></span>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="create">Save</button>
+                <button type="button" class="btn btn-primary" id="sendCancelReason">Send</button>
             </div>
         </div>
     </div>
@@ -155,6 +151,8 @@
         echo 'Request Cancel';
        } else if ($status == 3) {
         echo 'Complete';
+       } else if ($status == 4) {
+        echo 'Select Another';
        }
     }
 @endphp
