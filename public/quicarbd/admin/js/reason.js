@@ -42,18 +42,28 @@ $(document).on('click', '#cancelModal', function () {
 $("#sendReason").click(function(){
     var ride_id = $('#ride_id').val();
     var reason  = $('#reason').val();
+    var cancel_from  = $('#cancel_from :selected').val();
+    var charge_apply  = $('#charge_apply :selected').val();
     $.ajax({
         type: 'POST',
         url: '/admin/ride/cancel/reason/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             ride_id : ride_id,
-            reason  : reason
+            reason  : reason,
+            cancel_from  : cancel_from,
+            charge_apply  : charge_apply,
         },
         success: function (response) {
             if((response.errors)){
                 if(response.errors.reason){
                     $('.reasonError').text(response.errors.reason);
+                }   
+                if(response.errors.cancel_from){
+                    $('.cancelFromError').text(response.errors.cancel_from);
+                }   
+                if(response.errors.charge_apply){
+                    $('.chargeApplyError').text(response.errors.charge_apply);
                 }
             }else{
                 $('#reason').val('');

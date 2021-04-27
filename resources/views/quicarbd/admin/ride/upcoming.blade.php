@@ -146,9 +146,26 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
+                        <label for="cancel_from" class="control-label mb-10">Cancel From <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <select id="cancel_from" class="form-control">
+                            <option value="0">User</option>
+                            <option value="1">Partner</option>
+                            <option value="2">Admin</option>
+                        </select>
+                        <input type="hidden" id="ride_id" />
+                        <span class="text-danger cancelFromError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="charge_apply" class="control-label mb-10">Charge Apply <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <select id="charge_apply" class="form-control">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                        <span class="text-danger chargeApplyError"></span>
+                    </div>
+                    <div class="form-group">
                         <label for="reason" class="control-label mb-10">Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
                         <textarea id="reason" class="form-control" placeholder="Enter cancel reason.."></textarea>
-                        <input type="hidden" id="ride_id" />
                         <span class="text-danger reasonError"></span>
                     </div>
                 </form>

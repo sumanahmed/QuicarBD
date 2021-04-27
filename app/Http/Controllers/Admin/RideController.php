@@ -12,6 +12,7 @@ use App\Models\RideList;
 use App\Models\UserAccount;
 use App\Models\District;
 use App\Models\City;
+use App\Models\OwnerAccount;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Jobs\SendSmsNotification;
@@ -315,12 +316,22 @@ class RideController extends Controller
   /**
    * ride cancel reason send
    */
-  public function reasonSend (Request $request) {
-      
+  public function reasonSend (Request $request) 
+  {
     $validators = Validator::make($request->all(),[
         'ride_id' => 'required',
         'reason'  => 'required'
     ]);
+    
+    $ride = RideList::find($request->ride_id);
+    $bid  = RideBiting::find($ride->accepted_ride_bitting_id);
+    
+    if ($ride->status == 4) {
+        $validators = Validator::make($request->all(),[
+            'cancel_from' => 'required',
+            'charge_apply'=> 'required'
+        ]);
+    }
     
     if($validators->fails()){
         return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
@@ -329,39 +340,66 @@ class RideController extends Controller
     DB::beginTransaction();
     
     try {
-        
-        $bid = RideBiting::where('ride_id', $request->ride_id)->first();
-        $ride = RideList::find($request->ride_id);
      
         if ($bid != null) {
             $partner = Owner::find($bid->owner_id);
-            $user    = User::find($bid->user_id);
+            $user    = User::find($ride->user_id);
             
             $bid->status = 2;
-            $bid->update();
-        
-        } else {
-            $user_id = RideList::find($request->ride_id)->user_id;
-            $user    = User::find($user_id);   
+            $bid->update(); 
         }
     
-        if ($ride->status == 4 && $ride->payment_status == 1) {
+        if ($ride->status == 4) {
 
-          $user_account = UserAccount::where('tnx_id', $ride->tnx_id)->first();
+        //   $user_account = UserAccount::where('tnx_id', $ride->tnx_id)->first();
+        //   if ($user_account != null) {
+        //     $user = User::find($user_account->user_id);
+        //     $user->balance = ($user->balance + $user_account->adjust_quicar_balance + $user_account->discount + $user_account->online_payment);
+        //     $user->cash_back_balance = ($user->cash_back_balance + $user_account->adjust_cashback);
+        //     $user->update();
+
+        //     $userAccount = new UserAccount();
+        //     $userAccount->amount          = ($user_account->adjust_quicar_balance + $user_account->discount + $user_account->online_payment + $user_account->adjust_cashback);
+        //     $userAccount->adjust_cashback = $user_account->adjust_cashback;
+        //     $userAccount->adjust_quicar_balance = $user_account->adjust_quicar_balance;
+        //     $userAccount->discount        = $user_account->discount;
+        //     $userAccount->online_payment  = $user_account->online_payment;
+        //     $userAccount->tnx_id          = time();
+        //     $userAccount->type            = 1; // 1 credit, user income
+        //     $userAccount->income_from     = 1; // 1 mean ride
+        //     $userAccount->history_id      = $ride->id;
+        //     $userAccount->reason          = 'Ride advance payment return in cancel';
+        //     $userAccount->user_id         = $ride->user_id;
+        //     $userAccount->save();
+        //   }
           
-          if ($user_account != null) {
+          
+          if ($request->cancel_from == 0 && $request->charge_apply == 1) { // 0 mean user
             
-            $user = User::find($user_account->user_id);
-            $user->balance = ($user->balance + $user_account->adjust_quicar_balance + $user_account->discount + $user_account->online_payment);
-            $user->cash_back_balance = ($user->cash_back_balance + $user_account->adjust_cashback);
+            $start = $ride->accepted_bitting_time;
+            $end   = date('Y-m-d H:i:s');
+     
+            $diff = strtotime($start) - strtotime($end);
+            $fullDays   = floor($diff/(60*60*24));   
+            $interval   = floor(($diff-($fullDays*60*60*24))/(60*60)); 
+      
+            if ($interval > 24) {
+                $amount = ($bid->bit_amount * (50/100));
+            } else {
+                $amount = $bid->bit_amount;
+            }
+          
+            $user->balance = ($user->balance + $amount);
             $user->update();
-
+            
+            $user_account = UserAccount::where('tnx_id', $ride->tnx_id)->first();
+            
             $userAccount = new UserAccount();
-            $userAccount->amount          = ($user_account->adjust_quicar_balance + $user_account->discount + $user_account->online_payment + $user_account->adjust_cashback);
-            $userAccount->adjust_cashback = $user_account->adjust_cashback;
-            $userAccount->adjust_quicar_balance = $user_account->adjust_quicar_balance;
-            $userAccount->discount        = $user_account->discount;
-            $userAccount->online_payment  = $user_account->online_payment;
+            $userAccount->amount          = $amount;
+            $userAccount->adjust_cashback = 0;
+            $userAccount->adjust_quicar_balance = 0;
+            $userAccount->discount        = 0;
+            $userAccount->online_payment  = $amount;
             $userAccount->tnx_id          = time();
             $userAccount->type            = 1; // 1 credit, user income
             $userAccount->income_from     = 1; // 1 mean ride
@@ -369,9 +407,29 @@ class RideController extends Controller
             $userAccount->reason          = 'Ride advance payment return in cancel';
             $userAccount->user_id         = $ride->user_id;
             $userAccount->save();
+            
+          } elseif ($request->cancel_from == 1 && $request->charge_apply == 1) {
+            
+            $commission = ($bid->bit_amount * (5/100)); 
+            
+            $partner = Owner::find($bid->owner_id);
+            $partner->current_balance = ($partner->current_balance - $commission);
+            $partner->update();
+            
+            $parnterAccount = new OwnerAccount();
+            $parnterAccount->amount         = $partner->current_balance;
+            $parnterAccount->quicar_charge  = $commission;
+            $parnterAccount->net_amount     = ($partner->current_balance + $commission);
+            $parnterAccount->type           = 0; // debit 0 mean partner expense
+            $parnterAccount->income_from    = 1;
+            $parnterAccount->reason_text    = 'Ride Cancel Commission Deduct';
+            $parnterAccount->history_id     = $ride->id;
+            $parnterAccount->owner_id       = $bid->owner_id;
+            $parnterAccount->status         = 1;
+            $parnterAccount->save();
           }
         }
-
+        
         $ride->status           = 2;
         $ride->cancel_by        = 2; // 2 mean admin
         $ride->cancel_reason    = $request->reason; 
@@ -382,24 +440,24 @@ class RideController extends Controller
         $msg    = $request->reason; 
         $helper = new Helper(); 
         
-        if(isset($parnter)) {
+        if($request->cancel_from == 1) { 
             $helper->sendSinglePartnerNotification($partner->n_key, $title, $msg); //push notification send to partner
             $helper->smsNotification($type=2, $bid->owner_id, $title, $msg); // send notification, 2=partner
         }
         
-        if (isset($user)) {
+        if ($request->cancel_from == 0) {
             $helper->sendSinglePartnerNotification($user->n_key, $title, $msg); //push notification send to user
             $helper->smsNotification($type=1, $user->id, $title, $msg); // send notification, 1=user
         }
         
+        DB::commit();
+        
     } catch (Exception $ex) {
         
         DB::rollback();
-        
         $ex->getMessage();
     }
     
-    DB::commit();
     return response()->json();
     
   }
@@ -557,6 +615,13 @@ class RideController extends Controller
             $bidding->status        = 2;
             $bidding->cancel_reason = $request->cancel_reason;
             $bidding->update();
+            
+            $title  = 'Bid Cancel';
+            $msg    = $request->cancel_reason; 
+            $helper = new Helper(); 
+            
+            $helper->sendSinglePartnerNotification($partner->n_key, $title, $msg); //push notification send to partner
+            $helper->smsNotification($type=2, $bidding->owner_id, $title, $msg); // send notification, 2=partner
         }
     } catch (Exception $ex) {
         $ex->getMessage();
