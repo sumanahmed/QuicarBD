@@ -168,9 +168,12 @@ class UserController extends Controller
     //show all users
     public function userLogList(Request $request)
     {
-        $query = DB::table('user_log')
-                    ->join('users','user_log.user_id','users.id')
-                    ->select('user_log.visit_time','user_log.user_id','users.id','users.n_key','users.name','users.phone')
+        $query = DB::table('users')
+                    ->leftjoin('user_log','users.id','user_log.user_id')
+                    ->select('user_log.visit_time',
+                            'user_log.user_id','users.name',
+                            'users.phone','users.n_key'
+                    )
                     ->distinct();
                     
         // $query = DB::table('user_log')

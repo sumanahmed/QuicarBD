@@ -29,6 +29,10 @@ class DriverController extends Controller
             $query = $query->where('license', $request->license);
         }
         
+        if ($request->license_epxired_date) {
+            $query = $query->where('license_epxired_date', date('Y-m-d', strtotime($request->license_epxired_date)));
+        }
+        
         if ($request->nid) {
             $query = $query->where('nid', $request->nid);
         }

@@ -43,7 +43,13 @@
                                         <label for="license" class="control-label mb-10">Licenese No</label>                                            
                                         <input type="text" name="license" @if(isset($_GET['license'])) value="{{ $_GET['license'] }}" @endif placeholder="License No" class="form-control">
                                     </div>
-                                </div> 
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="license_epxired_date" class="control-label mb-10">Licenese Expired Date</label>                                            
+                                        <input type="date" name="license_epxired_date" @if(isset($_GET['license_epxired_date'])) value="{{ $_GET['license_epxired_date'] }}" @endif class="form-control">
+                                    </div>
+                                </div>  
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="nid" class="control-label mb-10">NID</label>                                            
@@ -74,6 +80,7 @@
                                             <option value="100">Select</option>
                                             <option value="0" @if(isset($_GET['c_status']) && $_GET['c_status'] == 0) selected @endif>Pending</option>
                                             <option value="1" @if(isset($_GET['c_status']) && $_GET['c_status'] == 1) selected @endif>Approved</option>
+                                            <option value="2" @if(isset($_GET['c_status']) && $_GET['c_status'] == 2) selected @endif>Hold</option>
                                         </select>
                                     </div>
                                 </div> 
@@ -94,6 +101,7 @@
                                             <th>Name</th>
                                             <th>NID</th>
                                             <th>License No</th>
+                                            <th>License Expired</th>
                                             <th>Phone</th>
                                             <th>Image</th>
                                             <th>Status</th>
@@ -113,6 +121,7 @@
                                                     <td>{{ $driver->name }}</td>
                                                     <td>{{ $driver->nid }}</td>
                                                     <td>{{ $driver->license }}</td>
+                                                    <td>{{ $driver->license_epxired_date != null ? date('Y-m-d', strtotime($driver->license_epxired_date)) : '' }}</td>
                                                     <td>{{ $driver->phone }}</td>
                                                     <td><img src="http://quicarbd.com/{{ $driver->driver_photo }}" style="width:80px;height:60px"/>
                                                     <td>{{ $driver->c_status == 1 ? 'Approve' : 'Pending' }} </td>

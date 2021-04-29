@@ -109,7 +109,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="img1" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span></label> 
+                                                        <label for="img1" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span>  (Width:600px; Height:215px)</label> 
                                                         <div class="avatar-upload">
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="marketing_banner_image" id="img1Upload" accept=".png, .jpg, .jpeg" required/>
