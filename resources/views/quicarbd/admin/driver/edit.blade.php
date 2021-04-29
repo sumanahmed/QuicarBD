@@ -8,8 +8,8 @@
     </style>
 @endsection
 @section('content')
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-md-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -77,7 +77,7 @@
                                                         <select id="c_status" name="c_status" class="form-control datePicker" required>
                                                             <option value="0" @if($driver->c_status == 0) selected @endif>Pending</option>    
                                                             <option value="1" @if($driver->c_status == 1) selected @endif>Active</option>    
-                                                            <option value="2" @if($driver->c_status == 2) selected @endif>Cancel</option>    
+                                                            <option value="2" @if($driver->c_status == 2) selected @endif>Hold</option>    
                                                         </select>
                                                         @if($errors->has('dob'))
                                                             <span class="text-danger"> {{ $errors->first('dob') }}</span>
@@ -275,13 +275,13 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
         </div>
     </div>    
 </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

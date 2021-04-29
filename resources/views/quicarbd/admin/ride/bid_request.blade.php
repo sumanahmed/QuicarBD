@@ -214,6 +214,7 @@
                         <label for="reason" class="control-label mb-10">Visible Time <span class="text-danger text-bold" title="Required Field">*</span></label>
                         <input type="text" id="ride_visiable_time" class="form-control" readonly/>
                         <input type="hidden" id="ride_id" />
+                        <input type="hidden" id="cancel_from" value="0" />
                     </div>
                     <div class="form-group">
                         <label for="reason" class="control-label mb-10">New Visible Time <span class="text-danger text-bold" title="Required Field">*</span></label>

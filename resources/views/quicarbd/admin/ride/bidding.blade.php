@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Bidding')
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -41,6 +41,7 @@
                                             <th>Quicar Charge</th>
                                             <th>Owner Get</th>
                                             <th>Status</th>
+                                            <th>Cancel Reason</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -53,6 +54,7 @@
                                             <th>Quicar Charge</th>
                                             <th>Owner Get</th>
                                             <th>Status</th>
+                                            <th>Cancel Reason</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -72,6 +74,7 @@
                                                 <td>{{ $bidding->quicar_charge }}</td>
                                                 <td>{{ $bidding->you_get }}</td>
                                                 <td>{{ getStatus($bidding->status) }}</td>
+                                                <td>{{ $bidding->cancel_reason }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">
                                                     <a href="{{ route('ride.details', $bidding->ride_id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     <a href="#" id="bidAmountChange" data-toggle="modal" data-id="{{ $bidding->id }}" data-bit_amount="{{ $bidding->bit_amount }}" data-quicar_charge="{{ $bidding->quicar_charge }}" data-you_get="{{ $bidding->you_get }}" class="btn btn-xs btn-primary" title="Cancel"><i class="fa fa-usd"></i></a>
@@ -85,7 +88,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>       
 </div>
@@ -148,7 +151,7 @@
        } else if ($status == 1) {
         echo 'Request Accept';
        } else if ($status == 2) {
-        echo 'Request Cancel';
+        echo 'Bid Cancel';
        } else if ($status == 3) {
         echo 'Complete';
        } else if ($status == 4) {
@@ -158,7 +161,7 @@
 @endphp
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/bidding.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/bidding.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

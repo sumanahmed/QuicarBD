@@ -9,6 +9,7 @@ use App\Models\Car;
 use App\Models\CarPackage;
 use Illuminate\Http\Request;
 use App\Models\Owner;
+use App\Models\OwnerAccount;
 use App\Models\District;
 use App\Models\City;
 use App\Models\Driver;
@@ -26,38 +27,34 @@ class PartnerController extends Controller
     //show all partner
     public function index(Request $request)
     {
-        $query = DB::table('owners')
-                ->leftjoin('district','owners.service_location_district','district.id')
-                ->select('owners.*','district.value as district_name')
-                ->orderBy('owners.id','DESC')
-                ->where('owners.account_status', 1);
+        $query = DB::table('owners')->orderBy('id','DESC')->where('account_status', 1);
         
         if ($request->name) {
-            $query = $query->where('owners.name', 'like', "{$request->name}%");
+            $query = $query->where('name', 'like', "{$request->name}%");
         }
         
         if ($request->phone) {
-            $query = $query->where('owners.phone', $request->phone);
+            $query = $query->where('phone', $request->phone);
         }
         
         if ($request->nid) {
-            $query = $query->where('owners.nid', $request->nid);
+            $query = $query->where('nid', $request->nid);
         }
       
-        if ($request->service_location_district) {
-            $query = $query->where('owners.service_location_district', $request->service_location_district);
+        if ($request->service_location_district != null && $request->service_location_district != 0) { 
+            $query = $query->where('service_location_district', $request->service_location_district);
         }
         
-        if ($request->service_location_district == null) {
-            $query = $query->where('owners.service_location_district', '=', '');
+        if ($request->service_location_district == null) { 
+            $query = $query->whereNull('service_location_district');
         }
         
         $partners = $query->paginate(12);
         
-        if ($request->service_location_district) {
+        if ($request->service_location_district != null && $request->service_location_district != 0) {
             $total_partner = DB::table('owners')->where('service_location_district',$request->service_location_district)->count('id');
         } elseif ($request->service_location_district == null) {
-            $total_partner = DB::table('owners')->where('service_location_district', '=', '')->count('id');
+            $total_partner = DB::table('owners')->whereNull('service_location_district')->count('id');
         } else {
             $total_partner = 0;
         }
@@ -520,16 +517,44 @@ class PartnerController extends Controller
             return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
         }
         
-        $partner = Owner::find($request->id); 
-        $partner->current_balance = ($partner->current_balance + $request->add_balance); 
-        $partner->update();
-
-        $id      = $request->n_key;
-        $title   = "New balance add";
-        $body    = "New balance ". $request->add_balance ." with your current balance. Thanks Team Quicar";
-
-        $helper = new Helper();
-        $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
+        DB::beginTransaction();
+        
+        try {
+        
+            $partner = Owner::find($request->id); 
+            $partner->current_balance = ($partner->current_balance + $request->add_balance); 
+            $partner->update();
+    
+            $id      = $request->n_key;
+            $title   = "New balance add";
+            $body    = "New balance ". $request->add_balance ." with your current balance. Thanks Team Quicar";
+            
+            $ownerAcc                   = new OwnerAccount();
+            $ownerAcc->amount           = $request->add_balance;
+            $ownerAcc->quicar_charge    = 0;
+            $ownerAcc->net_amount       = $request->add_balance;
+            $ownerAcc->type             = 1; //1=credit
+            $ownerAcc->income_from      = 5; 
+            $ownerAcc->reason_text      = "Admin Balance Added"; 
+            $ownerAcc->history_id       = 0; 
+            $ownerAcc->owner_id         = $partner->id; 
+            $ownerAcc->save(); 
+    
+            $helper = new Helper();
+            $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
+            $helper->smsNotification($type = 2, $partner->id, $title, $body); // send notification, 2=user
+            
+            DB::commit();
+            
+        } catch (\Exception $ex) {
+            
+            DB::rollback();
+            
+            return response([
+                'status' => 403,
+                'message' => 'Failed to save data.'
+            ]);
+        }
         
         return Response::json([
             'status'    => 200,

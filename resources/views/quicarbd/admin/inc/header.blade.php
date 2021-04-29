@@ -15,6 +15,7 @@
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css"/>
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('quicarbd/admin/vendors/bower_components/summernote/dist/summernote.css') }}" rel="stylesheet" type="text/css">
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<link href="{{ asset('quicarbd/admin/dist/css/toastr.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('quicarbd/admin/dist/css/style.css') }}" rel="stylesheet" type="text/css">
 	@yield('styles')

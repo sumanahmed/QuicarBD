@@ -34,6 +34,10 @@
 	<script src="{{ asset('quicarbd/admin/dist/js/dashboard-data.js') }}"></script>
 	<script src="{{ asset('quicarbd/admin/dist/js/toastr.js') }}"></script>
 	<script src="{{ asset('quicarbd/admin/js/image-popup.js') }}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script>
+	    $('.selectable').select2();
+	</script>
 	<script>
 		var image_base_path = "http://quicarbd.com/";		
 		//var image_base_path = "http://localhost:8000/";		

@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','User')
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -60,6 +60,8 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Image</th>
                                             <th>Balance</th>
                                             <th>CashBack Balance</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
@@ -69,6 +71,8 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Phone</th>
+                                            <th>Email</th>
+                                            <th>Image</th>
                                             <th>Balance</th>
                                             <th>CashBack Balance</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
@@ -81,6 +85,8 @@
                                                 <tr class="user-{{ $user->id }}">
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->phone }}</td>
+                                                    <td>{{ $user->email }}</td>
+                                                    <td><img src="{{ $user->img }}" style="width:100px;height:80px;" /></td>
                                                     <td>{{ $user->balance }}</td>
                                                     <td>{{ $user->cash_back_balance }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
@@ -103,7 +109,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
     
@@ -161,6 +167,7 @@
             </div>
         </div>
     </div>
+    </div>
     
     <!-- Balance ADD Modal -->
     <div id="userBalanceAddModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -196,5 +203,5 @@
     </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/user.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/user.js') }}"></script>
 @endsection

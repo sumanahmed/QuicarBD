@@ -1,8 +1,11 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','Partner')
 @section('content')
-<div class="container-fluid">				
-	<!-- Title -->
+@php 
+    $helper = new App\Http\Lib\Helper;
+@endphp
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <a href="{{ route('partner.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
@@ -115,7 +118,7 @@
                                                     <td>{{ $partner->phone }}</td>
                                                     <td>{{ $partner->current_balance }}</td>
                                                     <td>{{ "BP-".$partner->bidding_percent.", CP-".$partner->car_package_charge.", HP-".$partner->hotel_package_charge.", TP-".$partner->travel_package_charge }}</td>
-                                                    <td>{{ $partner->district_name }}</td>    
+                                                    <td>{{ $partner->service_location_district != null ? $helper->getDistrict($partner->service_location_district) : '' }}</td>    
                                                     <td>{{ $dateTime }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         @if($partner->account_status == 0)
@@ -143,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
     
@@ -236,7 +239,7 @@
 </div>
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

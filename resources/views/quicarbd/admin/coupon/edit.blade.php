@@ -100,7 +100,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="spacifice_user" class="control-label mb-10">Specific User <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <select id="spacifice_user" name="spacifice_user" class="form-control selectable">                                                            
+                                                        <select id="spacifice_user" name="spacifice_user" class="form-control">                                                            
                                                             <option value="0" @if($coupon->spacifice_user == 0) selected @endif>Global</option>                                                            
                                                             <option value="1" @if($coupon->spacifice_user == 1) selected @endif>Specific User</option>                                                          
                                                         </select>
@@ -142,7 +142,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="img1" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span></label> 
+                                                        <label for="img1" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span> (width:500px; height:138px)</label> 
                                                         <div class="avatar-upload">
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="image" id="img1Upload" accept=".png, .jpg, .jpeg" required/>
@@ -169,10 +169,10 @@
                                                 <div class="col-md-3" id="showUser" @if($coupon->spacifice_user != 1) style="display:none" @endif>
                                                     <div class="form-group">
                                                         <label for="user_id" class="control-label mb-10">Users </label>                                            
-                                                        <select id="user_id" name="user_id" class="form-control">                                                            
+                                                        <select id="user_id" name="user_id" class="form-control selectable">                                                            
                                                             <option value="0">Select</option>  
                                                             @foreach($users as $user)
-                                                                <option value="{{ $user->id }}" @if($user->id == $coupon->user_id) selected @endif>{{ $user->name }}</option>                                                             
+                                                                <option value="{{ $user->id }}" @if($user->id == $coupon->user_id) selected @endif>{{ $user->phone }}</option>                                                             
                                                             @endforeach
                                                         </select>
                                                         @if($errors->has('user_id'))

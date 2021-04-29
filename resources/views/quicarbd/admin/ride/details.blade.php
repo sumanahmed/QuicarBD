@@ -12,6 +12,15 @@
                                         //->where('ride_biting.ride_id', $ride->id)
                                         ->where('ride_biting.id', $ride->accepted_ride_bitting_id)
                                         ->first();
+    } elseif ($ride->status == 2 && $ride->accepted_ride_bitting_id != null) {
+        $ride_detail = \App\Models\RideBiting::join('cars','ride_biting.car_id','cars.id')
+                                        ->leftjoin('owners','ride_biting.owner_id','owners.id')
+                                        ->select('ride_biting.*','cars.carRegisterNumber',
+                                            'owners.name as owner_name','owners.phone as owner_phone'
+                                        )
+                                        //->where('ride_biting.ride_id', $ride->id)
+                                        ->where('ride_biting.id', $ride->accepted_ride_bitting_id)
+                                        ->first();
     } elseif ($ride->status == 2) {
         $ride_detail = \App\Models\RideBiting::select('ride_biting.*','cars.carRegisterNumber','owners.name as owner_name','owners.phone as owner_phone')
                     ->join('cars','ride_biting.car_id','cars.id')
@@ -29,8 +38,8 @@
     $current_date_time = \Carbon\Carbon::now()->toDateTimeString();
     
 @endphp
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-md-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -196,6 +205,14 @@
                                                         <input type="phone" value="{{ $ride_detail->bit_amount }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
+                                                @if($ride->booking_id != null)
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="phone" class="control-label mb-10">Booking ID</label>                                            
+                                                            <input type="phone" value="{{ $ride->booking_id }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="phone" class="control-label mb-10">Car Registration Number</label>                                            
@@ -224,7 +241,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
             @if($ride->start_time < $current_date_time) 
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
@@ -266,7 +283,7 @@
                         </div>
                     </div>
                 </div>
-            @endif  
+            @endif	
             @if($ride->status == 2) 
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
@@ -288,6 +305,21 @@
                                                         <input type="phone" value="{{ cancelBy($ride->cancel_by) }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
+                                                
+                                                @if($ride->cancel_by == 0 && $ride->accepted_ride_bitting_id != null)
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="phone" class="control-label mb-10">Bid Approved Partner Name</label>                                            
+                                                            <input type="phone" value="{{ $ride_detail->owner_name }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="phone" class="control-label mb-10">Bid Approved Partner Phone</label>                                            
+                                                            <input type="phone" value="{{ $ride_detail->owner_phone }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 @if($ride->cancel_by == 1)
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -355,7 +387,7 @@
                         </div>
                     </div>
                 </div>
-            @endif  
+            @endif	
             
             @php 
                 $bittings = \App\Models\RideBiting::select('ride_biting.*','cars.carRegisterNumber',

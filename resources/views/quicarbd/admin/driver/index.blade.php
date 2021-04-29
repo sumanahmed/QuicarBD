@@ -2,8 +2,8 @@
 @section('title','Driver')
 
 @section('content')
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <a href="{{ route('driver.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
@@ -121,7 +121,7 @@
                                                         @if($driver->c_status == 0)
                                                             <a href="{{ route('driver.status-update', ['id' => $driver->id, 'owner_id' => $driver->owner_id, 'c_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
                                                         @else
-                                                            <a href="{{ route('driver.status-update', ['id' => $driver->id, 'owner_id' => $driver->owner_id, 'c_status'=> 2 ]) }}" class="btn btn-xs btn-success" title="Cancel"><i class="fa fa-unlock-alt"></i></a>
+                                                            <a href="{{ route('driver.status-update', ['id' => $driver->id, 'owner_id' => $driver->owner_id, 'c_status'=> 2 ]) }}" class="btn btn-xs btn-success" title="Hold"><i class="fa fa-unlock-alt"></i></a>
                                                         @endif
                                                         <a href="{{ route('driver.edit', $driver->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteDriver" data-target="#deleteDriverModal" data-id="{{ $driver->id }}" title="Delete"><i class="fa fa-remove"></i></button>
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
         </div>
     </div>
 
@@ -160,7 +160,7 @@
 </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

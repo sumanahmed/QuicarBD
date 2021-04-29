@@ -11,6 +11,7 @@ use GuzzleHttp\Client;
 use App\Models\CarPackage;
 use App\Models\HotelPackage;
 use App\Models\TravelPackage;
+use App\Models\UserAccount;
 use App\Models\SMS;
 use App\Models\UserAppInformation;
 use App\Models\UserAppSetting;
@@ -105,16 +106,46 @@ class UserController extends Controller
             return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
         }
         
-        $user = User::find($request->id); 
-        $user->balance = ($user->balance + $request->add_balance); 
-        $user->update();
-
-        $id      = $request->n_key;
-        $title   = "New balance add";
-        $body    = "New balance ". $request->add_balance ." with your current balance. Thanks Team Quicar";
-
-        $helper = new Helper();
-        $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
+        DB::beginTransaction();
+        
+        try {
+            $user = User::find($request->id); 
+            $user->balance = ($user->balance + $request->add_balance); 
+            $user->update();
+            
+            $userAcc                    = new UserAccount();
+            $userAcc->amount            = $request->add_balance;
+            $userAcc->adjust_cashback   = 0;
+            $userAcc->adjust_quicar_balance = 0;
+            $userAcc->discount          = 0;
+            $userAcc->online_payment    = $request->add_balance;
+            $userAcc->tnx_id            = time();
+            $userAcc->type              = 1;
+            $userAcc->income_from       = 5;
+            $userAcc->history_id        = 0;
+            $userAcc->reason            = "Admin Balance Added";
+            $userAcc->user_id           = $user->id;
+            $userAcc->save();
+    
+            $id      = $request->n_key;
+            $title   = "New balance add";
+            $body    = "New balance ". $request->add_balance ." with your current balance. Thanks Team Quicar";
+    
+            $helper = new Helper();
+            $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
+            $helper->smsNotification($type = 1, $user->id, $title, $body); // send notification, 1=user
+            
+            DB::commit();
+            
+        } catch (\Exception $ex) {
+            
+            DB::rollback();
+            
+            return response([
+                'status' => 403,
+                'message' => 'Failed to save data.'
+            ]);
+        }
         
         return Response::json([
             'status'    => 200,

@@ -80,10 +80,18 @@ class Helper
     }
 
     /**
-     * get city
+     * get user name
     */
     public function getUser($id) 
     {
         return User::find($id)->name;
+    }
+    
+    /**
+     * get user phone
+    */
+    public function getUserPhone($id) 
+    {
+        return User::find($id)->phone;
     }
 }

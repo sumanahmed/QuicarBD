@@ -123,6 +123,13 @@ class RideController extends Controller
     $title = "New Ride arrive on your Service Location";
     $body = "Pickup From : ".$starting_district_name.", ".$starting_city_name.", ".$startig_area."\nTo : ".$destination_district_name.", ".$destinatin_city_name.", ".$destination_area."\nDate:- ".$start_timeNotification;
 
+    $userTitle = "আপনার ট্রিপ রিকোয়েস্ট টি একটিভ করা হয়েছে";
+    $userMsg   = "পার্টনার এর ভাড়ার অফারগুলো দেখতে অ্যাপ এ প্রবেশ করুন। মাত্র ১০% অ্যাডভান্স করে বুকিং করতে পারবেন যেকোনো গাড়ি।";
+    
+    $id     = User::find($ride->user_id)->n_key;
+    $helper = new Helper();
+    $helper->sendSinglePartnerNotification($id, $userTitle, $userMsg); //push notification send to user
+
     $client = new Client();
     $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner".$ride->starting_district);
     
@@ -168,7 +175,7 @@ class RideController extends Controller
   
   
   /**
-    * show upcoming bid rides
+    * show upcoming bid ridesr
   */
   public function upcoming(Request $request){
     $current_date_time = Carbon::now()->toDateTimeString(); 
@@ -250,11 +257,10 @@ class RideController extends Controller
     return view('quicarbd.admin.ride.complete', compact('rides'));
   }
 
-
   /**
     * show cancel rides
   */
-  public function cancel(Request $request){
+  public function cancel(Request $request){ 
     $query = DB::table('ride_list')
                   ->join('users','ride_list.user_id','users.id')
                   ->leftjoin('bit_cancel_list','ride_list.cancellation_id','bit_cancel_list.id')
@@ -270,7 +276,7 @@ class RideController extends Controller
       $query = $query->where('users.phone', $request->phone);
     }    
     
-    if ($request->payment_status) { 
+    if (isset($request->payment_status) && $request->payment_status != 10000) { 
       $query = $query->where('ride_list.payment_status', $request->payment_status);
     }  
     
@@ -324,7 +330,9 @@ class RideController extends Controller
     ]);
     
     $ride = RideList::find($request->ride_id);
-    $bid  = RideBiting::find($ride->accepted_ride_bitting_id);
+    if ($ride->accepted_ride_bitting_id != null) {
+        $bid  = RideBiting::find($ride->accepted_ride_bitting_id);
+    }
     
     if ($ride->status == 4) {
         $validators = Validator::make($request->all(),[
@@ -341,13 +349,14 @@ class RideController extends Controller
     
     try {
      
-        if ($bid != null) {
+        if ($ride->accepted_ride_bitting_id != null) {
             $partner = Owner::find($bid->owner_id);
-            $user    = User::find($ride->user_id);
             
             $bid->status = 2;
             $bid->update(); 
         }
+        
+        $user    = User::find($ride->user_id);
     
         if ($ride->status == 4) {
 
@@ -535,23 +544,23 @@ class RideController extends Controller
                     ->get();
                     
         $details = [
-    		'for'           => $request->for,
+        'for'           => $request->for,
             'title'         => $title,
             'message'       => $msg,
             'notification'  => $request->notification,
             'users'         => [],
             'owners'        => $owner
-    	];
-    	
-    	// send all mail in the queue.
+      ];
+      
+      // send all mail in the queue.
         $job = (new SendSmsNotification($details))
             ->delay(
-            	now()
-            	->addSeconds(2)
+              now()
+              ->addSeconds(2)
             ); 
 
         dispatch($job);
-    	
+      
     }
     
     return Response::json([

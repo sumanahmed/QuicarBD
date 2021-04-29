@@ -282,7 +282,7 @@ class DriverController extends Controller
                 $msg    = 'Dear '.$partner->name.', sorry your driver ('.$driver->name.') '.' Pending. Call for help 01611822829. Thanks Team Quicar'; 
             } elseif ($request->c_status == 2) { 
                 $title  = 'Driver Cancelled';            
-                $msg    = 'Dear '.$partner->name.', sorry your driver ('.$driver->name.') '.' Cancelled. Call for help 01611822829. Thanks Team Quicar'; 
+                $msg    = 'Dear '.$partner->name.', sorry your driver ('.$driver->name.') '.' Hold. Call for help 01611822829. Thanks Team Quicar'; 
             }                        
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
             $helper->smsSend($request->phone, $msg); // sms send

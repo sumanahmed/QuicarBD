@@ -243,6 +243,7 @@
                         <label for="reason" class="control-label mb-10">Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
                         <textarea id="reason" class="form-control" placeholder="Enter cancel reason.." required></textarea>
                         <input type="hidden" id="ride_id" />
+                        <input type="hidden" id="cancel_from" value="0" />
                         <span class="text-danger reasonError"></span>
                     </div>
                 </form>
