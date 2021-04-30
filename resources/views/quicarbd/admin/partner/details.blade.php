@@ -8,6 +8,9 @@
     </style>
 @endsection
 @section('content')
+@php 
+    $helper = new App\Http\Lib\Helper;
+@endphp
 <div class="container-fluid">				
 	<!-- Title -->
     <div class="row heading-bg">
@@ -16,9 +19,9 @@
         <!-- Breadcrumb -->
         <div class="col-md-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Partner</a></li>
-            <li class="active"><span>Details</span></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Partner</a></li>
+                <li class="active"><span>Details</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -37,7 +40,25 @@
                 <div class="panel-wrapper collapse in">
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                <div class="panel panel-default card-view pa-0">
+                                    <div class="panel-wrapper collapse in">
+                                        <div class="panel-body pa-0">
+                                            <div class="sm-data-box">
+                                                <div class="container-fluid">
+                                                    <div class="text-center pl-0 pr-0 data-wrap-left">
+                                                        <a href="#">
+                                                            <span class="txt-dark block counter"><span class="counter-anim">{{ $total_ride }}</span></span>
+                                                            <span class="weight-500 uppercase-font block font-13">Total Ride</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                                 <div class="panel panel-default card-view pa-0">
                                     <div class="panel-wrapper collapse in">
                                         <div class="panel-body pa-0">
@@ -55,7 +76,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <div class="panel panel-default card-view pa-0">
                                     <div class="panel-wrapper collapse in">
                                         <div class="panel-body pa-0">
@@ -73,7 +94,7 @@
                                     </div>
                                 </div>
                             </div>                    
-                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <div class="panel panel-default card-view pa-0">
                                     <div class="panel-wrapper collapse in">
                                         <div class="panel-body pa-0">
@@ -91,7 +112,7 @@
                                     </div>
                                 </div>
                             </div>   
-                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <div class="panel panel-default card-view pa-0">
                                     <div class="panel-wrapper collapse in">
                                         <div class="panel-body pa-0">
@@ -109,7 +130,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <div class="panel panel-default card-view pa-0">
                                     <div class="panel-wrapper collapse in">
                                         <div class="panel-body pa-0">
@@ -191,7 +212,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="service_location_district" class="control-label mb-10">Service Location Disitrict <span class="text-danger" title="Required">*</span></label>                                            
-                                                    <input type="text" id="service_location_district" value="{{ $district_name }}" class="form-control" readonly>
+                                                    <input type="text" id="service_location_district" value="{{ $helper->getDistrict($partner->service_location_district) }}" class="form-control" readonly>
                                                 </div>
                                             </div>                            
                                         </div>
@@ -344,10 +365,60 @@
                     </div>
                 </div>
             </div>	
+            <div class="panel panel-default card-view">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>Ride History</h6> 
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-wrapper collapse in">
+                    <div class="panel-body">
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table id="datable_1" class="table table-hover display pb-30" >
+                                    <thead>
+                                        <tr>
+                                            <th>Bid Amount</th>
+                                            <th>Quicar Charge</th>
+                                            <th>Partner Amount</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Bid Amount</th>
+                                            <th>Quicar Charge</th>
+                                            <th>Partner Amount</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach($rides as $ride)
+                                            <tr>
+                                                <td>{{ $ride->bit_amount }}</td>
+                                                <td>{{ $ride->quicar_charge }}</td>
+                                                <td>{{ $ride->you_get }}</td>
+                                                <td>{{ rideStatus($ride->status) }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>    
 </div>
 @php 
+    function rideStatus ($status) {
+        if ($status == 1) {
+            echo 'Bid Accepted';
+        } 
+    }
+
     function incomeFrom($type) {
        if ($type == 1) {
         echo 'Ride';

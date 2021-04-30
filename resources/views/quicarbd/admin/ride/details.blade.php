@@ -186,40 +186,6 @@
                                                     <input type="phone" @if($ride->accepted_bitting_time != null) value="{{ date('Y-m-d H:i:s a', strtotime($ride->accepted_bitting_time)) }}" @endif class="form-control" readonly>
                                                 </div>
                                             </div>
-                                            @if($ride->status == 4)
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Partner Name</label>                                            
-                                                        <input type="phone" value="{{ $ride_detail->owner_name }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Partner Phone</label>                                            
-                                                        <input type="phone" value="{{ $ride_detail->owner_phone }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Accepted Bid Amount</label>                                            
-                                                        <input type="phone" value="{{ $ride_detail->bit_amount }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                                @if($ride->booking_id != null)
-                                                    <div class="col-md-4">
-                                                        <div class="form-group">
-                                                            <label for="phone" class="control-label mb-10">Booking ID</label>                                            
-                                                            <input type="phone" value="{{ $ride->booking_id }}" class="form-control" readonly>
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Car Registration Number</label>                                            
-                                                        <input type="phone" @if($ride_detail != null) value="{{ $ride_detail->carRegisterNumber }}" @endif class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                            @endif
                                             @if($ride->rown_way == 1)
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -242,6 +208,72 @@
                     </div>
                 </div>
             </div>	
+            @if($ride->status == 4)
+                <div class="panel panel-default card-view">
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>Accepted Bid Details</h6> 
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-sm-12 col-xs-12">                                
+                                    <div class="form-wrap">
+                                        <div class="form-body">     
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Partner Name</label>                                            
+                                                        <input type="phone" value="{{ $ride_detail->owner_name }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Partner Phone</label>                                            
+                                                        <input type="phone" value="{{ $ride_detail->owner_phone }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Accepted Bid Amount</label>                                            
+                                                        <input type="phone" value="{{ $ride_detail->bit_amount }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Partner Amount</label>                                            
+                                                        <input type="phone" value="{{ $ride_detail->you_get }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Quicar Charge</label>                                            
+                                                        <input type="phone" value="{{ $ride_detail->quicar_charge }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Booking ID</label>                                            
+                                                        <input type="phone" value="{{ $ride->booking_id }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Car Registration Number</label>                                            
+                                                        <input type="phone" @if($ride_detail != null) value="{{ $ride_detail->carRegisterNumber }}" @endif class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
             @if($ride->start_time < $current_date_time) 
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">

@@ -253,8 +253,9 @@ class RideController extends Controller
     }
                 
     $rides = $query->paginate(12); 
-
-    return view('quicarbd.admin.ride.complete', compact('rides'));
+    $sms   = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
+    
+    return view('quicarbd.admin.ride.complete', compact('rides','sms'));
   }
 
   /**
@@ -270,7 +271,7 @@ class RideController extends Controller
                           'ride_list.cancellation_bit_id','ride_list.cancellation_id','ride_list.payment_status'
                   )
                 ->where('ride_list.status', 2)
-                ->orderBy('ride_list.id','DESC');
+                ->orderBy('ride_list.updated_at','DESC');
                 
     if ($request->phone) { 
       $query = $query->where('users.phone', $request->phone);
@@ -544,23 +545,23 @@ class RideController extends Controller
                     ->get();
                     
         $details = [
-        'for'           => $request->for,
+    		'for'           => $request->for,
             'title'         => $title,
             'message'       => $msg,
             'notification'  => $request->notification,
             'users'         => [],
-            'owners'        => $owner
-      ];
-      
-      // send all mail in the queue.
+            'owners'        => $owners
+    	];
+    	
+    	// send all mail in the queue.
         $job = (new SendSmsNotification($details))
             ->delay(
-              now()
-              ->addSeconds(2)
+            	now()
+            	->addSeconds(2)
             ); 
 
         dispatch($job);
-      
+    	
     }
     
     return Response::json([

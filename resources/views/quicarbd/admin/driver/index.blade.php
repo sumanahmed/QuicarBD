@@ -11,8 +11,8 @@
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-            <li><a href="#">Dashboard</a></li>
-            <li class="active"><span>Driver</span></li>
+                <li><a href="#">Dashboard</a></li>
+                <li class="active"><span>Driver</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -98,13 +98,13 @@
                                 <table class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
+                                            <th>Name & Phone</th>
                                             <th>NID</th>
                                             <th>License No</th>
                                             <th>License Expired</th>
-                                            <th>Phone</th>
                                             <th>Image</th>
                                             <th>Status</th>
+                                            <th>Reason</th>
                                             <th>Date & Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
@@ -118,19 +118,19 @@
                                                     $formattedTime = $db_time->format('j M, Y h:i A');
                                                 @endphp
                                                 <tr class="driver-{{ $driver->id }}">
-                                                    <td>{{ $driver->name }}</td>
+                                                    <td>{{ $driver->name }}<br/>{{ $driver->phone }}</td>
                                                     <td>{{ $driver->nid }}</td>
                                                     <td>{{ $driver->license }}</td>
                                                     <td>{{ $driver->license_epxired_date != null ? date('Y-m-d', strtotime($driver->license_epxired_date)) : '' }}</td>
-                                                    <td>{{ $driver->phone }}</td>
                                                     <td><img src="http://quicarbd.com/{{ $driver->driver_photo }}" style="width:80px;height:60px"/>
-                                                    <td>{{ $driver->c_status == 1 ? 'Approve' : 'Pending' }} </td>
+                                                    <td>{{ getStatus($driver->c_status) }} </td>
+                                                    <td>{{ $driver->reason }} </td>
                                                     <td>{{ $formattedTime }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        @if($driver->c_status == 0)
+                                                        @if($driver->c_status == 0 || $driver->c_status == 2)
                                                             <a href="{{ route('driver.status-update', ['id' => $driver->id, 'owner_id' => $driver->owner_id, 'c_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
                                                         @else
-                                                            <a href="{{ route('driver.status-update', ['id' => $driver->id, 'owner_id' => $driver->owner_id, 'c_status'=> 2 ]) }}" class="btn btn-xs btn-success" title="Hold"><i class="fa fa-unlock-alt"></i></a>
+                                                            <a href="#" data-toggle="modal" id="holdDriver" data-id="{{ $driver->id }}" data-owner_id="{{ $driver->owner_id }}" class="btn btn-xs btn-success" title="Hold"><i class="fa fa-unlock-alt"></i></a>
                                                         @endif
                                                         <a href="{{ route('driver.edit', $driver->id) }}" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <button class="btn btn-xs btn-danger" data-toggle="modal" id="deleteDriver" data-target="#deleteDriverModal" data-id="{{ $driver->id }}" title="Delete"><i class="fa fa-remove"></i></button>
@@ -153,6 +153,33 @@
         </div>
     </div>
 
+    <!-- Change status of driver -->
+    <div class="modal fade" id="holdModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title" id="exampleModalLabel1">Hold Driver</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="title" class="control-label mb-10">Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <textarea name="add_balance" id="hold_reason" class="form-control"></textarea>
+                            <input type="hidden" id="id" />
+                            <input type="hidden" id="owner_id" />
+                            <span class="errorReason text-danger text-bold"></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="sendDriverHold">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Delete Class Modal -->
     <div class="modal fade" id="deleteDriverModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -167,6 +194,18 @@
         </div>
     </div>
 </div>
+
+@php 
+    function getStatus ($status) {
+        if ($status == 0) {
+            echo "Pending";
+        } elseif ($status == 1) {
+            echo "Approved";
+        } elseif ($status == 2) {
+            echo "Hold";
+        }
+    }
+@endphp
 @endsection
 @section('scripts')
 	<script src="{{ asset('quicarbd/admin/js/driver.js') }}"></script>

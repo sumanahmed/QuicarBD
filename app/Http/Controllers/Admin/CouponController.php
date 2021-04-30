@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\CouponList;
 use App\Models\CouponUsedList;
 use GuzzleHttp\Client;
+use DateTimeZone;
+use DateTime;
 use DB;
 
 class CouponController extends Controller
@@ -101,8 +103,13 @@ class CouponController extends Controller
             
             $coupon->save();
             
+            $request_start = date('Y-m-d H:i:s', strtotime($request->start)); 
+            $request_end   = date('Y-m-d H:i:s', strtotime($request->end)); 
+            $start = DateTime::createFromFormat('Y-m-d H:i:s', $request_start, new DateTimeZone("UTC"))->format('j M, Y h:i A');
+            $end   = DateTime::createFromFormat('Y-m-d H:i:s', $request_end, new DateTimeZone("UTC"))->format('j M, Y h:i A');
+            
             $title   = $request->coupon;
-            $message = "আপনার জন্য একটি কুইকার ডিসকাউন্ট কুপন ইস্যু করা হয়েছে। \n কুপন কোড: " .$coupon->coupon." \n কুপনের মেয়াদ : (".$coupon->start." to ".$coupon->end.") \nকুপনের পরিমান: ".$coupon->amount."\n এই কুপনটি আপনি অ্যাডভান্স করার সময় এডজাস্ট করতে পারবেন।\n কুইকারের সাথেই থাকুন \nকুইকার বিজনেস টিম";;
+            $message = "আপনার জন্য একটি কুইকার ডিসকাউন্ট কুপন ইস্যু করা হয়েছে। \n কুপন কোড: " .$coupon->coupon." \n কুপনের মেয়াদ : (".$start ." to ".$end.") \nকুপনের পরিমান: ".$coupon->amount."\n এই কুপনটি আপনি অ্যাডভান্স করার সময় এডজাস্ট করতে পারবেন।\n কুইকারের সাথেই থাকুন \nকুইকার বিজনেস টিম";;
 
             if ($request->spacifice_user == 0) {
                 

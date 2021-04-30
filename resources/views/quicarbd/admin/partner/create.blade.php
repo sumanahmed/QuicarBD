@@ -131,7 +131,7 @@
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="bidding_percent" class="control-label mb-10">Bidding Percent  <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <input type="text" id="bidding_percent" name="bidding_percent" value="15" placeholder="Bidding Percent" class="form-control" required>
+                                                        <input type="text" id="bidding_percent" name="bidding_percent" value="{{ $global->bidding_percent }}" placeholder="Bidding Percent" class="form-control" required>
                                                         @if($errors->has('bidding_percent'))
                                                             <span class="text-danger"> {{ $errors->first('bidding_percent') }}</span>
                                                         @endif
@@ -139,8 +139,8 @@
                                                 </div>                                    
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="car_package_charge" class="control-label mb-10">Car Package Charge  <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <input type="text" id="car_package_charge" name="car_package_charge" value="{{ old('car_package_charge') }}" placeholder="Car Package Charge" class="form-control" required>
+                                                        <label for="car_package_charge" class="control-label mb-10">Car Package Charge(%)  <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <input type="text" id="car_package_charge" name="car_package_charge" value="{{ $global->car_package_charge }}" placeholder="Car Package Charge" class="form-control" required>
                                                         @if($errors->has('car_package_charge'))
                                                             <span class="text-danger"> {{ $errors->first('car_package_charge') }}</span>
                                                         @endif
@@ -148,8 +148,8 @@
                                                 </div>                                    
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="hotel_package_charge" class="control-label mb-10">Hotel Package Charge  <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <input type="text" id="hotel_package_charge" name="hotel_package_charge" value="{{ old('hotel_package_charge') }}" placeholder="Hotel Package Charge" class="form-control" required>
+                                                        <label for="hotel_package_charge" class="control-label mb-10">Hotel Package Charge(%)  <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <input type="text" id="hotel_package_charge" name="hotel_package_charge" value="{{ $global->hotel_package_charge }}" placeholder="Hotel Package Charge" class="form-control" required>
                                                         @if($errors->has('hotel_package_charge'))
                                                             <span class="text-danger"> {{ $errors->first('hotel_package_charge') }}</span>
                                                         @endif
@@ -157,8 +157,8 @@
                                                 </div>                                    
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label for="travel_package_charge" class="control-label mb-10">Travel Package Charge  <span class="text-danger" title="Required">*</span></label>                                            
-                                                        <input type="text" id="travel_package_charge" name="travel_package_charge" value="{{ old('travel_package_charge') }}" placeholder="Travel Package Charge" class="form-control" required>
+                                                        <label for="travel_package_charge" class="control-label mb-10">Travel Package Charge(%)  <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <input type="text" id="travel_package_charge" name="travel_package_charge" value="{{ $global->travel_package_charge }}" placeholder="Travel Package Charge" class="form-control" required>
                                                         @if($errors->has('travel_package_charge'))
                                                             <span class="text-danger"> {{ $errors->first('travel_package_charge') }}</span>
                                                         @endif

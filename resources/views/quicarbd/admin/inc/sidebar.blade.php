@@ -259,6 +259,9 @@
             </ul>
         </li>
         <li>
+            <a href="{{ route('pricing.index') }}"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Ride Pricing</span></div><div class="pull-right"></div><div class="clearfix"></div></a>
+        </li>
+        <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#carRent"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Car Rent</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="carRent" class="collapse collapse-level-1 two-col-list">
                 <li><a href="{{ route('ride.bid_expired_ride') }}">Expired Request</a></li>

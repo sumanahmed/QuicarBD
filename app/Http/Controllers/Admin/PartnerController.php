@@ -26,7 +26,7 @@ class PartnerController extends Controller
 {
     //show all partner
     public function index(Request $request)
-    {
+    { 
         $query = DB::table('owners')->orderBy('id','DESC')->where('account_status', 1);
         
         if ($request->name) {
@@ -41,19 +41,19 @@ class PartnerController extends Controller
             $query = $query->where('nid', $request->nid);
         }
       
-        if ($request->service_location_district != null && $request->service_location_district != 0) { 
+        if ($request->service_location_district > 0) {
             $query = $query->where('service_location_district', $request->service_location_district);
         }
         
-        if ($request->service_location_district == null) { 
+        if ($request->service_location_district == -1) { 
             $query = $query->whereNull('service_location_district');
         }
         
         $partners = $query->paginate(12);
         
-        if ($request->service_location_district != null && $request->service_location_district != 0) {
+        if ($request->service_location_district > 0) {
             $total_partner = DB::table('owners')->where('service_location_district',$request->service_location_district)->count('id');
-        } elseif ($request->service_location_district == null) {
+        } elseif ($request->service_location_district == -1) {
             $total_partner = DB::table('owners')->whereNull('service_location_district')->count('id');
         } else {
             $total_partner = 0;
@@ -68,12 +68,13 @@ class PartnerController extends Controller
     //show create page
     public function create(){
         $districts  = District::orderBy('value','ASC')->get(); 
-        return view('quicarbd.admin.partner.create', compact('districts'));
+        $global = PartnerAppSetting::find(1);
+        return view('quicarbd.admin.partner.create', compact('districts','global'));
     }
 
     //partner store
-    public function store(Request $request){ 
-
+    public function store(Request $request)
+    { 
         $this->validate($request, [
             'name'      => 'required',
             'email'     => 'required|unique:owners,email',
@@ -220,12 +221,30 @@ class PartnerController extends Controller
         $partner                = Owner::find($id);
         $data['partner']        = $partner;
         $data['district_name']  = $partner->service_location_district;
+        $data['total_ride']     = DB::table('ride_biting')
+                                    ->leftjoin('ride_list','ride_biting.ride_id','ride_list.id')
+                                    ->where('ride_biting.owner_id', $id)
+                                    ->where('ride_list.accepted_ride_bitting_id', '!=', null)
+                                    ->count('ride_list.id');
         $data['total_car']      = Car::where('owner_id', $id)->count('id');
         $data['total_driver']   = Driver::where('owner_id', $id)->count('id');
         $data['total_car_package']      = CarPackage::where('owner_id', $id)->count('id');
         $data['total_hotel_package']    = HotelPackage::where('owner_id', $id)->count('id');
         $data['total_travel_package']   = TravelPackage::where('owner_id', $id)->count('id');
-        $data['accounts']   = DB::table('owner_account')->where('owner_id', $id)->orderBy('id','DESC')->get();
+        $data['accounts']               = DB::table('owner_account')->where('owner_id', $id)->orderBy('id','DESC')->get();
+        $data['rides']   = DB::table('ride_biting')
+                            ->leftjoin('ride_list','ride_biting.ride_id','ride_list.id')
+                            ->select('ride_biting.bit_amount','ride_biting.ride_id',
+                                'ride_biting.quicar_charge','ride_biting.you_get',
+                                'ride_biting.status','ride_list.booking_id'
+                            )
+                            ->where('ride_biting.status', 1)
+                            ->where('ride_list.accepted_ride_bitting_id', '!=', null)
+                            ->where('ride_biting.owner_id', $id)
+                            ->distinct('ride_biting.ride_id')
+                            ->orderBy('ride_biting.id','DESC')
+                            ->get();
+                           
         return view('quicarbd.admin.partner.details', $data);
     }
 

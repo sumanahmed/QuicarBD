@@ -112,3 +112,44 @@ function license_back_pic(input) {
 $("#licenseBackUpload").change(function() {
     license_back_pic(this);
 });
+
+
+//open hold status modal
+$(document).on('click', '#holdDriver', function () {
+    $('#holdModal').modal('show');
+    $('#id').val($(this).data('id'));
+    $('#owner_id').val($(this).data('owner_id'));
+    $('#c_status').val($(this).data('c_status'));
+ });
+
+ //hold status driver
+$("#sendDriverHold").click(function(){
+    
+    var id          = $('#id').val();
+    var owner_id    = $('#owner_id').val();
+    var c_status    = $('#c_status').val();
+    var reason      = $('#hold_reason').val();
+    
+    $.ajax({
+        type: 'POST',
+        url: '/admin/driver/hold-status',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            id    : id,
+            owner_id    : owner_id,
+            c_status    : c_status,
+            reason      : reason
+        },
+        success: function (response) {
+            if((response.errors)){
+                if(response.errors.message){
+                    $('.errorReason').text(response.errors.message);
+                }
+            }else{
+                toastr.success(response.message)
+                $('#holdModal').modal('hide');
+            }
+        }
+    });
+});
+

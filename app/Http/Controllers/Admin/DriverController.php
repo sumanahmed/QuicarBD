@@ -285,7 +285,7 @@ class DriverController extends Controller
                 $title  = 'Driver Pending';            
                 $msg    = 'Dear '.$partner->name.', sorry your driver ('.$driver->name.') '.' Pending. Call for help 01611822829. Thanks Team Quicar'; 
             } elseif ($request->c_status == 2) { 
-                $title  = 'Driver Cancelled';            
+                $title  = 'Driver Hold';            
                 $msg    = 'Dear '.$partner->name.', sorry your driver ('.$driver->name.') '.' Hold. Call for help 01611822829. Thanks Team Quicar'; 
             }                        
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
@@ -299,5 +299,44 @@ class DriverController extends Controller
         }
         
         return redirect()->route('driver.index')->with('message','Status update successfully');
+    }
+    
+    /**
+     * status update
+     */
+    public function holdStatus (Request $request) 
+    {      
+        $validators=Validator::make($request->all(),[
+            'reason'  => 'required',
+        ]);
+        
+        if($validators->fails()){
+            return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+        }
+        
+        try {
+
+            $driver  = Driver::find($request->id);
+            $partner = Owner::find($request->owner_id);
+
+            $driver->c_status = 2; // 2 mean Hold
+            $driver->reason   = $request->reason; // 2 mean Hold
+            $driver->update();
+            
+            $helper = new Helper(); 
+            $id     = $partner->n_key;
+            $title  = 'Driver Hold';            
+            $msg    = 'Dear '.$partner->name.', sorry your driver ('.$driver->name.')'.' Hold. Reason: '.$request->reason.'. Call for help 01611822829. Thanks Team Quicar'; 
+                      
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
+            $helper->smsSend($request->phone, $msg); // sms send
+
+        } catch (Exception $ex) {
+            return Response::json([
+                'errors' => $ex->getMessage()
+            ]);
+        }
+        
+        return response()->json();
     }
 }

@@ -4,8 +4,8 @@
 @php 
     $helper = new App\Http\Lib\Helper;
 @endphp
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <a href="{{ route('partner.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
@@ -58,7 +58,7 @@
                                         <label for="service_location_district" class="control-label mb-10">Service Location</label>                                            
                                         <select name="service_location_district" class="form-control">
                                             <option value="0">Select</option>
-                                            <option value="">Empty</option>
+                                            <option value="-1">Empty</option>
                                             @foreach($districts as $district)
                                                 <option value="{{ $district->id }}" @if(isset($_GET['service_location_district']) && $district->id == $_GET['service_location_district']) selected @endif>{{ $district->name }} </option>
                                             @endforeach
@@ -86,10 +86,10 @@
                                 <table class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Phone</th>
+                                            <th>Name & Phone</th>
                                             <th>Balance</th>
                                             <th>Percentage</th>
+                                            <th>Account Type</th>
                                             <th>Service Location</th>
                                             <th>Date & Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
@@ -97,10 +97,10 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Phone</th>
+                                            <th>Name & Phone</th>
                                             <th>Balance</th>
                                             <th>Percentage</th>
+                                            <th>Account Type</th>
                                             <th>Service Location</th>
                                             <th>Date & Time</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
@@ -114,10 +114,10 @@
                                                     $dateTime = $db_time->setTimeZone(new DateTimeZone("Asia/Dhaka"))->format('j M, Y h:i A');
                                                 @endphp
                                                 <tr class="partner-{{ $partner->id }}">
-                                                    <td>{{ $partner->name }}</td>
-                                                    <td>{{ $partner->phone }}</td>
+                                                    <td>{{ $partner->name }}<br/>{{ $partner->phone }}</td>
                                                     <td>{{ $partner->current_balance }}</td>
                                                     <td>{{ "BP-".$partner->bidding_percent.", CP-".$partner->car_package_charge.", HP-".$partner->hotel_package_charge.", TP-".$partner->travel_package_charge }}</td>
+                                                    <td>{{ ownerAccountType($partner->account_type) }}</td>
                                                     <td>{{ $partner->service_location_district != null ? $helper->getDistrict($partner->service_location_district) : '' }}</td>    
                                                     <td>{{ $dateTime }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
@@ -146,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
         </div>
     </div>
     
@@ -237,9 +237,28 @@
         </div>
     </div>
 </div>
+@php 
+    function ownerAccountType ($type) {
+        if ($type == 0) {
+            echo "Car";
+        } elseif ($type == 1) {
+            echo "Hotel";
+        } elseif ($type == 2) {
+            echo "Travel";
+        } elseif ($type == 3) {
+            echo "Car & Hotel";
+        } elseif ($type == 4) {
+            echo "Car, Hotel & Travel";
+        } elseif ($type == 5) {
+            echo "Hotel & Travel";
+        } elseif ($type == 6) {
+            echo "Car & Travel";
+        }
+    }
+@endphp
 @endsection
 @section('scripts')
-    <script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

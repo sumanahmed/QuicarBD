@@ -305,16 +305,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                            </div>                                                
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <label for="status_message" class="control-label mb-10">Status Message</label>
-                                                    <input type="text" name="status_message" value="{{ $car->status_message }}" id="status_message" class="form-control" placeholder="Enter Status Message"/>
-                                                    @if($errors->has('status_message'))
-                                                        <span class="text-danger"> {{ $errors->first('status_message') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
+                                            </div>      
                                             <div class="row" style="margin-top:10px;">
                                                 <div class="col-md-4">
                                                     <div class="form-group">

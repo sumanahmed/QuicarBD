@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\HotelPackageController;
 use App\Http\Controllers\Admin\TravelPackageController;
 use App\Http\Controllers\Admin\CarTypeController;
 use App\Http\Controllers\Admin\CarYearController;
+use App\Http\Controllers\Admin\RidePricingController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -122,6 +123,7 @@ Route::group(['prefix'=>'/admin/driver', 'middleware' => 'admin'], function(){
     Route::post('/update/{id}', [DriverController::class, 'update'])->name('driver.update');
     Route::post('/destroy', [DriverController::class, 'destroy'])->name('driver.destroy');
     Route::get('/status-update', [DriverController::class, 'statusUpdate'])->name('driver.status-update');
+    Route::post('/hold-status', [DriverController::class, 'holdStatus'])->name('driver.hold_status');
 });
 
 Route::group(['prefix'=>'/admin/property-type', 'middleware' => 'admin'], function(){
@@ -315,6 +317,16 @@ Route::group(['prefix'=>'/admin/notice', 'middleware' => 'admin'], function(){
     Route::post('/packages/update', [NoticeController::class, 'noticePackagesUpdate'])->name('notice.packages.update');
     Route::get('/partner-app', [NoticeController::class, 'noticePartnerApp'])->name('notice.partner_app');
     Route::post('/partner-app/update', [NoticeController::class, 'noticePartnerAppUpdate'])->name('notice.partner_app.update');
+});
+
+
+Route::group(['prefix'=>'/admin/pricing', 'middleware' => 'admin'], function(){
+    Route::get('/', [RidePricingController::class, 'index'])->name('pricing.index');
+    Route::get('/create', [RidePricingController::class, 'create'])->name('pricing.create');
+    Route::post('/store', [RidePricingController::class, 'store'])->name('pricing.store');
+    Route::get('/edit/{id}', [RidePricingController::class, 'edit'])->name('pricing.edit');
+    Route::post('/update/{id}', [RidePricingController::class, 'update'])->name('pricing.update');
+    Route::post('/destroy', [RidePricingController::class, 'destroy'])->name('pricing.destroy');
 });
 
 Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){

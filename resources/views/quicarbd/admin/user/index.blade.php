@@ -1,8 +1,8 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','User')
 @section('content')
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -86,7 +86,7 @@
                                                     <td>{{ $user->name }}</td>
                                                     <td>{{ $user->phone }}</td>
                                                     <td>{{ $user->email }}</td>
-                                                    <td><img src="{{ $user->img }}" style="width:100px;height:80px;" /></td>
+                                                    <td><img src="http://quicarbd.com/mobileapi/user/api/user_photo/{{ $user->img }}" style="width:100px;height:80px;" /></td>
                                                     <td>{{ $user->balance }}</td>
                                                     <td>{{ $user->cash_back_balance }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
         </div>
     </div>
     
@@ -203,5 +203,5 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset('quicarbd/admin/js/user.js') }}"></script>
+	<script src="{{ asset('quicarbd/admin/js/user.js') }}"></script>
 @endsection
