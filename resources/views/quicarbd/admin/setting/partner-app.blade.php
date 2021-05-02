@@ -117,15 +117,6 @@
                                                 </div>
                                                 <div class="col-md-4">                                        
                                                     <div class="form-group">
-                                                        <label for="whats_new_in_update" class="control-label mb-10"> Whats New in Update </label>
-                                                        <input type="text" id="whats_new_in_update" name="whats_new_in_update" value="{{ $setting->whats_new_in_update }}" class="form-control">
-                                                        @if($errors->has('whats_new_in_update'))
-                                                            <span class="text-danger"> {{ $errors->first('whats_new_in_update') }}</span>
-                                                        @endif
-                                                    </div>
-                                                </div> 
-                                                <div class="col-md-4">                                        
-                                                    <div class="form-group">
                                                         <label for="mandatory_update" class="control-label mb-10">Mandatory Update <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select name="mandatory_update" id="mandatory_update" class="form-control" required>
                                                             <option value="1" @if($setting->mandatory_update == 1) selected @endif>Yes</option>
@@ -217,7 +208,9 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">                                        
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="twitter_link" class="control-label mb-10"> Twitter Link <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="twitter_link" name="twitter_link" value="{{ $setting->twitter_link }}" class="form-control" required>
@@ -226,7 +219,7 @@
                                                         @endif
                                                     </div>
                                                 </div>       
-                                                <div class="col-md-4">                                        
+                                                <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="user_app_version_code" class="control-label mb-10"> User App Version Code <span class="text-danger" title="Required">*</span></label>
                                                         <input type="text" id="user_app_version_code" name="user_app_version_code" value="{{ $setting->user_app_version_code }}" class="form-control" required>
@@ -235,7 +228,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">                                        
+                                                <div class="col-md-3">                                        
                                                     <div class="form-group">
                                                         <label for="user_app_version_name" class="control-label mb-10"> User App Version Name</label>
                                                         <input type="text" id="user_app_version_name" name="user_app_version_name" value="{{ $setting->user_app_version_name }}" class="form-control">
@@ -244,7 +237,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="user_app_mandatory_audate" class="control-label mb-10">App Mandatory Update <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select name="user_app_mandatory_audate" id="user_app_mandatory_audate" class="form-control" required>
@@ -256,7 +249,18 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                            </div>          
+                                            </div>    
+                                            <div class="row">
+                                                <div class="col-md-6">                                        
+                                                    <div class="form-group">
+                                                        <label for="whats_new_in_update" class="control-label mb-10"> Whats New in Update </label>
+                                                        <textarea id="whats_new_in_update" name="whats_new_in_update" class="form-control">{{ $setting->whats_new_in_update }}</textarea>
+                                                        @if($errors->has('whats_new_in_update'))
+                                                            <span class="text-danger"> {{ $errors->first('whats_new_in_update') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div> 
+                                            </div>
                                             <div class="row" style="margin-top:10px;">
                                                 <div class="col-md-4">
                                                     <div class="form-group">

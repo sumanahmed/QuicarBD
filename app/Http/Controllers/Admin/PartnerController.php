@@ -351,6 +351,10 @@ class PartnerController extends Controller
             $query = $query->where('nid', $request->nid);
         }
         
+        if ($request->account_status == 2) {
+            $query = $query->where('account_status', 2);
+        } 
+        
         if ($request->account_status == 0) {
             $query = $query->where('account_status', 0)
                             ->where('nid_font_pic', '')

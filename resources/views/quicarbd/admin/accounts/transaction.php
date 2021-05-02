@@ -114,7 +114,7 @@
                                                 <td>{{ $transaction->adjust_quicar_balance }}</td>
                                                 <td>{{ $transaction->online_payment }}</td>
                                                 <td>{{ $transaction->amount }}</td>
-                                                <td>payment method</td>
+                                                <td>{{ $transaction->method }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

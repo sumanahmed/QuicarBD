@@ -117,6 +117,7 @@
                                                     <td>{{ $ride->rown_way == 0 ? 'One Way' : 'Round Way' }}</td>
                                                     <td>{{ $ride->ride_visiable_time != null ? $ride_visiable_time : '' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
+                                                        <a href="{{ route('ride.send_pending', $ride->id) }}" class="btn btn-xs btn-primary" title="Send to Pending"><i class="fa fa-arrow-left"></i></a> 
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                         <!--<a href="#" id="cancelModal" data-toggle="modal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>-->
                                                     </td>

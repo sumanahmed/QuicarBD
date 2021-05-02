@@ -74,6 +74,7 @@
                                             <th>End</th>                                     
                                             <th>Total Use</th>                                     
                                             <th>For</th>                                     
+                                            <th>Status</th>                                     
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -95,8 +96,14 @@
                                                 <td>{{ $end }}</td>
                                                 <td>{{ $coupon->total_use }}</td>
                                                 <td>{{ $coupon->spacifice_user == 1 ? $helper->getUser($coupon->user_id)." - ".$helper->getUserPhone($coupon->user_id) : 'Global' }}</td>
+                                                <td>{{ $coupon->status == 1 ? 'Active' : 'Block' }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">
                                                     <a href="{{ route('coupon.edit', $coupon->id) }}" class="btn btn-xs btn-raised btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
+                                                    @if($coupon->status == 1)
+                                                        <a href="{{ route('coupon.block', ['id' => $coupon->id, 'status' => 0]) }}" class="btn btn-xs btn-raised btn-info" title="Block"><i class="fa fa-lock"></i></a>
+                                                    @else
+                                                        <a href="{{ route('coupon.block', ['id' => $coupon->id, 'status' => 1]) }}" class="btn btn-xs btn-success btn-info" title="Block"><i class="fa fa-check"></i></a>
+                                                    @endif
                                                     <a href="#" class="btn btn-xs btn-raised btn-danger" data-toggle="modal" id="deleteCoupon" data-target="#deleteCouponModal" data-id="{{ $coupon->id }}" title="Delete"><i class="fa fa-remove"></i></a>
                                                 </td>
                                             </tr>

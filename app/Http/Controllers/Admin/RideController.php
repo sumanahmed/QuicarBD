@@ -12,6 +12,7 @@ use App\Models\RideList;
 use App\Models\UserAccount;
 use App\Models\District;
 use App\Models\City;
+use App\Models\CarType;
 use App\Models\OwnerAccount;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -61,6 +62,17 @@ class RideController extends Controller
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();
     return view('quicarbd.admin.ride.expired_ride', compact('rides','reasons'));
   }  
+  
+  /**
+    * send ride to pending from expired
+  */
+  public function sendPending($id){
+    $ride = RideList::find($id);
+    $ride->status = 0; // 0 mean pending
+    $ride->update();
+    return redirect()->back()->with('message','Ride moved to pending');
+  }  
+  
   
   /**
     * show pending ride of user
@@ -115,12 +127,13 @@ class RideController extends Controller
     $destination_district_name = District::find($ride->destination_district)->bn_name;
     $destinatin_city_name   = City::find($ride->destination_city)->bn_name;
     $destination_area       = $ride->destination_area;
-    
+    $car_type               = CarType::find($ride->car_type)->name;
+   
     $start_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
     $formattedStartTime = $start_time->format('j M, Y h:i A');
     
     $start_timeNotification = $formattedStartTime;
-    $title = "New Ride arrive on your Service Location";
+    $title = $starting_district_name." লোকেশনে ট্রিপ রিকুয়েস্ট"."(".$car_type.")";
     $body = "Pickup From : ".$starting_district_name.", ".$starting_city_name.", ".$startig_area."\nTo : ".$destination_district_name.", ".$destinatin_city_name.", ".$destination_area."\nDate:- ".$start_timeNotification;
 
     $userTitle = "আপনার ট্রিপ রিকোয়েস্ট টি একটিভ করা হয়েছে";
@@ -131,7 +144,8 @@ class RideController extends Controller
     $helper->sendSinglePartnerNotification($id, $userTitle, $userMsg); //push notification send to user
 
     $client = new Client();
-    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner".$ride->starting_district);
+    //$client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner".$ride->starting_district); //service location wise notificaiton send
+    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner"); // global notification send
     
     return redirect()->route('ride.bid_request')->with('message','Ride Approve Successfully');
   } 
@@ -147,7 +161,7 @@ class RideController extends Controller
                         'ride_list.starting_district','ride_list.starting_city','ride_list.startig_area', 
                         'ride_list.destination_district','ride_list.destination_city','ride_list.destination_area',
                         'ride_list.start_time', 'ride_list.user_id', 'ride_list.car_type', 'ride_list.rown_way',
-                        'ride_list.ride_visiable_time','users.name as user_name','users.phone as user_phone'
+                        'ride_list.ride_visiable_time','users.name as user_name','users.phone as user_phone','ride_list.max_request'
                 )
                 ->where('ride_list.status', 1)
                 ->where('ride_list.payment_status', 0)
@@ -212,10 +226,11 @@ class RideController extends Controller
       $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
     }
                 
-    $rides = $query->paginate(12);  
-
+    $rides = $query->paginate(12);
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();  
-    return view('quicarbd.admin.ride.upcoming', compact('rides','reasons'));
+    $sms   = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
+    
+    return view('quicarbd.admin.ride.upcoming', compact('rides','reasons','sms'));
   }
 
   /**
@@ -299,12 +314,13 @@ class RideController extends Controller
   */
   public function bidding($id){
     $biddings = DB::table('ride_biting')
-                  ->leftjoin('cars','ride_biting.car_id','cars.id')
                   ->leftjoin('owners','ride_biting.owner_id','owners.id')
                   ->leftjoin('drivers','ride_biting.driver_id','drivers.id')
+                  ->leftjoin('cars','ride_biting.car_id','cars.id')
                   ->select('drivers.name as driver_name','drivers.phone as driver_phone',
-                          'owners.name as owner_name','owners.phone as owner_phone',
-                          'ride_biting.*','cars.carRegisterNumber')
+                          'owners.name as owner_name','owners.phone as owner_phone','ride_biting.owner_id',
+                          'ride_biting.*','cars.carRegisterNumber','cars.carModel','cars.carYear'
+                    )
                   ->where('ride_biting.ride_id', $id)
                   ->orderBy('ride_biting.id','DESC')
                   ->get();
@@ -437,6 +453,29 @@ class RideController extends Controller
             $parnterAccount->owner_id       = $bid->owner_id;
             $parnterAccount->status         = 1;
             $parnterAccount->save();
+            
+            $getAccount  = DB::table('user_account')
+                            ->join('ride_biting','user_account.history_id','ride_biting.id')
+                            ->select('user_account.amount')
+                            ->where('user_account.type', 0)
+                            ->where('user_account.income_from', 1)
+                            ->where('ride_biting.history_id', $bid->id)
+                            ->where('user_account.user_id', $ride->user_id)
+                            ->first();
+     
+            $userAccount = new UserAccount();
+            $userAccount->amount          = $getAccount->amount;
+            $userAccount->adjust_cashback = 0;
+            $userAccount->adjust_quicar_balance = 0;
+            $userAccount->discount        = 0;
+            $userAccount->online_payment  = $getAccount->amount;
+            $userAccount->tnx_id          = time();
+            $userAccount->type            = 1; // 1 credit, user income
+            $userAccount->income_from     = 1; // 1 mean ride
+            $userAccount->history_id      = $ride->id;
+            $userAccount->reason          = 'Ride cancel amount back in user account';
+            $userAccount->user_id         = $ride->user_id;
+            $userAccount->save();
           }
         }
         
@@ -569,6 +608,68 @@ class RideController extends Controller
         'message'   => "Notification & SMS send successfully",
     ]);
     
+  }  
+  
+  /**
+   * bid upcoming notification send
+   */
+  public function upcomingNotificationSend (Request $request) 
+  { 
+    $validators = Validator::make($request->all(),[
+        'ride_id'   => 'required',
+        'user_id'   => 'required',
+        'owner_id'  => 'required',
+        'title'     => 'required',
+        'message'   => 'required',
+        'for'       => 'required',
+        'notification' => 'required',
+    ]);
+
+    if($validators->fails()){
+        return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+    }
+    
+    $helper = new Helper();
+    $title  = $request->title;
+    $msg    = $request->message; 
+
+    if ($request->for == 1) { // 1 mean user
+        $user = DB::table('users')->select('id','n_key','name','phone')->where('id', $request->user_id)->first();
+        
+        if($request->notification == 1){
+            
+            $helper->smsNotification($type=1, $request->user_id, $title, $msg); // send notification, 1=user
+            $helper->sendSinglePartnerNotification($user->n_key, $title, $msg); //push notification send
+            
+        } elseif ($request->notification == 2){
+            
+            $helper->smsNotification($type=1, $request->user_id, $title, $msg); // send notification, 1=user
+            $helper->sendSinglePartnerNotification($user->n_key, $title, $msg); //push notification send
+            $helper->smsSend($user->phone, $msg); // sms send
+        }
+    } elseif ($request->for == 2) { // 2 mean partner
+    
+        $owner = DB::table('owners')->select('owners.phone','owners.n_key')->first();
+              
+        if($request->notification == 1){
+            
+            $helper->smsNotification($type=2, $request->owner_id, $title, $msg); // send notification, 2=partner
+            $helper->sendSinglePartnerNotification($owner->n_key, $title, $msg); //push notification send
+            
+        } elseif ($request->notification == 2){
+            
+            $helper->smsNotification($type=2, $request->owner_id, $title, $msg); // send notification, 2=partner
+            $helper->sendSinglePartnerNotification($owner->n_key, $title, $msg); //push notification send
+            $helper->smsSend($owner->phone, $msg); // sms send
+        }
+    	
+    }
+    
+    return Response::json([
+        'status'    => 200,
+        'message'   => "Notification & SMS send successfully",
+    ]);
+    
   }
     
   /**
@@ -639,5 +740,31 @@ class RideController extends Controller
     
     return response()->json();
     
+  } 
+  
+  /**
+   * Bid Request Quantity Update
+   */
+  public function bidRequestQtyUpdate(Request $request) 
+  {
+    $validators = Validator::make($request->all(),[
+        'ride_id'        => 'required',
+        'new_max_request'=> 'required'
+    ]);
+    
+    if($validators->fails()){
+        return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+    }
+    
+    try {
+        
+        $ride               = RideList::find($request->ride_id);
+        $ride->max_request  = $request->new_max_request;
+        $ride->update();
+        
+    } catch (Exception $ex) {
+        $ex->getMessage();
+    }
+    return response()->json();
   }
 }

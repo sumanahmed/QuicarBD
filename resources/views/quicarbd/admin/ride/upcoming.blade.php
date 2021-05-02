@@ -115,7 +115,7 @@
                                                     <td>{{ $ride->car_type_name }}</td>
                                                     <td>{{ $ride->carRegisterNumber }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="#" class="btn btn-xs btn-primary" id="rideSendNotification" data-toggle="modal" title="Notification" data-user_id="{{ $ride->user_id }}" data-ride_id="{{ $ride->id }}"><i class="fa fa-bell"></i></a> 
+                                                        <a href="#" class="btn btn-xs btn-primary" id="upcomingRideSendNotification" data-toggle="modal" title="Notification" data-user_id="{{ $ride->user_id }}"  data-owner_id="{{ $ride->owner_id }}" data-ride_id="{{ $ride->id }}"><i class="fa fa-bell"></i></a> 
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                         <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                     </td>
@@ -180,7 +180,7 @@
 </div>
 
 <!-- Notification Modal -->
-<div id="rideSendNotificationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div id="upcomingRideSendNotificationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -203,6 +203,7 @@
                         <input type="text" name="title" id="title" class="form-control"placeholder="Enter Title" required>
                         <input type="hidden" name="ride_id" id="ride_id" />
                         <input type="hidden" name="user_id" id="user_id" />
+                        <input type="hidden" name="owner_id" id="owner_id" />
                         <span class="errorTitle text-danger text-bold"></span>
                     </div>
                     <div class="form-group">
@@ -235,7 +236,7 @@
                 <button type="button" class="btn btn-xs btn-danger" id="smsDelete">Delete</button>
                 <button type="button" class="btn btn-xs btn-success" id="smsDraftSave">Save as Draft</button>
                 <button type="button" class="btn btn-xs btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-xs btn-primary" id="rideNotificationSend">Send</button>
+                <button type="button" class="btn btn-xs btn-primary" id="upcomingRideNotificationSend">Send</button>
             </div>
         </div>
     </div>

@@ -189,3 +189,52 @@ $("#rideNotificationSend").click(function(){
         }
     });
 });
+
+
+//open notification send modal
+$(document).on('click', '#upcomingRideSendNotification', function () {
+    $('#upcomingRideSendNotificationModal').modal('show');
+    $('#ride_id').val($(this).data('ride_id'));
+    $('#user_id').val($(this).data('user_id'));
+    $('#owner_id').val($(this).data('owner_id'));
+ });
+
+//notification send
+$("#upcomingRideNotificationSend").click(function(){
+    
+    var ride_id = $('#ride_id').val();
+    var user_id = $('#user_id').val();
+    var owner_id= $('#owner_id').val();
+    var title   = $('#title').val();
+    var message = $('.sms_message').val();
+    var nfor    = $('#for option:selected').val();
+    var notification= $('input[name=notification]:checked').val();
+    
+    $.ajax({
+        type: 'POST',
+        url: '/admin/ride/upcoming/notification/send',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            ride_id     : ride_id,
+            user_id     : user_id,
+            owner_id    : owner_id,
+            title       : title,
+            message     : message,
+            for         : nfor,
+            notification: notification
+        },
+        success: function (response) {
+            if((response.errors)){
+                if(response.errors.title){
+                    $('.errorTitle').text(response.errors.title);
+                }
+                if(response.errors.message){
+                    $('.errorMessage').text(response.errors.message);
+                }
+            }else{
+                toastr.success(response.message)
+                $('#upcomingRideSendNotificationModal').modal('hide');
+            }
+        }
+    });
+});

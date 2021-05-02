@@ -201,6 +201,7 @@ Route::group(['prefix'=>'/admin/coupon', 'middleware' => 'admin'], function(){
     Route::post('/store', [CouponController::class, 'store'])->name('coupon.store');
     Route::get('/edit/{id}', [CouponController::class, 'edit'])->name('coupon.edit');
     Route::post('/update/{coupon_id}', [CouponController::class, 'update'])->name('coupon.update');
+    Route::get('/block', [CouponController::class, 'block'])->name('coupon.block');
     Route::post('/destroy', [CouponController::class, 'destroy'])->name('coupon.destroy');
     Route::get('/used-list', [CouponController::class, 'usedList'])->name('coupon.usedList');
 });
@@ -331,6 +332,7 @@ Route::group(['prefix'=>'/admin/pricing', 'middleware' => 'admin'], function(){
 
 Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::get('/bid-expired-ride', [RideController::class, 'bidExpiredRide'])->name('ride.bid_expired_ride');
+    Route::get('/send-pending/{id}', [RideController::class, 'sendPending'])->name('ride.send_pending');
     Route::get('/pending', [RideController::class, 'pending'])->name('ride.pending');
     Route::get('/approve/{id}', [RideController::class, 'approve'])->name('ride.approve');
     Route::get('/bid-request', [RideController::class, 'bidRequest'])->name('ride.bid_request');
@@ -342,6 +344,7 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');    
     Route::post('/update-visible-time', [RideController::class, 'updateVisibleTime'])->name('ride.update_visible_time');    
     Route::post('/notification/send', [RideController::class, 'notificationSend'])->name('ride.notification_send');    
+    Route::post('/upcoming/notification/send', [RideController::class, 'upcomingNotificationSend'])->name('ride.upcoming_notification_send');    
     Route::post('/update-bid-amount', [RideController::class, 'updateBidAmount'])->name('ride.update_bid_amount');    
     Route::post('/bid-cancel', [RideController::class, 'bidCancel'])->name('ride.bid_cancel');    
 });

@@ -210,6 +210,19 @@ class CouponController extends Controller
             return redirect()->back()->with('error_message','Sorry, something went wrong');
         }
     }
+    
+    //update
+    public function block(Request $request)
+    {
+        $coupon         = CouponList::find($request->id);
+        $coupon->status = $request->status;
+        
+        if($coupon->update()){
+            return redirect()->route('coupon.index',['coupon_for' => $coupon->coupon_for])->with('message','Coupon blocked');
+        }else{
+            return redirect()->back()->with('error_message','Sorry, something went wrong');
+        }
+    }
 
     //destroy
     public function destroy(Request $request){

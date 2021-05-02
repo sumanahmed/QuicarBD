@@ -1,11 +1,3 @@
-<?php
-    $pendingDriver = \App\Models\Driver::where('c_status', 0)->count('id');
-    $pendingCar = \App\Models\Car::where('status', 0)->count('id');
-    $pendingCarPackage = \App\Models\CarPackage::where('status', 0)->count('id');
-    $pendingHotelPackage = \App\Models\HotelPackage::where('status', 0)->count('id');
-    $pendingPartner = \App\Models\Owner::where('account_status', 0)->count('id');
-    $pendingRide = \App\Models\RideList::where('status', 0)->count('id');
-?>
 
 <div class="fixed-sidebar-left">
     <ul class="nav navbar-nav side-nav nicescroll-bar">
@@ -51,32 +43,15 @@
             <a href="{{ route('user.user_log_list') }}"><div class="pull-left"><i class="fa fa-history mr-20"></i><span class="right-nav-text">User Log</span></div><div class="pull-right"></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a href="{{ route('driver.index') }}"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Driver</span></div><div class="pull-right"></div>
-                @if($pendingDriver > 0)
-                    <div class="pull-right"><span class="label label-warning">{{ $pendingDriver }}</span></div>
-                @endif
-                <div class="clearfix"></div>
-            </a>
+            <a href="{{ route('driver.index') }}"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Driver</span></div><div class="pull-right"></div></a>
         </li>
         <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#partners"><div class="pull-left"><i class="fa fa-user mr-20"></i><span class="right-nav-text">Partner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="partners" class="collapse collapse-level-1 two-col-list">
-                <li>
-                    <a href="{{ route('partner.create') }}">Add New</a>
-                </li>
-                <li>
-                    <a href="{{ route('partner.index') }}">All Partner </a>
-                </li>
-                <li>
-                    <a href="{{ route('partner.verification') }}">Partner Verification
-                        @if($pendingPartner > 0)
-                            <div class="pull-right"><span class="label label-warning">{{ $pendingPartner }}</span></div>
-                        @endif
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('partner.account_type_change_request') }}">Account Type Change Request</a>
-                </li>
+                <li><a href="{{ route('partner.create') }}">Add New</a></li>
+                <li><a href="{{ route('partner.index') }}">All Partner </a></li>
+                <li><a href="{{ route('partner.verification') }}">Partner Verification</a></li>
+                <li><a href="{{ route('partner.account_type_change_request') }}">Account Type Change Request</a></li>
             </ul>
         </li>
         <li>
@@ -125,11 +100,7 @@
                             <a href="{{ route('car.create') }}">Add New Car</a>
                         </li>
                         <li>
-                            <a href="{{ route('car.index') }}">All Car 
-                            @if($pendingCar > 0)
-                                <div class="pull-right"><span class="label label-warning">{{ $pendingCar }}</span></div>
-                            @endif
-                            </a>
+                            <a href="{{ route('car.index') }}">All Car</a>
                         </li>
                         <li>
                             <a href="{{ route('car.expired') }}">Expired Car</a>
@@ -198,11 +169,7 @@
                             <a href="{{ route('car_package.create') }}">Add New</a>
                         </li>
                         <li>
-                            <a href="{{ route('car_package.index') }}">All 
-                                @if($pendingCarPackage > 0)
-                                    <div class="pull-right"><span class="label label-warning">{{ $pendingCarPackage }}</span></div>
-                                @endif
-                            </a>
+                            <a href="{{ route('car_package.index') }}">All</a>
                         </li>
                     </ul>
                 </li>
@@ -213,11 +180,7 @@
                             <a href="{{ route('hotel_package.create') }}">Add New</a>
                         </li>
                         <li>
-                            <a href="{{ route('hotel_package.index') }}">All 
-                                @if($pendingHotelPackage > 0)
-                                    <div class="pull-right"><span class="label label-warning">{{ $pendingHotelPackage }}</span></div>
-                                @endif
-                            </a>
+                            <a href="{{ route('hotel_package.index') }}">All</a>
                         </li>
                     </ul>
                 </li>
@@ -265,13 +228,7 @@
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#carRent"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Car Rent</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="carRent" class="collapse collapse-level-1 two-col-list">
                 <li><a href="{{ route('ride.bid_expired_ride') }}">Expired Request</a></li>
-                <li>
-                    <a href="{{ route('ride.pending') }}">Pending
-                        @if($pendingRide > 0)
-                            <div class="pull-right"><span class="label label-warning">{{ $pendingRide }}</span></div>
-                        @endif
-                    </a>
-                </li>
+                <li><a href="{{ route('ride.pending') }}">Pending</a></li>
                 <li><a href="{{ route('ride.bid_request') }}">Bid Request</a></li>
                 <li><a href="{{ route('ride.upcoming') }}">Upcoming Ride</a></li>
                 <li><a href="{{ route('ride.complete') }}">Completed Trip</a></li>

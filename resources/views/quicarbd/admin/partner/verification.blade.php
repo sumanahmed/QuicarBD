@@ -55,7 +55,8 @@
                                         <select name="account_status" class="form-control">
                                             <option value="100">Select</option>
                                             <option value="0" @if(isset($_GET['account_status']) && $_GET['account_status'] == 0) selected @endif>Pending</option>    
-                                            <option value="5" @if(isset($_GET['account_status']) && $_GET['account_status'] == 5) selected @endif>Waiting for Approval</option>    
+                                            <option value="5" @if(isset($_GET['account_status']) && $_GET['account_status'] == 5) selected @endif>Waiting for Approval</option> 
+                                            <option value="2" @if(isset($_GET['account_status']) && $_GET['account_status'] == 2) selected @endif>Hold</option>    
                                         </select>
                                     </div>
                                 </div> 
@@ -98,7 +99,7 @@
                                             @foreach($partners as $partner)
                                                 @php 
                                                     $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $partner->created_at, new DateTimeZone("UTC"));
-                                                    $dateTime = $db_time->setTimeZone(new DateTimeZone("Asia/Dhaka"))->format('j M, Y h:i A');
+                                                    $dateTime = $db_time->format('j M, Y h:i A');
                                                 @endphp
                                                 <tr class="partner-{{ $partner->id }}">
                                                     <td>{{ $partner->name }}</td>
