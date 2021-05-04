@@ -44,6 +44,11 @@
                                     </div>
                                 </div> 
                                 <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="balance" class="control-label mb-10">Balance</label>                                            
+                                        <input type="text" name="balance" @if(isset($_GET['balance'])) value="{{ $_GET['balance'] }}" @endif placeholder="Balance" class="form-control">
+                                    </div>
+                                </div>
                                 <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>

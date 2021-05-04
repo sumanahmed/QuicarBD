@@ -38,8 +38,8 @@
     $current_date_time = \Carbon\Carbon::now()->toDateTimeString();
     
 @endphp
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-md-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -207,8 +207,8 @@
                         </div>
                     </div>
                 </div>
-            </div>	
-            @if($ride->status == 4)
+            </div>  
+            @if($ride->status == 4 && $ride->accepted_ride_bitting_id != null)
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
                         <div class="pull-left">
@@ -274,7 +274,7 @@
                     </div>
                 </div>
             @endif
-            @if($ride->start_time < $current_date_time) 
+            @if($ride->accepted_ride_bitting_id != null && $ride->start_time < $current_date_time) 
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
                         <div class="pull-left">
@@ -315,7 +315,7 @@
                         </div>
                     </div>
                 </div>
-            @endif	
+            @endif  
             @if($ride->status == 2) 
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
@@ -419,7 +419,7 @@
                         </div>
                     </div>
                 </div>
-            @endif	
+            @endif  
             
             @php 
                 $bittings = \App\Models\RideBiting::select('ride_biting.*','cars.carRegisterNumber',
@@ -490,7 +490,9 @@
 </div>
 @php 
     function getStatus($status) {
-       if ($status == 1) {
+       if ($status == 0) {
+        echo 'Pending';
+       } elseif ($status == 1) {
         echo 'Waiting for Bid';
        } else if ($status == 2) {
         echo 'Cancel Request';

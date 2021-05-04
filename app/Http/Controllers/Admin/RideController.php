@@ -17,12 +17,13 @@ use App\Models\OwnerAccount;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Jobs\SendSmsNotification;
+use App\Models\CouponList;
+use App\Models\CouponUsedList;
 use Carbon\Carbon;
 use Validator;
 use Response;
 use DateTime;
 use DateTimeZone;
-
 use DB;
 
 class RideController extends Controller
@@ -147,13 +148,188 @@ class RideController extends Controller
     //$client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner".$ride->starting_district); //service location wise notificaiton send
     $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner"); // global notification send
     
-    return redirect()->route('ride.bid_request')->with('message','Ride Approve Successfully');
+    return redirect()->back()->with('message','Ride Approve Successfully');
+  } 
+  
+  
+  /**
+    * user ride approve from admin panel
+  */
+  public function userApprove(Request $request)
+  {
+    $validators = Validator::make($request->all(),[
+        'ride_id' => 'required',
+        'bid_id'  => 'required',
+        'online_balance'    => 'required',
+        'user_balance'      => 'required',
+        'cashback_balance'  => 'required',
+        'coupon_used'  => 'required',
+        'coupon_code'  => 'required',
+        'tnx_id'  => 'required',
+        'method'  => 'required',
+    ]);
+    
+    if($validators->fails()){
+        return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+    }
+    
+    $ride = RideList::find($request->ride_id);
+    $bid  = RideBiting::find($request->bid_id);
+    
+    $booking_id     = "QR".time();
+    $current_time   = date("Y-m-d H:i:s");
+    $final_amount   = ($bid->quicar_charge + ($bid->quicar_charge * (3/100)));
+    $amount         = ($request->online_balance + $request->user_balance + $request->cashback_balance);
+    
+    if ($amount > $final_amount) {
+        return Response::json([
+            'status'    => 403,
+            'data'      => "Amount not match"
+        ]);
+    }
+    
+    if ($request->coupon_used == 1) {
+        $coupon = CouponList::select('id','amount','type')->where('coupon', $request->coupon_code)->first();
+    } 
+    
+    DB::beginTransaction();
+    
+    try {
+    
+        $bid->status = 1;
+        $bid->accepted_timeing = $current_time;
+        $bid->update();
+        
+        $ride->status                   = 4;
+        $ride->accepted_ride_bitting_id = $bid->id;
+        $ride->accepted_bitting_time    = $current_time;
+        $ride->payment_status           = 1;
+        $ride->payment_complete_time    = $current_time;
+        $ride->booking_id               = $booking_id;
+        $ride->tnx_id                   = $request->tnx_id;
+        $ride->update();
+        
+        $userAcc                        = new UserAccount();
+        $userAcc->amount                = $amount;
+        $userAcc->adjust_cashback       = $request->cashback_balance;
+        $userAcc->adjust_quicar_balance = $request->user_balance;
+        $userAcc->discount              = $request->coupon_used == 1 ? $coupon->amount : 0;
+        $userAcc->online_payment        = $request->online_balance;
+        $userAcc->tnx_id                = $request->tnx_id;
+        $userAcc->booking_id            = $booking_id;
+        $userAcc->type                  = 0; //debit
+        $userAcc->income_from           = 1; //ride
+        $userAcc->history_id            = $ride->id; //ride
+        $userAcc->reason                = "Car Rent advance payment";
+        $userAcc->advance_payment       = 1;
+        $userAcc->user_id               = $ride->user_id;
+        $userAcc->method                = $ride->method;
+        $userAcc->save();
+        
+        if ($request->user_balance > 0) {
+            
+            $user_balance = User::find($ride->user_id);
+            $user_balance->balance = ($user_balance->balance - $request->user_balance);
+            $user_balance->update();
+            
+            $user_acc                        = new UserAccount();
+            $user_acc->amount                = $request->user_balance;
+            $user_acc->adjust_cashback       = 0;
+            $user_acc->adjust_quicar_balance = 0;
+            $user_acc->discount              = 0;
+            $user_acc->online_payment        = 0;
+            $user_acc->tnx_id                = "UB".time();
+            $user_acc->booking_id            = $booking_id;
+            $user_acc->type                  = 0; //debit
+            $user_acc->income_from           = 1; //ride
+            $user_acc->history_id            = $ride->id; //ride
+            $user_acc->reason                = "Quicar Credit Expense";
+            $user_acc->user_id               = $ride->user_id;
+            $user_acc->save();
+        }     
+        
+        if ($request->cashback_balance > 0) {
+            
+            $user_balance = User::find($ride->user_id);
+            $user_balance->cash_back_balance = ($user_balance->cash_back_balance - $request->cashback_balance);
+            $user_balance->update();
+            
+            $user_acc                        = new UserAccount();
+            $user_acc->amount                = $request->cashback_balance;
+            $user_acc->adjust_cashback       = 0;
+            $user_acc->adjust_quicar_balance = 0;
+            $user_acc->discount              = 0;
+            $user_acc->online_payment        = 0;
+            $user_acc->tnx_id                = "CB".time();
+            $user_acc->booking_id            = $booking_id;
+            $user_acc->type                  = 0; //debit
+            $user_acc->income_from           = 1; //ride
+            $user_acc->history_id            = $ride->id; //ride
+            $user_acc->reason                = "CashBack reduce";
+            $user_acc->user_id               = $ride->user_id;
+            $user_acc->save();
+        }
+        
+        if ($request->coupon_used == 1) {
+            $coupon_used                = new CouponUsedList();
+            $coupon_used->coupon_id     = $coupon->id;
+            $coupon_used->used_user_id  = 1;
+            $coupon_used->save();
+        }
+        
+        $bittings = RideBiting::select('id')->where('accepted_timeing', null)->where('ride_id', $ride->id)->get();
+        foreach ($bittings as $bitting) {
+            $tmpBid = RideBiting::find($bitting->id);
+            $tmpBid->status = 4;
+            $tmpBid->update();
+        }
+        
+        DB::commit();
+        
+    } catch (Exception $ex) {
+        
+        DB::rollback();
+        
+        $ex->getMessage();
+    }
+    
+    $ride->status = 4;
+    $ride->update();
+    
+    $starting_district_name = District::find($ride->starting_district)->bn_name;
+    $starting_city_name     = City::find($ride->starting_city)->bn_name;
+    $startig_area           = $ride->startig_area;
+    $destination_district_name = District::find($ride->destination_district)->bn_name;
+    $destinatin_city_name   = City::find($ride->destination_city)->bn_name;
+    $destination_area       = $ride->destination_area;
+    $car_type               = CarType::find($ride->car_type)->name;
+   
+    $start_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
+    $formattedStartTime = $start_time->format('j M, Y h:i A');
+    
+    $start_timeNotification = $formattedStartTime;
+    $title = $starting_district_name." লোকেশনে ট্রিপ রিকুয়েস্ট"."(".$car_type.")";
+    $body = "Pickup From : ".$starting_district_name.", ".$starting_city_name.", ".$startig_area."\nTo : ".$destination_district_name.", ".$destinatin_city_name.", ".$destination_area."\nDate:- ".$start_timeNotification;
+
+    $userTitle = "আপনার ট্রিপ রিকোয়েস্ট টি একটিভ করা হয়েছে";
+    $userMsg   = "পার্টনার এর ভাড়ার অফারগুলো দেখতে অ্যাপ এ প্রবেশ করুন। মাত্র ১০% অ্যাডভান্স করে বুকিং করতে পারবেন যেকোনো গাড়ি।";
+    
+    $id     = User::find($ride->user_id)->n_key;
+    $helper = new Helper();
+    $helper->sendSinglePartnerNotification($id, $userTitle, $userMsg); //push notification send to user
+
+    $client = new Client();
+    //$client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner".$ride->starting_district); //service location wise notificaiton send
+    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner"); // global notification send
+    
+    return redirect()->back()->with('message','Ride Approve Successfully');
   } 
   
   /**
     * show bid request
   */
-  public function bidRequest(Request $request){
+  public function bidRequest(Request $request)
+  {
     $current_date_time = Carbon::now()->toDateTimeString(); 
     $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
@@ -191,7 +367,8 @@ class RideController extends Controller
   /**
     * show upcoming bid ridesr
   */
-  public function upcoming(Request $request){
+  public function upcoming(Request $request)
+  {
     $current_date_time = Carbon::now()->toDateTimeString(); 
     $query = DB::table('ride_list')
             ->join('users','ride_list.user_id','users.id')
@@ -236,7 +413,8 @@ class RideController extends Controller
   /**
     * show complete rides
   */
-  public function complete(Request $request){
+  public function complete(Request $request)
+  {
     $current_date_time = Carbon::now()->toDateTimeString();
     $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
@@ -276,7 +454,8 @@ class RideController extends Controller
   /**
     * show cancel rides
   */
-  public function cancel(Request $request){ 
+  public function cancel(Request $request)
+  { 
     $query = DB::table('ride_list')
                   ->join('users','ride_list.user_id','users.id')
                   ->leftjoin('bit_cancel_list','ride_list.cancellation_id','bit_cancel_list.id')
@@ -312,7 +491,8 @@ class RideController extends Controller
   /**
     * show upcoming bid rides
   */
-  public function bidding($id){
+  public function bidding($id)
+  {
     $biddings = DB::table('ride_biting')
                   ->leftjoin('owners','ride_biting.owner_id','owners.id')
                   ->leftjoin('drivers','ride_biting.driver_id','drivers.id')
@@ -324,7 +504,7 @@ class RideController extends Controller
                   ->where('ride_biting.ride_id', $id)
                   ->orderBy('ride_biting.id','DESC')
                   ->get();
-                      
+    
     return view('quicarbd.admin.ride.bidding', compact('biddings'));
   }
 
@@ -459,10 +639,9 @@ class RideController extends Controller
                             ->select('user_account.amount')
                             ->where('user_account.type', 0)
                             ->where('user_account.income_from', 1)
-                            ->where('ride_biting.history_id', $bid->id)
-                            ->where('user_account.user_id', $ride->user_id)
+                            ->where('user_account.tnx_id', $ride->tnx_id)
                             ->first();
-     
+
             $userAccount = new UserAccount();
             $userAccount->amount          = $getAccount->amount;
             $userAccount->adjust_cashback = 0;

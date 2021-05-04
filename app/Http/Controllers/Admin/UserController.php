@@ -35,6 +35,10 @@ class UserController extends Controller
         
         if ($request->phone) {
             $query = $query->where('phone', $request->phone);
+        }  
+        
+        if ($request->balance) {
+            $query = $query->where('balance', $request->balance);
         }
         
         $users = $query->paginate(12);

@@ -24,12 +24,12 @@ class CarController extends Controller
 {
     //show all cars
     public function index(Request $request)
-    {   
+    { 
         $query = Car::leftjoin('owners','owners.id','cars.owner_id')
                     ->select('cars.*','owners.name as owner_name','owners.phone as owner_phone')
                     ->orderBy('cars.id','DESC');
 
-        if ($request->carType && $request->carType != 0) {
+        if ($request->carType) { 
             $query = $query->where('cars.carType', 'like', "{$request->carType}%");
         }
 
@@ -57,17 +57,17 @@ class CarController extends Controller
             $query = $query->where('cars.status', $request->status);
         }
         
-        if ($request->phone) { 
+        if ($request->phone != null) { 
             $query = $query->where('owners.phone', $request->phone);
         }
         
-        if ($request->carType) { 
+        if (isset($request->carType)) { 
             $total_car_type_car = DB::table('cars')->where('carType', $request->carType)->count('id'); 
         } else {
             $total_car_type_car = 0;
         }
 
-        $cars = isset($request->perPage) ? $query->paginate($request->perPage) : $query->paginate(10);
+        $cars = $query->paginate(12);
 
         $types  = CarType::all();
         $years  = CarYear::all();

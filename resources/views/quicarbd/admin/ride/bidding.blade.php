@@ -90,6 +90,7 @@
                                                     <a href="{{ route('ride.details', $bidding->ride_id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     <a href="#" id="bidAmountChange" data-toggle="modal" data-id="{{ $bidding->id }}" data-bit_amount="{{ $bidding->bit_amount }}" data-quicar_charge="{{ $bidding->quicar_charge }}" data-you_get="{{ $bidding->you_get }}" class="btn btn-xs btn-primary" title="Cancel"><i class="fa fa-usd"></i></a>
                                                     <a href="#" id="bidCancelModal" data-toggle="modal" data-id="{{ $bidding->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
+                                                    <a href="#" id="showRideApprove" data-toggle="modal" data-bid_id="{{ $bidding->id }}" data-ride_id="{{ $bidding->ride_id }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -102,6 +103,57 @@
             </div>	
         </div>
     </div>       
+</div>
+<div class="modal fade" id="rideApproveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="exampleModalLabel1">User Ride Approve</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="online_balance" class="control-label mb-10">Online Balance <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <input type="text" id="online_balance" class="form-control" value="0" required>
+                        <input type="hidden" id="bid_id" />
+                        <input type="hidden" id="ride_id" />
+                    </div>
+                    <div class="form-group">
+                        <label for="user_balance" class="control-label mb-10">User Balance  <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <input type="text" id="user_balance" class="form-control" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cashback_balance" class="control-label mb-10">Cashback Balance  <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <input type="text" id="cashback_balance" class="form-control" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="coupon_used" class="control-label mb-10">Coupon Used <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <select id="coupon_used" class="form-control"required>
+                            <option value="0">No</option>    
+                            <option value="1">Yes</option>    
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:none">
+                        <label for="coupon_code" class="control-label mb-10">Coupon Code</label>
+                        <input type="text" id="coupon_code" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="tnx_id" class="control-label mb-10">Tnx ID <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <input type="text" id="tnx_id" class="form-control" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="method" class="control-label mb-10">Payment Method <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <input type="text" id="method" class="form-control" value="0" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="rideApprove">Update</button>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal fade" id="bidAmountChangeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
     <div class="modal-dialog" role="document">
