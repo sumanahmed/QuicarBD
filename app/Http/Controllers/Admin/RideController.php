@@ -641,6 +641,9 @@ class RideController extends Controller
                             ->where('user_account.income_from', 1)
                             ->where('user_account.tnx_id', $ride->tnx_id)
                             ->first();
+                            
+            $user->balance = ($user->balance + $getAccount->amount);
+            $user->update();
 
             $userAccount = new UserAccount();
             $userAccount->amount          = $getAccount->amount;
