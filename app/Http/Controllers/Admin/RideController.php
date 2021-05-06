@@ -590,7 +590,7 @@ class RideController extends Controller
             $interval   = floor(($diff-($fullDays*60*60*24))/(60*60)); 
       
             if ($interval > 24) {
-                $amount = ($bid->bit_amount * (50/100));
+                $amount = $bid->bit_amount - ($bid->bit_amount * (50/100));
             } else {
                 $amount = $bid->bit_amount;
             }
