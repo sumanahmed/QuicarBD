@@ -60,6 +60,17 @@
                                     </div>
                                 </div> 
                                 <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="car_type" class="control-label mb-10">Car Type</label>                                            
+                                        <select name="car_type" class="form-control">
+                                            <option value="0">Select</option>
+                                            @foreach($car_types as $car_type)
+                                                <option value="{{ $car_type->id }}" @if(isset($_GET['car_type']) && $_GET['car_type'] == $car_type->id) selected @endif>{{ $car_type->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                                     </div>

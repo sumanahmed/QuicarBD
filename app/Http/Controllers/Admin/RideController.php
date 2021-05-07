@@ -469,6 +469,10 @@ class RideController extends Controller
                 
     if ($request->phone) { 
       $query = $query->where('users.phone', $request->phone);
+    }   
+    
+    if ($request->car_type) { 
+      $query = $query->where('ride_list.car_type', $request->car_type);
     }    
     
     if (isset($request->payment_status) && $request->payment_status != 10000) { 
@@ -484,8 +488,9 @@ class RideController extends Controller
     }
                 
     $rides = $query->paginate(12);  
+    $car_types = DB::table("car_types")->orderBy('name','ASC')->get();
 
-    return view('quicarbd.admin.ride.cancel', compact('rides'));
+    return view('quicarbd.admin.ride.cancel', compact('rides','car_types'));
   }
 
   /**
