@@ -361,7 +361,10 @@
                     <a href="{{ route('accounts.summary') }}">Summary</a>
                 </li>
                 <li>
-                    <a href="{{ route('accounts.transaction') }}">Transactions</a>
+                    <a href="{{ route('accounts.transaction') }}">All Transactions</a>
+                </li>
+                <li>
+                    <a href="{{ route('accounts.online_transaction') }}">Online Transactions</a>
                 </li>
                 <li>
                     <a href="{{ route('accounts.refund') }}">Refund</a>

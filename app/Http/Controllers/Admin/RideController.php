@@ -12,6 +12,7 @@ use App\Models\RideList;
 use App\Models\UserAccount;
 use App\Models\District;
 use App\Models\City;
+use App\Models\Car;
 use App\Models\CarType;
 use App\Models\OwnerAccount;
 use GuzzleHttp\Client;
@@ -78,7 +79,8 @@ class RideController extends Controller
   /**
     * show pending ride of user
   */
-  public function pending(Request $request){
+  public function pending(Request $request)
+  {
     $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
                 ->select('ride_list.id','ride_list.created_at',
@@ -209,6 +211,25 @@ class RideController extends Controller
         $ride->tnx_id                   = $request->tnx_id;
         $ride->update();
         
+        
+        if ($request->online_balance > 0) {
+            
+            $user_acc                        = new UserAccount();
+            $user_acc->amount                = $request->online_balance;
+            $user_acc->adjust_cashback       = 0;
+            $user_acc->adjust_quicar_balance = 0;
+            $user_acc->discount              = 0;
+            $user_acc->online_payment        = $request->online_balance;
+            $user_acc->tnx_id                = "CB".time();
+            $user_acc->booking_id            = $booking_id;
+            $user_acc->type                  = 1; //credit
+            $user_acc->income_from           = 1; //ride
+            $user_acc->history_id            = $ride->id; //ride
+            $user_acc->reason                = "Online Credit add for Ride";
+            $user_acc->user_id               = $ride->user_id;
+            $user_acc->save();
+        }
+        
         $userAcc                        = new UserAccount();
         $userAcc->amount                = $amount;
         $userAcc->adjust_cashback       = $request->cashback_balance;
@@ -231,43 +252,13 @@ class RideController extends Controller
             $user_balance = User::find($ride->user_id);
             $user_balance->balance = ($user_balance->balance - $request->user_balance);
             $user_balance->update();
-            
-            $user_acc                        = new UserAccount();
-            $user_acc->amount                = $request->user_balance;
-            $user_acc->adjust_cashback       = 0;
-            $user_acc->adjust_quicar_balance = 0;
-            $user_acc->discount              = 0;
-            $user_acc->online_payment        = 0;
-            $user_acc->tnx_id                = "UB".time();
-            $user_acc->booking_id            = $booking_id;
-            $user_acc->type                  = 0; //debit
-            $user_acc->income_from           = 1; //ride
-            $user_acc->history_id            = $ride->id; //ride
-            $user_acc->reason                = "Quicar Credit Expense";
-            $user_acc->user_id               = $ride->user_id;
-            $user_acc->save();
         }     
         
         if ($request->cashback_balance > 0) {
             
-            $user_balance = User::find($ride->user_id);
-            $user_balance->cash_back_balance = ($user_balance->cash_back_balance - $request->cashback_balance);
-            $user_balance->update();
-            
-            $user_acc                        = new UserAccount();
-            $user_acc->amount                = $request->cashback_balance;
-            $user_acc->adjust_cashback       = 0;
-            $user_acc->adjust_quicar_balance = 0;
-            $user_acc->discount              = 0;
-            $user_acc->online_payment        = 0;
-            $user_acc->tnx_id                = "CB".time();
-            $user_acc->booking_id            = $booking_id;
-            $user_acc->type                  = 0; //debit
-            $user_acc->income_from           = 1; //ride
-            $user_acc->history_id            = $ride->id; //ride
-            $user_acc->reason                = "CashBack reduce";
-            $user_acc->user_id               = $ride->user_id;
-            $user_acc->save();
+            $user_cashhback = User::find($ride->user_id);
+            $user_cashhback->cash_back_balance = ($user_cashhback->cash_back_balance - $request->cashback_balance);
+            $user_cashhback->update();
         }
         
         if ($request->coupon_used == 1) {
@@ -283,6 +274,51 @@ class RideController extends Controller
             $tmpBid->status = 4;
             $tmpBid->update();
         }
+        
+        /* Partner SMS,Notification Section */
+        
+            $carRegNo = Car::find()->carRegisterNumber;
+            $carType = Car::find()->carType;
+            $tripType = $ride->rown_way == 0 ? "একমুখী" : "উভয়মুখী";
+            $start_date = date('j M, Y H:i:s', strtotime($ride->start_time));
+            $start_time = date('H:i:s', strtotime($ride->start_time));
+            $bid_amount = $bid->bit_amount;
+            
+            $partner_sms_title = "আপনার একটি গাড়ির বুকিং কন্ফার্ম হয়েছে।\n";
+            $partner_sms_msg   = "গাড়ির নাম্বার : ".$carRegNo." '\n যাত্রার তারিখ: ".$carType."\nকুইকার পার্টনার সাপোর্ট" ;
+            $partnerNotification = "আপনার একটি গাড়ির বুকিং কন্ফার্ম হয়েছে\n আপনার বুকিং আইডি : ".$ride->booking_id." \n গাড়ির নাম্বার :".$carType."\n যাত্রার ধরণ : ".$tripType;
+            $partnerMessage = "যাত্রার তারিখ : ".$start_date."\n যাত্রার সময় : ".$start_time."\n আপনার ভাড়া :".$bid_amount."\n কুইকার চার্জ : ".$bid->quicar_charge."\n আপনি পাবেন : ".$bid->you_get."আপনার ".$bid->you_get." টাকা ট্রিপ শেষ হওয়ার পর ইউজারের থেকে বুঝে নিন। \n এখনি ইউজারের সাথে কথা বলে বিস্তারিত জেনে নিন \n আপনার যাত্রা শুভ হোক \n কুইকার পার্টনার সাপোর্ট \n ";
+            if (!empty($ride->extra_note)) {
+                $parnterFinalMsg = $partnerNotification." (নোট : ".$ride->extra_note.$partnerMessage.")";
+            } else {
+                $parnterFinalMsg = $partnerNotification." ".$partnerMessage;
+            }
+            
+            $helper = new Helper(); 
+            $owner_key = Owner::find($bid->owner_id)->n_key;
+            $owner_phone = Owner::find($bid->owner_id)->phone;
+            
+            $helper->sendSinglePartnerNotification($owner_key, $partner_sms_title, $partner_sms_msg); //push notification send
+            $helper->smsSend($owner_phone, $partner_sms_msg); // sms send
+            $helper->smsNotification($type = 2, $bid->owner_id, $partner_sms_title, $parnterFinalMsg); // bell notification, 2=partner
+            
+        /* Partner SMS,Notification Section End*/
+        
+        
+        /* User SMS,Notification Section*/
+            $trip_type = $ride->rown_way == 0 ? "One Way" : "Round Way";
+            
+            $user_sms_title = "Your payment has been done.";
+            $user_sms_msg = "Trip Type : ". $trip_type. " \n Booking ID : ". $ride->booking_id . " \n Transaction ID : ". $ride->tnx_id . " \n Travel Date : ". $start_date. " \n Travel Time : ".$start_time. "\n Total Price : ". $bid->bit_amount. "\n Advance Payment : ".$bid->quicar_charge. "\n Pay to Driver : ". $bid->you_get." \n Have a safe journey \n Team Quicar";
+            $user_notification = "Your payment has been done. Trip Type : ". $trip_type. " \n Booking ID : ". $ride->booking_id . " \n Transaction ID : ". $ride->tnx_id . " \n Travel Date : ". $start_date. " \n Travel Time : ".$start_time. "\n Total Price : ". $bid->bit_amount. "\n Advance Payment : ".$bid->quicar_charge. "\n Pay to Driver : ". $bid->you_get." \n Have a safe journey \n Team Quicar";
+            
+            $user_key = User::find($ride->user_id)->n_key;
+            $user_phone = Owner::find($ride->user_id)->phone;
+            
+            $helper->sendSinglePartnerNotification($user_key, $user_sms_title, $user_sms_msg); //push notification send
+            $helper->smsSend($user_phone, $user_sms_msg); // sms send
+            $helper->smsNotification($type = 1, $ride->user_id, $user_sms_title, $user_notification); // bell notification, 2=partner
+        /* User SMS,Notification Section End*/
         
         DB::commit();
         

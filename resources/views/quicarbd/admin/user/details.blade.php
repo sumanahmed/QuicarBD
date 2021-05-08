@@ -248,9 +248,11 @@
                                             <th>Adjust Quicar Balance</th>
                                             <th>Online Payment</th>
                                             <th>Amount</th>
+                                            <th>Current Bal</th>
+                                            <th>Cashback Bal</th>
+                                            <th>Type</th>
                                             <th>TnxID</th>
                                             <th>Booking ID</th>
-                                            <th>Type</th>
                                             <th>Income From</th>
                                             <th>Reason</th>
                                             <th>Date & Time</th>
@@ -261,9 +263,11 @@
                                             <th>Adjust Quicar Balance</th>
                                             <th>Online Payment</th>
                                             <th>Amount</th>
+                                            <th>Current Bal</th>
+                                            <th>Cashback Bal</th>
+                                            <th>Type</th>
                                             <th>TnxID</th>
                                             <th>Booking ID</th>
-                                            <th>Type</th>
                                             <th>Income From</th>
                                             <th>Reason</th>
                                             <th>Date & Time</th>
@@ -272,6 +276,19 @@
                                     <tbody>
                                         @foreach($accounts as $account)
                                             @php 
+                                                $prev = \App\Models\UserAccount::where('user_id', $account->user_id)->where('id', '<', $account->id)->first();
+                                                if ($prev != null) {
+                                                    if ($account->type == 1) {
+                                                        $current_bal  = $prev->amount + $account->amount;
+                                                        $cashback_bal = $prev->adjust_cashback != 0 ? $prev->amount + $account->adjust_cashback : 0;
+                                                    } else {
+                                                        $current_bal  = $prev->amount - $account->amount;;
+                                                        $cashback_bal = $prev->adjust_cashback != 0 ? $prev->amount - $account->adjust_cashback : 0;
+                                                    }
+                                                } else {
+                                                    $current_bal  = $account->amount;
+                                                    $cashback_bal = $account->adjust_cashback;
+                                                }
                                                 $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $account->created_at, new DateTimeZone("UTC"));
                                                 $formattedTime = $db_time->format('j M, Y h:i A');
                                             @endphp
@@ -279,9 +296,11 @@
                                                 <td>{{ $account->adjust_quicar_balance }}</td>
                                                 <td>{{ $account->online_payment }}</td>
                                                 <td>{{ $account->amount }}</td>
+                                                <td>{{ $current_bal }}</td>
+                                                <td>{{ $cashback_bal }}</td>
+                                                <td>{{ $account->type == 0 ? 'Debit' : 'Credit' }}</td>
                                                 <td>{{ $account->tnx_id }}</td>
                                                 <td>{{ $account->booking_id }}</td>
-                                                <td>{{ $account->type == 0 ? 'Debit' : 'Credit' }}</td>
                                                 <td>{{ incomeFrom($account->income_from) }}</td>
                                                 <td>{{ $account->reason }}</td>
                                                 <td>{{ $formattedTime }}</td>

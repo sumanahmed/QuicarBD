@@ -51,13 +51,42 @@ class AccountsController extends Controller
             $query = $query->where('users.phone', $request->phone);
         }        
         
-        if (isset($request->type) && $request->type != 100) {
+        if ($request->type && $request->type != 100) {
             $query = $query->where('user_account.type', $request->type);
         }
 
         $transactions = $query->paginate(12);
         
         return view('quicarbd.admin.accounts.transaction', compact('transactions'));
+    }  
+    
+    /**
+     * show transaction
+     */
+    public function onlineTransaction (Request $request)
+    {
+        $start_date = isset($request->start_date) ? date('Y-m-d', strtotime($request->start_date)) : date('Y-m-d', strtotime('-30 days'));
+        $end_date   = isset($request->end_date) ? date('Y-m-d', strtotime($request->end_date)) : date('Y-m-d');
+        
+        $query = DB::table('user_account')
+                    ->leftjoin('users','user_account.user_id','users.id')
+                    ->select('user_account.*','users.phone')
+                    ->whereDate('user_account.created_at','>=', $start_date)
+                    ->whereDate('user_account.created_at','<=', $end_date)
+                    ->where('user_account.online_payment', '!=', 0)
+                    ->orderBy('user_account.id','DESC');
+
+        if ($request->phone) {
+            $query = $query->where('users.phone', $request->phone);
+        }  
+        
+        if ($request->tnx_id) {
+            $query = $query->where('user_account.tnx_id', $request->tnx_id);
+        }   
+
+        $transactions = $query->paginate(12);
+        
+        return view('quicarbd.admin.accounts.online-transaction', compact('transactions'));
     }
 
     /**

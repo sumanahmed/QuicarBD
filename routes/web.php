@@ -335,6 +335,7 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::get('/send-pending/{id}', [RideController::class, 'sendPending'])->name('ride.send_pending');
     Route::get('/pending', [RideController::class, 'pending'])->name('ride.pending');
     Route::get('/approve/{id}', [RideController::class, 'approve'])->name('ride.approve');
+    Route::post('/user-approve', [RideController::class, 'userApprove'])->name('ride.user_approve');
     Route::get('/bid-request', [RideController::class, 'bidRequest'])->name('ride.bid_request');
     Route::get('/upcoming', [RideController::class, 'upcoming'])->name('ride.upcoming');
     Route::get('/complete', [RideController::class, 'complete'])->name('ride.complete');
@@ -347,6 +348,7 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::post('/upcoming/notification/send', [RideController::class, 'upcomingNotificationSend'])->name('ride.upcoming_notification_send');    
     Route::post('/update-bid-amount', [RideController::class, 'updateBidAmount'])->name('ride.update_bid_amount');    
     Route::post('/bid-cancel', [RideController::class, 'bidCancel'])->name('ride.bid_cancel');    
+    Route::post('/bid-request-qty-update', [RideController::class, 'bidRequestQtyUpdate'])->name('ride.bid_request_qty_update');    
 });
 
 Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], function(){
@@ -399,6 +401,7 @@ Route::group(['prefix'=>'/admin/withdraw', 'middleware' => 'admin'], function(){
 Route::group(['prefix'=>'/admin/accounts', 'middleware' => 'admin'], function(){
     Route::get('/summary', [AccountsController::class, 'summary'])->name('accounts.summary');
     Route::get('/transaction', [AccountsController::class, 'transaction'])->name('accounts.transaction');
+    Route::get('/online-transaction', [AccountsController::class, 'onlineTransaction'])->name('accounts.online_transaction');
     Route::get('/refund', [AccountsController::class, 'refund'])->name('accounts.refund');
     Route::get('/user-balance', [AccountsController::class, 'userBalance'])->name('accounts.user-balance');
     Route::get('/partner-balance', [AccountsController::class, 'partnerBalance'])->name('accounts.partner-balance');
