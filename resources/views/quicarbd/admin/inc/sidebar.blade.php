@@ -267,7 +267,7 @@
             </ul>
         </li>
         <li>
-            <a href="javascript:void(0);" data-toggle="collapse" data-target="#banner"><div class="pull-left"><i class="fa fa-image mr-20"></i><span class="right-nav-text">Banner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#banner"><div class="pull-left"><i class="fa fa-image mr-20"></i><span class="right-nav-text">All Banner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="banner" class="collapse collapse-level-1 two-col-list">
                 <li>
                     <a href="{{ route('user_banner.index') }}">User</a>
@@ -283,6 +283,17 @@
                 </li>
                 <li>
                     <a href="{{ route('banner.packages', ['type' => 3]) }}">Travel Package</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#marketingBanner"><div class="pull-left"><i class="fa fa-image mr-20"></i><span class="right-nav-text">Marketing Banner</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="marketingBanner" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="{{ route('marketing_banner.index',['type'=>1]) }}">User</a>
+                </li>
+                <li>
+                    <a href="{{ route('marketing_banner.index',['type'=>2]) }}">Partner</a>
                 </li>
             </ul>
         </li>

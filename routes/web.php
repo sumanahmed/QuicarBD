@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AccountsController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CarBrandController;
+use App\Http\Controllers\Admin\MarketingBannerController;
 use App\Http\Controllers\Admin\CarClassController;
 use App\Http\Controllers\Admin\CarColorController;
 use App\Http\Controllers\Admin\CarController;
@@ -231,6 +232,15 @@ Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
     Route::post('/balance/add', [UserController::class, 'balanceAdd'])->name('user.balance.add');
     Route::get('/user-log', [UserController::class, 'userLogList'])->name('user.user_log_list');
     Route::get('/log/{id}', [UserController::class, 'log'])->name('user.log');
+});
+
+Route::group(['prefix'=>'/admin/marketing-banner', 'middleware' => 'admin'], function(){
+    Route::get('/', [MarketingBannerController::class, 'index'])->name('marketing_banner.index');
+    Route::get('/create', [MarketingBannerController::class, 'create'])->name('marketing_banner.create');
+    Route::post('/store', [MarketingBannerController::class, 'store'])->name('marketing_banner.store');
+    Route::get('/edit/{id}', [MarketingBannerController::class, 'edit'])->name('marketing_banner.edit');
+    Route::post('/update/{id}', [MarketingBannerController::class, 'update'])->name('marketing_banner.update');
+    Route::post('/destroy', [MarketingBannerController::class, 'destroy'])->name('marketing_banner.destroy');
 });
 
 Route::group(['prefix'=>'/admin/user-banner', 'middleware' => 'admin'], function(){
