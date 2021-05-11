@@ -123,6 +123,7 @@
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <!--<a href="#" class="btn btn-xs btn-primary" id="rideSendNotification" data-toggle="modal" title="Notification" data-user_id="{{ $ride->user_id }}" data-ride_id="{{ $ride->id }}"><i class="fa fa-bell"></i></a> -->
                                                         <a href="{{ route('ride.approve', $ride->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-check"></i></a> 
+                                                        <a href="{{ route('ride.edit', $ride->id) }}" class="btn btn-xs btn-success" title="Edit"><i class="fa fa-pencil"></i></a> 
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                         <a href="#" id="changeVisibleTime" data-toggle="modal" data-ride_id="{{ $ride->id }}" data-ride_visiable_time="{{ $ride_visiable_time }}" class="btn btn-xs btn-primary" title="Change Visible Time"><i class="fa fa-clock-o"></i></a>
                                                         <a href="#" id="cancelModal" data-toggle="modal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>

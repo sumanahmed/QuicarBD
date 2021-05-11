@@ -38,8 +38,8 @@
     $current_date_time = \Carbon\Carbon::now()->toDateTimeString();
     
 @endphp
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-md-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -186,20 +186,18 @@
                                                     <input type="phone" @if($ride->accepted_bitting_time != null) value="{{ date('Y-m-d H:i:s a', strtotime($ride->accepted_bitting_time)) }}" @endif class="form-control" readonly>
                                                 </div>
                                             </div>
-                                            @if($ride->rown_way == 1)
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Driver Cost Bear</label>                                            
-                                                        <input type="phone" value="{{ $ride->driver_cost_bear == 0 ? 'No' : 'Yes' }}" class="form-control" readonly>
-                                                    </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="phone" class="control-label mb-10">Driver Cost Bear</label>                                            
+                                                    <input type="phone" value="{{ $ride->driver_cost_bear == 0 ? 'No' : 'Yes' }}" class="form-control" readonly>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Car Cost Bear</label>                                            
-                                                        <input type="phone" value="{{ $ride->car_all_cost_bear == 0 ? 'Car Body Rent Only' : 'Including All Cost' }}" class="form-control" readonly>
-                                                    </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="phone" class="control-label mb-10">Car Cost Bear</label>                                            
+                                                    <input type="phone" value="{{ $diff >= 2 ? 'Car Body Rent Only' : 'Including All Cost' }}" class="form-control" readonly>
                                                 </div>
-                                            @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -207,7 +205,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
             @if($ride->status == 4 && $ride->accepted_ride_bitting_id != null)
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
@@ -315,7 +313,7 @@
                         </div>
                     </div>
                 </div>
-            @endif  
+            @endif	
             @if($ride->status == 2) 
                 <div class="panel panel-default card-view">
                     <div class="panel-heading">
@@ -419,7 +417,7 @@
                         </div>
                     </div>
                 </div>
-            @endif  
+            @endif	
             
             @php 
                 $bittings = \App\Models\RideBiting::select('ride_biting.*','cars.carRegisterNumber',

@@ -24,7 +24,7 @@ class SmsNotificationController extends Controller
 
     //send sms notification
     public function send(Request $request)
-    { 
+    {  
         $this->validate($request,[
             'for'       => 'required',
             'status'    => 'required',
@@ -36,37 +36,47 @@ class SmsNotificationController extends Controller
         $title = $request->title;
         $body  = $request->message;
         
+        if($request->hasFile('image')){ 
+            $image             = $request->file('image');
+            $imageName         = time().".".$image->getClientOriginalExtension();
+            $directory         = '../mobileapi/asset/notification/';
+            $image->move($directory, $imageName);
+            $notificationImg = "http://quicarbd.com/mobileapi/asset/notification/".$imageName;
+            $image = $notificationImg;
+        } else {
+            $image = "";
+        }
         
         if ($request->notification == 0) { //push notification
         
             if($request['for'] == 1){ // 1 mean user
                 $client = new Client(); 
-                $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar");
+                $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=quicar");
             } else { // 2 mean partner
                 if (isset($request->account_type) && $request->account_type != null) {
                     $client = new Client();
-                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=account_type".$request->account_type);
+                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=account_type".$request->account_type);
                 } 
                 
                 if (isset($request->service_location_district) && $request->service_location_district != null) {
                      $client = new Client();
-                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner".$request->service_location_district);
+                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=quicar_owner".$request->service_location_district);
                 }
             }
         } elseif ($request->notification == 1) { //bell notification
         
             if($request['for'] == 1){ // 1 mean user
                 $client = new Client(); 
-                $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar");
+                $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=quicar");
             } else { // 2 mean partner
                 if (isset($request->account_type) && $request->account_type != null) {
                     $client = new Client();
-                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=account_type".$request->account_type);
+                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=account_type".$request->account_type);
                 } 
                 
                 if (isset($request->service_location_district) && $request->service_location_district != null) {
-                     $client = new Client();
-                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner".$request->service_location_district);
+                    $client = new Client();
+                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=quicar_owner".$request->service_location_district);
                 }
             }
             
@@ -74,7 +84,7 @@ class SmsNotificationController extends Controller
         
             if($request['for'] == 1){ // 1 mean user
                 $client = new Client(); 
-                $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar");
+                $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=quicar");
                 
                 $users_phone = DB::table('users')->where('account_status', $request->status)->pluck('phone')->implode(', '); 
                 
@@ -83,12 +93,12 @@ class SmsNotificationController extends Controller
             } else { // 2 mean partner
                 if (isset($request->account_type) && $request->account_type != null) {
                     $client = new Client();
-                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=account_type".$request->account_type);
+                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=account_type".$request->account_type);
                 } 
                 
                 if (isset($request->service_location_district) && $request->service_location_district != null) {
                      $client = new Client();
-                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner".$request->service_location_district);
+                    $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=quicar_owner".$request->service_location_district);
                 }
                 
                 $users_phone = DB::table('owners')->where('account_status', $request->status)->pluck('phone')->implode(', '); 
@@ -126,14 +136,25 @@ class SmsNotificationController extends Controller
        
         $title  = $request->title;
         $body   = strip_tags($request->message);
+        
+        if($request->hasFile('image')){ 
+            $image             = $request->file('image');
+            $imageName         = time().".".$image->getClientOriginalExtension();
+            $directory         = '../mobileapi/asset/notification/';
+            $image->move($directory, $imageName);
+            $notificationImg = "http://quicarbd.com/mobileapi/asset/notification/".$imageName;
+            $image = $notificationImg;
+        } else {
+            $image = "";
+        }
 
         if ($request['for'] == 1) { // 1 mean user 
             $client = new Client(); 
-            $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar");
+            $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=quicar");
             
         } elseif ($request['for'] == 2) { // 2 mean partner
             $client = new Client();
-            $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&token=quicar_owner");
+            $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=quicar_owner");
         }
 
         return redirect()->back()->with('message','Send successfully');        

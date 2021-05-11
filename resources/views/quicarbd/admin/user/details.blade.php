@@ -167,7 +167,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="img" class="control-label mb-10">Image </label>                                            
-                                                    <img src="{{ asset($user->img) }}" class="form-control" style="width: 80px;height:60px;"/>
+                                                    <img src="http://quicarbd.com/mobileapi/user/api/user_photo/{{ $user->img }}" class="form-control" style="width: 80px;height:60px;"/>
                                                 </div>
                                             </div> 
                                         </div>
@@ -277,18 +277,21 @@
                                         @foreach($accounts as $account)
                                             @php 
                                                 $prev = \App\Models\UserAccount::where('user_id', $account->user_id)->where('id', '<', $account->id)->first();
+                                            
+                                                
                                                 if ($prev != null) {
                                                     if ($account->type == 1) {
-                                                        $current_bal  = $prev->amount + $account->amount;
-                                                        $cashback_bal = $prev->adjust_cashback != 0 ? $prev->amount + $account->adjust_cashback : 0;
-                                                    } else {
-                                                        $current_bal  = $prev->amount - $account->amount;;
-                                                        $cashback_bal = $prev->adjust_cashback != 0 ? $prev->amount - $account->adjust_cashback : 0;
+                                                        $tmp_current = $tmp_current + $account->amount;
+                                                        $tmp_cashback = $tmp_cashback != 0 ? $tmp_cashback + $account->adjust_cashback : 0;
+                                                    } else { 
+                                                        $tmp_current = ($tmp_current - $account->amount) + $account->discount;
+                                                        $tmp_cashback = $tmp_cashback != 0 ? $tmp_cashback - $account->adjust_cashback : 0;
                                                     }
                                                 } else {
-                                                    $current_bal  = $account->amount;
-                                                    $cashback_bal = $account->adjust_cashback;
+                                                    $tmp_current  = $account->amount;
+                                                    $tmp_cashback = $account->adjust_cashback;
                                                 }
+                                                
                                                 $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $account->created_at, new DateTimeZone("UTC"));
                                                 $formattedTime = $db_time->format('j M, Y h:i A');
                                             @endphp
@@ -296,8 +299,8 @@
                                                 <td>{{ $account->adjust_quicar_balance }}</td>
                                                 <td>{{ $account->online_payment }}</td>
                                                 <td>{{ $account->amount }}</td>
-                                                <td>{{ $current_bal }}</td>
-                                                <td>{{ $cashback_bal }}</td>
+                                                <td>{{ $tmp_current }}</td>
+                                                <td>{{ $tmp_cashback }}</td>
                                                 <td>{{ $account->type == 0 ? 'Debit' : 'Credit' }}</td>
                                                 <td>{{ $account->tnx_id }}</td>
                                                 <td>{{ $account->booking_id }}</td>

@@ -155,6 +155,60 @@ class RideController extends Controller
   
   
   /**
+    *pending ride edit
+  */
+  public function edit($id)
+  {
+    $ride = RideList::find($id);
+    $districts = DB::table('district')->select('id','value as name')->orderBy('value','ASC')->get();
+    $starting_cities = DB::table('city')->select('id','name')->where('district_id', $ride->starting_district)->orderBy('name','ASC')->get();
+    $destination_cities = DB::table('city')->select('id','name')->where('district_id', $ride->destination_district)->orderBy('name','ASC')->get();
+    $car_types = DB::table('car_types')->select('id','name')->get();
+    
+    return view("quicarbd.admin.ride.edit", compact('ride','districts','starting_cities','destination_cities','car_types'));
+  } 
+  
+  
+  /**
+    * user ride update
+  */
+  public function update(Request $request, $id)
+  {
+    $this->validate($request, [
+        'starting_district' => 'required',
+        'starting_city'     => 'required',
+        'startig_area'      => 'required',
+        'destination_district'  => 'required',
+        'destination_city'      => 'required',
+        'destination_area'      => 'required',
+        'car_type'      => 'required',
+        'rown_way'      => 'required',
+        'start_time'    => 'required',
+    ]);
+    
+    try {
+        $ride = RideList::find($id);    
+        $ride->starting_district    = $request->starting_district;
+        $ride->starting_city        = $request->starting_city;
+        $ride->startig_area         = $request->startig_area;
+        $ride->destination_district = $request->destination_district;
+        $ride->destination_city     = $request->destination_city;
+        $ride->destination_area     = $request->destination_area;
+        $ride->car_type             = $request->car_type;
+        $ride->rown_way             = $request->rown_way;
+        $ride->extra_note           = $request->extra_note;
+        $ride->start_time           = $request->start_time;
+        $ride->update();
+        
+        
+    } catch (Exception $ex) {
+        return redirect()->back()->with('error_message', $ex->getMessage());
+    }
+    
+    return redirect()->route('ride.pending')->with('message','Ride Update Successfully');
+  } 
+  
+  /**
     * user ride approve from admin panel
   */
   public function userApprove(Request $request)
@@ -552,14 +606,29 @@ class RideController extends Controller
   /**
     * show ride details
   */
-  public function details($ride_id){
-    $ride = RideList::find($ride_id);                
-    return view('quicarbd.admin.ride.details', compact('ride'));
+  public function details($ride_id)
+  {
+    $ride = RideList::find($ride_id);  
+    
+    if ($ride->start_time != null) {
+        
+        $start_date = date('Y-m-d', strtotime($ride->start_time));
+        $today_date = date('Y-m-d');
+        
+        $earlier = new DateTime($start_date);
+        $later   = new DateTime($today_date);
+        
+        $diff = $later->diff($earlier)->format("%a");
+    } else {
+        $diff = 0;
+    }
+  
+    return view('quicarbd.admin.ride.details', compact('ride','diff'));
   }
 
   /**
    * ride cancel reason send
-   */
+  */
   public function reasonSend (Request $request) 
   {
     $validators = Validator::make($request->all(),[

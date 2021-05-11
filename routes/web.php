@@ -345,6 +345,8 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::get('/send-pending/{id}', [RideController::class, 'sendPending'])->name('ride.send_pending');
     Route::get('/pending', [RideController::class, 'pending'])->name('ride.pending');
     Route::get('/approve/{id}', [RideController::class, 'approve'])->name('ride.approve');
+    Route::get('/edit/{id}', [RideController::class, 'edit'])->name('ride.edit');
+    Route::post('/update/{id}', [RideController::class, 'update'])->name('ride.update');
     Route::post('/user-approve', [RideController::class, 'userApprove'])->name('ride.user_approve');
     Route::get('/bid-request', [RideController::class, 'bidRequest'])->name('ride.bid_request');
     Route::get('/upcoming', [RideController::class, 'upcoming'])->name('ride.upcoming');

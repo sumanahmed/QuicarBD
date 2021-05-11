@@ -28,7 +28,7 @@
                 </div>
                 <div class="panel-wrapper collapse in">
                     <div class="panel-body">
-                        <form action="{{ route('sms_notification.global_notification.send') }}" class="col-md-6" method="POST">
+                        <form action="{{ route('sms_notification.global_notification.send') }}" class="col-md-6" method="POST" enctype="multipart/form-data" novalidate>
                             @csrf
                             <div class="form-group">
                                 <label for="sms" class="control-label mb-10">Select Message </label>
@@ -57,6 +57,10 @@
                                 <label for="message" class="control-label mb-10">Message <span class="text-danger" title="Required">*</span></label>
                                 <textarea class="form-control sms_message" name="message" rows="6" id="message" placeholder="Enter your message"  required></textarea>
                                 <span class="errorMessage text-danger text-bold"></span>
+                            </div>                
+                            <div class="form-group">
+                                <label for="image" class="control-label mb-10">Image </label>
+                                <input type="file" class="form-control" name="image" id="image" />
                             </div>     
                             <div class="form-row">
                                 <button type="button" class="btn btn-xs btn-danger" id="smsDelete">Delete</button>

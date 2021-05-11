@@ -59,7 +59,6 @@ class MarketingBannerController extends Controller
         $this->validate($request,[
             'marketing_dialog_title' => 'required',
             'type'   => 'required',
-            'marketing_banner_image' => 'required',
         ]);
         
         $marketing_banner           = MarketingBanner::find($request->id);

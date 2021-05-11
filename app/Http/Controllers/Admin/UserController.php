@@ -119,10 +119,10 @@ class UserController extends Controller
             
             $userAcc                    = new UserAccount();
             $userAcc->amount            = $request->add_balance;
-            $userAcc->adjust_cashback   = 0;
+            $userAcc->adjust_cashback   = $request->add_balance;
             $userAcc->adjust_quicar_balance = 0;
             $userAcc->discount          = 0;
-            $userAcc->online_payment    = $request->add_balance;
+            $userAcc->online_payment    = 0;
             $userAcc->tnx_id            = time();
             $userAcc->type              = 1;
             $userAcc->income_from       = 5;
@@ -166,7 +166,7 @@ class UserController extends Controller
         $data['total_car_pacakage_booking'] = DB::table('car_package_order')->where('user_id', $id)->count('id');
         $data['total_hotel_pacakage_booking'] = DB::table('hotel_package_order')->where('user_id', $id)->count('id');
         $data['total_travel_pacakage_booking'] = DB::table('travel_packages_order')->where('user_id', $id)->count('id');
-        $data['accounts'] = DB::table('user_account')->where('user_id', $id)->orderBy('id','ASC')->get();
+        $data['accounts'] = DB::table('user_account')->where('user_id', $id)->orderBy('created_at','ASC')->get();
         return view('quicarbd.admin.user.details', $data);
     }
     
