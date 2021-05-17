@@ -609,6 +609,12 @@ class RideController extends Controller
   public function details($ride_id)
   {
     $ride = RideList::find($ride_id);  
+    $transactions = DB::table('user_account')
+                    ->leftjoin('users','user_account.user_id','users.id')
+                    ->select('user_account.*','users.phone')
+                    ->where('user_account.history_id', $ride->accepted_ride_bitting_id)
+                    ->orderBy('user_account.id','DESC')
+                    ->get();
     
     if ($ride->start_time != null) {
         
@@ -623,7 +629,7 @@ class RideController extends Controller
         $diff = 0;
     }
   
-    return view('quicarbd.admin.ride.details', compact('ride','diff'));
+    return view('quicarbd.admin.ride.details', compact('ride','transactions','diff'));
   }
 
   /**

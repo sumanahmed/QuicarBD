@@ -126,7 +126,7 @@
                                                         @else
                                                             <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 0 ]) }}" class="btn btn-xs btn-success" title="Lock"><i class="fa fa-unlock-alt"></i></a>
                                                         @endif
-                                                        <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 2 ]) }}" class="btn btn-xs btn-danger" title="Hold"><i class="fa fa-pause"></i></a>
+                                                        <a href="#" class="btn btn-xs btn-danger" id="partnerHold" data-toggle="modal" data-target="#partnerHoldModal" title="Hold" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-pause"></i></a>
                                                         <a href="#" class="btn btn-xs btn-primary" id="sendNotification" data-toggle="modal" data-target="#sendNotificationModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
                                                         <a href="#" class="btn btn-xs btn-primary" id="partnerBalanceAdd" data-toggle="modal" title="Balance" data-id="{{ $partner->id }}" data-current_balance="{{ $partner->current_balance }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-usd"></i></a> 
                                                         <a href="{{ route('partner.edit', $partner->id) }}" target="_blank" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
@@ -232,6 +232,34 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="addBalance">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Balance ADD Modal -->
+    <div id="partnerHoldModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h5 class="modal-title" id="exampleModalLabel1">Partner Hold</h5>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="title" class="control-label mb-10">Hold Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <input type="hidden" name="id" id="id" />
+                            <input type="hidden" name="phone" id="phone" />
+                            <input type="hidden" name="n_key" id="n_key" />
+                            <input type="text" name="block_reason" id="block_reason" class="form-control">
+                            <span class="errorReason text-danger text-bold"></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="sendReason">Send</button>
                 </div>
             </div>
         </div>

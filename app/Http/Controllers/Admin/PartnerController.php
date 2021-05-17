@@ -18,6 +18,7 @@ use App\Models\TravelPackage;
 use App\Models\PartnerAppSetting;
 use Exception;
 use GuzzleHttp\Client;
+use Carbon\Carbon;
 use Validator;
 use Response;
 use DB;
@@ -66,7 +67,8 @@ class PartnerController extends Controller
     }
 
     //show create page
-    public function create(){
+    public function create()
+    {
         $districts  = District::orderBy('value','ASC')->get(); 
         $global = PartnerAppSetting::find(1);
         return view('quicarbd.admin.partner.create', compact('districts','global'));
@@ -144,7 +146,8 @@ class PartnerController extends Controller
     }
 
     //partner update
-    public function update(Request $request, $id){ 
+    public function update(Request $request, $id)
+    { 
         $this->validate($request, [
             'name'      => 'required',
             'email'     => 'required|unique:owners,email,'.$id,
@@ -217,14 +220,19 @@ class PartnerController extends Controller
     }
 
     //partner details
-    public function details($id){
+    public function details($id)
+    {
+        $current_date_time      = Carbon::now()->toDateTimeString();
         $partner                = Owner::find($id);
         $data['partner']        = $partner;
         $data['district_name']  = $partner->service_location_district;
         $data['total_ride']     = DB::table('ride_biting')
-                                    ->leftjoin('ride_list','ride_biting.ride_id','ride_list.id')
+                                    ->join('ride_list','ride_biting.ride_id','ride_list.id')
                                     ->where('ride_biting.owner_id', $id)
+                                    ->where('ride_biting.status', 1)
+                                    ->where('ride_list.status', 4)
                                     ->where('ride_list.accepted_ride_bitting_id', '!=', null)
+                                    ->where('ride_list.start_time', '<', $current_date_time)
                                     ->count('ride_list.id');
         $data['total_car']      = Car::where('owner_id', $id)->count('id');
         $data['total_driver']   = Driver::where('owner_id', $id)->count('id');
@@ -332,7 +340,8 @@ class PartnerController extends Controller
     }
 
     //partner details
-    public function verification(Request $request){
+    public function verification(Request $request)
+    {
         $query = Owner::orderBy('id','DESC')
                         ->where(function($query) {
                             return $query->where('account_status', 0)
@@ -647,5 +656,36 @@ class PartnerController extends Controller
         } else {
             return redirect()->back();
         }
+    }
+    
+    //partner hold
+    public function hold (Request $request)
+    {
+        $validators=Validator::make($request->all(),[
+            'id'    => 'required',
+            'phone' => 'required',
+            'n_key' => 'required',
+            'block_reason' => 'required',
+        ]);
+        
+        if($validators->fails()){
+            return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+        }
+        
+        $partner = Owner::find($request->id);
+
+        $helper = new Helper(); 
+        $id     = $request->n_key;
+        $title  = 'আপনার একাউন্ট বন্ধ';
+        $msg    = 'আপনার কুইকার একাউন্ট টি বন্ধ করে দেওয়া হয়েছে। দয়া করে কুইকার সাপোর্টে(01611822829) যোগাযোগ করুন'; 
+        
+        
+        $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
+        $helper->smsSend($partner->phone, $msg); // sms send
+        $helper->smsNotification($type = 2, $request->id, $title, $msg); // send notification, 2=partner
+
+        $partner->is_block = 1;
+        $partner->block_reason = $request->block_reason;
+        $partner->update();
     }
 }

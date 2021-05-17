@@ -1,6 +1,9 @@
 @extends('quicarbd.admin.layout.admin')
 @section('title','User')
 @section('content')
+@php 
+    $helper = new App\Http\Lib\Helper;
+@endphp
 <div class="container-fluid">				
 	<!-- Title -->
     <div class="row heading-bg">
@@ -192,38 +195,62 @@
                                 <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
+                                            <th>Booking Date</th>
+                                            <th>Travel Date</th>
                                             <th>Starting Address</th>
                                             <th>Destination Address</th>
+                                            <th>Trip Type</th>
+                                            <th>Booking ID</th>
+                                            <th>Tnx ID</th>
+                                            <th>Amount</th>
                                             <th>Status</th>
+                                            <th>Cancel By</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Booking Date</th>
+                                            <th>Travel Date</th>
                                             <th>Starting Address</th>
                                             <th>Destination Address</th>
+                                            <th>Trip Type</th>
+                                            <th>Booking ID</th>
+                                            <th>Tnx ID</th>
+                                            <th>Amount</th>
                                             <th>Status</th>
+                                            <th>Cancel By</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="userData">
-                                        @if(isset($rides) && count($rides) > 0)
-                                            @php $i=1; @endphp
-                                            @foreach($rides as $ride)
-                                                <tr class="ride-{{ $ride->id }}">
-                                                    <td>{{ $ride->startig_area.", ".$ride->starting_city.", ".$ride->starting_district }}</td>
-                                                    <td>{{ $ride->destination_area.", ".$ride->destination_city.", ".$ride->destination_district }}</td>
-                                                    <td>{{ getStatus($ride->status) }}</td>
-                                                    <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td colspan="3" class="text-center">No Data Found</td>
+                                        @foreach($rides as $ride)
+                                            @php
+                                                $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->created_at, new DateTimeZone("UTC"));
+                                                $bookingDate = $db_time->format('j M, Y h:i A');
+                                                $db_travel = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
+                                                $travelDate = $db_travel->format('j M, Y h:i A');
+                                                if ($ride->accepted_ride_bitting_id != null) {
+                                                    $ride_detail = \App\Models\RideBiting::find($ride->accepted_ride_bitting_id);
+                                                }
+                                                
+                                            @endphp
+                                            <tr class="ride-{{ $ride->id }}">
+                                                <td>{{ $bookingDate }}</td>                                                  
+                                                <td>{{ $travelDate }}</td>
+                                                <td>{{ $ride->startig_area.", ".$helper->getCity($ride->starting_city).", ".$helper->getDistrict($ride->starting_district) }}</td>
+                                                <td>{{ $ride->destination_area.", ".$helper->getCity($ride->destination_city).", ".$helper->getDistrict($ride->destination_district) }}</td>
+                                                <td>{{ $ride->rown_way == 0 ? 'One Way' : 'Round Way' }}</td>
+                                                <td>{{ $ride->booking_id }}</td>
+                                                <td>{{ $ride->tnx_id }}</td>
+                                                <td>{{ isset($ride_detail) ? $ride_detail->bit_amount : '' }}</td>
+                                                <td>{{ getStatus($ride->status) }}</td>
+                                                <td>{{ $ride->status == 2 ? getCancelBy($ride->cancel_by) : '' }}</td>
+                                                <td style="vertical-align: middle;text-align: center;">
+                                                    <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
+                                                </td>
                                             </tr>
-                                        @endif
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -247,6 +274,7 @@
                                         <tr>
                                             <th>Adjust Quicar Balance</th>
                                             <th>Online Payment</th>
+                                            <th>Bonus</th>
                                             <th>Amount</th>
                                             <th>Current Bal</th>
                                             <th>Cashback Bal</th>
@@ -262,6 +290,7 @@
                                         <tr>
                                             <th>Adjust Quicar Balance</th>
                                             <th>Online Payment</th>
+                                            <th>Bonus</th>
                                             <th>Amount</th>
                                             <th>Current Bal</th>
                                             <th>Cashback Bal</th>
@@ -298,6 +327,7 @@
                                             <tr>
                                                 <td>{{ $account->adjust_quicar_balance }}</td>
                                                 <td>{{ $account->online_payment }}</td>
+                                                <td>{{ $account->discount }}</td>
                                                 <td>{{ $account->amount }}</td>
                                                 <td>{{ $tmp_current }}</td>
                                                 <td>{{ $tmp_cashback }}</td>
@@ -350,6 +380,16 @@
        } else if ($type == 7) {
         echo 'Cashback';
        }
+    }
+    
+    function getCancelBy ($cancelBy) {
+        if ($cancelBy == 0) {
+            echo 'User';
+        } elseif ($cancelBy == 1) {
+            echo 'Partner';
+        } elseif ($cancelBy == 2) {
+            echo 'Admin';
+        }
     }
 @endphp
 @endsection

@@ -144,6 +144,41 @@ $("#destroyPartner").click(function(){
 });
 
 //open request cancel modal
+$(document).on('click', '#partnerHold', function () {
+    $('#partnerHoldModal').modal('show');
+    $('#id').val($(this).data('id'));
+    $('#phone').val($(this).data('phone'));
+    $('#n_key').val($(this).data('n_key'));
+ });
+
+//request cancel
+$("#sendReason").click(function(){
+    $.ajax({
+        type: 'POST',
+        url: '/admin/partner/hold',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            id: $('#id').val(),
+            phone: $('#phone').val(),
+            n_key: $('#n_key').val(),
+            block_reason: $('#block_reason').val()
+        },
+        success: function (response) {
+            if((response.errors)){
+                if(response.errors.block_reason){
+                    $('.errorReason').text(response.errors.block_reason);
+                } 
+            } else {
+                $('#partnerHoldModal').modal('hide');
+                toastr.success('Partner Hold Successfully')
+                //location.reload()
+            }
+        }
+    });
+});
+
+
+//open hold modal
 $(document).on('click', '#showRequestCancel', function () {
     $('#requestCancelModal').modal('show');
     $('input[name=del_id]').val($(this).data('id'));

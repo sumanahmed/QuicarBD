@@ -483,6 +483,71 @@
                     </div>
                 </div>
             @endif
+                <div class="panel panel-default card-view">
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>Transaction History</h6> 
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <div class="table-wrap">
+                                <div class="table-responsive">
+                                    <table class="table table-hover display pb-30" >
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Type</th>
+                                                <th>Reason</th>
+                                                <th>Trnx ID</th>
+                                                <th>Phone</th>
+                                                <th>Tnx Type</th>
+                                                <th>Discount</th>
+                                                <th>Adjust Quicar Balance</th>
+                                                <th>Online Payment</th>
+                                                <th>Amount</th>
+                                                <th>Payment Method</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Type</th>
+                                                <th>Reason</th>
+                                                <th>Trnx ID</th>
+                                                <th>Phone</th>
+                                                <th>Tnx Type</th>
+                                                <th>Discount</th>
+                                                <th>Adjust Quicar Balance</th>
+                                                <th>Online Payment</th>
+                                                <th>Amount</th>
+                                                <th>Payment Method</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody id="carData">
+                                            @foreach($transactions as $transaction)
+                                                <tr>
+                                                    <td>{{ date('d M, Y', strtotime($transaction->created_at)) }}</td>
+                                                    <td>{{ getPaymentType($transaction->income_from) }}</td>
+                                                    <td>{{ $transaction->reason }}</td>
+                                                    <td>{{ $transaction->tnx_id }}</td>
+                                                    <td>{{ $transaction->phone }}</td>
+                                                    <td>{{ $transaction->type == 0 ? 'Debit' : 'Credit' }}</td>
+                                                    <td>{{ $transaction->discount }}</td>
+                                                    <td>{{ $transaction->adjust_quicar_balance }}</td>
+                                                    <td>{{ $transaction->online_payment }}</td>
+                                                    <td>{{ $transaction->amount }}</td>
+                                                    <td>{{ $transaction->method }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>    
 </div>
@@ -501,6 +566,24 @@
        } else if ($status == 5) {
         echo 'Completed';
        }
+    }
+    
+    function getPaymentType($transaction_from) {
+        if ($transaction_from == 1) {
+            echo "Ride";
+        } elseif ($transaction_from == 2) {
+            echo "Car Package";
+        } elseif ($transaction_from == 3) {
+            echo "Hotel Package";
+        } elseif ($transaction_from == 4) {
+            echo "Travel Package";
+        } elseif ($transaction_from == 5) {
+            echo "Bonus";
+        } elseif ($transaction_from == 6) {
+            echo "Incentive";
+        } elseif ($transaction_from == 7) {
+            echo "Cashback";
+        }
     }
     
     function cancelBy($cancel_by) {

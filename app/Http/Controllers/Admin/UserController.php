@@ -161,7 +161,7 @@ class UserController extends Controller
     public function details($id)
     {
         $data['user']   = User::find($id);
-        $data['rides']  = RideList::where('user_id', $id)->get();
+        $data['rides']  = RideList::where('user_id', $id)->orderBy('id','DESC')->get();
         $data['total_ride'] = RideList::where('user_id', $id)->where('status', 4)->where('accepted_ride_bitting_id', '!=', null)->count('id');
         $data['total_car_pacakage_booking'] = DB::table('car_package_order')->where('user_id', $id)->count('id');
         $data['total_hotel_pacakage_booking'] = DB::table('hotel_package_order')->where('user_id', $id)->count('id');
