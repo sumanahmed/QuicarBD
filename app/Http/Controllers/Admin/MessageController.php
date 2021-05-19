@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\OwnerMessageList;
+use App\Models\User;
+use App\Models\Owner;
 use App\Http\Lib\Helper;
 use Response;
 use DB;
@@ -58,13 +60,19 @@ class MessageController extends Controller
     // message reply
     public function reply (Request $request) 
     {  
-        $helper = new Helper();
-        $title = "Message Reply";
-        $msg   = $request->reply;
         
+        $helper = new Helper();
+        $title = "You have a message reply from quicar support";
+        header('Content-type: text/plain');
+        $msg   = "Message : ".$request->send_message."\nReply : ".$request->reply;
+
         if ($request->type == 1) { //user
+            $n_key = User::find($request->sender_id)->n_key;
+            $helper->sendSinglePartnerNotification($n_key, $title, $msg); //push notification send
             $helper->smsNotification($type = 1, $request->sender_id, $title, $msg); // send notification, 1=user
         } else {
+            $n_key = Owner::find($request->sender_id)->n_key;
+            $helper->sendSinglePartnerNotification($n_key, $title, $msg); //push notification send
             $helper->smsNotification($type = 2, $request->sender_id, $title, $msg); // send notification, 2=partner
         }
         

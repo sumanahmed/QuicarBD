@@ -10,6 +10,7 @@ $(document).on('click', '#replyComplain', function () {
 $("#sendComplainReply").click(function (e) {
     var id          = $("#id").val();
     var sender_id   = $("#sender_id").val();
+    var complain    = $(".complain").val();
     var reply       = $(".reply_message").val();
     var type        = $("#type").val();
     $.ajax({
@@ -19,6 +20,7 @@ $("#sendComplainReply").click(function (e) {
         data: {
             id          : id,
             sender_id   : sender_id,
+            complain    : complain,
             reply       : reply,
             type        : type
         },

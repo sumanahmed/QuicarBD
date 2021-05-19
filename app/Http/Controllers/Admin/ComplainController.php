@@ -61,11 +61,11 @@ class ComplainController extends Controller
     public function reply (Request $request) 
     {  
         $helper = new Helper();
-        $title  = "Complain Report Reply";
-        $msg    = $request->reply;
-        
+        $title  = "You have a complain reply from quicar support";
+        $msg    = "Complain : ".$request->complain."\nReply : ".$request->reply;
+
         if ($request->type == 1) { //user
-            $id = User::find($request->sender_id)->n_key;
+            $id = User::find($request->sender_id)->n_key; 
             $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
             $helper->smsNotification($type = 1, $request->sender_id, $title, $msg); // send notification, 1=user
         } else {
