@@ -60,7 +60,6 @@ class MessageController extends Controller
     // message reply
     public function reply (Request $request) 
     {  
-        
         $helper = new Helper();
         $title = "You have a message reply from quicar support";
         header('Content-type: text/plain');

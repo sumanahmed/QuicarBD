@@ -85,7 +85,7 @@
                                                 <td>{{ $msg_time }}</td>
                                                 <td>{{ $user->status == 0 ? 'Unread' : 'Read' }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">
-                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyMessage" data-id="{{ $user->id }}" data-message="{{ $user->message }}" data-sender_id="{{ $user->sender_id }}" data-type="2" title="Reply"><i class="fa fa-reply"></i></a>
+                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyMessage" data-id="{{ $user->id }}" data-message="{{ $user->message }}" data-sender_id="{{ $user->sender_id }}" data-type="1" title="Reply"><i class="fa fa-reply"></i></a>
                                                     <a href="'/admin/user/details/'+ $user->sender_id" target="_blank" class="btn btn-xs btn-info" title="User Details"><i class="fa fa-eye"></i></a>
                                                     <button href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteFeedback" data-target="#deleteFeedbackModal" data-id="{{ $user->id }}" title="Delete"><i class="fa fa-remove"></i></button>
                                                 </td>

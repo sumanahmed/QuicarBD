@@ -85,7 +85,7 @@
                                                 <td>{{ $dateTime }}</td>
                                                 <td>{{ $partner->status == 0 ? 'Unread' : 'Read' }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">
-                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyMessage" data-id="{{ $partner->id }}" data-message="{{ $partner->message }}" data-sender_id="{{ $partner->sender_id }}" data-type="2" title="Reply"><i class="fa fa-reply"></i></a>
+                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyMessage" data-id="{{ $partner->id }}" data-message="{{ $partner->message }}" data-sender_id="{{ $partner->sender_id }}" data-type="0" title="Reply"><i class="fa fa-reply"></i></a>
                                                     <a href="{{ route('partner.details', $partner->sender_id) }}" target="_blank" class="btn btn-xs btn-info" title="Partner Details"><i class="fa fa-eye"></i></a>
                                                     <button href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteFeedback" data-target="#deleteFeedbackModal" data-id="{{ $partner->id }}" title="Delete"><i class="fa fa-remove"></i></button>
                                                 </td>
