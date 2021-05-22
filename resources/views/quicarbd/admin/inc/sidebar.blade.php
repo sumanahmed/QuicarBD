@@ -50,6 +50,7 @@
             <ul id="partners" class="collapse collapse-level-1 two-col-list">
                 <li><a href="{{ route('partner.create') }}">Add New</a></li>
                 <li><a href="{{ route('partner.index') }}">All Partner </a></li>
+                <li><a href="{{ route('partner.hold_list') }}">Hold Partner</a></li>
                 <li><a href="{{ route('partner.verification') }}">Partner Verification</a></li>
                 <li><a href="{{ route('partner.account_type_change_request') }}">Account Type Change Request</a></li>
             </ul>
@@ -293,7 +294,7 @@
                     <a href="{{ route('marketing_banner.index',['type'=>1]) }}">User</a>
                 </li>
                 <li>
-                    <a href="{{ route('marketing_banner.index',['type'=>2]) }}">Partner</a>
+                    <a href="{{ route('marketing_banner.index',['type'=>0]) }}">Partner</a>
                 </li>
             </ul>
         </li>

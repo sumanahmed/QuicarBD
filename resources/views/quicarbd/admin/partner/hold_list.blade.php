@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Partner')
+@section('title','Hold Partner')
 @section('content')
 @php 
     $helper = new App\Http\Lib\Helper;
@@ -8,14 +8,13 @@
 	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-            <a href="{{ route('partner.create') }}" class="btn btn-success btn-anim"><i class="icon-plus"></i><span class="btn-text">Add New</span></a>
         </div>
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
             <li><a href="#">Dashboard</a></li>
             <li><a href="#">Partner</a></li>
-            <li class="active"><span>All Partner</span></li>
+            <li class="active"><span>All Hold Partner</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -27,13 +26,12 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">All Partner</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
                     <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
-                        <form action="{{ route('partner.index') }}" method="get">
+                        <form action="{{ route('partner.hold_list') }}" method="get">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -54,29 +52,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="service_location_district" class="control-label mb-10">Service Location</label>                                            
-                                        <select name="service_location_district" class="form-control">
-                                            <option value="0">Select</option>
-                                            <option value="-1">Empty</option>
-                                            @foreach($districts as $district)
-                                                <option value="{{ $district->id }}" @if(isset($_GET['service_location_district']) && $district->id == $_GET['service_location_district']) selected @endif>{{ $district->name }} </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                                     </div>
                                 </div>
-                                @if($total_partner > 0)
-                                    <div class="col-md-2">
-                                        <div class="form-group" style="margin-top:30px;">
-                                            Total Partner : {{ $total_partner }}
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
                         </form>
                     </div>
@@ -92,6 +71,7 @@
                                             <th>Account Type</th>
                                             <th>Service Location</th>
                                             <th>Date & Time</th>
+                                            <th>Hold Reason</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -103,6 +83,7 @@
                                             <th>Account Type</th>
                                             <th>Service Location</th>
                                             <th>Date & Time</th>
+                                            <th>Hold Reason</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -120,16 +101,10 @@
                                                     <td>{{ ownerAccountType($partner->account_type) }}</td>
                                                     <td>{{ $partner->service_location_district != null ? $helper->getDistrict($partner->service_location_district) : '' }}</td>    
                                                     <td>{{ $dateTime }}</td>
+                                                    <td>{{ $partner->block_reason }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        @if($partner->account_status == 0)
-                                                            <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 1 ]) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
-                                                        @else
-                                                            <a href="{{ route('partner.status-update', ['id' => $partner->id, 'account_status'=> 0 ]) }}" class="btn btn-xs btn-success" title="Lock"><i class="fa fa-unlock-alt"></i></a>
-                                                        @endif
-                                                        <a href="#" class="btn btn-xs btn-danger" id="partnerHold" data-toggle="modal" data-target="#partnerHoldModal" title="Hold" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-pause"></i></a>
+                                                        <a href="{{ route('partner.unhold', $partner->id) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
                                                         <a href="#" class="btn btn-xs btn-primary" id="sendNotification" data-toggle="modal" data-target="#sendNotificationModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
-                                                        <a href="#" class="btn btn-xs btn-primary" id="partnerBalanceAdd" data-toggle="modal" title="Balance" data-id="{{ $partner->id }}" data-current_balance="{{ $partner->current_balance }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-usd"></i></a> 
-                                                        <a href="{{ route('partner.edit', $partner->id) }}" target="_blank" class="btn btn-xs btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                                         <a href="{{ route('partner.details', $partner->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>
                                                     </td>
                                                 </tr>
@@ -211,7 +186,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h5 class="modal-title" id="exampleModalLabel1">Manage Balance</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">Add Balance</h5>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -224,13 +199,8 @@
                         </div>
                         <div class="form-group">
                             <label for="title" class="control-label mb-10">Add Balance <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <input type="text" name="add_balance" id="add_balance" value="0" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            <input type="text" name="add_balance" id="add_balance" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                             <span class="errorAddBalance text-danger text-bold"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="title" class="control-label mb-10">Deduct Balance <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <input type="text" name="deduct_balance" id="deduct_balance" class="form-control" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                            <span class="errorDeductBalance text-danger text-bold"></span>
                         </div>
                     </form>
                 </div>

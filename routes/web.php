@@ -223,6 +223,8 @@ Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){
     Route::post('/account-type-change-cancel', [PartnerController::class, 'accountTypeChangeCancel'])->name('partner.account_type_change_cancel');
     Route::post('/balance/add', [PartnerController::class, 'balanceAdd'])->name('partner.balance.add');
     Route::post('/hold', [PartnerController::class, 'hold'])->name('partner.hold');
+    Route::get('/hold-list', [PartnerController::class, 'holdList'])->name('partner.hold_list');
+    Route::get('/unhold/{id}', [PartnerController::class, 'unhold'])->name('partner.unhold');
 });
 
 Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){

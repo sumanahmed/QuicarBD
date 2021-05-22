@@ -49,6 +49,10 @@ class AccountsController extends Controller
 
         if ($request->phone) {
             $query = $query->where('users.phone', $request->phone);
+        }         
+        
+        if ($request->tnx_id) {
+            $query = $query->where('user_account.tnx_id', $request->tnx_id);
         }        
         
         if ($request->type && $request->type != 100) {

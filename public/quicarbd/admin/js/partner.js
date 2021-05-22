@@ -219,6 +219,7 @@ $("#addBalance").click(function(){
     var n_key       = $('input[name="n_key"]').val();
     var balance     = $('input[name="balance"]').val();
     var add_balance = $('input[name="add_balance"]').val();
+    var deduct_balance = $('input[name="deduct_balance"]').val();
     
     $.ajax({
         type: 'POST',
@@ -229,11 +230,15 @@ $("#addBalance").click(function(){
             n_key       : n_key,
             balance     : balance,
             add_balance : add_balance,
+            deduct_balance : deduct_balance,
         },
         success: function (response) {
             if((response.errors)){
                 if(response.errors.add_balance){
                     $('.errorAddBalance').text(response.errors.add_balance);
+                } 
+                if(response.errors.deduct_balance){
+                    $('.errorDeductBalance').text(response.errors.deduct_balance);
                 } 
             }else{
                 $('#partnerBalanceAddModal').modal('hide');

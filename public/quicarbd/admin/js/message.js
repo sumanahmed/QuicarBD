@@ -2,6 +2,7 @@ $(document).on('click', '#replyMessage', function () {
     $('#replyMessageModal').modal('show');
     $('#id').val($(this).data('id'));
     $('.send_message').val($(this).data('message'));
+    $('.reply_message').val($(this).data('reply_message'));
     $('#sender_id').val($(this).data('sender_id'));
     $('#type').val($(this).data('type'));
  });

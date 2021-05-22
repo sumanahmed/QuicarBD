@@ -2,6 +2,7 @@ $(document).on('click', '#replyComplain', function () {
     $('#replyComplainModal').modal('show');
     $('#id').val($(this).data('id'));
     $('.complain').val($(this).data('complain'));
+    $('.reply_message').val($(this).data('reply_message'));
     $('#sender_id').val($(this).data('sender_id'));
     $('#type').val($(this).data('type'));
  });

@@ -98,11 +98,12 @@ class UserController extends Controller
     
     //balance add
     public function balanceAdd(Request $request)
-    {       
+    {      
         $validators=Validator::make($request->all(),[
             'id'   => 'required',
             'balance' => 'required',
             'add_balance' => 'required',
+            'deduct_balance' => 'required',
             'n_key' => 'required',
         ]);
         
@@ -113,27 +114,56 @@ class UserController extends Controller
         DB::beginTransaction();
         
         try {
-            $user = User::find($request->id); 
-            $user->balance = ($user->balance + $request->add_balance); 
-            $user->update();
             
-            $userAcc                    = new UserAccount();
-            $userAcc->amount            = $request->add_balance;
-            $userAcc->adjust_cashback   = $request->add_balance;
-            $userAcc->adjust_quicar_balance = 0;
-            $userAcc->discount          = 0;
-            $userAcc->online_payment    = 0;
-            $userAcc->tnx_id            = time();
-            $userAcc->type              = 1;
-            $userAcc->income_from       = 5;
-            $userAcc->history_id        = 0;
-            $userAcc->reason            = "Admin Balance Added";
-            $userAcc->user_id           = $user->id;
-            $userAcc->save();
-    
-            $id      = $request->n_key;
-            $title   = "New balance add";
-            $body    = "New balance ". $request->add_balance ." with your current balance. Thanks Team Quicar";
+            if ($request->add_balance != null && $request->add_balance > 0) {
+                $user = User::find($request->id); 
+                $user->balance = ($user->balance + $request->add_balance); 
+                $user->update();
+                
+                $userAcc                    = new UserAccount();
+                $userAcc->amount            = $request->add_balance;
+                $userAcc->adjust_cashback   = $request->add_balance;
+                $userAcc->adjust_quicar_balance = 0;
+                $userAcc->discount          = 0;
+                $userAcc->online_payment    = 0;
+                $userAcc->tnx_id            = time();
+                $userAcc->type              = 1;
+                $userAcc->income_from       = 5;
+                $userAcc->history_id        = 0;
+                $userAcc->reason            = "Admin Balance Added";
+                $userAcc->user_id           = $user->id;
+                $userAcc->save();
+        
+                $id      = $request->n_key;
+                $title   = "New balance add";
+                $body    = "New balance ". $request->add_balance ." with your current balance. Thanks Team Quicar";
+                
+            } 
+            
+            if ($request->deduct_balance != null && $request->deduct_balance > 0) {
+                $user = User::find($request->id); 
+                $user->balance = ($user->balance - $request->deduct_balance); 
+                $user->update();
+                
+                $userAcc                    = new UserAccount();
+                $userAcc->amount            = $request->deduct_balance;
+                $userAcc->adjust_cashback   = 0;
+                $userAcc->adjust_quicar_balance = $request->deduct_balance;
+                $userAcc->discount          = 0;
+                $userAcc->online_payment    = 0;
+                $userAcc->tnx_id            = time();
+                $userAcc->type              = 0;
+                $userAcc->income_from       = 5;
+                $userAcc->history_id        = 0;
+                $userAcc->reason            = "Admin Balance Deducted";
+                $userAcc->user_id           = $user->id;
+                $userAcc->save();
+        
+                $id      = $request->n_key;
+                $title   = "Balance Deducted";
+                $body    = "Balance deducted ". $request->deduct_balance ." Tk from your current balance. Thanks Team Quicar";
+            }
+            
     
             $helper = new Helper();
             $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send

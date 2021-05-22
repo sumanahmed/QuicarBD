@@ -36,6 +36,12 @@
                                         <label class="control-label mb-10">Phone</label>                                            
                                         <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif placeholder="Enter Phone.." class="form-control" />
                                     </div>
+                                </div>           
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10">TnxID</label>                                            
+                                        <input type="text" name="tnx_id" @if(isset($_GET['tnx_id'])) value="{{ $_GET['tnx_id'] }}" @endif placeholder="Enter TnxID" class="form-control" />
+                                    </div>
                                 </div>  
                                 <div class="col-md-2">
                                     <div class="form-group">

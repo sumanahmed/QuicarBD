@@ -92,7 +92,7 @@
                                                 <td>{{ $complainTime }}</td>
                                                 <td>{{ $complain->answer_time != null ? $answerTime : '' }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">
-                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyComplain" data-id="{{ $complain->id }}" data-complain="{{ $complain->message }}" data-sender_id="{{ $complain->sender_id }}" data-type="0" title="Reply"><i class="fa fa-reply"></i></a>
+                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyComplain" data-id="{{ $complain->id }}" data-reply_message="{{ $complain->reply_message }}" data-complain="{{ $complain->message }}" data-sender_id="{{ $complain->sender_id }}" data-type="0" title="Reply"><i class="fa fa-reply"></i></a>
                                                     <button href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteFeedback" data-target="#deleteFeedbackModal" data-id="{{ $complain->id }}" title="Delete"><i class="fa fa-remove"></i></button>
                                                 </td>
                                             </tr>

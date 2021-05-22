@@ -28,7 +28,7 @@ class PartnerController extends Controller
     //show all partner
     public function index(Request $request)
     { 
-        $query = DB::table('owners')->orderBy('id','DESC')->where('account_status', 1);
+        $query = DB::table('owners')->orderBy('id','DESC')->where('is_block', 0)->where('account_status', 1);
         
         if ($request->name) {
             $query = $query->where('name', 'like', "{$request->name}%");
@@ -330,6 +330,7 @@ class PartnerController extends Controller
             $helper->smsNotification($type = 2, $partner->id, $title, $msg); // send notification, 2=partner
 
             $partner->account_status = $request->account_status;
+            $partner->is_block = 0;
             $partner->update();
 
         } catch (Exception $ex) {
@@ -542,6 +543,7 @@ class PartnerController extends Controller
             'id'   => 'required',
             'balance' => 'required',
             'add_balance' => 'required',
+            'deduct_balance' => 'required',
             'n_key' => 'required',
         ]);
         
@@ -552,25 +554,48 @@ class PartnerController extends Controller
         DB::beginTransaction();
         
         try {
-        
-            $partner = Owner::find($request->id); 
-            $partner->current_balance = ($partner->current_balance + $request->add_balance); 
-            $partner->update();
-    
-            $id      = $request->n_key;
-            $title   = "New balance add";
-            $body    = "New balance ". $request->add_balance ." with your current balance. Thanks Team Quicar";
             
-            $ownerAcc                   = new OwnerAccount();
-            $ownerAcc->amount           = $request->add_balance;
-            $ownerAcc->quicar_charge    = 0;
-            $ownerAcc->net_amount       = $request->add_balance;
-            $ownerAcc->type             = 1; //1=credit
-            $ownerAcc->income_from      = 5; 
-            $ownerAcc->reason_text      = "Admin Balance Added"; 
-            $ownerAcc->history_id       = 0; 
-            $ownerAcc->owner_id         = $partner->id; 
-            $ownerAcc->save(); 
+            if ($request->add_balance != null && $request->add_balance > 0) {
+                $partner = Owner::find($request->id); 
+                $partner->current_balance = ($partner->current_balance + $request->add_balance); 
+                $partner->update();
+        
+                $id      = $request->n_key;
+                $title   = "New balance add";
+                $body    = "New balance ". $request->add_balance ." with your current balance. Thanks Team Quicar";
+                
+                $ownerAcc                   = new OwnerAccount();
+                $ownerAcc->amount           = $request->add_balance;
+                $ownerAcc->quicar_charge    = 0;
+                $ownerAcc->net_amount       = $request->add_balance;
+                $ownerAcc->type             = 1; //1=credit
+                $ownerAcc->income_from      = 5; 
+                $ownerAcc->reason_text      = "Admin Balance Added"; 
+                $ownerAcc->history_id       = 0; 
+                $ownerAcc->owner_id         = $partner->id; 
+                $ownerAcc->save(); 
+            }
+            
+            if ($request->deduct_balance != null && $request->deduct_balance > 0) {
+                $partner = Owner::find($request->id); 
+                $partner->current_balance = ($partner->current_balance - $request->deduct_balance); 
+                $partner->update();
+        
+                $id      = $request->n_key;
+                $title   = "Balance Deducted";
+                $body    = "Balance deducted ". $request->deduct_balance ." from your current balance. Thanks Team Quicar";
+                
+                $ownerAcc                   = new OwnerAccount();
+                $ownerAcc->amount           = $request->deduct_balance;
+                $ownerAcc->quicar_charge    = 0;
+                $ownerAcc->net_amount       = $request->deduct_balance;
+                $ownerAcc->type             = 0; //0=Debit
+                $ownerAcc->income_from      = 5; 
+                $ownerAcc->reason_text      = "Admin Balance Deducted"; 
+                $ownerAcc->history_id       = 0; 
+                $ownerAcc->owner_id         = $partner->id; 
+                $ownerAcc->save(); 
+            }
     
             $helper = new Helper();
             $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
@@ -687,5 +712,56 @@ class PartnerController extends Controller
         $partner->is_block = 1;
         $partner->block_reason = $request->block_reason;
         $partner->update();
+    }
+    
+    //show hold partner list
+    public function holdList(Request $request)
+    {
+        $query = DB::table('owners')->orderBy('id','DESC')->where('is_block', 1);
+        
+        if ($request->name) {
+            $query = $query->where('name', 'like', "{$request->name}%");
+        }
+        
+        if ($request->phone) {
+            $query = $query->where('phone', $request->phone);
+        }
+        
+        if ($request->nid) {
+            $query = $query->where('nid', $request->nid);
+        }
+        
+        $partners = $query->paginate(12);
+        $sms   = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
+        
+        return view('quicarbd.admin.partner.hold_list', compact('partners','sms'));
+    }
+    
+    /**
+     * partner unhold
+     */
+    public function unhold($id) 
+    {   
+        try {
+
+            $partner = Owner::find($id);
+
+            $helper = new Helper(); 
+            $id     = $partner->n_key;
+            $title  = 'Account Approved';
+            $msg    = 'Dear '.$partner->name.', Your account active successfully. Call for help 01611822829. Thanks Team Quicar'; 
+            
+            $helper->sendSinglePartnerNotification($id, $title, $msg); //push notificatio nsend
+            $helper->smsSend($partner->phone, $msg); // sms send
+            $helper->smsNotification($type = 2, $partner->id, $title, $msg); // send notification, 2=partner
+            
+            $partner->is_block = 0;
+            $partner->update();
+
+        } catch (Exception $ex) {
+            return redirect()->route('partner.hold_list')->with('error_message',$ex->getMessage());
+        }
+        
+        return redirect()->route('partner.hold_list')->with('message','Unhold successfully');
     }
 }

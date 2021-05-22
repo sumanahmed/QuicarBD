@@ -180,7 +180,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h5 class="modal-title" id="exampleModalLabel1">Add Balance</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">Manage Balance</h5>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -193,8 +193,13 @@
                         </div>
                         <div class="form-group">
                             <label for="title" class="control-label mb-10">Add Balance <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <input type="text" name="add_balance" id="add_balance" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            <input type="text" name="add_balance" id="add_balance" class="form-control" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                             <span class="errorAddBalance text-danger text-bold"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="control-label mb-10">Deduct Balance <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <input type="text" name="deduct_balance" id="deduct_balance" class="form-control" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            <span class="errorDeductBalance text-danger text-bold"></span>
                         </div>
                     </form>
                 </div>
