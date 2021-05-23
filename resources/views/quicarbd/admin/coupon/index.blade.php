@@ -81,6 +81,7 @@
                                     <tbody id="allCoupon">
                                         @foreach($coupons as $coupon)
                                             @php 
+                                                $coupon_used = \App\Models\CouponUsedList::where('coupon_id', $coupon->id)->count('id');
                                                 $start_time = DateTime::createFromFormat('Y-m-d H:i:s', $coupon->start, new DateTimeZone("UTC"));
                                                 $start = $start_time->format('j M, Y h:i A');
                                                 $end_time = DateTime::createFromFormat('Y-m-d H:i:s', $coupon->end, new DateTimeZone("UTC"));
@@ -94,7 +95,7 @@
                                                 <td>{{ $coupon->upto_amount }}</td>
                                                 <td>{{ $start }}</td>
                                                 <td>{{ $end }}</td>
-                                                <td>{{ $coupon->total_use }}</td>
+                                                <td>{{ $coupon->total_use."(".$coupon_used.")" }}</td>
                                                 <td>{{ $coupon->spacifice_user == 1 ? $helper->getUser($coupon->user_id)." - ".$helper->getUserPhone($coupon->user_id) : 'Global' }}</td>
                                                 <td>{{ $coupon->status == 1 ? 'Active' : 'Block' }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">

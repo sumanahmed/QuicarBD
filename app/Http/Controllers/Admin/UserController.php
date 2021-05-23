@@ -27,7 +27,7 @@ class UserController extends Controller
     //show all users
     public function index(Request $request)
     {
-        $query = DB::table('users')->select('*');
+        $query = DB::table('users')->select('users.*');
 
         if ($request->name) {
             $query = $query->where('name', 'like', "{$request->name}%");
@@ -35,6 +35,14 @@ class UserController extends Controller
         
         if ($request->phone) {
             $query = $query->where('phone', $request->phone);
+        }  
+        
+        if ($request->complete_service) {
+            $query = $query->join('ride_list','users.id','ride_list.user_id')
+                            ->addSelect('ride_list.status')
+                            ->where('ride_list.status', 4)
+                            ->where('ride_list.accepted_ride_bitting_id', '!=', null)
+                            ->distinct('ride_list.user_id');
         }  
         
         if ($request->balance) {

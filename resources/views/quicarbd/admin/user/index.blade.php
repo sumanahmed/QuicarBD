@@ -50,6 +50,15 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="complete_service" class="control-label mb-10">Complete Service</label>                                            
+                                        <select name="complete_service" class="form-control">
+                                            <option value="0">Select</option>    
+                                            <option value="1" @if(isset($_GET['complete_service']) && $_GET['complete_service'] == 1) selected @endif>Ride</option>    
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                                     </div>

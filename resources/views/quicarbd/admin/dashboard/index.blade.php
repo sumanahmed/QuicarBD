@@ -309,6 +309,144 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body sm-data-box-1">
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Message</span> 
+                            <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
+                            </div>
+                            <div class="progress-anim mt-20">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <ul class="flex-stat cars mt-5">
+                                <li>
+                                    <a href="{{ route('message.user') }}">
+                                        <span class="block">User Unread</span>
+                                        <span class="block">
+                                            <i class=" txt-dark font-20">{{ $user_msg_unread }}</i>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="block">User Read</span>
+                                        <span class="block weight-500 txt-dark font-15">{{ $user_msg_read }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('message.partner') }}">
+                                        <span class="block">Partner Unread</span>
+                                        <span class="block weight-500 txt-dark font-15">{{ $partner_msg_unread }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="block">Partner Read</span>
+                                        <span class="block weight-500 txt-dark font-15">{{ $partner_msg_read }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body sm-data-box-1">
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Complain</span> 
+                            <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
+                            </div>
+                            <div class="progress-anim mt-20">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <ul class="flex-stat cars mt-5">
+                                <li>
+                                    <a href="{{ route('complain.user') }}">
+                                        <span class="block">User Unreplied</span>
+                                        <span class="block">
+                                            <i class=" txt-dark font-20">{{ $user_complain_unread }}</i>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="block">User Replied</span>
+                                        <span class="block weight-500 txt-dark font-15">{{ $user_complain_read }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('complain.partner') }}">
+                                        <span class="block">Partner Unreplied</span>
+                                        <span class="block weight-500 txt-dark font-15">{{ $partner_complain_unread }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="block">Partner Replied</span>
+                                        <span class="block weight-500 txt-dark font-15">{{ $partner_complain_read }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body sm-data-box-1">
+                            <span class="uppercase-font weight-500 font-14 block text-center txt-dark">Income</span> 
+                            <div class="cus-sat-stat weight-500 txt-primary text-center mt-5">
+                            </div>
+                            <div class="progress-anim mt-20">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-primary
+                                    wow animated progress-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            <ul class="flex-stat cars mt-5">
+                                <li>
+                                    <a href="#">
+                                        <span class="block">Today</span>
+                                        <span class="block">
+                                            <i class=" txt-dark font-20">{{ $today_income }}</i>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="block">Last 3 Days</span>
+                                        <span class="block weight-500 txt-dark font-15">{{ $last_three_days_income }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="block">Last 7 Days</span>
+                                        <span class="block weight-500 txt-dark font-15">{{ $last_seven_days_income }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="block">Last 30 Days</span>
+                                        <span class="block weight-500 txt-dark font-15">{{ $last_thirty_days_income }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <!-- Row -->
