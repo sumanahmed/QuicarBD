@@ -49,7 +49,7 @@ class UserController extends Controller
             $query = $query->where('balance', $request->balance);
         }
         
-        $users = $query->paginate(12);
+        $users = $query->paginate(12)->appends(request()->query());
         $sms   = SMS::select('id','title','message')->orderBy('id','DESC')->get();
 
         return view('quicarbd.admin.user.index', compact('users','sms'));
@@ -235,7 +235,7 @@ class UserController extends Controller
             $query = $query->whereDate('user_log.visit_time', date('Y-m-d', strtotime($request->visit_date)));
         }
         
-        $users = $query->paginate(12);
+        $users = $query->paginate(12)->appends(request()->query());
         $sms   = SMS::select('id','title','message')->orderBy('id','DESC')->get();
         
         return view('quicarbd.admin.user.log-list', compact('users','sms'));

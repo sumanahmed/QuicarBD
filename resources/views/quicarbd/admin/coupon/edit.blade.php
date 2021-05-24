@@ -79,7 +79,7 @@
                                                 </div>
                                             </div>    
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="percentage" class="control-label mb-10">Percentage </label>                                                        
                                                         <input type='text' name="percentage" id="percentage" value="{{ $coupon->percentage }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
@@ -88,7 +88,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="amount" class="control-label mb-10">Amount </label>                                                        
                                                         <input type='text' name="amount" id="amount" value="{{ $coupon->amount }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
@@ -97,7 +97,22 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="complete_service" class="control-label mb-10">Complete Service </label>                                            
+                                                        <select id="complete_service" name="complete_service" class="form-control">                                                            
+                                                            <option value="0" @if($coupon->complete_service == null) selected @endif>Select</option>                                                            
+                                                            <option value="1" @if($coupon->complete_service == 1) selected @endif>Ride</option>                                                          
+                                                            <option value="2" @if($coupon->complete_service == 2) selected @endif>Car Pacakge</option>                                                          
+                                                            <option value="3" @if($coupon->complete_service == 3) selected @endif>Hotel Pacakge</option>                                                          
+                                                            <option value="4" @if($coupon->complete_service == 4) selected @endif>Travel Pacakge</option>                                                          
+                                                        </select>
+                                                        @if($errors->has('complete_service'))
+                                                            <span class="text-danger"> {{ $errors->first('complete_service') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="spacifice_user" class="control-label mb-10">Specific User <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select id="spacifice_user" name="spacifice_user" class="form-control">                                                            

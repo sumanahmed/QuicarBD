@@ -27,7 +27,7 @@ class CouponController extends Controller
             $query = $query->where('status', $request->status);
         }   
         
-        $coupons= $query->paginate(12); 
+        $coupons= $query->paginate(12)->appends(request()->query());
         
         $coupon_for= $request->coupon_for;
         $users  = DB::table('users')->select('id','name')->orderBy('id','DESC')->get();
@@ -86,6 +86,7 @@ class CouponController extends Controller
             $coupon->end    = $request->end;
             $coupon->percentage = isset($request->percentage) ? $request->percentage : 0;
             $coupon->amount     = isset($request->amount) ? $request->amount : 0;
+            $coupon->complete_service = $request->complete_service > 0 ? $request->complete_service : NULL;
             $coupon->spacifice_user = $request->spacifice_user;
             $coupon->how_many_use   = $request->how_many_use;
             $coupon->total_use      = $request->how_many_use;
@@ -184,6 +185,7 @@ class CouponController extends Controller
         $coupon->end    = $request->end;
         $coupon->percentage = isset($request->percentage) ? $request->percentage : 0;
         $coupon->amount     = isset($request->amount) ? $request->amount : 0;
+        $coupon->complete_service = $request->complete_service > 0 ? $request->complete_service : NULL;
         $coupon->spacifice_user = $request->spacifice_user;
         $coupon->how_many_use   = $request->how_many_use;
         $coupon->total_use      = $request->how_many_use;

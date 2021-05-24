@@ -59,7 +59,7 @@ class RideController extends Controller
       $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
     }
                 
-    $rides = $query->paginate(12);
+    $rides = $query->paginate(12)->appends(request()->query());
     
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();
     return view('quicarbd.admin.ride.expired_ride', compact('rides','reasons'));
@@ -104,7 +104,7 @@ class RideController extends Controller
       $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
     }
                 
-    $rides = $query->paginate(12);
+    $rides = $query->paginate(12)->appends(request()->query());
     
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();
     $sms     = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
@@ -446,7 +446,7 @@ class RideController extends Controller
       $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
     }
                 
-    $rides = $query->paginate(12);
+    $rides = $query->paginate(12)->appends(request()->query());
     
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();
     $sms     = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
@@ -493,7 +493,8 @@ class RideController extends Controller
       $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
     }
                 
-    $rides = $query->paginate(12);
+    $rides = $query->paginate(12)->appends(request()->query());
+    
     $reasons = BidCancelList::where('type',0)->where('app_type', 0)->get();  
     $sms   = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
     
@@ -535,7 +536,7 @@ class RideController extends Controller
       $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
     }
                 
-    $rides = $query->paginate(12); 
+    $rides = $query->paginate(12)->appends(request()->query()); 
     $sms   = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
     
     return view('quicarbd.admin.ride.complete', compact('rides','sms'));
@@ -577,7 +578,7 @@ class RideController extends Controller
       $query = $query->whereDate('ride_list.start_time', date('Y-m-d', strtotime($request->travel_date)));
     }
                 
-    $rides = $query->paginate(12);  
+    $rides = $query->paginate(12)->appends(request()->query()); 
     $car_types = DB::table("car_types")->orderBy('name','ASC')->get();
 
     return view('quicarbd.admin.ride.cancel', compact('rides','car_types'));
@@ -881,23 +882,34 @@ class RideController extends Controller
                     ->where('ride_biting.ride_id', $request->ride_id)
                     ->get();
                     
-        $details = [
-    		'for'           => $request->for,
-            'title'         => $title,
-            'message'       => $msg,
-            'notification'  => $request->notification,
-            'users'         => [],
-            'owners'        => $owners
-    	];
+        foreach ($owners as $owner) {
+            
+            $helper->smsNotification($type=2, $owner->id, $title, $msg); // send notification, 2=partner
+            $helper->sendSinglePartnerNotification($owner->n_key, $title, $msg); //push notification send
+            
+            if($request->notification != 1){
+                $helper->smsSend($owner->phone, $msg); // sms send
+            }
+            
+        }
+                    
+    //     $details = [
+    // 		'for'           => $request->for,
+    //         'title'         => $title,
+    //         'message'       => $msg,
+    //         'notification'  => $request->notification,
+    //         'users'         => [],
+    //         'owners'        => $owners
+    // 	];
     	
-    	// send all mail in the queue.
-        $job = (new SendSmsNotification($details))
-            ->delay(
-            	now()
-            	->addSeconds(2)
-            ); 
+    // 	// send all mail in the queue.
+    //     $job = (new SendSmsNotification($details))
+    //         ->delay(
+    //         	now()
+    //         	->addSeconds(2)
+    //         ); 
 
-        dispatch($job);
+    //     dispatch($job);
     	
     }
     

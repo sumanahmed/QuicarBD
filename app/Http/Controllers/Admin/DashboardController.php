@@ -102,7 +102,7 @@ class DashboardController extends Controller
 		
 		$today_debit  = DB::table('user_account')->where('type', 0)->whereDate('created_at', $today)->sum('amount');
         $today_credit = DB::table('user_account')->where('type', 1)->whereDate('created_at', $today)->sum('amount');
-        dd($today_debit, $today_credit);
+		
 		$three_days_debit  = DB::table('user_account')->where('type', 0)->whereDate('created_at', '>=', $three_days_ago)->sum('amount');
         $three_days_credit = DB::table('user_account')->where('type', 1)->whereDate('created_at', '<=', $today)->sum('amount');
         
