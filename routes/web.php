@@ -39,6 +39,7 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ComplainController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\NotificationLogController;
 use App\Http\Controllers\Admin\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
@@ -392,6 +393,11 @@ Route::group(['prefix'=>'/admin/sms-notification', 'middleware' => 'admin'], fun
     Route::post('/push-notification-send', [SmsNotificationController::class, 'pushNotificationSend'])->name('sms_notification.push_notification.send');
     Route::get('/global-notification', [SmsNotificationController::class, 'globalNotification'])->name('sms_notification.global_notification');
     Route::post('/global-notification-send', [SmsNotificationController::class, 'globalNotificationSend'])->name('sms_notification.global_notification.send');
+});
+
+Route::group(['prefix'=>'/notification-log', 'middleware' => 'admin'], function(){
+    Route::get('/partner', [NotificationLogController::class, 'partnerNotification'])->name('notification_log.partner');
+    Route::get('/user', [NotificationLogController::class, 'userNotification'])->name('notification_log.user');
 });
 
 Route::group(['prefix'=>'/admin/message', 'middleware' => 'admin'], function(){
