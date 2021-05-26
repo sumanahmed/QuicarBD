@@ -129,7 +129,7 @@
                                                 @php 
                                                     $start = date_create(date('Y-m-d', strtotime($ride->start_time)));
                                                     $end   = date_create(date('Y-m-d', strtotime($ride->return_time_for_round_way)));
-                                                    $total_day = date_diff($end,$start)->format('%a');
+                                                    $total_day = date_diff($end,$start)->format('%a') + 1;
                                                 @endphp
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -195,7 +195,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="phone" class="control-label mb-10">Car Cost Bear</label>                                            
-                                                    <input type="phone" value="{{ $diff >= 2 ? 'Car Body Rent Only' : 'Including All Cost' }}" class="form-control" readonly>
+                                                    <input type="phone" value="{{ $total_day >= 2 ? 'Car Body Rent Only' : 'Including All Cost' }}" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
