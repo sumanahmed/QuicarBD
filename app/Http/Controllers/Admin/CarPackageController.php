@@ -40,7 +40,7 @@ class CarPackageController extends Controller
             $query = $query->where('car_packages.price', $request->price);
         }
 
-        $car_packages = $query->paginate(12);
+        $car_packages = $query->paginate(12)->appends(request()->query());
         $districts = DB::table('district')->select('id','value as name')->orderBy('value','ASC')->get();
         
         return view('quicarbd.admin.package.car-package.index', compact('car_packages','districts'));
@@ -74,7 +74,6 @@ class CarPackageController extends Controller
             'price'         => 'required',
             'status'        => 'required',
             'package_status'=> 'required',
-            'status_message'=> 'required',
             'owner_get'     => 'required',
             'car_id'        => 'required',
             'quicar_charge' => 'required',
@@ -174,7 +173,6 @@ class CarPackageController extends Controller
             'price'         => 'required',
             'status'        => 'required',
             'package_status'=> 'required',
-            'status_message'=> 'required',
             'owner_get'     => 'required',
             'car_id'        => 'required',
             'quicar_charge' => 'required',

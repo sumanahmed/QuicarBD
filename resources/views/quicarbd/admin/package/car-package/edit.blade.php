@@ -266,7 +266,7 @@
                                                 </div>
                                                 <div class="col-md-3">                                        
                                                     <div class="form-group">
-                                                        <label for="status_message" class="control-label mb-10"> Status Message <span class="text-danger" title="Required">*</span></label>
+                                                        <label for="status_message" class="control-label mb-10"> Status Message</label>
                                                         <input type="text" id="status_message" name="status_message" value="{{ $car_package->status_message }}" class="form-control" placeholder="Status Message" required>
                                                     </div>
                                                 </div>

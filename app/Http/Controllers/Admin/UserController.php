@@ -260,7 +260,7 @@ class UserController extends Controller
                     ->where('user_log.user_id', $id)
                     ->orderBy('user_log.id','DESC');
         
-        $logs = $user_logs->paginate(12);
+        $logs = $user_logs->paginate(12)->appends(request()->query());
         
         $user_name = User::find($id)->name;
 

@@ -90,6 +90,7 @@
                                             <th>Cancel By</th>
                                             <th>Total Cancel</th>
                                             <th>Reason</th>
+                                            <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
@@ -101,6 +102,7 @@
                                             <th>Cancel By</th>
                                             <th>Total Cancel</th>
                                             <th>Reason</th>
+                                            <th>Status</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -136,6 +138,7 @@
                                                     <td>{{ $cancelBy }}</td>
                                                     <td>{{ $total_cancel }}</td>
                                                     <td>{{ $ride->reason != null ? $ride->reason : '' }}</td>
+                                                    <td>{{ $ride->payment_status == 0 ? 'Before Payment' : 'After Payment' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>                                                       
                                                     </td>

@@ -29,7 +29,6 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
-                    
                     <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
                         <form action="{{ route('car_package.index') }}" method="get">
                             <div class="row">
@@ -97,7 +96,7 @@
                                                     <td>{{ $package->duration }}</td>
                                                     <td>{{ $package->district_name }}</td>
                                                     <td>{{ $package->price }}</td>
-                                                    <td>{{ $package->package_status == 0 ? 'Pause' : 'Active' }}</td>
+                                                    <td>{{ $package->package_status == 0 ? 'Invisible' : 'Visible' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('package_review.index',['review_to' => 0, 'id' => $package->id]) }}" target="_blank" class="btn btn-xs btn-primary" title="Review"><i class="fa fa-eye"></i></a>
                                                         <a href="{{ route('car_package.details', $package->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>

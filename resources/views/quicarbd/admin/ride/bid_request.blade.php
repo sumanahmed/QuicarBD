@@ -71,7 +71,9 @@
                                             <th>User</th>
                                             <th>From</th>
                                             <th>To</th>
+                                            <th>Total Ride</th>
                                             <th>Total Bid</th>
+                                            <th>Max Bid</th>
                                             <th>Car Type</th>
                                             <th>Trip Type</th>
                                             <th>Visible Time</th>
@@ -85,7 +87,9 @@
                                             <th>User</th>
                                             <th>From</th>
                                             <th>To</th>
+                                            <th>Total Ride</th>
                                             <th>Total Bid</th>
+                                            <th>Max Bid</th>
                                             <th>Car Type</th>
                                             <th>Trip Type</th>
                                             <th>Visible Time</th>
@@ -97,6 +101,7 @@
                                             @foreach($rides as $ride)
                                                 @php
                                                     $total_bid = \App\Models\RideBiting::where('ride_id',$ride->id)->count('id');
+                                                    $total_ride = \App\Models\RideList::where('user_id',$ride->user_id)->where('status', 4)->count('id');
                                                     $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->created_at, new DateTimeZone("UTC"));
                                                     $bookingDate = $db_time->format('j M, Y h:i A');
                                                     $db_travel = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
@@ -112,7 +117,9 @@
                                                     <td><a href="{{ route('user.details', $ride->user_id) }}">{{ $ride->user_name }} <br/>{{ $ride->user_phone }}</a></td>  
                                                     <td>{{ $helper->getDistrict($ride->starting_district).",".$helper->getCity($ride->starting_city).",".$ride->startig_area }}</td>
                                                     <td>{{ $helper->getDistrict($ride->destination_district).",".$helper->getCity($ride->destination_city).",".$ride->destination_area }}</td>
+                                                    <td>{{ $total_ride }}</td>
                                                     <td><a target="_blank" class="btn btn-xs btn-warning" href="{{ route('ride.bidding', $ride->id) }}">{{ $total_bid }}</a></td>
+                                                    <td><a href="#" id="changeMaxRequest" class="btn btn-xs btn-success" data-toggle="modal" data-ride_id="{{ $ride->id }}" data-max_request="{{ $ride->max_request }}">{{ $ride->max_request }}</a></td>
                                                     <td>{{ $helper->getCarType($ride->car_type) }}</td>
                                                     <td>{{ $ride->rown_way == 0 ? 'One Way' : 'Round Way' }}</td>
                                                     <td>{{ $ride->ride_visiable_time != null ? $ride_visiable_time : '' }}</td>
@@ -206,7 +213,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">Update Visible TIme</h5>
             </div>
             <div class="modal-body">
                 <form>
@@ -214,7 +221,6 @@
                         <label for="reason" class="control-label mb-10">Visible Time <span class="text-danger text-bold" title="Required Field">*</span></label>
                         <input type="text" id="ride_visiable_time" class="form-control" readonly/>
                         <input type="hidden" id="ride_id" />
-                        <input type="hidden" id="cancel_from" value="0" />
                     </div>
                     <div class="form-group">
                         <label for="reason" class="control-label mb-10">New Visible Time <span class="text-danger text-bold" title="Required Field">*</span></label>
@@ -226,6 +232,34 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="updateRideVisibleTime">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="changeBidRequestQtyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="exampleModalLabel1">Update Bid Request Quantity</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="reason" class="control-label mb-10">Maximum Request <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <input type="text" id="max_request" class="form-control" readonly/>
+                        <input type="hidden" id="ride_id" />
+                    </div>
+                    <div class="form-group">
+                        <label for="reason" class="control-label mb-10">New Maximum Request <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <input type="text" id="new_max_request" class="form-control"/>
+                        <span class="text-danger errorNewMaxRequest"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updateMaxRequest">Update</button>
             </div>
         </div>
     </div>
@@ -243,6 +277,7 @@
                         <label for="reason" class="control-label mb-10">Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
                         <textarea id="reason" class="form-control" placeholder="Enter cancel reason.." required></textarea>
                         <input type="hidden" id="ride_id" />
+                        <input type="hidden" id="cancel_from" value="0" />
                         <span class="text-danger reasonError"></span>
                     </div>
                 </form>
