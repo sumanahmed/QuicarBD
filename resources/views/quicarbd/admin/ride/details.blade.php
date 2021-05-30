@@ -192,12 +192,14 @@
                                                     <input type="phone" value="{{ $ride->driver_cost_bear == 0 ? 'No' : 'Yes' }}" class="form-control" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="phone" class="control-label mb-10">Car Cost Bear</label>                                            
-                                                    <input type="phone" value="{{ $total_day >= 2 ? 'Car Body Rent Only' : 'Including All Cost' }}" class="form-control" readonly>
+                                            @if($ride->rown_way != 0 && $total_day > 1)
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Car Cost Bear</label>                                            
+                                                        <input type="phone" value="{{ $total_day >= 2 ? 'Car Body Rent Only' : 'Including All Cost' }}" class="form-control" readonly>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
