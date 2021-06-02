@@ -27,7 +27,7 @@ class UserController extends Controller
     //show all users
     public function index(Request $request)
     {
-        $query = DB::table('users')->select('users.*');
+        $query = DB::table('users')->select('users.*')->orderBy('id','DESC');
 
         if ($request->name) {
             $query = $query->where('name', 'like', "{$request->name}%");

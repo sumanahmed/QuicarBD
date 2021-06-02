@@ -169,8 +169,15 @@
                                             </div>                                                                                                                               
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="img" class="control-label mb-10">Image </label>                                            
-                                                    <img src="http://quicarbd.com/mobileapi/user/api/user_photo/{{ $user->img }}" class="form-control" style="width: 80px;height:60px;"/>
+                                                    <label for="img1" class="control-label mb-10">Image </label>  
+                                                    <div class="avatar-upload">
+                                                        <div class="avatar-edit">
+                                                            <label class="img-popup" src="http://quicarbd.com/mobileapi/user/api/user_photo/{{ $user->img }}"><i class="fa fa-eye"></i></label>
+                                                        </div>
+                                                        <div class="avatar-preview" style="width:100%">
+                                                            <div id="img1Preview" style="background-image: url(http://quicarbd.com/mobileapi/user/api/user_photo/{{ $user->img }});"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div> 
                                         </div>
@@ -394,7 +401,6 @@
 @endphp
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

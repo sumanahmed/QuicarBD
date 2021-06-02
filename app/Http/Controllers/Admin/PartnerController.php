@@ -50,7 +50,7 @@ class PartnerController extends Controller
             $query = $query->whereNull('service_location_district');
         }
         
-        $partners = $query->paginate(12);
+        $partners = $query->paginate(12)->appends(request()->query());
         
         if ($request->service_location_district > 0) {
             $total_partner = DB::table('owners')->where('service_location_district',$request->service_location_district)->count('id');
@@ -377,7 +377,7 @@ class PartnerController extends Controller
                             ->where('nid_back_pic', '<>', '');
         }
         
-        $partners = $query->paginate(12);
+        $partners = $query->paginate(12)->appends(request()->query());
         $sms      = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
         
         return view('quicarbd.admin.partner.verification', compact('partners','sms'));
@@ -416,7 +416,7 @@ class PartnerController extends Controller
             $query = $query->where('account_type_chage_request.which_acount', $request->which_acount);
         }
         
-        $partners = $query->paginate(12); 
+        $partners = $query->paginate(12)->appends(request()->query());
                     
         return view('quicarbd.admin.partner.account_type_change_request', compact('partners'));
     }
@@ -731,7 +731,7 @@ class PartnerController extends Controller
             $query = $query->where('nid', $request->nid);
         }
         
-        $partners = $query->paginate(12);
+        $partners = $query->paginate(12)->appends(request()->query());
         $sms   = DB::table('sms')->select('id','title','message')->orderBy('id','DESC')->get();
         
         return view('quicarbd.admin.partner.hold_list', compact('partners','sms'));

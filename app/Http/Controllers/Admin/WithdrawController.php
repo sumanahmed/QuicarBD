@@ -31,7 +31,7 @@ class WithdrawController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
-        $withdraws = $query->paginate(12);
+        $withdraws = $query->paginate(12)->appends(request()->query());;
         
         return view('quicarbd.admin.withdraw.pending', compact('withdraws'));
     }  
@@ -59,7 +59,7 @@ class WithdrawController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
-        $withdraws = $query->paginate(12);
+        $withdraws = $query->paginate(12)->appends(request()->query());;
         
         return view('quicarbd.admin.withdraw.complete', compact('withdraws'));
     }
@@ -87,7 +87,7 @@ class WithdrawController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
-        $withdraws = $query->paginate(12);
+        $withdraws = $query->paginate(12)->appends(request()->query());;
         
         return view('quicarbd.admin.withdraw.cancel', compact('withdraws'));
     }  

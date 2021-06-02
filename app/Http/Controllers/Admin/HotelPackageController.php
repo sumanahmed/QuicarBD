@@ -44,7 +44,7 @@ class HotelPackageController extends Controller
             $query = $query->where('hotel_packages.price', $request->price);
         }
 
-        $hotel_packages = $query->paginate(12);
+        $hotel_packages = $query->paginate(12)->appends(request()->query());;
         $districts = DB::table('district')->select('id','value as name')->orderBy('value','ASC')->get();
         
         return view('quicarbd.admin.package.hotel-package.index', compact('hotel_packages','districts'));

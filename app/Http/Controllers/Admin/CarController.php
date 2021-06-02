@@ -67,7 +67,7 @@ class CarController extends Controller
             $total_car_type_car = 0;
         }
 
-        $cars = $query->paginate(12);
+        $cars = $query->paginate(12)->appends(request()->query());
 
         $types  = CarType::all();
         $years  = CarYear::all();
@@ -123,48 +123,48 @@ class CarController extends Controller
             $image1Name         = "carImage".time().".".$image1->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image1->move($directory, $image1Name);
-            $image1Url          = $directory.$image1Name;
-            $car->carImage      = $image1Url;
+            $image1Url          = $image1Name;
+            $car->carImage      = "/mobileapi/asset/car/".$image1Url;
         }
         if($request->hasFile('carSmartCardFont')){
             $image2             = $request->file('carSmartCardFont');
             $image2Name         = "carSmartCardFont".time().".".$image2->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image2->move($directory, $image2Name);
-            $image2Url          = $directory.$image2Name;
-            $car->carSmartCardFont= $image2Url;
+            $image2Url          = $image2Name;
+            $car->carSmartCardFont= "/mobileapi/asset/car/".$image2Url;
         }
         if($request->hasFile('carSmartCardBack')){
             $image3             = $request->file('carSmartCardBack');
             $image3Name         = "carSmartCardBack".time().".".$image3->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image3->move($directory, $image3Name);
-            $image3Url          = $directory.$image3Name;
-            $car->carSmartCardBack          = $image3Url;
+            $image3Url          = $image3Name;
+            $car->carSmartCardBack          = "/mobileapi/asset/car/".$image3Url;
         }
         if($request->hasFile('taxToken_image')){
             $image4             = $request->file('taxToken_image');
             $image4Name         = "taxToken_image".time().".".$image4->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image4->move($directory, $image4Name);
-            $image4Url          = $directory.$image4Name;
-            $car->taxToken_image= $image4Url;
+            $image4Url          = $image4Name;
+            $car->taxToken_image= "/mobileapi/asset/car/".$image4Url;
         }
         if($request->hasFile('fitnessCertificate')){
             $image5             = $request->file('fitnessCertificate');
             $image5Name         = "fitnessCertificate".time().".".$image5->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image5->move($directory, $image5Name);
-            $image5Url          = $directory.$image5Name;
-            $car->fitnessCertificate          = $image5Url;
+            $image5Url          = $image5Name;
+            $car->fitnessCertificate= "/mobileapi/asset/car/".$image5Url;
         }
         if($request->hasFile('insurancePaper_path')){
             $image6             = $request->file('insurancePaper_path');
             $image6Name         = "insurancePaper_path".time().".".$image6->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image6->move($directory, $image6Name);
-            $image6Url          = $directory.$image6Name;
-            $car->insurancePaper_path = $image6Url;
+            $image6Url          = $image6Name;
+            $car->insurancePaper_path = "/mobileapi/asset/car/".$image6Url;
         }
         if($car->save()){
             return redirect()->route('car.index')->with('message','Car created successfully');
@@ -247,8 +247,8 @@ class CarController extends Controller
             $image1Name         = "carImage".time().".".$image1->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image1->move($directory, $image1Name);
-            $image1Url          = $directory.$image1Name;
-            $car->carImage      = $image1Url;
+            $image1Url          = $image1Name;
+            $car->carImage      = "/mobileapi/asset/car/".$image1Url;
         }
         if($request->hasFile('carSmartCardFont')){
             if(($car->carSmartCardFont != null) && file_exists($car->carSmartCardFont)){
@@ -258,8 +258,8 @@ class CarController extends Controller
             $image2Name         = "carSmartCardFont".time().".".$image2->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image2->move($directory, $image2Name);
-            $image2Url          = $directory.$image2Name;
-            $car->carSmartCardFont= $image2Url;
+            $image2Url          = $image2Name;
+            $car->carSmartCardFont= "/mobileapi/asset/car/".$image2Url;
         }
         if($request->hasFile('carSmartCardBack')){
             if(($car->carSmartCardBack != null) && file_exists($car->carSmartCardBack)){
@@ -269,8 +269,8 @@ class CarController extends Controller
             $image3Name         = "carSmartCardBack".time().".".$image3->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image3->move($directory, $image3Name);
-            $image3Url          = $directory.$image3Name;
-            $car->carSmartCardBack          = $image3Url;
+            $image3Url          = $image3Name;
+            $car->carSmartCardBack= "/mobileapi/asset/car/".$image3Url;
         }
         if($request->hasFile('taxToken_image')){
             if(($car->taxToken_image != null) && file_exists($car->taxToken_image)){
@@ -280,8 +280,8 @@ class CarController extends Controller
             $image4Name         = "taxToken_image".time().".".$image4->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image4->move($directory, $image4Name);
-            $image4Url          = $directory.$image4Name;
-            $car->taxToken_image= $image4Url;
+            $image4Url          = $image4Name;
+            $car->taxToken_image= "/mobileapi/asset/car/".$image4Url;
         }
         if($request->hasFile('fitnessCertificate')){
             if(($car->fitnessCertificate != null) && file_exists($car->fitnessCertificate)){
@@ -291,8 +291,8 @@ class CarController extends Controller
             $image5Name         = "fitnessCertificate".time().".".$image5->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image5->move($directory, $image5Name);
-            $image5Url          = $directory.$image5Name;
-            $car->fitnessCertificate          = $image5Url;
+            $image5Url          = $image5Name;
+            $car->fitnessCertificate= "/mobileapi/asset/car/".$image5Url;
         }
         if($request->hasFile('insurancePaper_path')){
             if(($car->insurancePaper_path != null) && file_exists($car->insurancePaper_path)){
@@ -302,8 +302,8 @@ class CarController extends Controller
             $image6Name         = "insurancePaper_path".time().".".$image6->getClientOriginalExtension();
             $directory          = '../mobileapi/asset/car/';
             $image6->move($directory, $image6Name);
-            $image6Url          = $directory.$image6Name;
-            $car->insurancePaper_path = $image6Url;
+            $image6Url          = $image6Name;
+            $car->insurancePaper_path = "/mobileapi/asset/car/".$image6Url;
         }
         if($car->update()){
             return redirect()->route('car.index')->with('message','Car update successfully');

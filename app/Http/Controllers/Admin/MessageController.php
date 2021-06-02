@@ -30,7 +30,7 @@ class MessageController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
-        $partners = $query->paginate(12);
+        $partners = $query->paginate(12)->appends(request()->query());;
         
         return view('quicarbd.admin.message.partner', compact('partners'));
     }
@@ -52,7 +52,7 @@ class MessageController extends Controller
             $query = $query->where('users.phone', $request->phone);
         }
         
-        $users = $query->paginate(12);
+        $users = $query->paginate(12)->appends(request()->query());;
         
         return view('quicarbd.admin.message.user', compact('users'));
     }

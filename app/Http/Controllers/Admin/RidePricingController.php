@@ -42,7 +42,7 @@ class RidePricingController extends Controller
             $query = $query->where('maximum_price', $request->maximum_price);
         }
 
-        $pricings = $query->paginate(12); 
+        $pricings = $query->paginate(12)->appends(request()->query());
         $districts  = DB::table('district')->orderBy('value','ASC')->get();
         $car_types  = DB::table('car_types')->orderBy('id','ASC')->get();
  

@@ -59,7 +59,7 @@ class AccountsController extends Controller
             $query = $query->where('user_account.type', $request->type);
         }
 
-        $transactions = $query->paginate(12);
+        $transactions = $query->paginate(12)->appends(request()->query());
         
         return view('quicarbd.admin.accounts.transaction', compact('transactions'));
     }  
@@ -88,7 +88,7 @@ class AccountsController extends Controller
             $query = $query->where('user_account.tnx_id', $request->tnx_id);
         }   
 
-        $transactions = $query->paginate(12);
+        $transactions = $query->paginate(12)->appends(request()->query());
         
         return view('quicarbd.admin.accounts.online-transaction', compact('transactions'));
     }
@@ -119,7 +119,7 @@ class AccountsController extends Controller
             $query = $query->where('users.phone', $request->phone);
         }
 
-        $refunds = $query->paginate(12);
+        $refunds = $query->paginate(12)->appends(request()->query());
 
         return view('quicarbd.admin.accounts.refund', compact('refunds'));
     }
@@ -147,7 +147,7 @@ class AccountsController extends Controller
             $query = $query->where('phone', $request->phone);
         }
 
-        $balances = $query->paginate(12);
+        $balances = $query->paginate(12)->appends(request()->query());
 
         return view('quicarbd.admin.accounts.user-balance',compact('balances'));
     }
@@ -183,7 +183,7 @@ class AccountsController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
 
-        $balances = $query->paginate(12);
+        $balances = $query->paginate(12)->appends(request()->query());
 
         return view('quicarbd.admin.accounts.partner-balance', compact('balances'));
     }
@@ -219,7 +219,7 @@ class AccountsController extends Controller
             $query = $query->where('withdraw_list_partner.status', $request->status);
         }
 
-        $withdraws = $query->paginate(12); 
+        $withdraws = $query->paginate(12)->appends(request()->query()); 
 
         return view('quicarbd.admin.accounts.withdraw', compact('withdraws'));
     }

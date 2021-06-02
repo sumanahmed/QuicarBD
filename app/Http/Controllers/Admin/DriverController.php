@@ -45,7 +45,7 @@ class DriverController extends Controller
             $query = $query->where('c_status', $request->c_status);
         }
 
-        $drivers = $query->paginate(12); 
+        $drivers = $query->paginate(12)->appends(request()->query());; 
         $owners  = Owner::select('id','name')->where('account_status', 1)->get();
  
         return view('quicarbd.admin.driver.index', compact('drivers','owners'));

@@ -30,7 +30,7 @@ class ComplainController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
-        $complains = $query->paginate(12);
+        $complains = $query->paginate(12)->appends(request()->query());
         
         return view('quicarbd.admin.complain.partner', compact('complains'));
     }
@@ -52,7 +52,7 @@ class ComplainController extends Controller
             $query = $query->where('users.phone', $request->phone);
         }
         
-        $complains = $query->paginate(12);
+        $complains = $query->paginate(12)->appends(request()->query());
         
         return view('quicarbd.admin.complain.user', compact('complains'));
     }
