@@ -7614,3 +7614,9 @@ ul.cars li {
 i.fa {
   color: #fff;
 }
+
+.navbar.navbar-inverse.navbar-fixed-top .nav.top-nav > li > a .top-nav-icon-badge {
+    background: #f8b32d !important;
+    height: 18px !important;
+    width: 25px !important;
+}

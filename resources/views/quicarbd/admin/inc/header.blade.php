@@ -23,12 +23,18 @@
 
 <body>
 <?php
+	$current_date_time = \Carbon\Carbon::now()->toDateTimeString();
     $pendingDriver = \App\Models\Driver::where('c_status', 0)->count('id');
     $pendingCar = \App\Models\Car::where('status', 0)->count('id');
     $pendingCarPackage = \App\Models\CarPackage::where('status', 0)->count('id');
     $pendingHotelPackage = \App\Models\HotelPackage::where('status', 0)->count('id');
     $pendingPartner = \App\Models\Owner::where('account_status', 0)->count('id');
     $pendingRide = \App\Models\RideList::where('status', 0)->count('id');
+    $bookingRide = \App\Models\RideList::where('status', 4)
+					->where('accepted_ride_bitting_id', '!=', null)
+					->where('start_time', '>', $current_date_time)
+					->count('id');
+    $cancelRide = \App\Models\RideList::where('status', 2)->count('id');
 ?>
     <div class="wrapper theme-1-active pimary-color-blue">
 		<!-- Top Menu Items -->
@@ -69,9 +75,23 @@
 						</a>
 					</li>
 					<li class="dropdown alert-drp">
-						<a href="{{ route('ride.pending') }}" title="Pending Ride">Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
+						<a href="{{ route('ride.pending') }}" title="Pending Ride">Pending Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
     						@if($pendingRide > 0)
     						    <span class="top-nav-icon-badge">{{ $pendingRide }}</span>
+    						@endif
+						</a>
+					</li>
+					<li class="dropdown alert-drp">
+						<a href="{{ route('ride.upcoming') }}" title="Booking Ride">Booking Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
+    						@if($pendingRide > 0)
+    						    <span class="top-nav-icon-badge">{{ $pendingRide }}</span>
+    						@endif
+						</a>
+					</li>
+					<li class="dropdown alert-drp">
+						<a href="{{ route('ride.cancel') }}" title="Cancel Ride">Cancel Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
+    						@if($cancelRide > 0)
+    						    <span class="top-nav-icon-badge">{{ $cancelRide }}</span>
     						@endif
 						</a>
 					</li>
