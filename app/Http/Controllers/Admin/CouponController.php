@@ -114,6 +114,9 @@ class CouponController extends Controller
 
             if ($request->spacifice_user == 0) {
                 
+                $helper = new Helper(); 
+                $helper->smsNotification($type = 1, 0, $title, $message); // bell notification, 1=user
+                
                 $client = new Client();
                 $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$message."&type=1&token=quicar");    
                 

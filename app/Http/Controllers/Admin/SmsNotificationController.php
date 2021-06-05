@@ -155,7 +155,7 @@ class SmsNotificationController extends Controller
         } elseif ($request['for'] == 2) { // 2 mean partner
             $client = new Client();
             $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$body."&type=1&image=".$image."&token=quicar_owner");
-        }
+        } 
 
         return redirect()->back()->with('message','Send successfully');        
     }
