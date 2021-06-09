@@ -45,7 +45,7 @@ class DriverController extends Controller
             $query = $query->where('c_status', $request->c_status);
         }
 
-        $drivers = $query->paginate(12)->appends(request()->query());; 
+        $drivers = $query->paginate(12)->appends(request()->query());
         $owners  = Owner::select('id','name')->where('account_status', 1)->get();
  
         return view('quicarbd.admin.driver.index', compact('drivers','owners'));
@@ -91,42 +91,42 @@ class DriverController extends Controller
         if($request->driver_photo){
             $image          = $request->file('driver_photo');
             $image_name     = time().".".$image->getClientOriginalExtension();
-            $directory      = '../mobileapi/asset/driver/driver_photo/';
+            $directory      = '../mobileapi/asset/car/';
             $image->move($directory, $image_name);
-            $image_url      = $directory.$image_name;
-            $driver->driver_photo    = $image_url;
+            $image_url      = $image_name;
+            $driver->driver_photo    = "http://quicarbd.com/mobileapi/asset/car/".$image_url;
         }
         if($request->nid_font_pic){
             $license        = $request->file('nid_font_pic');
             $license_name   = time().".".$license->getClientOriginalExtension();
-            $directory      = '../mobileapi/asset/driver/nid/';
+            $directory      = '../mobileapi/asset/car/';
             $license->move($directory, $license_name);
-            $nid_front_url    = $directory.$license_name;
-            $driver->nid_font_pic= $nid_front_url;
+            $nid_front_url    = $license_name;
+            $driver->nid_font_pic= "http://quicarbd.com/mobileapi/asset/car/".$nid_front_url;
         }
         if($request->nid_back_pic){
             $license        = $request->file('nid_back_pic');
             $license_name   = time().".".$license->getClientOriginalExtension();
-            $directory      = '../mobileapi/asset/driver/nid/';
+            $directory      = '../mobileapi/asset/car/';
             $license->move($directory, $license_name);
-            $nid_back_url    = $directory.$license_name;
-            $driver->nid_back_pic= $nid_back_url;
+            $nid_back_url    = $license_name;
+            $driver->nid_back_pic= "http://quicarbd.com/mobileapi/asset/car/".$nid_back_url;
         }
         if($request->license_font_pic){
             $license        = $request->file('license_font_pic');
             $license_name   = time().".".$license->getClientOriginalExtension();
-            $directory      = '../mobileapi/asset/driver/license/';
+            $directory      = '../mobileapi/asset/car/';
             $license->move($directory, $license_name);
-            $license_front_url    = $directory.$license_name;
-            $driver->license_font_pic= $license_front_url;
+            $license_front_url    = $license_name;
+            $driver->license_font_pic= "http://quicarbd.com/mobileapi/asset/car/".$license_front_url;
         }
         if($request->license_back_pic){
             $license        = $request->file('license_back_pic');
             $license_name   = time().".".$license->getClientOriginalExtension();
-            $directory      = '../mobileapi/asset/driver/license/';
+            $directory      = '../mobileapi/asset/car/';
             $license->move($directory, $license_name);
-            $license_back_url    = $directory.$license_name;
-            $driver->license_back_pic= $license_back_url;
+            $license_back_url    = $license_name;
+            $driver->license_back_pic= "http://quicarbd.com/mobileapi/asset/car/".$license_back_url;
         }
         if($driver->save()){
             return redirect()->route('driver.index')->with('message','Driver created successfully');
@@ -165,10 +165,10 @@ class DriverController extends Controller
             }
             $image          = $request->file('driver_photo');
             $image_name     = time().".".$image->getClientOriginalExtension();
-            $directory      = '../mobileapi/asset/driver/driver_photo/';
+            $directory      = '../mobileapi/asset/car/';
             $image->move($directory, $image_name);
-            $image_url      = $directory.$image_name;
-            $driver->driver_photo = $image_url;
+            $image_url      = $image_name;
+            $driver->driver_photo = "http://quicarbd.com/mobileapi/asset/car/".$image_url;
         }
         if($request->nid_font_pic){
             if($driver->nid_font_pic != null && file_exists($driver->nid_font_pic)){
@@ -176,10 +176,10 @@ class DriverController extends Controller
             }
             $license        = $request->file('nid_font_pic');
             $license_name   = time().".".$license->getClientOriginalExtension();
-            $directory      = '../mobileapi/asset/driver/nid/';
+            $directory      = '../mobileapi/asset/car/';
             $license->move($directory, $license_name);
-            $nid_front_url    = $directory.$license_name;
-            $driver->nid_font_pic= $nid_front_url;
+            $nid_front_url    = $license_name;
+            $driver->nid_font_pic= "http://quicarbd.com/mobileapi/asset/car/".$nid_front_url;
         }
         if($request->nid_back_pic){
             if($driver->nid_back_pic != null && file_exists($driver->nid_back_pic)){
@@ -187,10 +187,10 @@ class DriverController extends Controller
             }
             $license        = $request->file('nid_back_pic');
             $license_name   = time().".".$license->getClientOriginalExtension();
-            $directory      = '../mobileapi/asset/driver/nid/';
+            $directory      = '../mobileapi/asset/car/';
             $license->move($directory, $license_name);
-            $nid_back_url    = $directory.$license_name;
-            $driver->nid_back_pic= $nid_back_url;
+            $nid_back_url    = $license_name;
+            $driver->nid_back_pic= "http://quicarbd.com/mobileapi/asset/car/".$nid_back_url;
         }
         if($request->license_font_pic){
             if($driver->license_font_pic != null && file_exists($driver->license_font_pic)){
@@ -198,10 +198,10 @@ class DriverController extends Controller
             }
             $license        = $request->file('license_font_pic');
             $license_name   = time().".".$license->getClientOriginalExtension();
-            $directory      = '../mobileapi/asset/driver/license/';
+            $directory      = '../mobileapi/asset/car/';
             $license->move($directory, $license_name);
-            $license_front_url    = $directory.$license_name;
-            $driver->license_font_pic= $license_front_url;
+            $license_front_url    = $license_name;
+            $driver->license_font_pic= "http://quicarbd.com/mobileapi/asset/car/".$license_front_url;
         }
         if($request->license_back_pic){
             if($driver->license_back_pic != null && file_exists($driver->license_back_pic)){
@@ -209,10 +209,10 @@ class DriverController extends Controller
             }
             $license        = $request->file('license_back_pic');
             $license_name   = time().".".$license->getClientOriginalExtension();
-            $directory      = '../mobileapi/asset/driver/license/';
+            $directory      = '../mobileapi/asset/car/';
             $license->move($directory, $license_name);
-            $license_back_url    = $directory.$license_name;
-            $driver->license_back_pic= $license_back_url;
+            $license_back_url    = $license_name;
+            $driver->license_back_pic= "http://quicarbd.com/mobileapi/asset/car/".$license_back_url;
         }
         if($driver->update()){
             
