@@ -19,13 +19,15 @@ class AccountsController extends Controller
     public function summary()
     {
         
-        $debit  = DB::table('user_account')->where('type', 0)->sum('amount');
-        $credit = DB::table('user_account')->where('type', 1)->sum('amount');
+        $total_user_payment  = DB::table('user_account')->where('type', 0)->where('advance_payment', 1)->sum('amount');
+        $total_refund  = DB::table('user_account')->where('id_refund', 1)->sum('amount');
+        $total_discount  = DB::table('user_account')->where('type', 0)->where('advance_payment', 1)->sum('discount');
+        
         
         $data['user_balance']   = DB::table('users')->sum('balance'); 
         $data['user_cashback']  = DB::table('users')->sum('cash_back_balance');
         $data['partner_balance']= DB::table('owners')->sum('current_balance');
-        $data['quicar_income']  = $debit - $credit;
+        $data['quicar_income']  = ($total_user_payment - $total_refund) - $total_discount;
         
         return view('quicarbd.admin.accounts.summary', $data);
     }    
