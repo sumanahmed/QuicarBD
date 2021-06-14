@@ -72,6 +72,7 @@
                                             <th>From</th>
                                             <th>To</th>
                                             <th>Total Ride</th>
+                                            <th>Total Cancel</th>
                                             <th>Total Bid</th>
                                             <th>Max Bid</th>
                                             <th>Car Type</th>
@@ -88,6 +89,7 @@
                                             <th>From</th>
                                             <th>To</th>
                                             <th>Total Ride</th>
+                                            <th>Total Cancel</th>
                                             <th>Total Bid</th>
                                             <th>Max Bid</th>
                                             <th>Car Type</th>
@@ -102,6 +104,7 @@
                                                 @php
                                                     $total_bid = \App\Models\RideBiting::where('ride_id',$ride->id)->count('id');
                                                     $total_ride = \App\Models\RideList::where('user_id',$ride->user_id)->where('status', 4)->count('id');
+                                                    $total_cancel = \App\Models\RideList::where('user_id',$ride->user_id)->where('status', 2)->where('cancel_by',0)->count('id');
                                                     $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->created_at, new DateTimeZone("UTC"));
                                                     $bookingDate = $db_time->format('j M, Y h:i A');
                                                     $db_travel = DateTime::createFromFormat('Y-m-d H:i:s', $ride->start_time, new DateTimeZone("UTC"));
@@ -118,6 +121,7 @@
                                                     <td>{{ $helper->getDistrict($ride->starting_district).",".$helper->getCity($ride->starting_city).",".$ride->startig_area }}</td>
                                                     <td>{{ $helper->getDistrict($ride->destination_district).",".$helper->getCity($ride->destination_city).",".$ride->destination_area }}</td>
                                                     <td>{{ $total_ride }}</td>
+                                                    <td>{{ $total_cancel }}</td>
                                                     <td><a target="_blank" class="btn btn-xs btn-warning" href="{{ route('ride.bidding', $ride->id) }}">{{ $total_bid }}</a></td>
                                                     <td><a href="#" id="changeMaxRequest" class="btn btn-xs btn-success" data-toggle="modal" data-ride_id="{{ $ride->id }}" data-max_request="{{ $ride->max_request }}">{{ $ride->max_request }}</a></td>
                                                     <td>{{ $helper->getCarType($ride->car_type) }}</td>
@@ -133,7 +137,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="6" class="text-center">No Data Found</td>
+                                                <td colspan="12" class="text-center">No Data Found</td>
                                             </tr>
                                         @endif
                                     </tbody>

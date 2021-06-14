@@ -34,7 +34,10 @@
 					->where('accepted_ride_bitting_id', '!=', null)
 					->where('start_time', '>', $current_date_time)
 					->count('id');
-    $cancelRide = \App\Models\RideList::where('status', 2)->count('id');
+    $cancelRide = \App\Models\RideList::where('status', 2)
+                    ->where('accepted_ride_bitting_id','!=',null)
+                    ->where('payment_status',1)
+                    ->count('id');
 ?>
     <div class="wrapper theme-1-active pimary-color-blue">
 		<!-- Top Menu Items -->
@@ -89,7 +92,7 @@
 						</a>
 					</li>
 					<li class="dropdown alert-drp">
-						<a href="{{ route('ride.cancel') }}" title="Cancel Ride">Cancel Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
+						<a href="{{ route('ride.cancel') }}" title="Cancel Ride">Booking Cancel Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
     						@if($cancelRide > 0)
     						    <span class="top-nav-icon-badge">{{ $cancelRide }}</span>
     						@endif
