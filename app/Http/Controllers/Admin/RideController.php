@@ -212,7 +212,7 @@ class RideController extends Controller
     * user ride approve from admin panel
   */
   public function userApprove(Request $request)
-  {
+  { 
     $validators = Validator::make($request->all(),[
         'ride_id' => 'required',
         'bid_id'  => 'required',
@@ -220,7 +220,6 @@ class RideController extends Controller
         'user_balance'      => 'required',
         'cashback_balance'  => 'required',
         'coupon_used'  => 'required',
-        'coupon_code'  => 'required',
         'tnx_id'  => 'required',
         'method'  => 'required',
     ]);
@@ -331,8 +330,8 @@ class RideController extends Controller
         
         /* Partner SMS,Notification Section */
         
-            $carRegNo = Car::find()->carRegisterNumber;
-            $carType = Car::find()->carType;
+            $carRegNo = Car::find($bid->car_id)->carRegisterNumber;
+            $carType = Car::find($bid->car_id)->carType;
             $tripType = $ride->rown_way == 0 ? "একমুখী" : "উভয়মুখী";
             $start_date = date('j M, Y H:i:s', strtotime($ride->start_time));
             $start_time = date('H:i:s', strtotime($ride->start_time));
@@ -365,10 +364,11 @@ class RideController extends Controller
             $user_sms_title = "Your payment has been done.";
             $user_sms_msg = "Trip Type : ". $trip_type. " \n Booking ID : ". $ride->booking_id . " \n Transaction ID : ". $ride->tnx_id . " \n Travel Date : ". $start_date. " \n Travel Time : ".$start_time. "\n Total Price : ". $bid->bit_amount. "\n Advance Payment : ".$bid->quicar_charge. "\n Pay to Driver : ". $bid->you_get." \n Have a safe journey \n Team Quicar";
             $user_notification = "Your payment has been done. Trip Type : ". $trip_type. " \n Booking ID : ". $ride->booking_id . " \n Transaction ID : ". $ride->tnx_id . " \n Travel Date : ". $start_date. " \n Travel Time : ".$start_time. "\n Total Price : ". $bid->bit_amount. "\n Advance Payment : ".$bid->quicar_charge. "\n Pay to Driver : ". $bid->you_get." \n Have a safe journey \n Team Quicar";
-            
+
             $user_key = User::find($ride->user_id)->n_key;
-            $user_phone = Owner::find($ride->user_id)->phone;
-            
+            $user_phone = User::find($ride->user_id)->phone;
+        
+            $helper = new Helper(); 
             $helper->sendSinglePartnerNotification($user_key, $user_sms_title, $user_sms_msg); //push notification send
             $helper->smsSend($user_phone, $user_sms_msg); // sms send
             $helper->smsNotification($type = 1, $ride->user_id, $user_sms_title, $user_notification); // bell notification, 2=partner

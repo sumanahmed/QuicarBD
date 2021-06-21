@@ -65,7 +65,7 @@ $("#sendCancelReason").click(function(){
 //open ride approve modal
 $(document).on('click', '#showRideApprove', function () {
   $('#rideApproveModal').modal('show');
-  $('#bid_id').val($(this).data('id'));
+  $('#bid_id').val($(this).data('bid_id'));
   $('#ride_id').val($(this).data('ride_id'));
 });
 
@@ -77,7 +77,7 @@ $("#rideApprove").click(function(){
   var online_balance  = $('#online_balance').val()
   var user_balance    = $('#user_balance').val()
   var cashback_balance= $('#cashback_balance').val()
-  var coupon_used = $('#coupon_used :selected').val()
+  var coupon_used = $('#coupon_used option:selected').val()
   var coupon_code = $('#coupon_code').val()
   var tnx_id = $('#tnx_id').val()
   var method = $('#method').val()
@@ -108,7 +108,7 @@ $("#rideApprove").click(function(){
               
           }
           
-          toastr.success('Bid Cancelled')
+          toastr.success('Ride Approved')
           //location.reload();
       }
   });
