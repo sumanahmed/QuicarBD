@@ -106,11 +106,12 @@ class UserController extends Controller
     
     //balance add
     public function balanceAdd(Request $request)
-    {      
+    {    
         $validators=Validator::make($request->all(),[
             'id'   => 'required',
             'balance' => 'required',
             'add_balance' => 'required',
+            'add_cashback_balance' => 'required',
             'deduct_balance' => 'required',
             'n_key' => 'required',
         ]);
@@ -123,6 +124,31 @@ class UserController extends Controller
         
         try {
             
+            if ($request->add_cashback_balance != null && $request->add_cashback_balance > 0) { 
+                $user = User::find($request->id); 
+                $user->cash_back_balance = ($user->cash_back_balance + $request->add_cashback_balance); 
+                $user->update();
+                
+                $userAcc                    = new UserAccount();
+                $userAcc->amount            = $request->add_cashback_balance;
+                $userAcc->adjust_cashback   = $request->add_cashback_balance;
+                $userAcc->adjust_quicar_balance = 0;
+                $userAcc->discount          = 0;
+                $userAcc->online_payment    = 0;
+                $userAcc->tnx_id            = time();
+                $userAcc->type              = 1;
+                $userAcc->income_from       = 5;
+                $userAcc->history_id        = 0;
+                $userAcc->reason            = "Admin Cashback Balance Added";
+                $userAcc->user_id           = $user->id;
+                $userAcc->save();
+        
+                $id      = $request->n_key;
+                $title   = "New cashback balance add";
+                $body    = "New cashback balance ". $request->add_cashback_balance ." with your current cashback balance. Thanks Team Quicar";
+                
+            } 
+            
             if ($request->add_balance != null && $request->add_balance > 0) {
                 $user = User::find($request->id); 
                 $user->balance = ($user->balance + $request->add_balance); 
@@ -130,8 +156,8 @@ class UserController extends Controller
                 
                 $userAcc                    = new UserAccount();
                 $userAcc->amount            = $request->add_balance;
-                $userAcc->adjust_cashback   = $request->add_balance;
-                $userAcc->adjust_quicar_balance = 0;
+                $userAcc->adjust_cashback   = 0;
+                $userAcc->adjust_quicar_balance = $request->add_balance;
                 $userAcc->discount          = 0;
                 $userAcc->online_payment    = 0;
                 $userAcc->tnx_id            = time();

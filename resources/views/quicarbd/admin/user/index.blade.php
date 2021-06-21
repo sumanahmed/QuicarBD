@@ -181,7 +181,6 @@
             </div>
         </div>
     </div>
-    </div>
     
     <!-- Balance ADD Modal -->
     <div id="userBalanceAddModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -206,6 +205,11 @@
                             <span class="errorAddBalance text-danger text-bold"></span>
                         </div>
                         <div class="form-group">
+                            <label for="title" class="control-label mb-10">Add Cashback Balance <span class="text-danger text-bold" title="Required Field">*</span></label>
+                            <input type="text" name="add_cashback_balance" id="add_cashback_balance" class="form-control" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            <span class="errorAddCashbackBalance text-danger text-bold"></span>
+                        </div>
+                        <div class="form-group">
                             <label for="title" class="control-label mb-10">Deduct Balance <span class="text-danger text-bold" title="Required Field">*</span></label>
                             <input type="text" name="deduct_balance" id="deduct_balance" class="form-control" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                             <span class="errorDeductBalance text-danger text-bold"></span>
@@ -219,7 +223,7 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 @endsection
 @section('scripts')
 	<script src="{{ asset('quicarbd/admin/js/user.js') }}"></script>

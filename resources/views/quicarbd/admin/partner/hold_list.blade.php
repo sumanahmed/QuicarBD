@@ -4,8 +4,8 @@
 @php 
     $helper = new App\Http\Lib\Helper;
 @endphp
-<div class="container-fluid">				
-	<!-- Title -->
+<div class="container-fluid">               
+    <!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -66,24 +66,24 @@
                                     <thead>
                                         <tr>
                                             <th>Name & Phone</th>
-                                            <th>Balance</th>
                                             <th>Percentage</th>
                                             <th>Account Type</th>
                                             <th>Service Location</th>
                                             <th>Date & Time</th>
                                             <th>Hold Reason</th>
+                                            <th>Balance</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Name & Phone</th>
-                                            <th>Balance</th>
                                             <th>Percentage</th>
                                             <th>Account Type</th>
                                             <th>Service Location</th>
                                             <th>Date & Time</th>
                                             <th>Hold Reason</th>
+                                            <th>Balance</th>
                                             <th style="vertical-align: middle;text-align: center;">Action</th>
                                         </tr>
                                     </tfoot>
@@ -96,12 +96,12 @@
                                                 @endphp
                                                 <tr class="partner-{{ $partner->id }}">
                                                     <td>{{ $partner->name }}<br/>{{ $partner->phone }}</td>
-                                                    <td>{{ $partner->current_balance }}</td>
                                                     <td>{{ "BP-".$partner->bidding_percent.", CP-".$partner->car_package_charge.", HP-".$partner->hotel_package_charge.", TP-".$partner->travel_package_charge }}</td>
                                                     <td>{{ ownerAccountType($partner->account_type) }}</td>
                                                     <td>{{ $partner->service_location_district != null ? $helper->getDistrict($partner->service_location_district) : '' }}</td>    
                                                     <td>{{ $dateTime }}</td>
                                                     <td>{{ $partner->block_reason }}</td>
+                                                    <td>{{ $partner->current_balance }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('partner.unhold', $partner->id) }}" class="btn btn-xs btn-success" title="Approve"><i class="fa fa-check"></i></a>
                                                         <a href="#" class="btn btn-xs btn-primary" id="sendNotification" data-toggle="modal" data-target="#sendNotificationModal" title="Notification" data-id="{{ $partner->id }}" data-phone="{{ $partner->phone }}" data-n_key="{{ $partner->n_key }}"><i class="fa fa-bell"></i></a>
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>  
         </div>
     </div>
     
@@ -261,7 +261,7 @@
 @endphp
 @endsection
 @section('scripts')
-	<script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
+    <script src="{{ asset('quicarbd/admin/js/partner.js') }}"></script>
     <script>
         $("#dashboard").addClass('active');
     </script>

@@ -717,7 +717,12 @@ class PartnerController extends Controller
     //show hold partner list
     public function holdList(Request $request)
     {
-        $query = DB::table('owners')->orderBy('id','DESC')->where('is_block', 1);
+        $query = DB::table('owners')
+                    ->orderBy('id','DESC')
+                    ->where(function($q){
+                        return $q->where('is_block', 1)
+                                ->orWhere('current_balance', '<', 0);
+                    });
         
         if ($request->name) {
             $query = $query->where('name', 'like', "{$request->name}%");
