@@ -383,6 +383,7 @@
                                             <th>Quicar Charge</th>
                                             <th>Partner Amount</th>
                                             <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -391,6 +392,7 @@
                                             <th>Quicar Charge</th>
                                             <th>Partner Amount</th>
                                             <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -400,6 +402,7 @@
                                                 <td>{{ $ride->quicar_charge }}</td>
                                                 <td>{{ $ride->you_get }}</td>
                                                 <td>{{ rideStatus($ride->status) }}</td>
+                                                <td><a href="{{ route('ride.details', $ride->ride_id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
