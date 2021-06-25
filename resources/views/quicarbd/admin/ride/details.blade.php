@@ -186,17 +186,19 @@
                                                     <input type="phone" @if($ride->accepted_bitting_time != null) value="{{ date('Y-m-d H:i:s a', strtotime($ride->accepted_bitting_time)) }}" @endif class="form-control" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="phone" class="control-label mb-10">Driver Cost Bear</label>                                            
-                                                    <input type="phone" value="{{ $ride->driver_cost_bear == 0 ? 'No' : 'Yes' }}" class="form-control" readonly>
+                                            @if($ride->rown_way == 1)
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="phone" class="control-label mb-10">Driver Cost Bear</label>                                            
+                                                        <input type="phone" value="{{ $ride->driver_cost_bear == 0 ? 'No' : 'Yes' }}" class="form-control" readonly>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            @if($ride->rown_way != 0 && $total_day > 1)
+                                            @endif
+                                            @if($ride->rown_way == 1 && $total_day > 1)
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="phone" class="control-label mb-10">Car Cost Bear</label>                                            
-                                                        <input type="phone" value="{{ $total_day >= 2 ? 'Car Body Rent Only' : 'Including All Cost' }}" class="form-control" readonly>
+                                                        <input type="phone" value="{{ $ride->car_all_cost_bear == 1 ? 'Including All Cost' : 'Car Body Rent Only' }}" class="form-control" readonly>
                                                     </div>
                                                 </div>
                                             @endif
@@ -589,13 +591,13 @@
     }
     
     function cancelBy($cancel_by) {
-       if ($cancel_by == 0) {
+        if ($cancel_by == 0) {
             echo 'User';
-       } else if ($cancel_by == 1) {
+        } else if ($cancel_by == 1) {
             echo 'Partner';
-       } else if ($cancel_by == 2) {
+        } else if ($cancel_by == 2) {
             echo 'Admin';
-       }
+        }
     }
 @endphp
 @endsection
