@@ -12,10 +12,10 @@
         <!-- Breadcrumb -->
         <div class="col-md-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Package Ride</a></li>
-            <li><a href="#">Car Package</a></li>
-            <li class="active"><span>Details</span></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Package Ride</a></li>
+                <li><a href="#">Car Package</a></li>
+                <li class="active"><span>Details</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -124,93 +124,6 @@
                     </div>
                 </div>
             </div>	
-            @if($detail->status == 5) 
-                <div class="panel panel-default card-view">
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>Complete Ride Details</h6> 
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="panel-wrapper collapse in">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-sm-12 col-xs-12">                                
-                                    <div class="form-wrap">
-                                        <div class="form-body">     
-                                            <div class="row">
-                                                <div class="col-md-4">                                        
-                                                    <div class="form-group">
-                                                        <label for="name" class="control-label mb-10">Ride Amount</label>
-                                                        <input type="text" id="name" name="name" value="{{ $ride_detail->bit_amount }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Quicar Charge</label>                                            
-                                                        <input type="phone" id="phone" value="{{ $ride_detail->quicar_charge }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">                                        
-                                                    <div class="form-group">
-                                                        <label for="name" class="control-label mb-10">Partner Get</label>
-                                                        <input type="text" id="name" name="name" value="{{ $ride_detail->you_get }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif	
-            @if($detail->status == 2) 
-                @php 
-                    $cancel_reason = \App\Models\BidCancelList::find($detail->cancellation_reason)->name;
-                @endphp
-                <div class="panel panel-default card-view">
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>Cancel Package Ride Details</h6> 
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="panel-wrapper collapse in">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-sm-12 col-xs-12">                                
-                                    <div class="form-wrap">
-                                        <div class="form-body">     
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Cancel By</label>                                            
-                                                        <input type="phone" id="phone" value="{{ $detail->cancel_by == 0 ? 'User' : 'Partner' }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Cancel Reason</label>                                            
-                                                        <input type="phone" id="phone" value="{{ $cancel_reason }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="phone" class="control-label mb-10">Cancel Date & Time</label>                                            
-                                                        <input type="phone" id="phone" value="{{ date('Y-m-d H:i:s a', strtotime($detail->cancelation_time)) }}" class="form-control" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif	
         </div>
     </div>    
 </div>

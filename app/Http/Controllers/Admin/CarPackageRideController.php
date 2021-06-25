@@ -9,6 +9,7 @@ use App\Models\Owner;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
+use Carbon\Carbon;
 use Response;
 use DB;
 use Exception;
@@ -18,8 +19,9 @@ class CarPackageRideController extends Controller
     /**
      * car package booking show
     */
-    public function booking() {
-        $bookings = DB::table('car_package_order')
+    public function booking(Request $request) 
+    {
+        $query  = DB::table('car_package_order')
                     ->join('car_packages','car_package_order.package_id','car_packages.id')
                     ->join('users','car_package_order.user_id','users.id')
                     ->join('owners','car_package_order.owner_id','owners.id')
@@ -31,31 +33,60 @@ class CarPackageRideController extends Controller
                         'owners.name as owner_name','owners.phone as owner_phone'
                     )
                     ->where('car_package_order.status', '<=', 1)
-                    ->where('car_package_order.payment_status', 0)
-                    ->get();
-
+                    ->where('car_package_order.payment_status', 0);
+                    
+        if ($request->phone) { 
+          $query = $query->where('users.phone', $request->phone);
+        }  
+        
+        if ($request->booking_date) {
+          $query = $query->whereDate('car_package_order.created_at', date('Y-m-d', strtotime($request->booking_date)));
+        }
+        
+        if ($request->travel_date) {
+          $query = $query->whereDate('car_package_order.travel_date', date('Y-m-d', strtotime($request->travel_date)));
+        }
+        
+        $bookings = $query->paginate(12)->appends(request()->query());
+        
         return view('quicarbd.admin.package-ride.car-package.booking', compact('bookings'));
     }
 
     /**
      * car package booking show
     */
-    public function upcoming() {
-        $orders = DB::table('car_package_order')
+    public function upcoming(Request $request) 
+    {
+        $current_date_time = Carbon::now()->toDateTimeString(); 
+        $query = DB::table('car_package_order')
                     ->join('car_packages','car_package_order.package_id','car_packages.id')
                     ->join('users','car_package_order.user_id','users.id')
                     ->join('owners','car_package_order.owner_id','owners.id')
                     ->join('cars','car_package_order.car_id','cars.id')
                     ->select('car_package_order.created_at','car_package_order.user_id','car_package_order.owner_id',
                         'car_package_order.package_id','car_package_order.travel_date', 'car_package_order.status','car_package_order.payment_status',
-                        'car_package_order.id', 'car_package_order.booking_id',
+                        'car_package_order.id', 'car_package_order.booking_id','car_package_order.ride_start_time',
                         'car_packages.name', 'car_packages.price', 'cars.carRegisterNumber','car_packages.quicar_charge',
                         'users.name as user_name','users.phone as user_phone',
                         'owners.name as owner_name','owners.phone as owner_phone'
                     )
                     ->where('car_package_order.status', 1)
                     ->where('car_package_order.payment_status', 1)
-                    ->get();
+                    ->where('car_package_order.ride_start_time', '>', $current_date_time);
+                    
+        if ($request->phone) { 
+          $query = $query->where('users.phone', $request->phone);
+        }  
+        
+        if ($request->booking_date) {
+          $query = $query->whereDate('car_package_order.created_at', date('Y-m-d', strtotime($request->booking_date)));
+        }
+        
+        if ($request->travel_date) {
+          $query = $query->whereDate('car_package_order.travel_date', date('Y-m-d', strtotime($request->travel_date)));
+        }
+                    
+        $orders = $query->paginate(12)->appends(request()->query());
 
         return view('quicarbd.admin.package-ride.car-package.upcoming', compact('orders'));
     }
@@ -85,30 +116,48 @@ class CarPackageRideController extends Controller
     /**
      * car package complete show
     */
-    public function complete() { 
-        $orders = DB::table('car_package_order')
+    public function complete(Request $request) 
+    {
+        $current_date_time = Carbon::now()->toDateTimeString(); 
+        
+        $query = DB::table('car_package_order')
                     ->join('car_packages','car_package_order.package_id','car_packages.id')
                     ->join('users','car_package_order.user_id','users.id')
                     ->join('owners','car_package_order.owner_id','owners.id')
                     ->join('cars','car_package_order.car_id','cars.id')
                     ->select('car_package_order.created_at','car_package_order.user_id','car_package_order.owner_id',
                         'car_package_order.package_id','car_package_order.travel_date', 'car_package_order.status','car_package_order.payment_status',
-                        'car_package_order.id', 'car_package_order.booking_id','car_package_order.review_give',
+                        'car_package_order.id', 'car_package_order.booking_id','car_package_order.review_give', 'car_package_order.ride_start_time',
                         'car_packages.name', 'car_packages.price', 'cars.carRegisterNumber','car_packages.quicar_charge',
                         'users.name as user_name','users.phone as user_phone',
                         'owners.name as owner_name','owners.phone as owner_phone'
                     )
-                    ->where('car_package_order.status', 4)
-                    ->get();
-
+                    ->where('car_package_order.ride_start_time', '>', $current_date_time);
+                    
+        if ($request->phone) { 
+          $query = $query->where('users.phone', $request->phone);
+        }  
+        
+        if ($request->booking_date) {
+          $query = $query->whereDate('car_package_order.created_at', date('Y-m-d', strtotime($request->booking_date)));
+        }
+        
+        if ($request->travel_date) {
+          $query = $query->whereDate('car_package_order.travel_date', date('Y-m-d', strtotime($request->travel_date)));
+        }
+                    
+        $orders = $query->paginate(12)->appends(request()->query());
+        
         return view('quicarbd.admin.package-ride.car-package.complete', compact('orders'));
     }
 
     /**
      * car package cancel show
     */
-    public function cancel() { 
-        $orders = DB::table('car_package_order')
+    public function cancel(Request $request) 
+    {
+        
+        $query = DB::table('car_package_order')
                     ->join('car_packages','car_package_order.package_id','car_packages.id')
                     ->join('users','car_package_order.user_id','users.id')
                     ->join('owners','car_package_order.owner_id','owners.id')
@@ -122,7 +171,20 @@ class CarPackageRideController extends Controller
                     )
                     ->where('car_package_order.status', 2)
                     ->get();
-
+        if ($request->phone) { 
+          $query = $query->where('users.phone', $request->phone);
+        }  
+        
+        if ($request->booking_date) {
+          $query = $query->whereDate('car_package_order.created_at', date('Y-m-d', strtotime($request->booking_date)));
+        }
+        
+        if ($request->travel_date) {
+          $query = $query->whereDate('car_package_order.travel_date', date('Y-m-d', strtotime($request->travel_date)));
+        }
+                    
+        $orders = $query->paginate(12)->appends(request()->query());
+        
         return view('quicarbd.admin.package-ride.car-package.cancel', compact('orders'));
     }
 
