@@ -73,51 +73,51 @@ Route::get('/sms/list', [CommonController::class, 'smsList'])->name('admin.sms_l
 Route::post('/sms/store', [CommonController::class, 'smsStore'])->name('admin.sms_store'); 
 Route::post('/sms/destroy', [CommonController::class, 'smsDestroy'])->name('admin.sms_destroy'); 
 
-Route::get('/admin',[AuthController::class, 'login'])->name('admin.login');
-Route::post('/admin/signin',[AuthController::class, 'signin'])->name('admin.signin');
-Route::post('/admin/logout',[AuthController::class, 'logout'])->name('admin.logout');
+Route::get('/',[AuthController::class, 'login'])->name('admin.login');
+Route::post('/signin',[AuthController::class, 'signin'])->name('admin.signin');
+Route::post('/logout',[AuthController::class, 'logout'])->name('admin.logout');
 
-Route::group(['prefix'=>'/admin', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/', 'middleware' => 'admin'], function(){
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 });
 
-Route::group(['prefix'=>'/admin/setting/user-app-info', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/setting/user-app-info', 'middleware' => 'admin'], function(){
     Route::get('/edit', [UserController::class, 'userAppInfoEdit'])->name('setting.user-app-info.edit');
     Route::post('/update', [UserController::class, 'userAppInfoUpdate'])->name('setting.user-app-info.update');
 });
 
-Route::group(['prefix'=>'/admin/setting/user-app', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/setting/user-app', 'middleware' => 'admin'], function(){
     Route::get('/edit', [UserController::class, 'userAppSettingEdit'])->name('setting.user-app.edit');
     Route::post('/update', [UserController::class, 'userAppSettingUpdate'])->name('setting.user-app.update');
 });
 
-Route::group(['prefix'=>'/admin/setting/partner-app', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/setting/partner-app', 'middleware' => 'admin'], function(){
     Route::get('/edit', [PartnerController::class, 'partnerAppSettingEdit'])->name('setting.partner-app.edit');
     Route::post('/update', [PartnerController::class, 'partnerAppSettingUpdate'])->name('setting.partner-app.update');
 });
 
-Route::group(['prefix'=>'/admin/setting/district', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/setting/district', 'middleware' => 'admin'], function(){
     Route::get('/', [DistrictController::class, 'index'])->name('setting.district.index');
     Route::post('/store', [DistrictController::class, 'store'])->name('setting.district.store');
     Route::post('/update', [DistrictController::class, 'update'])->name('setting.district.update');
     Route::post('/destroy', [DistrictController::class, 'destroy'])->name('setting.district.destroy');
 });
 
-Route::group(['prefix'=>'/admin/setting/city', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/setting/city', 'middleware' => 'admin'], function(){
     Route::get('/', [CityController::class, 'index'])->name('setting.city.index');
     Route::post('/store', [CityController::class, 'store'])->name('setting.city.store');
     Route::post('/update', [CityController::class, 'update'])->name('setting.city.update');
     Route::post('/destroy', [CityController::class, 'destroy'])->name('setting.city.destroy');
 });
 
-Route::group(['prefix'=>'/admin/setting/tour-spot', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/setting/tour-spot', 'middleware' => 'admin'], function(){
     Route::get('/', [TourSportController::class, 'index'])->name('setting.tour_spot.index');
     Route::post('/store', [TourSportController::class, 'store'])->name('setting.tour_spot.store');
     Route::post('/update', [TourSportController::class, 'update'])->name('setting.tour_spot.update');
     Route::post('/destroy', [TourSportController::class, 'destroy'])->name('setting.tour_spot.destroy');
 });
 
-Route::group(['prefix'=>'/admin/driver', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/driver', 'middleware' => 'admin'], function(){
     Route::get('/', [DriverController::class, 'index'])->name('driver.index');
     Route::get('/create', [DriverController::class, 'create'])->name('driver.create');
     Route::post('/store', [DriverController::class, 'store'])->name('driver.store');
@@ -128,63 +128,63 @@ Route::group(['prefix'=>'/admin/driver', 'middleware' => 'admin'], function(){
     Route::post('/hold-status', [DriverController::class, 'holdStatus'])->name('driver.hold_status');
 });
 
-Route::group(['prefix'=>'/admin/property-type', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/property-type', 'middleware' => 'admin'], function(){
     Route::get('/', [PropertyTypeController::class, 'index'])->name('property_type.index');
     Route::post('/store', [PropertyTypeController::class, 'store'])->name('property_type.store');
     Route::post('/update', [PropertyTypeController::class, 'update'])->name('property_type.update');
     Route::post('/destroy', [PropertyTypeController::class, 'destroy'])->name('property_type.destroy');
 });
 
-Route::group(['prefix'=>'/admin/car-type', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/car-type', 'middleware' => 'admin'], function(){
     Route::get('/', [CarTypeController::class, 'index'])->name('car_type.index');
     Route::post('/store', [CarTypeController::class, 'store'])->name('car_type.store');
     Route::post('/update', [CarTypeController::class, 'update'])->name('car_type.update');
     Route::post('/destroy', [CarTypeController::class, 'destroy'])->name('car_type.destroy');
 });
 
-Route::group(['prefix'=>'/admin/brand', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/brand', 'middleware' => 'admin'], function(){
     Route::get('/', [CarBrandController::class, 'index'])->name('brand.index');
     Route::post('/store', [CarBrandController::class, 'store'])->name('brand.store');
     Route::post('/update', [CarBrandController::class, 'update'])->name('brand.update');
     Route::post('/destroy', [CarBrandController::class, 'destroy'])->name('brand.destroy');
 });
 
-Route::group(['prefix'=>'/admin/model', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/model', 'middleware' => 'admin'], function(){
     Route::get('/', [CarModelController::class, 'index'])->name('model.index');
     Route::post('/store', [CarModelController::class, 'store'])->name('model.store');
     Route::post('/update', [CarModelController::class, 'update'])->name('model.update');
     Route::post('/destroy', [CarModelController::class, 'destroy'])->name('model.destroy');
 });
 
-Route::group(['prefix'=>'/admin/year', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/year', 'middleware' => 'admin'], function(){
     Route::get('/', [YearController::class, 'index'])->name('year.index');
     Route::post('/store', [YearController::class, 'store'])->name('year.store');
     Route::post('/update', [YearController::class, 'update'])->name('year.update');
     Route::post('/destroy', [YearController::class, 'destroy'])->name('year.destroy');
 });
 
-Route::group(['prefix'=>'/admin/class', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/class', 'middleware' => 'admin'], function(){
     Route::get('/', [CarClassController::class, 'index'])->name('class.index');
     Route::post('/store', [CarClassController::class, 'store'])->name('class.store');
     Route::post('/update', [CarClassController::class, 'update'])->name('class.update');
     Route::post('/destroy', [CarClassController::class, 'destroy'])->name('class.destroy');
 });
 
-Route::group(['prefix'=>'/admin/color', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/color', 'middleware' => 'admin'], function(){
     Route::get('/', [CarColorController::class, 'index'])->name('color.index');
     Route::post('/store', [CarColorController::class, 'store'])->name('color.store');
     Route::post('/update', [CarColorController::class, 'update'])->name('color.update');
     Route::post('/destroy', [CarColorController::class, 'destroy'])->name('color.destroy');
 });
 
-Route::group(['prefix'=>'/admin/hotel-amenity', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/hotel-amenity', 'middleware' => 'admin'], function(){
     Route::get('/', [HotelAmenityController::class, 'index'])->name('hotel_amenity.index');
     Route::post('/store', [HotelAmenityController::class, 'store'])->name('hotel_amenity.store');
     Route::post('/update', [HotelAmenityController::class, 'update'])->name('hotel_amenity.update');
     Route::post('/destroy', [HotelAmenityController::class, 'destroy'])->name('hotel_amenity.destroy');
 });
 
-Route::group(['prefix'=>'/admin/car', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/car', 'middleware' => 'admin'], function(){
     Route::get('/', [CarController::class, 'index'])->name('car.index');
     Route::get('/create', [CarController::class, 'create'])->name('car.create');
     Route::post('/store', [CarController::class, 'store'])->name('car.store');
@@ -197,7 +197,7 @@ Route::group(['prefix'=>'/admin/car', 'middleware' => 'admin'], function(){
     Route::post('/owner-notification-send', [CarController::class, 'ownerSendNotification'])->name('car.destroy');
 });
 
-Route::group(['prefix'=>'/admin/coupon', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/coupon', 'middleware' => 'admin'], function(){
     Route::get('/', [CouponController::class, 'index'])->name('coupon.index');
     Route::get('/create', [CouponController::class, 'create'])->name('coupon.create');
     Route::post('/store', [CouponController::class, 'store'])->name('coupon.store');
@@ -208,7 +208,7 @@ Route::group(['prefix'=>'/admin/coupon', 'middleware' => 'admin'], function(){
     Route::get('/used-list', [CouponController::class, 'usedList'])->name('coupon.usedList');
 });
 
-Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/partner', 'middleware' => 'admin'], function(){
     Route::get('/', [PartnerController::class, 'index'])->name('partner.index');
     Route::get('/create', [PartnerController::class, 'create'])->name('partner.create');
     Route::post('/store', [PartnerController::class, 'store'])->name('partner.store');
@@ -228,7 +228,7 @@ Route::group(['prefix'=>'/admin/partner', 'middleware' => 'admin'], function(){
     Route::get('/unhold/{id}', [PartnerController::class, 'unhold'])->name('partner.unhold');
 });
 
-Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/user', 'middleware' => 'admin'], function(){
     Route::get('/', [UserController::class, 'index'])->name('user.index');
     Route::get('/status/update', [UserController::class, 'create'])->name('user.status.update');
     Route::get('/details/{user_id}', [UserController::class, 'details'])->name('user.details');
@@ -238,7 +238,7 @@ Route::group(['prefix'=>'/admin/user', 'middleware' => 'admin'], function(){
     Route::get('/log/{id}', [UserController::class, 'log'])->name('user.log');
 });
 
-Route::group(['prefix'=>'/admin/marketing-banner', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/marketing-banner', 'middleware' => 'admin'], function(){
     Route::get('/', [MarketingBannerController::class, 'index'])->name('marketing_banner.index');
     Route::get('/create', [MarketingBannerController::class, 'create'])->name('marketing_banner.create');
     Route::post('/store', [MarketingBannerController::class, 'store'])->name('marketing_banner.store');
@@ -247,7 +247,7 @@ Route::group(['prefix'=>'/admin/marketing-banner', 'middleware' => 'admin'], fun
     Route::post('/destroy', [MarketingBannerController::class, 'destroy'])->name('marketing_banner.destroy');
 });
 
-Route::group(['prefix'=>'/admin/user-banner', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/user-banner', 'middleware' => 'admin'], function(){
     Route::get('/', [UserBannerController::class, 'index'])->name('user_banner.index');
     Route::get('/create', [UserBannerController::class, 'create'])->name('user_banner.create');
     Route::post('/store', [UserBannerController::class, 'store'])->name('user_banner.store');
@@ -258,7 +258,7 @@ Route::group(['prefix'=>'/admin/user-banner', 'middleware' => 'admin'], function
     Route::get('/down/{id}', [UserBannerController::class, 'down'])->name('user_banner.down');
 });
 
-Route::group(['prefix'=>'/admin/partner-banner', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/partner-banner', 'middleware' => 'admin'], function(){
     Route::get('/', [PartnerBannerController::class, 'index'])->name('partner_banner.index');
     Route::get('/create', [PartnerBannerController::class, 'create'])->name('partner_banner.create');
     Route::post('/store', [PartnerBannerController::class, 'store'])->name('partner_banner.store');
@@ -269,7 +269,7 @@ Route::group(['prefix'=>'/admin/partner-banner', 'middleware' => 'admin'], funct
     Route::get('/down/{id}', [PartnerBannerController::class, 'down'])->name('partner_banner.down');
 });
 
-Route::group(['prefix'=>'/admin/car-package', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/car-package', 'middleware' => 'admin'], function(){
     Route::get('/', [CarPackageController::class, 'index'])->name('car_package.index');
     Route::get('/create', [CarPackageController::class, 'create'])->name('car_package.create');
     Route::post('/store', [CarPackageController::class, 'store'])->name('car_package.store');
@@ -279,7 +279,7 @@ Route::group(['prefix'=>'/admin/car-package', 'middleware' => 'admin'], function
     Route::post('/destroy', [CarPackageController::class, 'destroy'])->name('car_package.destroy');
 });
 
-Route::group(['prefix'=>'/admin/hotel-package', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/hotel-package', 'middleware' => 'admin'], function(){
     Route::get('/', [HotelPackageController::class, 'index'])->name('hotel_package.index');
     Route::get('/create', [HotelPackageController::class, 'create'])->name('hotel_package.create');
     Route::post('/store', [HotelPackageController::class, 'store'])->name('hotel_package.store');
@@ -289,7 +289,7 @@ Route::group(['prefix'=>'/admin/hotel-package', 'middleware' => 'admin'], functi
     Route::post('/destroy', [HotelPackageController::class, 'destroy'])->name('hotel_package.destroy');
 });
 
-Route::group(['prefix'=>'/admin/travel-package', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/travel-package', 'middleware' => 'admin'], function(){
     Route::get('/', [TravelPackageController::class, 'index'])->name('travel_package.index');
     Route::get('/create', [TravelPackageController::class, 'create'])->name('travel_package.create');
     Route::post('/store', [TravelPackageController::class, 'store'])->name('travel_package.store');
@@ -299,11 +299,11 @@ Route::group(['prefix'=>'/admin/travel-package', 'middleware' => 'admin'], funct
     Route::post('/destroy', [TravelPackageController::class, 'destroy'])->name('travel_package.destroy');
 });
 
-Route::group(['prefix'=>'/admin/package-review', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/package-review', 'middleware' => 'admin'], function(){
     Route::get('/', [PackageReviewController::class, 'index'])->name('package_review.index');
 });
 
-Route::group(['prefix'=>'/admin/reason/cancellation', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/reason/cancellation', 'middleware' => 'admin'], function(){
     Route::get('/', [CancellationReasonController::class, 'index'])->name('reason.index');
     Route::get('/create', [CancellationReasonController::class, 'create'])->name('reason.create');
     Route::post('/store', [CancellationReasonController::class, 'store'])->name('reason.store');
@@ -312,22 +312,22 @@ Route::group(['prefix'=>'/admin/reason/cancellation', 'middleware' => 'admin'], 
     Route::post('/destroy', [CancellationReasonController::class, 'destroy'])->name('reason.destroy');
 });
 
-Route::group(['prefix'=>'/admin/privacy/user', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/privacy/user', 'middleware' => 'admin'], function(){
     Route::get('/edit', [PrivacyController::class, 'userEedit'])->name('privacy.user.edit');
     Route::post('/update', [PrivacyController::class, 'userUpdate'])->name('privacy.user.update');
 });
 
-Route::group(['prefix'=>'/admin/privacy/partner', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/privacy/partner', 'middleware' => 'admin'], function(){
     Route::get('/edit', [PrivacyController::class, 'partnerEdit'])->name('privacy.partner.edit');
     Route::post('/update', [PrivacyController::class, 'partnerUpdate'])->name('privacy.partner.update');
 });
 
-Route::group(['prefix'=>'/admin/banner', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/banner', 'middleware' => 'admin'], function(){
     Route::get('/packages', [BannerController::class, 'bannerPackages'])->name('banner.packages');
     Route::post('/packages/update', [BannerController::class, 'bannerPackagesUpdate'])->name('banner.packages.update');
 });
 
-Route::group(['prefix'=>'/admin/notice', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/notice', 'middleware' => 'admin'], function(){
     Route::get('/packages', [NoticeController::class, 'noticePackages'])->name('notice.packages');
     Route::post('/packages/update', [NoticeController::class, 'noticePackagesUpdate'])->name('notice.packages.update');
     Route::get('/partner-app', [NoticeController::class, 'noticePartnerApp'])->name('notice.partner_app');
@@ -335,7 +335,7 @@ Route::group(['prefix'=>'/admin/notice', 'middleware' => 'admin'], function(){
 });
 
 
-Route::group(['prefix'=>'/admin/pricing', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/pricing', 'middleware' => 'admin'], function(){
     Route::get('/', [RidePricingController::class, 'index'])->name('pricing.index');
     Route::get('/create', [RidePricingController::class, 'create'])->name('pricing.create');
     Route::post('/store', [RidePricingController::class, 'store'])->name('pricing.store');
@@ -344,7 +344,7 @@ Route::group(['prefix'=>'/admin/pricing', 'middleware' => 'admin'], function(){
     Route::post('/destroy', [RidePricingController::class, 'destroy'])->name('pricing.destroy');
 });
 
-Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/ride', 'middleware' => 'admin'], function(){
     Route::get('/bid-expired-ride', [RideController::class, 'bidExpiredRide'])->name('ride.bid_expired_ride');
     Route::get('/send-pending/{id}', [RideController::class, 'sendPending'])->name('ride.send_pending');
     Route::get('/pending', [RideController::class, 'pending'])->name('ride.pending');
@@ -367,8 +367,9 @@ Route::group(['prefix'=>'/admin/ride', 'middleware' => 'admin'], function(){
     Route::post('/bid-request-qty-update', [RideController::class, 'bidRequestQtyUpdate'])->name('ride.bid_request_qty_update');    
 });
 
-Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/car-package-order', 'middleware' => 'admin'], function(){
     Route::get('/booking', [CarPackageRideController::class, 'booking'])->name('car_package_order.booking');
+    Route::get('/accepted', [CarPackageRideController::class, 'accepted'])->name('car_package_order.accepted');
     Route::get('/upcoming', [CarPackageRideController::class, 'upcoming'])->name('car_package_order.upcoming');
     Route::get('/ongoing', [CarPackageRideController::class, 'ongoing'])->name('car_package_order.ongoing');
     Route::get('/complete', [CarPackageRideController::class, 'complete'])->name('car_package_order.complete');
@@ -377,7 +378,7 @@ Route::group(['prefix'=>'/admin/car-package-order', 'middleware' => 'admin'], fu
     Route::post('/cancel/reason/send', [CarPackageRideController::class, 'reasonSend'])->name('car_package_order.reason.send');
 });
 
-Route::group(['prefix'=>'/admin/hotel-package-order', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/hotel-package-order', 'middleware' => 'admin'], function(){
     Route::get('/booking', [HotelPackageRideController::class, 'booking'])->name('hotel_package_order.booking');
     Route::get('/upcoming', [HotelPackageRideController::class, 'upcoming'])->name('hotel_package_order.upcoming');
     Route::get('/complete', [HotelPackageRideController::class, 'complete'])->name('hotel_package_order.complete');
@@ -386,7 +387,7 @@ Route::group(['prefix'=>'/admin/hotel-package-order', 'middleware' => 'admin'], 
     Route::post('/cancel/reason/send', [HotelPackageRideController::class, 'reasonSend'])->name('hotel_package_order.reason.send');
 });
 
-Route::group(['prefix'=>'/admin/sms-notification', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/sms-notification', 'middleware' => 'admin'], function(){
     Route::get('/', [SmsNotificationController::class, 'index'])->name('sms_notification.index');
     Route::post('/send', [SmsNotificationController::class, 'send'])->name('sms_notification.send');
     Route::get('/push-notification', [SmsNotificationController::class, 'pushNotification'])->name('sms_notification.push_notification');
@@ -400,26 +401,26 @@ Route::group(['prefix'=>'/notification-log', 'middleware' => 'admin'], function(
     Route::get('/user', [NotificationLogController::class, 'userNotification'])->name('notification_log.user');
 });
 
-Route::group(['prefix'=>'/admin/message', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/message', 'middleware' => 'admin'], function(){
     Route::get('/partner', [MessageController::class, 'partnerMessage'])->name('message.partner');
     Route::get('/user', [MessageController::class, 'userMessage'])->name('message.user');
     Route::post('/reply', [MessageController::class, 'reply'])->name('message.reply');
 });
 
-Route::group(['prefix'=>'/admin/complain', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/complain', 'middleware' => 'admin'], function(){
     Route::get('/partner', [ComplainController::class, 'partnerComplain'])->name('complain.partner');
     Route::get('/user', [ComplainController::class, 'userComplain'])->name('complain.user');
     Route::post('/reply', [ComplainController::class, 'reply'])->name('complain.reply');
 });
 
-Route::group(['prefix'=>'/admin/withdraw', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/withdraw', 'middleware' => 'admin'], function(){
     Route::get('/pending', [WithdrawController::class, 'pending'])->name('withdraw.pending');
     Route::get('/complete', [WithdrawController::class, 'complete'])->name('withdraw.complete');
     Route::get('/cancel', [WithdrawController::class, 'cancel'])->name('withdraw.cancel');
     Route::post('/approve', [WithdrawController::class, 'approve'])->name('withdraw.approve');
 });
 
-Route::group(['prefix'=>'/admin/accounts', 'middleware' => 'admin'], function(){
+Route::group(['prefix'=>'/accounts', 'middleware' => 'admin'], function(){
     Route::get('/summary', [AccountsController::class, 'summary'])->name('accounts.summary');
     Route::get('/transaction', [AccountsController::class, 'transaction'])->name('accounts.transaction');
     Route::get('/online-transaction', [AccountsController::class, 'onlineTransaction'])->name('accounts.online_transaction');

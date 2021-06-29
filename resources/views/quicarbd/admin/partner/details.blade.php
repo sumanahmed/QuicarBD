@@ -379,6 +379,8 @@
                                 <table id="datable_1" class="table table-hover display pb-30" >
                                     <thead>
                                         <tr>
+                                            <th>Booking Date</th>
+                                            <th>Travel Date</th>
                                             <th>Bid Amount</th>
                                             <th>Quicar Charge</th>
                                             <th>Partner Amount</th>
@@ -388,6 +390,8 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>Booking Date</th>
+                                            <th>Travel Date</th>
                                             <th>Bid Amount</th>
                                             <th>Quicar Charge</th>
                                             <th>Partner Amount</th>
@@ -397,7 +401,15 @@
                                     </tfoot>
                                     <tbody>
                                         @foreach($rides as $ride)
+                                            @php
+                                                $db_time = DateTime::createFromFormat('Y-m-d H:i:s', $ride->booking_date, new DateTimeZone("UTC"));
+                                                $bookingDate = $db_time->format('j M, Y h:i A');
+                                                $db_travel = DateTime::createFromFormat('Y-m-d H:i:s', $ride->travel_date, new DateTimeZone("UTC"));
+                                                $travelDate = $db_travel->format('j M, Y h:i A');
+                                            @endphp
                                             <tr>
+                                                <td>{{ $bookingDate }}</td>                                                  
+                                                <td>{{ $travelDate }}</td>
                                                 <td>{{ $ride->bit_amount }}</td>
                                                 <td>{{ $ride->quicar_charge }}</td>
                                                 <td>{{ $ride->you_get }}</td>

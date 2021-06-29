@@ -89,8 +89,8 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="district_id" class="control-label mb-10">Select Tour District <span class="text-danger" title="Required">*</span></label>
-                                                    <input type="text" class="form-control selectable" value="{{ $district }}" required readonly>
+                                                    <label for="district_id" class="control-label mb-10">Selected Tour District <span class="text-danger" title="Required">*</span></label>
+                                                    <input type="text" class="form-control" value="{{ $district }}" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-9">

@@ -1,5 +1,5 @@
 @extends('quicarbd.admin.layout.admin')
-@section('title','Booking')
+@section('title','Accepted & Unpaid')
 @section('content')
 <div class="container-fluid">				
 	<!-- Title -->
@@ -12,7 +12,7 @@
                 <li><a href="#">Dashboard</a></li>
                 <li><a href="#">Package Ride</a></li>
                 <li><a href="#">Car Package</a></li>
-                <li class="active"><span>Booking</span></li>
+                <li class="active"><span>Accepted & Unpaid</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -24,13 +24,13 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">Car Package Booking</h6>
+                        <h6 class="panel-title txt-dark">Accepted & Unpaid Car Package</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="panel-wrapper collapse in">
                     <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
-                        <form action="{{ route('car_package_order.booking') }}" method="get">
+                        <form action="{{ route('car_package_order.accepted') }}" method="get">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -87,8 +87,8 @@
                                         </tr>
                                     </tfoot>
                                     <tbody id="partnerData">
-                                        @if(isset($bookings) && count($bookings) > 0)
-                                            @foreach($bookings as $booking)
+                                        @if(isset($orders) && count($orders) > 0)
+                                            @foreach($orders as $booking)
                                                 <tr class="partner-{{ $booking->id }}">
                                                     <td>{{ date('Y-m-d H:i:s a', strtotime($booking->created_at)) }}</td>                                                  
                                                     <td>{{ date('Y-m-d H:i:s a', strtotime($booking->travel_date)) }}</td>
@@ -110,7 +110,7 @@
                                         @endif
                                     </tbody>
                                 </table>
-                                {{ $bookings->links('pagination::bootstrap-4') }}
+                                {{ $orders->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>

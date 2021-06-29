@@ -32,7 +32,7 @@ class CarPackageRideController extends Controller
                         'users.name as user_name','users.phone as user_phone',
                         'owners.name as owner_name','owners.phone as owner_phone'
                     )
-                    ->where('car_package_order.status', '<=', 1)
+                    ->where('car_package_order.status', 0)
                     ->where('car_package_order.payment_status', 0);
                     
         if ($request->phone) { 
@@ -50,6 +50,42 @@ class CarPackageRideController extends Controller
         $bookings = $query->paginate(12)->appends(request()->query());
         
         return view('quicarbd.admin.package-ride.car-package.booking', compact('bookings'));
+    }    
+    
+    /**
+     * car package accepted
+    */
+    public function accepted(Request $request) 
+    {
+        $query  = DB::table('car_package_order')
+                    ->join('car_packages','car_package_order.package_id','car_packages.id')
+                    ->join('users','car_package_order.user_id','users.id')
+                    ->join('owners','car_package_order.owner_id','owners.id')
+                    ->join('cars','car_package_order.car_id','cars.id')
+                    ->select('car_package_order.created_at','car_package_order.user_id','car_package_order.owner_id',
+                        'car_package_order.package_id','car_package_order.travel_date', 'car_package_order.status','car_package_order.payment_status',
+                        'car_packages.name', 'car_packages.price', 'cars.carRegisterNumber', 'car_package_order.id',
+                        'users.name as user_name','users.phone as user_phone',
+                        'owners.name as owner_name','owners.phone as owner_phone'
+                    )
+                    ->where('car_package_order.status', 1)
+                    ->where('car_package_order.payment_status', 0);
+                    
+        if ($request->phone) { 
+          $query = $query->where('users.phone', $request->phone);
+        }  
+        
+        if ($request->booking_date) {
+          $query = $query->whereDate('car_package_order.created_at', date('Y-m-d', strtotime($request->booking_date)));
+        }
+        
+        if ($request->travel_date) {
+          $query = $query->whereDate('car_package_order.travel_date', date('Y-m-d', strtotime($request->travel_date)));
+        }
+        
+        $orders = $query->paginate(12)->appends(request()->query());
+        
+        return view('quicarbd.admin.package-ride.car-package.accepted', compact('orders'));
     }
 
     /**
@@ -169,8 +205,8 @@ class CarPackageRideController extends Controller
                         'users.name as user_name','users.phone as user_phone',
                         'owners.name as owner_name','owners.phone as owner_phone'
                     )
-                    ->where('car_package_order.status', 2)
-                    ->get();
+                    ->where('car_package_order.status', 2);
+                    
         if ($request->phone) { 
           $query = $query->where('users.phone', $request->phone);
         }  

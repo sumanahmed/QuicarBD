@@ -64,14 +64,14 @@
 						</a>
 					</li>
 					<li class="dropdown alert-drp">
-						<a href="{{ route('car.index') }}" title="Pending Car">Car <i class="zmdi zmdi-car top-nav-icon"></i>
+						<a href="{{ route('car.index',['status' => 0]) }}" title="Pending Car">Car <i class="zmdi zmdi-car top-nav-icon"></i>
     						@if($pendingCar > 0)
     						    <span class="top-nav-icon-badge">{{ $pendingCar }}</span>
     						@endif
 						</a>
 					</li>
 					<li class="dropdown alert-drp">
-						<a href="{{ route('driver.index') }}" title="Pending Driver">Driver <i class="zmdi zmdi-car top-nav-icon"></i>
+						<a href="{{ route('driver.index',['c_status' => 0]) }}" title="Pending Driver">Driver <i class="zmdi zmdi-car top-nav-icon"></i>
     						@if($pendingDriver > 0)
     						    <span class="top-nav-icon-badge">{{ $pendingDriver }}</span>
     						@endif
@@ -92,14 +92,14 @@
 						</a>
 					</li>
 					<li class="dropdown alert-drp">
-						<a href="{{ route('ride.cancel') }}" title="Cancel Ride">Booking Cancel Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
+						<a href="{{ route('ride.cancel',['accepted_ride_bitting_id' => 1]) }}" title="Cancel Ride">Booking Cancel Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
     						@if($cancelRide > 0)
     						    <span class="top-nav-icon-badge">{{ $cancelRide }}</span>
     						@endif
 						</a>
 					</li>
 					<li class="dropdown alert-drp">
-						<a href="{{ route('car_package.index') }}" title="Pending Car Package">Car Package <i class="zmdi zmdi-notifications top-nav-icon"></i>
+						<a href="{{ route('car_package.index',['status' => 0]) }}" title="Pending Car Package">Car Package <i class="zmdi zmdi-notifications top-nav-icon"></i>
     						@if($pendingCarPackage > 0)
     						    <span class="top-nav-icon-badge">{{ $pendingCarPackage }}</span>
     						@endif

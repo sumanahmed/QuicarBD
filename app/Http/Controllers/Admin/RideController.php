@@ -32,7 +32,8 @@ class RideController extends Controller
   /**
     * show expired ride 
   */
-  public function bidExpiredRide(Request $request){
+  public function bidExpiredRide(Request $request)
+  {
     $current_date_time = Carbon::now()->toDateTimeString(); 
     $query = DB::table('ride_list')
                 ->join('users','ride_list.user_id','users.id')
@@ -68,7 +69,8 @@ class RideController extends Controller
   /**
     * send ride to pending from expired
   */
-  public function sendPending($id){
+  public function sendPending($id)
+  {
     $ride = RideList::find($id);
     $ride->status = 0; // 0 mean pending
     $ride->update();
@@ -114,7 +116,8 @@ class RideController extends Controller
   /**
     *approve pending ride of user
   */
-  public function approve($id){
+  public function approve($id)
+  {
     $ride = RideList::find($id);
     
     if (!$ride) {
@@ -564,6 +567,10 @@ class RideController extends Controller
     
     if ($request->car_type) { 
       $query = $query->where('ride_list.car_type', $request->car_type);
+    } 
+    
+    if ($request->accepted_ride_bitting_id) { 
+      $query = $query->where('ride_list.accepted_ride_bitting_id', '!=', null)->where('ride_list.payment_status',1);
     }    
     
     if (isset($request->payment_status) && $request->payment_status != 10000) { 

@@ -244,7 +244,8 @@ class PartnerController extends Controller
                             ->leftjoin('ride_list','ride_biting.ride_id','ride_list.id')
                             ->select('ride_biting.bit_amount','ride_biting.ride_id',
                                 'ride_biting.quicar_charge','ride_biting.you_get',
-                                'ride_biting.status','ride_list.booking_id'
+                                'ride_biting.status','ride_list.booking_id','ride_list.created_at as booking_date',
+                                'ride_list.start_time as travel_date'
                             )
                             ->where('ride_biting.status', 1)
                             ->where('ride_list.accepted_ride_bitting_id', '!=', null)

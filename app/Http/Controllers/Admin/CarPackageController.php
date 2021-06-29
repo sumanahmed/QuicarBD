@@ -18,7 +18,8 @@ class CarPackageController extends Controller
      /**
      * show car packages
      */
-    public function index(Request $request){
+    public function index(Request $request)
+    {  
         $query = DB::table('car_packages')
                     ->join('district','district.id','car_packages.district_id')
                     ->select('car_packages.*','district.value as district_name')
@@ -39,6 +40,10 @@ class CarPackageController extends Controller
         if ($request->price) {
             $query = $query->where('car_packages.price', $request->price);
         }
+        
+        if (isset($request->status)) { 
+            $query = $query->where('car_packages.status', $request->status);
+        }
 
         $car_packages = $query->paginate(12)->appends(request()->query());
         $districts = DB::table('district')->select('id','value as name')->orderBy('value','ASC')->get();
@@ -58,7 +63,8 @@ class CarPackageController extends Controller
     /**
      * car packages store
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $this->validate($request,[
             'name'          => 'required',
             'details'       => 'required',
@@ -128,7 +134,8 @@ class CarPackageController extends Controller
     /**
      * show car packages edit page
      */
-    public function edit($id){
+    public function edit($id)
+    {
         $car_package= CarPackage::find($id);
         $districts  = District::all();
         $partners   = Owner::where('account_status', 1)->get();
@@ -145,7 +152,7 @@ class CarPackageController extends Controller
     public function details($id){
         $car_package= CarPackage::find($id);
         $partner    = Owner::find($car_package->owner_id)->name;
-        $district   = District::find($car_package->district_id)->value;
+        $district   = District::find($car_package->district_id)->value; 
         $spots      = TourSpot::select('id','name')->where('district_id',$car_package->district_id)->get();
         $cars       = Car::select('id','carRegisterNumber')->where('owner_id',$car_package->owner_id)->where('status', 1)->get();
         $starting_location  = District::find($car_package->starting_location)->value;
