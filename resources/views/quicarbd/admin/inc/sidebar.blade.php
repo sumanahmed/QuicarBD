@@ -1,11 +1,22 @@
 
 <div class="fixed-sidebar-left">
+<?php 
+    $current_date_time = \Carbon\Carbon::now()->toDateTimeString();
+    $booking_car_package_ride = \App\Models\CarPackageOrder::where('status', 0)->where('payment_status', 0)->count('id');
+    $accepted_car_package_ride = \App\Models\CarPackageOrder::where('status', 1)->where('payment_status', 0)->count('id');
+    $upcoming_car_package_ride = \App\Models\CarPackageOrder::where('status', 1)
+                                    ->where('payment_status', 1)
+                                    ->where('ride_start_time', '>', $current_date_time)
+                                    ->count('id');
+    $complete_car_package_ride = \App\Models\CarPackageOrder::where('ride_start_time', '>', $current_date_time)->count('id');
+    $cancel_car_package_ride = \App\Models\CarPackageOrder::where('status', 2)->count('id');
+
+?>
     <ul class="nav navbar-nav side-nav nicescroll-bar">
         <li class="navigation-header">
             <span>Main</span> 
             <i class="zmdi zmdi-more"></i>
-        </li>
-        
+        </li>        
         <li>
             <a href="{{ route('dashboard') }}"><div class="pull-left"><i class="zmdi zmdi-landscape mr-20"></i><span class="right-nav-text">Dashboard</span></div><div class="pull-right"></div><div class="clearfix"></div></a>
         </li>
@@ -215,12 +226,12 @@
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#rideCarPackage"><div class="pull-left"><span class="right-nav-text">Car Package</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
                     <ul id="rideCarPackage" class="collapse collapse-level-1 two-col-list">
-                        <li><a href="{{ route('car_package_order.booking') }}">Booking Request</a></li>
-                        <li><a href="{{ route('car_package_order.accepted') }}">Accepted & Unpaid</a></li>
-                        <li><a href="{{ route('car_package_order.upcoming') }}">Upcoming Trip</a></li>
+                        <li><a href="{{ route('car_package_order.booking') }}">Booking Request <span class="top-nav-icon-badge">{{ $booking_car_package_ride }}</span></a></li>
+                        <li><a href="{{ route('car_package_order.accepted') }}">Accepted & Unpaid <span class="top-nav-icon-badge">{{ $accepted_car_package_ride != 0 ? $accepted_car_package_ride : '' }}</span></a></li>
+                        <li><a href="{{ route('car_package_order.upcoming') }}">Upcoming Trip <span class="top-nav-icon-badge">{{ $upcoming_car_package_ride != 0 ? $upcoming_car_package_ride : '' }}</span></a></li>
                         <!--<li><a href="{{ route('car_package_order.ongoing') }}">Ongoing Trip</a></li>-->
-                        <li><a href="{{ route('car_package_order.complete') }}">Complete Trip</a></li>
-                        <li><a href="{{ route('car_package_order.cancel') }}">Cancelled Trip</a></li>
+                        <li><a href="{{ route('car_package_order.complete') }}">Complete Trip <span class="top-nav-icon-badge">{{ $complete_car_package_ride != 0 ? $complete_car_package_ride : '' }}</span></a></li>
+                        <li><a href="{{ route('car_package_order.cancel') }}">Cancelled Trip <span class="top-nav-icon-badge">{{ $cancel_car_package_ride }}</span></a></li>
                     </ul>
                 </li>
                 <li>

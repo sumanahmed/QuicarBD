@@ -28,7 +28,7 @@
     $pendingCar = \App\Models\Car::where('status', 0)->count('id');
     $pendingCarPackage = \App\Models\CarPackage::where('status', 0)->count('id');
     $pendingHotelPackage = \App\Models\HotelPackage::where('status', 0)->count('id');
-    $pendingPartner = \App\Models\Owner::where('account_status', 0)->count('id');
+    $waitingForApproval = \App\Models\Owner::where('account_status', 0)->count('id');
     $pendingRide = \App\Models\RideList::where('status', 0)->count('id');
     $bookingRide = \App\Models\RideList::where('status', 4)
 					->where('accepted_ride_bitting_id', '!=', null)
@@ -57,9 +57,9 @@
 			<div id="mobile_only_nav" class="mobile-only-nav pull-right">
 				<ul class="nav navbar-right top-nav pull-right">
 					<li class="dropdown alert-drp">
-						<a href="{{ route('partner.verification') }}" title="Pending Partner">Partner <i class="zmdi zmdi-notifications top-nav-icon"></i>
-    						@if($pendingPartner > 0)
-    						    <span class="top-nav-icon-badge">{{ $pendingPartner }}</span>
+						<a href="{{ route('partner.verification',['account_status' => 0]) }}" title="Waiting for Approval">Partner Waiting for Approval <i class="zmdi zmdi-notifications top-nav-icon"></i>
+    						@if($waitingForApproval > 0)
+    						    <span class="top-nav-icon-badge">{{ $waitingForApproval }}</span>
     						@endif
 						</a>
 					</li>
@@ -106,7 +106,7 @@
 						</a>
 					</li>
 					<li class="dropdown alert-drp">
-						<a href="{{ route('hotel_package.index') }}" title="Pending Hotel Package">Hotel Package <i class="zmdi zmdi-notifications top-nav-icon"></i>
+						<a href="{{ route('hotel_package.index',['status' => 0]) }}" title="Pending Hotel Package">Hotel Package <i class="zmdi zmdi-notifications top-nav-icon"></i>
     						@if($pendingHotelPackage > 0)
     						    <span class="top-nav-icon-badge">{{ $pendingHotelPackage }}</span>
     						@endif

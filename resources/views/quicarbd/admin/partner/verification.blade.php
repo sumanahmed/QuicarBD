@@ -106,10 +106,8 @@
                                                     <td>{{ $partner->phone }}</td>
                                                     <td>{{ $partner->current_balance }}</td>
                                                     <td>{{ $partner->bidding_percent }}</td>
-                                                    @if($partner->account_status == 0 && $partner->nid_font_pic != null && $partner->nid_back_pic != null)
-                                                        <td>Waiting For Approval</td>                                                    
-                                                    @elseif($partner->account_status == 0)
-                                                        <td>Pending</td>
+                                                    @if($partner->account_status == 0)
+                                                        <td>Waiting For Approval</td>  
                                                     @elseif($partner->account_status == 1)
                                                         <td>Approve</td>
                                                     @else

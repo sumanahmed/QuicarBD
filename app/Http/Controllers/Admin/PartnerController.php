@@ -8,16 +8,16 @@ use App\Http\Lib\Helper;
 use App\Models\Car;
 use App\Models\CarPackage;
 use Illuminate\Http\Request;
-use App\Models\Owner;
-use App\Models\OwnerAccount;
-use App\Models\District;
-use App\Models\City;
-use App\Models\Driver;
-use App\Models\HotelPackage;
-use App\Models\TravelPackage;
-use App\Models\PartnerAppSetting;
+use App\Models\{
+    Owner,
+    OwnerAccount,
+    District,
+    Driver,
+    HotelPackage,
+    TravelPackage,
+    PartnerAppSetting
+};
 use Exception;
-use GuzzleHttp\Client;
 use Carbon\Carbon;
 use Validator;
 use Response;
@@ -367,9 +367,7 @@ class PartnerController extends Controller
         } 
         
         if ($request->account_status == 0) {
-            $query = $query->where('account_status', 0)
-                            ->where('nid_font_pic', '')
-                            ->where('nid_back_pic', '');
+            $query = $query->where('account_status', 0);
         }
         
         if ($request->account_status == 5) { 
