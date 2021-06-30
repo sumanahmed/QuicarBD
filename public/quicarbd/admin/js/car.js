@@ -176,7 +176,7 @@ $(document).on('click', '#sendNotification', function () {
     var owner_id    = $('#owner_id').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/car/owner-notification-send',
+        url: '/car/owner-notification-send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             title       : title,
@@ -227,7 +227,7 @@ $(document).on('click', '#deleteCar', function () {
 $("#destroyCar").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/car/destroy',
+        url: '/car/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

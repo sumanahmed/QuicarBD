@@ -7,7 +7,7 @@ $(document).on('click', '#deletePolicy', function () {
 $("#destroyPolicy").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/reason/cancellation/destroy',
+        url: '/reason/cancellation/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

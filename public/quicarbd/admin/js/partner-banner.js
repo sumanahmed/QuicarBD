@@ -8,7 +8,7 @@ $("#create").click(function (e) {
 
     $.ajax({
         type:'POST',
-        url: '/admin/partner-banner/store',
+        url: '/partner-banner/store',
         headers: { 'X-CSRF-TOKEN': $('meta[title="_token"]').attr('content') },
         enctype: 'multipart/form-data',
         processData: false,
@@ -72,7 +72,7 @@ $("#update").click(function (e) {
     form_data.append('details', $("#edit_details").val());
     $.ajax({
         type:'POST',
-        url: '/admin/partner-banner/update',
+        url: '/partner-banner/update',
         headers: { 'X-CSRF-TOKEN': $('meta[title="_token"]').attr('content') },
         enctype: 'multipart/form-data',
         processData: false,
@@ -140,7 +140,7 @@ $(document).on('click', '#deletePartnerBanner', function () {
 $("#destroyPartnerBanner").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/partner-banner/destroy',
+        url: '/partner-banner/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

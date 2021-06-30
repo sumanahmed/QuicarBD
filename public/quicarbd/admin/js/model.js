@@ -6,7 +6,7 @@ $("#create").click(function (e) {
     var car_brand_id= $("#car_brand_id :selected").val();
     $.ajax({
         type:'POST',
-        url: '/admin/model/store',
+        url: '/model/store',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             name        : name,
@@ -64,7 +64,7 @@ $("#update").click(function (e) {
     
     $.ajax({
         type:'POST',
-        url: '/admin/model/update',
+        url: '/model/update',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id          : id,
@@ -112,7 +112,7 @@ $(document).on('click', '#deleteModel', function () {
 $("#destroyModel").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/model/destroy',
+        url: '/model/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

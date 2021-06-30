@@ -35,7 +35,7 @@ $(document).on('click', '#deleteTravelPackage', function () {
 $("#destroyTravelPackage").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/travel-package/destroy',
+        url: '/travel-package/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

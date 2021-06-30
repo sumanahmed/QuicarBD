@@ -46,7 +46,7 @@ $(document).on('click', '#deleteCarPackage', function () {
 $("#deleteCarPackageModal").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/car-package/destroy',
+        url: '/car-package/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

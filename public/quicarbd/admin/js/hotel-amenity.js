@@ -5,7 +5,7 @@ $("#create").click(function (e) {
     var status = $("#status").val();
     $.ajax({
         type:'POST',
-        url: '/admin/hotel-amenity/store',
+        url: '/hotel-amenity/store',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             name : name,
@@ -57,7 +57,7 @@ $("#update").click(function (e) {
     var status  = $("#edit_status :selected").val();
     $.ajax({
         type:'POST',
-        url: '/admin/hotel-amenity/update',
+        url: '/hotel-amenity/update',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id    : id,
@@ -101,7 +101,7 @@ $(document).on('click', '#deleteHotelAmenity', function () {
 $("#destroyHotelAmenity").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/hotel-amenity/destroy',
+        url: '/hotel-amenity/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

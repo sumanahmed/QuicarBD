@@ -16,7 +16,7 @@ $("#sendReply").click(function (e) {
     var type        = $("#type").val();
     $.ajax({
         type:'POST',
-        url: '/admin/message/reply',
+        url: '/message/reply',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id          : id,

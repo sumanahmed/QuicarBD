@@ -19,7 +19,7 @@ $("#userNotificationSend").click(function(){
     var phone       = $('#phone').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/user/notification/send',
+        url: '/user/notification/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             n_key       : n_key,
@@ -68,7 +68,7 @@ $("#addBalance").click(function(){
     
     $.ajax({
         type: 'POST',
-        url: '/admin/user/balance/add',
+        url: '/user/balance/add',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id          : id,

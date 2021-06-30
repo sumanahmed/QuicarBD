@@ -8,7 +8,7 @@ $(document).on('click', '#deleteDriver', function () {
 $("#destroyDriver").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/driver/destroy',
+        url: '/driver/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()
@@ -132,7 +132,7 @@ $("#sendDriverHold").click(function(){
     
     $.ajax({
         type: 'POST',
-        url: '/admin/driver/hold-status',
+        url: '/driver/hold-status',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id    : id,

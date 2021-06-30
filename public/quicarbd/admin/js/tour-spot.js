@@ -9,7 +9,7 @@ $("#create").click(function (e) { console.log("yesss");
 
     $.ajax({
         type:'POST',
-        url: '/admin/setting/tour-spot/store',
+        url: '/setting/tour-spot/store',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         enctype: 'multipart/form-data',
         processData: false,
@@ -79,7 +79,7 @@ $("#update").click(function (e) {
     form_data.append('address', $("#edit_address").val());
     $.ajax({
         type:'POST',
-        url: '/admin/setting/tour-spot/update',
+        url: '/setting/tour-spot/update',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         enctype: 'multipart/form-data',
         processData: false,
@@ -133,7 +133,7 @@ $(document).on('click', '#deleteSpot', function () {
 $("#destroySpot").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/setting/tour-spot/destroy',
+        url: '/setting/tour-spot/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

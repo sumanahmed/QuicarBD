@@ -5,7 +5,7 @@ $("#create").click(function (e) {
     var bn_name = $("#bn_name").val();
     $.ajax({
         type:'POST',
-        url: '/admin/setting/district/store',
+        url: '/setting/district/store',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             name : name,
@@ -56,7 +56,7 @@ $("#update").click(function (e) {
     var bn_name = $("#edit_bn_name").val();
     $.ajax({
         type:'POST',
-        url: '/admin/setting/district/update',
+        url: '/setting/district/update',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id    : id,
@@ -99,7 +99,7 @@ $(document).on('click', '#deleteDistrict', function () {
 $("#destroyDistrict").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/setting/district/destroy',
+        url: '/setting/district/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

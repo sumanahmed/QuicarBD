@@ -77,14 +77,14 @@ Project:	Goofy
 /** Imports **/
 /****************************/
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,700i);
-@import url(http://admin.quicarbd.com/quicarbd/admin/vendors/bower_components/bootstrap/dist/css/bootstrap.min.css);
+@import url(https://admin.quicarbd.com/quicarbd/admin/vendors/bower_components/bootstrap/dist/css/bootstrap.min.css);
 @import url(font-awesome.min.css);
 @import url(themify-icons.css);
 @import url(animate.css);
 @import url(simple-line-icons.css);
 @import url(material-design-iconic-font.min.css);
-@import url(http://admin.quicarbd.com/quicarbd/admin/vendors/bower_components/switchery/dist/switchery.min.css);
-@import url(http://admin.quicarbd.com/quicarbd/admin/vendors/bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css);
+@import url(https://admin.quicarbd.com/quicarbd/admin/vendors/bower_components/switchery/dist/switchery.min.css);
+@import url(https://admin.quicarbd.com/quicarbd/admin/vendors/bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css);
 /****************************/
 /** Reset **/
 /****************************/
@@ -5233,7 +5233,7 @@ a.compose-mail {
 .irs-bar,
 .irs-bar-edge,
 .irs-slider {
-  background: url("http://admin.quicarbd.com/quicarbd/admin/img/range/sprite-skin-modern.png"); }
+  background: url("https://admin.quicarbd.com/quicarbd/admin/img/range/sprite-skin-modern.png"); }
 
 .irs-slider {
   background-position: 0 -120px; }
@@ -6126,7 +6126,7 @@ a.compose-mail {
 .profile-box .profile-cover-pic {
   position: relative;
   min-height: 197px;
-  background-image: url("http://admin.quicarbd.com/quicarbd/admin/img/gallery/mock6.jpg"); }
+  background-image: url("https://admin.quicarbd.com/quicarbd/admin/img/gallery/mock6.jpg"); }
   .profile-box .profile-cover-pic .profile-image-overlay {
     position: absolute;
     height: 100%;
@@ -6867,7 +6867,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
   line-height: 112px; }
 
 .error-bg-img {
-  background: url("http://admin.quicarbd.com/quicarbd/admin/img/errorbg.jpg");
+  background: url("https://admin.quicarbd.com/quicarbd/admin/img/errorbg.jpg");
   background-size: cover; }
 
 /*Products*/

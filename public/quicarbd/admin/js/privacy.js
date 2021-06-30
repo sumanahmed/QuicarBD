@@ -8,7 +8,7 @@ $(document).on('click', '#deletePrivacy', function () {
 $("#destroyPrivacy").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/privacy/destroy',
+        url: '/privacy/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

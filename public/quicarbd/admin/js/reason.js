@@ -11,7 +11,7 @@ $("#updateRideVisibleTime").click(function(){
     var new_visiable_time  = $('#new_visiable_time').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/ride/update-visible-time',
+        url: '/ride/update-visible-time',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             ride_id : ride_id,
@@ -32,6 +32,42 @@ $("#updateRideVisibleTime").click(function(){
     });
 });
 
+//open visible time change modal
+$(document).on('click', '#changeMaxRequest', function () {
+    $('#changeBidRequestQtyModal').modal('show');
+    $('#ride_id').val($(this).data('ride_id'));
+    $('#max_request').val($(this).data('max_request'));
+ });
+
+ //destroy master category
+$("#updateMaxRequest").click(function(){
+    
+    var ride_id = $('#ride_id').val();
+    var new_max_request  = $('#new_max_request').val();
+    
+    $.ajax({
+        type: 'POST',
+        url: '/ride/bid-request-qty-update',
+        headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
+        data: {
+            ride_id : ride_id,
+            new_max_request  : new_max_request
+        },
+        success: function (response) {
+            if((response.errors)){
+                if(response.errors.new_max_request){
+                    $('.errorNewMaxRequest').text(response.errors.new_max_request);
+                }
+            }else{
+                $('#reason').val('');
+                toastr.success('Bid Request Quantity Updated Successfully')
+                $('#changeBidRequestQtyModal').modal('hide');
+                location.reload();
+            }
+        }
+    });
+});
+
 //open send notification modal
 $(document).on('click', '#cancelModal', function () {
     $('#showCancelModal').modal('show');
@@ -46,7 +82,7 @@ $("#sendReason").click(function(){
     var charge_apply  = $('#charge_apply :selected').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/ride/cancel/reason/send',
+        url: '/ride/cancel/reason/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             ride_id : ride_id,
@@ -88,7 +124,7 @@ $("#carPackageSendReason").click(function(){
     var reason  = $('#reason').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/ride/cancel/reason/send',
+        url: '/ride/cancel/reason/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             package_order_id : package_order_id,
@@ -123,7 +159,7 @@ $("#hotelPackageSendReason").click(function(){
     var reason  = $('#reason').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/hotel-package-order/cancel/reason/send',
+        url: '/hotel-package-order/cancel/reason/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             package_order_id : package_order_id,
@@ -164,7 +200,7 @@ $("#rideNotificationSend").click(function(){
     
     $.ajax({
         type: 'POST',
-        url: '/admin/ride/notification/send',
+        url: '/ride/notification/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             ride_id     : ride_id,
@@ -212,7 +248,7 @@ $("#upcomingRideNotificationSend").click(function(){
     
     $.ajax({
         type: 'POST',
-        url: '/admin/ride/upcoming/notification/send',
+        url: '/ride/upcoming/notification/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             ride_id     : ride_id,

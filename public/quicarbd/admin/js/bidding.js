@@ -18,7 +18,7 @@ $("#updateBidAmount").click(function(){
   
   $.ajax({
       type: 'POST',
-      url: '/admin/ride/update-bid-amount',
+      url: '/ride/update-bid-amount',
       headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
       data: {
           id: id,
@@ -48,7 +48,7 @@ $("#sendCancelReason").click(function(){
   
   $.ajax({
       type: 'POST',
-      url: '/admin/ride/bid-cancel',
+      url: '/ride/bid-cancel',
       headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
       data: {
           id: id,
@@ -84,7 +84,7 @@ $("#rideApprove").click(function(){
   
   $.ajax({
       type: 'POST',
-      url: '/admin/ride/user-approve',
+      url: '/ride/user-approve',
       headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
       data: {
           bid_id : bid_id,

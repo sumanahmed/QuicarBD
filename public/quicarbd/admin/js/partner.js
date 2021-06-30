@@ -16,7 +16,7 @@ $("#ownerNotificationSend").click(function(){
     var phone       = $('#phone').val();
     $.ajax({
         type: 'POST',
-        url: '/admin/partner/notification/send',
+        url: '/partner/notification/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             n_key       : n_key,
@@ -130,7 +130,7 @@ $(document).on('click', '#deletePartner', function () {
 $("#destroyPartner").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/partner/destroy',
+        url: '/partner/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()
@@ -155,7 +155,7 @@ $(document).on('click', '#partnerHold', function () {
 $("#sendReason").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/partner/hold',
+        url: '/partner/hold',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('#id').val(),
@@ -189,7 +189,7 @@ $(document).on('click', '#showRequestCancel', function () {
 $("#requestCancel").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/partner/account-type-change-cancel',
+        url: '/partner/account-type-change-cancel',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val(),
@@ -223,7 +223,7 @@ $("#addBalance").click(function(){
     
     $.ajax({
         type: 'POST',
-        url: '/admin/partner/balance/add',
+        url: '/partner/balance/add',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id          : id,

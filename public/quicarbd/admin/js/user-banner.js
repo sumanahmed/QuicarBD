@@ -27,7 +27,7 @@ $(document).on('click', '#deleteUserBanner', function () {
 $("#destroyUserBanner").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/user-banner/destroy',
+        url: '/user-banner/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

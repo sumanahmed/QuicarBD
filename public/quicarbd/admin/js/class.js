@@ -5,7 +5,7 @@ $("#create").click(function (e) {
     var name = $("#name").val();
     $.ajax({
         type:'POST',
-        url: '/admin/class/store',
+        url: '/class/store',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             name : name,            
@@ -50,7 +50,7 @@ $("#update").click(function (e) {
     var name    = $("#edit_name").val();
     $.ajax({
         type:'POST',
-        url: '/admin/class/update',
+        url: '/class/update',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id    : id,
@@ -90,7 +90,7 @@ $(document).on('click', '#deleteClass', function () {
 $("#destroyClass").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/class/destroy',
+        url: '/class/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

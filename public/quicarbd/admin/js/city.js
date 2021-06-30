@@ -6,7 +6,7 @@ $("#create").click(function (e) {
     var district_id = $("#district_id :selected").val();
     $.ajax({
         type:'POST',
-        url: '/admin/setting/city/store',
+        url: '/setting/city/store',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             name : name,
@@ -66,7 +66,7 @@ $("#update").click(function (e) {
     var district_id = $("#edit_district_id :selected").val();
     $.ajax({
         type:'POST',
-        url: '/admin/setting/city/update',
+        url: '/setting/city/update',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id    : id,
@@ -114,7 +114,7 @@ $(document).on('click', '#deleteCity', function () {
 $("#destroyCity").click(function(){
     $.ajax({
         type: 'POST',
-        url: '/admin/setting/city/destroy',
+        url: '/setting/city/destroy',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             id: $('input[name=del_id]').val()

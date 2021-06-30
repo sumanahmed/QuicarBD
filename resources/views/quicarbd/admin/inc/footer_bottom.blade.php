@@ -39,7 +39,7 @@
 	    $('.selectable').select2();
 	</script>
 	<script>
-		var image_base_path = "http://quicarbd.com/";		
+		var image_base_path = "https://quicarbd.com/";		
 		//var image_base_path = "http://localhost:8000/";		
 	</script>
 	@if(Session::has('error_message'))
