@@ -1084,4 +1084,17 @@ class RideController extends Controller
     }
     return response()->json();
   }
+  
+  /**
+   * Cance seen update by id
+   */
+   public function cancelSeen($id)
+   {
+      $ride = RideList::findOrFail($id);
+      
+      $ride->cancel_seen = 1;
+      $ride->update();
+      
+      return redirect()->back()->with('message','Cancelled Ride seen successfully');
+   }
 }

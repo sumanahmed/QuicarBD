@@ -365,6 +365,7 @@ Route::group(['prefix'=>'/ride', 'middleware' => 'admin'], function(){
     Route::post('/update-bid-amount', [RideController::class, 'updateBidAmount'])->name('ride.update_bid_amount');    
     Route::post('/bid-cancel', [RideController::class, 'bidCancel'])->name('ride.bid_cancel');    
     Route::post('/bid-request-qty-update', [RideController::class, 'bidRequestQtyUpdate'])->name('ride.bid_request_qty_update');    
+    Route::get('/cancel-seen/{id}', [RideController::class, 'cancelSeen'])->name('ride.cancel_seen');    
 });
 
 Route::group(['prefix'=>'/car-package-order', 'middleware' => 'admin'], function(){

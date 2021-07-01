@@ -95,7 +95,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="phone" class="control-label mb-10">User</label>                                            
-                                                    <input type="phone" id="phone" value="{{ $helper->getUser($detail->user_id) }}" class="form-control" readonly>
+                                                    <input type="phone" id="phone" value="{{ $detail->user_name }}" class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -123,7 +123,142 @@
                         </div>
                     </div>
                 </div>
-            </div>	
+            </div>
+            @if($detail->status == 2)
+                <div class="panel panel-default card-view">
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>Car Package Cancel Details</h6> 
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-sm-12 col-xs-12">                                
+                                    <div class="form-wrap">
+                                        <div class="form-body">     
+                                            <div class="row">
+                                                <div class="col-md-4">                                        
+                                                    <div class="form-group">
+                                                        <label for="name" class="control-label mb-10">Cancel By</label>
+                                                        <input type="text" id="name" name="name" value="{{ $detail->cancel_by == 0 ? 'User' : 'Admin' }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                @if($detail->cancel_by == 0)
+                                                    <div class="col-md-4">                                        
+                                                        <div class="form-group">
+                                                            <label for="name" class="control-label mb-10">User Name</label>
+                                                            <input type="text" id="name" name="name" value="{{ $detail->user_name }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">                                        
+                                                        <div class="form-group">
+                                                            <label for="name" class="control-label mb-10">User Phone</label>
+                                                            <input type="text" id="name" name="name" value="{{ $detail->user_phone }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                @if($detail->cancel_by == 1)
+                                                    <div class="col-md-4">                                        
+                                                        <div class="form-group">
+                                                            <label for="name" class="control-label mb-10">Owner Name</label>
+                                                            <input type="text" id="name" name="name" value="{{ $detail->owner_name }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">                                        
+                                                        <div class="form-group">
+                                                            <label for="name" class="control-label mb-10">Owner Phone</label>
+                                                            <input type="text" id="name" name="name" value="{{ $detail->owner_phone }}" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                <div class="col-md-4">                                        
+                                                    <div class="form-group">
+                                                        <label for="name" class="control-label mb-10">Cancellation Reason</label>
+                                                        <input type="text" id="name" name="name" value="{{ $helper->getCancelReason($detail->cancellation_reason) }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">                                        
+                                                    <div class="form-group">
+                                                        <label for="name" class="control-label mb-10">Cancell Time</label>
+                                                        <input type="text" id="name" name="name" value="{{ $detail->cancelation_time }}" class="form-control" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            <div class="panel panel-default card-view">
+            <div class="panel-heading">
+                <div class="pull-left">
+                    <h6 class="txt-dark capitalize-font"><i class="fa fa-car mr-10"></i>Transaction History</h6> 
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <div class="table-wrap">
+                        <div class="table-responsive">
+                            <table class="table table-hover display pb-30" >
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Reason</th>
+                                        <th>Trnx ID</th>
+                                        <th>Phone</th>
+                                        <th>Tnx Type</th>
+                                        <th>Discount</th>
+                                        <th>Adjust Quicar Balance</th>
+                                        <th>Online Payment</th>
+                                        <th>Amount</th>
+                                        <th>Payment Method</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Reason</th>
+                                        <th>Trnx ID</th>
+                                        <th>Phone</th>
+                                        <th>Tnx Type</th>
+                                        <th>Discount</th>
+                                        <th>Adjust Quicar Balance</th>
+                                        <th>Online Payment</th>
+                                        <th>Amount</th>
+                                        <th>Payment Method</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody id="carData">
+                                    @foreach($transactions as $transaction)
+                                        <tr>
+                                            <td>{{ date('d M, Y', strtotime($transaction->created_at)) }}</td>
+                                            <td>{{ getPaymentType($transaction->income_from) }}</td>
+                                            <td>{{ $transaction->reason }}</td>
+                                            <td>{{ $transaction->tnx_id }}</td>
+                                            <td>{{ $transaction->phone }}</td>
+                                            <td>{{ $transaction->type == 0 ? 'Debit' : 'Credit' }}</td>
+                                            <td>{{ $transaction->discount }}</td>
+                                            <td>{{ $transaction->adjust_quicar_balance }}</td>
+                                            <td>{{ $transaction->online_payment }}</td>
+                                            <td>{{ $transaction->amount }}</td>
+                                            <td>{{ $transaction->method }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>    
 </div>
@@ -137,9 +272,27 @@
         echo 'Request Cancel';
        } else if ($status == 3) {
         echo 'Request Start';
-       } else if ($status == 4) {  
+       } else if ($status == 4) {
         echo 'Request Finished';
        }
+    }
+    
+    function getPaymentType($transaction_from) {
+        if ($transaction_from == 1) {
+            echo "Ride";
+        } elseif ($transaction_from == 2) {
+            echo "Car Package";
+        } elseif ($transaction_from == 3) {
+            echo "Hotel Package";
+        } elseif ($transaction_from == 4) {
+            echo "Travel Package";
+        } elseif ($transaction_from == 5) {
+            echo "Bonus";
+        } elseif ($transaction_from == 6) {
+            echo "Incentive";
+        } elseif ($transaction_from == 7) {
+            echo "Cashback";
+        }
     }
 @endphp
 @endsection

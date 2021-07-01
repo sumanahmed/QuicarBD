@@ -37,6 +37,7 @@
     $cancelRide = \App\Models\RideList::where('status', 2)
                     ->where('accepted_ride_bitting_id','!=',null)
                     ->where('payment_status',1)
+                    ->where('cancel_seen', 0)
                     ->count('id');
 ?>
     <div class="wrapper theme-1-active pimary-color-blue">
@@ -45,7 +46,7 @@
 			<div class="mobile-only-brand pull-left">
 				<div class="nav-header pull-left">
 					<div class="logo-wrap">
-						<a href="/">
+						<a href="{{ route('dashboard') }}">
 							<img class="brand-img" src="{{ asset('quicarbd/logo.png') }}" alt="brand"/>
 						</a>
 					</div>
@@ -57,7 +58,7 @@
 			<div id="mobile_only_nav" class="mobile-only-nav pull-right">
 				<ul class="nav navbar-right top-nav pull-right">
 					<li class="dropdown alert-drp">
-						<a href="{{ route('partner.verification',['account_status' => 0]) }}" title="Waiting for Approval">Partner Waiting for Approval <i class="zmdi zmdi-notifications top-nav-icon"></i>
+						<a href="{{ route('partner.verification',['account_status' => 0]) }}" title="Partner Waiting for Approval">Waiting for Approval <i class="zmdi zmdi-notifications top-nav-icon"></i>
     						@if($waitingForApproval > 0)
     						    <span class="top-nav-icon-badge">{{ $waitingForApproval }}</span>
     						@endif
@@ -86,8 +87,8 @@
 					</li>
 					<li class="dropdown alert-drp">
 						<a href="{{ route('ride.upcoming') }}" title="Booking Ride">Booking Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
-    						@if($pendingRide > 0)
-    						    <span class="top-nav-icon-badge">{{ $pendingRide }}</span>
+    						@if($bookingRide > 0)
+    						    <span class="top-nav-icon-badge">{{ $bookingRide }}</span>
     						@endif
 						</a>
 					</li>

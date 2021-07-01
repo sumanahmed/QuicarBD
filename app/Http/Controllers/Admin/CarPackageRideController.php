@@ -192,7 +192,6 @@ class CarPackageRideController extends Controller
     */
     public function cancel(Request $request) 
     {
-        
         $query = DB::table('car_package_order')
                     ->join('car_packages','car_package_order.package_id','car_packages.id')
                     ->join('users','car_package_order.user_id','users.id')
@@ -227,15 +226,28 @@ class CarPackageRideController extends Controller
     /**
      * car package order details
     */
-    public function details($id) {
+    public function details($id) 
+    {
         $detail = DB::table('car_package_order')
                     ->join('car_packages','car_package_order.package_id','car_packages.id')
+                    ->join('users','car_package_order.user_id','users.id')
+                    ->join('owners','car_package_order.owner_id','owners.id')
                     ->join('cars','car_package_order.car_id','cars.id')
-                    ->select('car_package_order.*','car_packages.name','car_packages.price', 'cars.carRegisterNumber')
+                    ->select('car_package_order.*','car_packages.name','car_packages.price', 'cars.carRegisterNumber',
+                        'users.name as user_name', 'users.phone as user_phone',
+                        'owners.name as owner_name', 'owners.phone as owner_phone'
+                    )
                     ->where('car_package_order.id', $id)
                     ->first();
-
-        return view('quicarbd.admin.package-ride.car-package.details', compact('detail'));
+                    
+        $transactions = DB::table('user_account')
+                            ->leftjoin('users','user_account.user_id','users.id')
+                            ->select('user_account.*','users.phone')
+                            ->where('user_account.income_from', 2)
+                            ->where('user_account.history_id', $id)
+                            ->get();
+        
+        return view('quicarbd.admin.package-ride.car-package.details', compact('detail','transactions'));
     }
 
     /**

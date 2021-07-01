@@ -141,6 +141,7 @@
                                                     <td>{{ $ride->payment_status == 0 ? 'Before Payment' : 'After Payment' }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>                                                       
+                                                        <a href="{{ route('ride.cancel_seen', $ride->id) }}" class="btn btn-xs btn-success" title="Seen"><i class="fa fa-check"></i></a>                                                       
                                                     </td>
                                                 </tr>
                                             @endforeach
