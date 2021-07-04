@@ -37,6 +37,7 @@ use App\Http\Controllers\Admin\RideController;
 use App\Http\Controllers\Admin\SmsNotificationController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ComplainController;
+use App\Http\Controllers\Admin\BonusController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\NotificationLogController;
@@ -412,6 +413,15 @@ Route::group(['prefix'=>'/complain', 'middleware' => 'admin'], function(){
     Route::get('/partner', [ComplainController::class, 'partnerComplain'])->name('complain.partner');
     Route::get('/user', [ComplainController::class, 'userComplain'])->name('complain.user');
     Route::post('/reply', [ComplainController::class, 'reply'])->name('complain.reply');
+});
+
+Route::group(['prefix'=>'/bonus', 'middleware' => 'admin'], function(){
+    Route::get('/', [BonusController::class, 'index'])->name('bonus.index');
+    Route::get('/create', [BonusController::class, 'create'])->name('bonus.create');
+    Route::post('/store', [BonusController::class, 'store'])->name('bonus.store');
+    Route::get('/edit/{id}', [BonusController::class, 'edit'])->name('bonus.edit');
+    Route::post('/update/{id}', [BonusController::class, 'update'])->name('bonus.update');
+    Route::post('/destroy', [BonusController::class, 'destroy'])->name('bonus.destroy');
 });
 
 Route::group(['prefix'=>'/withdraw', 'middleware' => 'admin'], function(){

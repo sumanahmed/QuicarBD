@@ -114,6 +114,17 @@
             </ul>
         </li>
         <li>
+            <a href="javascript:void(0);" data-toggle="collapse" data-target="#bonus"><div class="pull-left"><i class="fa fa-gift mr-20"></i><span class="right-nav-text">Bonus</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
+            <ul id="bonus" class="collapse collapse-level-1 two-col-list">
+                <li>
+                    <a href="{{ route('bonus.index',['type' => 1]) }}">Partner</a>
+                </li>
+                <li>
+                    <a href="{{ route('bonus.index',['type' => 0]) }}">User</a>
+                </li>
+            </ul>
+        </li>
+        <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#cars"><div class="pull-left"><i class="fa fa-car mr-20"></i><span class="right-nav-text">Cars</span></div><div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div><div class="clearfix"></div></a>
             <ul id="cars" class="collapse collapse-level-1 two-col-list">
                 <li>
