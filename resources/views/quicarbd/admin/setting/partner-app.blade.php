@@ -254,9 +254,18 @@
                                                 <div class="col-md-6">                                        
                                                     <div class="form-group">
                                                         <label for="whats_new_in_update" class="control-label mb-10"> Whats New in Update </label>
-                                                        <textarea id="whats_new_in_update" name="whats_new_in_update" class="form-control">{{ $setting->whats_new_in_update }}</textarea>
+                                                        <textarea id="whats_new_in_update" name="whats_new_in_update" class="form-control" rows="6">{{ $setting->whats_new_in_update }}</textarea>
                                                         @if($errors->has('whats_new_in_update'))
                                                             <span class="text-danger"> {{ $errors->first('whats_new_in_update') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div> 
+                                                <div class="col-md-6">                                        
+                                                    <div class="form-group">
+                                                        <label for="bid_pre_notice" class="control-label mb-10"> Bid Pre Notice </label>
+                                                        <textarea id="bid_pre_notice" name="bid_pre_notice" class="form-control" rows="6">{{ $setting->bid_pre_notice }}</textarea>
+                                                        @if($errors->has('bid_pre_notice'))
+                                                            <span class="text-danger"> {{ $errors->first('bid_pre_notice') }}</span>
                                                         @endif
                                                     </div>
                                                 </div> 

@@ -8,8 +8,8 @@
     </style>
 @endsection
 @section('content')
-<div class="container-fluid">               
-    <!-- Title -->
+<div class="container-fluid">				
+	<!-- Title -->
     <div class="row heading-bg">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         </div>
@@ -75,7 +75,7 @@
                                                 </div>
                                             </div>    
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="marketing_dialog_title" class="control-label mb-10">Marketing Dialog Title  <span class="text-danger" title="Required">*</span></label>                                                        
                                                         <input type='text' name="marketing_dialog_title" id="marketing_dialog_title" value="{{ $setting->marketing_dialog_title }}" class="form-control" required/>
@@ -84,7 +84,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="marketing_dialog_show" class="control-label mb-10">Marketing Dialog Show <span class="text-danger" title="Required">*</span></label>                                            
                                                         <select name="marketing_dialog_show" id="signup_bobus" class="form-control" required>
@@ -96,7 +96,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="max_adv_booking_ride" class="control-label mb-10">Maximum Advance Booking Ride <span class="text-danger" title="Required">*</span></label>                                                        
                                                         <input type='text' name="max_adv_booking_ride" id="max_adv_booking_ride" value="{{ $setting->max_adv_booking_ride }}" class="form-control" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required/>
@@ -105,11 +105,59 @@
                                                         @endif
                                                     </div>
                                                 </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="automatice_ride_approved" class="control-label mb-10">Automatic Ride Approved <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <select name="automatice_ride_approved" id="automatice_ride_approved" class="form-control" required>
+                                                            <option value="1" @if($setting->automatice_ride_approved == 1) selected @endif>Yes</option>
+                                                            <option value="0" @if($setting->automatice_ride_approved == 0) selected @endif>No</option>
+                                                        </select>
+                                                        @if($errors->has('automatice_ride_approved'))
+                                                            <span class="text-danger"> {{ $errors->first('automatice_ride_approved') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="ride_service_open" class="control-label mb-10">Ride Service Open <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <select name="ride_service_open" id="ride_service_open" class="form-control" required>
+                                                            <option value="1" @if($setting->ride_service_open == 1) selected @endif>Yes</option>
+                                                            <option value="0" @if($setting->ride_service_open == 0) selected @endif>No</option>
+                                                        </select>
+                                                        @if($errors->has('ride_service_open'))
+                                                            <span class="text-danger"> {{ $errors->first('ride_service_open') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="car_travel_package_open" class="control-label mb-10">Car Travel Package Open <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <select name="car_travel_package_open" id="car_travel_package_open" class="form-control" required>
+                                                            <option value="1" @if($setting->car_travel_package_open == 1) selected @endif>Yes</option>
+                                                            <option value="0" @if($setting->car_travel_package_open == 0) selected @endif>No</option>
+                                                        </select>
+                                                        @if($errors->has('car_travel_package_open'))
+                                                            <span class="text-danger"> {{ $errors->first('car_travel_package_open') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="hotel_package_open" class="control-label mb-10">Hotel Package Open <span class="text-danger" title="Required">*</span></label>                                            
+                                                        <select name="hotel_package_open" id="hotel_package_open" class="form-control" required>
+                                                            <option value="1" @if($setting->hotel_package_open == 1) selected @endif>Yes</option>
+                                                            <option value="0" @if($setting->hotel_package_open == 0) selected @endif>No</option>
+                                                        </select>
+                                                        @if($errors->has('hotel_package_open'))
+                                                            <span class="text-danger"> {{ $errors->first('hotel_package_open') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                             </div>                                    
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="img1" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span>  (Width:600px; Height:215px)</label> 
+                                                        <label for="img1" class="control-label mb-10">Image <span class="text-danger" title="Required">*</span> (Width:600px; Height:215px)</label> 
                                                         <div class="avatar-upload">
                                                             <div class="avatar-edit">
                                                                 <input type='file' name="marketing_banner_image" id="img1Upload" accept=".png, .jpg, .jpeg" required/>
@@ -140,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>	
         </div>
     </div>
 </div>

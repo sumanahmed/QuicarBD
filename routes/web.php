@@ -422,6 +422,7 @@ Route::group(['prefix'=>'/bonus', 'middleware' => 'admin'], function(){
     Route::get('/edit/{id}', [BonusController::class, 'edit'])->name('bonus.edit');
     Route::post('/update/{id}', [BonusController::class, 'update'])->name('bonus.update');
     Route::post('/destroy', [BonusController::class, 'destroy'])->name('bonus.destroy');
+    Route::get('/capable', [BonusController::class, 'capable'])->name('bonus.capable');
 });
 
 Route::group(['prefix'=>'/withdraw', 'middleware' => 'admin'], function(){

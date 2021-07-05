@@ -661,6 +661,7 @@ class PartnerController extends Controller
         $partner_app->app_vertion_code      = $request->app_vertion_code;
         $partner_app->app_vertion_name      = $request->app_vertion_name;
         $partner_app->whats_new_in_update   = $request->whats_new_in_update;
+        $partner_app->bid_pre_notice        = $request->bid_pre_notice;
         $partner_app->mandatory_update      = $request->mandatory_update;
         $partner_app->download_url          = $request->download_url;
         $partner_app->bidding_percent       = $request->bidding_percent;

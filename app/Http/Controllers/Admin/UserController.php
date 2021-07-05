@@ -342,6 +342,9 @@ class UserController extends Controller
             'marketing_dialog_show'     => 'required',
             'max_adv_booking_ride'      => 'required',
             'automatice_ride_approved'  => 'required',
+            'ride_service_open'         => 'required',
+            'car_travel_package_open'   => 'required',
+            'hotel_package_open'        => 'required',
         ]);
     
         $user_app                           = UserAppSetting::find(1);
@@ -352,6 +355,9 @@ class UserController extends Controller
         $user_app->marketing_dialog_show    = $request->marketing_dialog_show;
         $user_app->max_adv_booking_ride     = $request->max_adv_booking_ride;
         $user_app->automatice_ride_approved = $request->automatice_ride_approved;
+        $user_app->ride_service_open        = $request->ride_service_open;
+        $user_app->car_travel_package_open  = $request->car_travel_package_open;
+        $user_app->hotel_package_open       = $request->hotel_package_open;
         
         if($request->hasFile('marketing_banner_image')){
             

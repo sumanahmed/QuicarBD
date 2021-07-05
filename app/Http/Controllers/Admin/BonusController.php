@@ -101,7 +101,7 @@ class BonusController extends Controller
         $bonus->update($request->all());
         
         return redirect()->route('bonus.index')->with('message', 'Bonus updated successfully');
-    }    
+    }   
     
     /**
      * bonus destroy
@@ -111,5 +111,45 @@ class BonusController extends Controller
         $bonus = Bonus::findOrFail($request->id);
         
         return redirect()->route('bonus.index')->with('message', 'Bonus deleted successfully');
+    } 
+    
+    /**
+     * bonus capable
+    */
+    public function capable (Request $request) 
+    {
+        if ($request->type == 0) { //0 mean = user
+        
+            $records = DB::table('ride_list')
+                        ->join('users','ride_list.user_id','users.id')
+                        ->select('users.name','users.phone', DB::raw("COUNT(ride_list.id) as total_completed"))
+                        ->where('ride_list.start_time', '>=', $request->start)
+                        ->where('ride_list.start_time', '<=', $request->end)
+                        ->where('ride_list.status', 4)
+                        ->groupBy('ride_list.id','users.name','users.phone')
+                        ->get();
+                        
+            $records = $records->where('total_completed', $request->total);
+            
+        } else { 
+            
+            $records = DB::table('ride_biting')
+                        ->leftjoin('ride_list','ride_biting.ride_id','ride_list.id')
+                        ->leftjoin('owners','ride_biting.owner_id','owners.id')
+                        ->select('owners.name','owners.phone',DB::raw("COUNT(ride_list.id) as total_completed"))
+                        ->where('ride_biting.status', 1)
+                        ->where('ride_list.accepted_ride_bitting_id', '!=', null)
+                        ->where('ride_list.start_time', '>=', $request->start)
+                        ->where('ride_list.start_time', '<=', $request->end)
+                        ->where('ride_list.status', 4)
+                        ->get();
+                        
+            $records = $records->where('total_completed', $request->total);
+        }
+        
+        $type = $request->type;
+        $required_completed = $request->total;
+        
+        return view('quicarbd.admin.bonus.capable', compact('records', 'type', 'required_completed'));
     }
 }
