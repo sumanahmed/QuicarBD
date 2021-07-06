@@ -423,6 +423,8 @@ Route::group(['prefix'=>'/bonus', 'middleware' => 'admin'], function(){
     Route::post('/update/{id}', [BonusController::class, 'update'])->name('bonus.update');
     Route::post('/destroy', [BonusController::class, 'destroy'])->name('bonus.destroy');
     Route::get('/capable', [BonusController::class, 'capable'])->name('bonus.capable');
+    Route::get('/pay-now', [BonusController::class, 'payNow'])->name('bonus.pay_now');
+    Route::get('/paid/{id}', [BonusController::class, 'paidList'])->name('bonus.paid');
 });
 
 Route::group(['prefix'=>'/withdraw', 'middleware' => 'admin'], function(){

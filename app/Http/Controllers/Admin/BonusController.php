@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Owner;
+use App\Models\OwnerAccount;
 use App\Models\UserAccount;
 use App\Models\User;
 use App\Models\Bonus;
@@ -112,7 +114,7 @@ class BonusController extends Controller
     public function destroy (Request $request) 
     {
         $bonus = Bonus::findOrFail($request->id);
-        
+        $bonus->delete();
         return redirect()->route('bonus.index')->with('message', 'Bonus deleted successfully');
     } 
     
@@ -120,7 +122,7 @@ class BonusController extends Controller
      * bonus capable
     */
     public function capable (Request $request) 
-    {
+    {  
         if ($request->type == 0) { //0 mean = user
         
             $records = DB::table('ride_list')
@@ -132,7 +134,7 @@ class BonusController extends Controller
                         ->groupBy('ride_list.id','users.id','users.name','users.phone')
                         ->get();
                         
-            $records = $records->where('total_completed', 1);
+            $records = $records->where('total_completed', $request->completed);
             
         } else { 
             
@@ -165,28 +167,96 @@ class BonusController extends Controller
     {
         $bonus = Bonus::find($request->bonus_id);
         
-        if ($request->type == 0) { //0 mean user
+        DB::beginTransaction();
         
-            $userAccount = new UserAccount();
-            $userAccount->amount          = $bonus->bonus_amount;
-            $userAccount->adjust_cashback = 0;
-            $userAccount->adjust_quicar_balance = 0;
-            $userAccount->discount        = 0;
-            $userAccount->online_payment  = 0;
-            $userAccount->tnx_id          = time();
-            $userAccount->type            = 1; // 1 credit, user income
-            $userAccount->income_from     = 1; // 1 mean ride
-            $userAccount->history_id      = $request->bonus_id;
-            $userAccount->reason          = 'Ride bonus added';
-            $userAccount->user_id         = $request->id;
-            $userAccount->save();
+        try {
+        
+            if ($request->type == 0) { //0 mean user
             
-            $user_n_key   = User::find($request->id)->n_key;
-            $title  = 'Quicar Bonus';
-            $msg    = 'Dear, '.$request->name.' Bonus: '. $bonus->bonus_amount.' Tk added to your account. Thanks Team Quicar'; 
-            $helper = new Helper(); 
-            $helper->sendSinglePartnerNotification($user_n_key, $title, $msg); //push notification send to user
-            $helper->smsNotification($type=1, $request->id, $title, $msg); // send notification, 1=user
+                $userAccount = new UserAccount();
+                $userAccount->amount          = $bonus->bonus_amount;
+                $userAccount->adjust_cashback = 0;
+                $userAccount->adjust_quicar_balance = $bonus->bonus_amount;
+                $userAccount->discount        = 0;
+                $userAccount->online_payment  = 0;
+                $userAccount->tnx_id          = time();
+                $userAccount->type            = 1; // 1 credit, user income
+                $userAccount->income_from     = 5; // 5 mean bonus
+                $userAccount->history_id      = $request->bonus_id;
+                $userAccount->reason          = 'Ride bonus added';
+                $userAccount->user_id         = $request->id;
+                $userAccount->save();
+                
+                $user = User::find($request->id);
+                $user->balance = ($user->balance + $bonus->bonus_amount);
+                $user->update();
+                
+                $title  = 'Quicar Bonus';
+                $msg    = "Dear, ". $request->name. " Quicar added Bonus: ".$bonus->bonus_amount.' Tk, to your account. Thanks Team Quicar'; 
+                
+                $helper = new Helper();
+                $helper->sendSinglePartnerNotification($user->n_key, $title, $msg); //push notification send to user
+                $helper->smsNotification($type=1, $user->id, $title, $msg); // send notification, 1=user
+                
+            } else { //0 mean user
+            
+                $parnterAccount = new OwnerAccount();
+                $parnterAccount->amount         = $bonus->bonus_amount;
+                $parnterAccount->quicar_charge  = 0;
+                $parnterAccount->net_amount     = $bonus->bonus_amount;
+                $parnterAccount->type           = 1; //1=credit, partner income
+                $parnterAccount->income_from    = 5; //5 mean bonus
+                $parnterAccount->reason_text    = 'Bonus added';
+                $parnterAccount->history_id     = $request->bonus_id;
+                $parnterAccount->owner_id       = $request->id;
+                $parnterAccount->status         = 1;
+                $parnterAccount->save();
+                
+                $owner = Owner::find($request->id);
+                $owner->current_balance = ($owner->current_balance + $bonus->bonus_amount);
+                $owner->update();
+                
+                $title  = 'Quicar Bonus';
+                $msg    = "Dear, ". $request->name. " Quicar added Bonus: ".$bonus->bonus_amount.' Tk, to your account. Thanks Team Quicar'; 
+                
+                $helper = new Helper(); 
+                $helper->sendSinglePartnerNotification($owner->n_key, $title, $msg); //push notification send to partner
+                $helper->smsNotification($type=2, $request->id, $title, $msg); // send notification, 2=partner
+            }
+            
+            $bonus_complete = new BonusCompleteList();
+            $bonus_complete->bonus_id = $request->bonus_id;
+            $bonus_complete->receiver_id = $request->id;
+            $bonus_complete->type  = $request->type;
+            $bonus_complete->save();
+            
+            DB::commit();
+            
+        } catch (Exception $ex) {
+            
+            DB::rollback();
+            
+            return redirect()->back()->with('error_message', 'Sorry '. $ex->getMessage());
         }
+        
+        return view('quicarbd.admin.bonus.index')->with('message', 'Bonus paid successfully');
+    }
+    
+    /**
+     * Paid list
+    */ 
+    public function paidList ($id)
+    {
+        $bonus = Bonus::find($id);
+        
+        if ($bonus->type == 0) { //0 mean user
+            $bonus_completed_user = BonusCompleteList::select('receiver_id')->where('bonus_id', $id)->get()->toArray();
+            $users = User::whereIn('receiver_id', $bonus_completed_user)->get();
+        } else {
+            $bonus_completed_owner = BonusCompleteList::select('receiver_id')->where('bonus_id', $id)->get()->toArray();
+            $users = Owner::whereIn('receiver_id', $bonus_completed_owner)->get();
+        }
+        
+        return view('quicarbd.admin.bonus.paid', compact('bonus', 'users'));
     }
 }

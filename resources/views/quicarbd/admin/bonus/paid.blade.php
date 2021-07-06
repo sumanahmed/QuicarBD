@@ -9,7 +9,7 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
                 <li><a href="#">Dashboard</a></li>
-                <li class="active"><span>Bonus</span></li>
+                <li class="active"><span>Bonus Paid Completed {{ $bonus->type == 0 ? 'User' : 'Partner' }}</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -21,7 +21,7 @@
             <div class="panel panel-default card-view">
                 <div class="panel-heading">
                     <div class="pull-left">
-                        <h6 class="panel-title txt-dark">Bonus Capable {{ $type == 0 ? 'User' : 'Partner' }} List</h6>
+                        <h6 class="panel-title txt-dark">Bonus Paid Completed {{ $bonus->type == 0 ? 'User' : 'Partner' }} List</h6>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -34,39 +34,28 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Phone</th>
-                                            <th>Required</th>
-                                            <th>Completed</th>
-                                            <th>Status</th>
-                                            <th style="vertical-align: middle;text-align: center;">Action</th>
+                                            <th>Amount</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>Name</th>
                                             <th>Phone</th>
-                                            <th>Required</th>
-                                            <th>Completed</th>
-                                            <th>Status</th>
-                                            <th style="vertical-align: middle;text-align: center;">Action</th>
+                                            <th>Amount</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="partnerData">
-                                        @if(isset($records) && count($records) > 0)
-                                            @foreach($records as $record)
-                                                <tr class="record-{{ $record->id }}">
-                                                    <td>{{ $record->name }}</td>
-                                                    <td>{{ $record->phone }}</td>
-                                                    <td>{{ $required_completed }}</td>   
-                                                    <td>{{ $record->total_completed }}</td>
-                                                    <td></td>
-                                                    <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('bonus.pay_now',['id'=>$record->id, 'bonus_id'=>$bonus_id, 'name' => $record->name, 'phone'=>$record->phone, 'type'=>$type]) }}" class="btn btn-xs btn-success" title="Pay Now"><i class="fa fa-check"></i></a>
-                                                    </td>
+                                        @if(isset($users) && count($users) > 0)
+                                            @foreach($users as $user)
+                                                <tr class="record-{{ $user->id }}">
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->phone }}</td>
+                                                    <td>{{ $bonus->amount }}</td>
                                                 </tr>
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="6" class="text-center">No Data Found</td>
+                                                <td colspan="3" class="text-center">No Data Found</td>
                                             </tr>
                                         @endif
                                     </tbody>
