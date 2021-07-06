@@ -106,7 +106,8 @@
                                                     <td>{{ date('Y-m-d H:i:s a', strtotime($bonus->offer_finishing_time)) }}</td>
                                                     <td>{{ bonusFor($bonus->bonus_for) }}</td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('bonus.capable', ['type'=>$type, 'start'=>$bonus->offer_starting_time, 'end'=>$bonus->offer_finishing_time, 'completed'=>$bonus->completed_ride]) }}" class="btn btn-xs btn-success" title="Capable"><i class="fa fa-male"></i></a>
+                                                        <a href="{{ route('bonus.paid',$bonus->id) }}" class="btn btn-xs btn-success" title="Paid"><i class="fa fa-dollar"></i></a>
+                                                        <a href="{{ route('bonus.capable', ['bonus_id' =>$bonus->id, 'type'=>$type, 'start'=>$bonus->offer_starting_time, 'end'=>$bonus->offer_finishing_time, 'completed'=>$bonus->completed_ride]) }}" class="btn btn-xs btn-success" title="Capable"><i class="fa fa-male"></i></a>
                                                         <a href="{{ route('bonus.edit', $bonus->id) }}" class="btn btn-xs btn-info" title="Edit"><i class="fa fa-pencil"></i></a>
                                                         <a href="#" id="bonusDelete" data-toggle="modal" data-id="{{ $bonus->id }}" class="btn btn-xs btn-danger" title="Delete"><i class="fa fa-remove"></i></a>
                                                     </td>
