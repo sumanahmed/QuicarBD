@@ -21,16 +21,30 @@ class CarPackageController extends Controller
     public function index(Request $request)
     {  
         $query = DB::table('car_packages')
-                    ->join('district','district.id','car_packages.district_id')
-                    ->select('car_packages.*','district.value as district_name')
+                    ->join('owners','car_packages.owner_id','owners.id')
+                    ->join('district','car_packages.district_id','district.id')
+                    ->select('car_packages.*','district.value as district_name',
+                        'owners.id as owner_id','owners.name as owner_name','owners.phone as owner_phone'
+                    )
                     ->orderBy('car_packages.id','DESC');
                     
         if ($request->name) {
             $query = $query->where('car_packages.name', 'like', "{$request->name}%");
         }
 
+        if ($request->owner_phone) {
+            $query = $query->where('owners.phone', $request->owner_phone);
+        }
+        
         if ($request->owner_id) {
             $query = $query->where('car_packages.owner_id', $request->owner_id);
+            $total_pending = DB::table('car_packages')->where('owner_id', $request->owner_id)->where('status', 0)->count('id');
+            $total_approve = DB::table('car_packages')->where('owner_id', $request->owner_id)->where('status', 1)->count('id');
+            $total_cancel = DB::table('car_packages')->where('owner_id', $request->owner_id)->where('status', 2)->count('id');
+        } else {
+            $total_pending = 0;
+            $total_approve = 0;
+            $total_cancel = 0;
         }
         
         if ($request->district_id) {
@@ -41,14 +55,14 @@ class CarPackageController extends Controller
             $query = $query->where('car_packages.price', $request->price);
         }
         
-        if (isset($request->status)) { 
+        if ($request->status && $request->status != 100) { 
             $query = $query->where('car_packages.status', $request->status);
         }
 
         $car_packages = $query->paginate(12)->appends(request()->query());
         $districts = DB::table('district')->select('id','value as name')->orderBy('value','ASC')->get();
-        
-        return view('quicarbd.admin.package.car-package.index', compact('car_packages','districts'));
+       
+        return view('quicarbd.admin.package.car-package.index', compact('car_packages','districts', 'total_pending', 'total_approve', 'total_cancel'));
     }
 
     /**
