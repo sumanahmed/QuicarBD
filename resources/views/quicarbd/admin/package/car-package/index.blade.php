@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if($_GET['owner_id'] && $_GET['owner_id'] != null)
+                            @if(isset($_GET['owner_id']) && $_GET['owner_id'] != null)
                                 <div class="row">
                                     <div class="col-md-2">
                                         <div class="form-group">

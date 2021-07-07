@@ -55,7 +55,7 @@ class CarPackageController extends Controller
             $query = $query->where('car_packages.price', $request->price);
         }
         
-        if ($request->status && $request->status != 100) { 
+        if (isset($request->status) && $request->status != 100) { 
             $query = $query->where('car_packages.status', $request->status);
         }
 
