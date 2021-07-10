@@ -433,7 +433,7 @@ Route::group(['prefix'=>'/tutorial', 'middleware' => 'admin'], function(){
     Route::get('/create', [TutorialController::class, 'create'])->name('tutorial.create');
     Route::post('/store', [TutorialController::class, 'store'])->name('tutorial.store');
     Route::get('/edit/{id}', [TutorialController::class, 'edit'])->name('tutorial.edit');
-    Route::post('/update/{id}', [TutorialController::class, 'update'])->tutorial('bonus.update');
+    Route::post('/update/{id}', [TutorialController::class, 'update'])->name('tutorial.update');
     Route::post('/destroy', [TutorialController::class, 'destroy'])->name('tutorial.destroy');
 });
 
