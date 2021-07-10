@@ -38,6 +38,7 @@ use App\Http\Controllers\Admin\SmsNotificationController;
 use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ComplainController;
 use App\Http\Controllers\Admin\BonusController;
+use App\Http\Controllers\Admin\TutorialController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\NotificationLogController;
@@ -425,6 +426,15 @@ Route::group(['prefix'=>'/bonus', 'middleware' => 'admin'], function(){
     Route::get('/capable', [BonusController::class, 'capable'])->name('bonus.capable');
     Route::get('/pay-now', [BonusController::class, 'payNow'])->name('bonus.pay_now');
     Route::get('/paid/{id}', [BonusController::class, 'paidList'])->name('bonus.paid');
+});
+
+Route::group(['prefix'=>'/tutorial', 'middleware' => 'admin'], function(){
+    Route::get('/', [TutorialController::class, 'index'])->name('tutorial.index');
+    Route::get('/create', [TutorialController::class, 'create'])->name('tutorial.create');
+    Route::post('/store', [TutorialController::class, 'store'])->name('tutorial.store');
+    Route::get('/edit/{id}', [TutorialController::class, 'edit'])->name('tutorial.edit');
+    Route::post('/update/{id}', [TutorialController::class, 'update'])->tutorial('bonus.update');
+    Route::post('/destroy', [TutorialController::class, 'destroy'])->name('tutorial.destroy');
 });
 
 Route::group(['prefix'=>'/withdraw', 'middleware' => 'admin'], function(){
