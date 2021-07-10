@@ -38,7 +38,7 @@ class TutorialController extends Controller
     {   
         $type           = $request->type;
         $last_record    = Tutorial::select('serial')->orderBy('serial','DESC')->first();
-        $serial         = $last_record->serial + 1;
+        $serial         = $last_record != null ? $last_record->serial + 1 : 1;
         return view('quicarbd.admin.tutorial.create', compact('type','serial'));
     }   
     
