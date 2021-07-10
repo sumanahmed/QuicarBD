@@ -15,7 +15,7 @@ class Helper
     /**
      * send single partner push notification
      */
-    public function sendSinglePartnerNotification($id, $title, $message) {
+    public function sendSinglePartnerNotification($id, $title, $message) { 
         $id     = $id;
         $title  = $title;
         $body   = $message;
@@ -108,6 +108,46 @@ class Helper
         
         
         echo $result;
+    }
+    
+    /**
+     * firebase global push notification send
+    */
+    public function firebaseGlobalNotificationSend($title, $body, $id, $image, $type, $token) {
+       
+        define('API_ACCESS_KEY','AAAAASeLFFk:APA91bH1mQPDwxElZ5PIV_0_6_mjZr9XkoX7zIkWPPlMeMWDfg9cs13OoC4kHgNqXmHst1qWsR80gJVuvN0mHKkLh68WSaU8sCqBMptAr8NaiB4tXh_mnyuLlFrH0sBshhrIyvzjqyH1');
+        $fcmUrl = 'https://fcm.googleapis.com/fcm/send';
+        
+        $notification = [
+            'title' =>$title,
+            'body'  => $body,
+            'id'    => $id,
+            'image' =>$image,
+            'type'  =>$type,
+            'location'  =>'',
+            'location_id'=>''
+        ];
+        
+        $fcmNotification = [
+            'to' => '/topics/'.$token, //single or global token
+            'data' => $notification
+        ];
+        
+        $headers = [
+            'Authorization: key=' . API_ACCESS_KEY,
+            'Content-Type: application/json'
+        ];
+        
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,$fcmUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fcmNotification));
+        $result = curl_exec($ch);
+        curl_close($ch);
     }
 
     /**

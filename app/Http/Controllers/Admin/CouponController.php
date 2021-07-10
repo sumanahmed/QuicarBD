@@ -117,14 +117,14 @@ class CouponController extends Controller
                 $helper = new Helper(); 
                 $helper->smsNotification($type = 1, 0, $title, $message); // bell notification, 1=user
                 
-                $client = new Client();
-                $client->request("GET", "https://quicarbd.com//mobileapi/notification/globalNotification.php?notification=global&id=1&title=".$title ."&body=".$message."&type=1&token=quicar");    
+                $helper = new Helper(); 
+                $helper->firebaseGlobalNotificationSend($title, $message, $id=1, $image, $type=1, $token="quicar");
                 
             } elseif ($request->spacifice_user == 1) {
                 
                 $msg    = strip_tags($message);
                 $id     = User::find($coupon->user_id)->n_key;
-                
+           
                 $helper = new Helper();
                 $helper->sendSinglePartnerNotification($id, $title, $msg); //push notification send
                 $helper->smsNotification($type = 1, $coupon->user_id, $title, $msg); // send notification, 1=user
