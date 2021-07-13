@@ -524,7 +524,8 @@ class RideController extends Controller
                 )
                 ->where('ride_list.status', 4)
                 ->where('ride_list.accepted_ride_bitting_id', '!=', null)
-                ->where('ride_list.start_time', '<', $current_date_time)
+                //->where('ride_list.start_time', '<', $current_date_time)
+                ->where('ride_list.start_time_for_complete', '<', $current_date_time)
                 ->orderBy('ride_list.id','DESC');
                 
     if ($request->phone) { 
@@ -1090,11 +1091,11 @@ class RideController extends Controller
    */
    public function cancelSeen($id)
    {
-      $ride = RideList::findOrFail($id);
-      
-      $ride->cancel_seen = 1;
-      $ride->update();
-      
-      return redirect()->back()->with('message','Cancelled Ride seen successfully');
+       $ride = RideList::findOrFail($id);
+       
+       $ride->cancel_seen = 1;
+       $ride->update();
+       
+       return redirect()->back()->with('message','Cancelled Ride seen successfully');
    }
 }
