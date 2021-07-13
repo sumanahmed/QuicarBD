@@ -42,6 +42,16 @@
                                         <label for="phone" class="control-label mb-10">Phone</label>                                            
                                         <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif placeholder="Phone" class="form-control">
                                     </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="phone" class="control-label mb-10">Status</label>  
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="100">All</option>
+                                            <option value="0" @if(isset($_GET['status']) && $_GET['status'] == 0) selected @endif>Unread</option>
+                                            <option value="1" @if(isset($_GET['status']) && $_GET['status'] == 1) selected @endif>Read</option>
+                                        </select>
+                                    </div>
                                 </div> 
                                 <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
@@ -92,7 +102,7 @@
                                                 <td>{{ $complainTime }}</td>
                                                 <td>{{ $complain->answer_time != null ? $answerTime : '' }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">
-                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyComplain" data-id="{{ $complain->id }}" data-reply_message="{{ $complain->reply_message }}" data-complain="{{ $complain->message }}" data-sender_id="{{ $complain->sender_id }}" data-type="0" title="Reply"><i class="fa fa-reply"></i></a>
+                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyComplain" data-id="{{ $complain->id }}" data-complain="{{ $complain->message }}" data-reply_message="{{ $complain->reply_message }}" data-sender_id="{{ $complain->sender_id }}" data-type="0" title="Reply"><i class="fa fa-reply"></i></a>
                                                     <button href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteFeedback" data-target="#deleteFeedbackModal" data-id="{{ $complain->id }}" title="Delete"><i class="fa fa-remove"></i></button>
                                                 </td>
                                             </tr>

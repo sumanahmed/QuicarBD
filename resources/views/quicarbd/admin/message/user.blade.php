@@ -29,7 +29,7 @@
                 </div>
                 <div class="panel-wrapper collapse in">
                     <div class="panel-header" style="border-bottom: 2px solid #ddd;margin-top:10px;">
-                        <form action="{{ route('message.partner') }}" method="get">
+                        <form action="{{ route('message.user') }}" method="get">
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
@@ -41,6 +41,16 @@
                                     <div class="form-group">
                                         <label for="phone" class="control-label mb-10">Phone</label>                                            
                                         <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif placeholder="Phone" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="phone" class="control-label mb-10">Status</label>  
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="100">All</option>
+                                            <option value="0" @if(isset($_GET['status']) && $_GET['status'] == 0) selected @endif>Unread</option>
+                                            <option value="1" @if(isset($_GET['status']) && $_GET['status'] == 1) selected @endif>Read</option>
+                                        </select>
                                     </div>
                                 </div> 
                                 <div class="col-md-2">
@@ -85,7 +95,7 @@
                                                 <td>{{ $msg_time }}</td>
                                                 <td>{{ $user->status == 0 ? 'Unread' : 'Read' }}</td>
                                                 <td style="vertical-align: middle;text-align: center;">
-                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyMessage" data-id="{{ $user->id }}" data-message="{{ $user->message }}" data-sender_id="{{ $user->sender_id }}" data-type="1" title="Reply"><i class="fa fa-reply"></i></a>
+                                                    <a href="#" class="btn btn-xs btn-warning" data-toggle="modal" id="replyMessage" data-id="{{ $user->id }}" data-message="{{ $user->message }}"  data-reply_message="{{ $user->reply_message }}" data-sender_id="{{ $user->sender_id }}" data-type="1" title="Reply"><i class="fa fa-reply"></i></a>
                                                     <a href="'/admin/user/details/'+ $user->sender_id" target="_blank" class="btn btn-xs btn-info" title="User Details"><i class="fa fa-eye"></i></a>
                                                     <button href="#" class="btn btn-xs btn-danger" data-toggle="modal" id="deleteFeedback" data-target="#deleteFeedbackModal" data-id="{{ $user->id }}" title="Delete"><i class="fa fa-remove"></i></button>
                                                 </td>
@@ -122,7 +132,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message" class="control-label mb-10">Reply <span class="text-danger text-bold" title="Required Field">*</span></label>
-                            <textarea class="form-control" name="reply" id="reply" placeholder="Enter your reply"></textarea>
+                            <textarea class="form-control reply_message" name="reply" id="reply" placeholder="Enter your reply"></textarea>
                             <span class="errorReply text-danger text-bold"></span>
                         </div>
                     </form>

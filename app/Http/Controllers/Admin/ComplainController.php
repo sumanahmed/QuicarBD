@@ -30,6 +30,10 @@ class ComplainController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
+        if (isset($request->status) && $request->status != 100) {
+            $query = $query->where('owner_message_list.status', $request->status);
+        }
+        
         $complains = $query->paginate(12)->appends(request()->query());
         
         return view('quicarbd.admin.complain.partner', compact('complains'));
@@ -50,6 +54,10 @@ class ComplainController extends Controller
         
         if ($request->phone) {
             $query = $query->where('users.phone', $request->phone);
+        }
+        
+        if (isset($request->status) && $request->status != 100) {
+            $query = $query->where('owner_message_list.status', $request->status);
         }
         
         $complains = $query->paginate(12)->appends(request()->query());

@@ -30,6 +30,10 @@ class MessageController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
+        if (isset($request->status) && $request->status != 100) {
+            $query = $query->where('owner_message_list.status', $request->status);
+        }
+        
         $partners = $query->paginate(12)->appends(request()->query());
         
         return view('quicarbd.admin.message.partner', compact('partners'));
@@ -42,7 +46,7 @@ class MessageController extends Controller
                     ->leftjoin('users','owner_message_list.sender_id','users.id')
                     ->select('users.name','users.phone','users.n_key','owner_message_list.*')
                     ->where('owner_message_list.type', 1)
-                    ->orderBy('users.id','DESC');
+                    ->orderBy('owner_message_list.id','DESC');
 
         if ($request->name) {
             $query = $query->where('users.name', 'like', "{$request->name}%");
@@ -50,6 +54,10 @@ class MessageController extends Controller
         
         if ($request->phone) {
             $query = $query->where('users.phone', $request->phone);
+        }
+        
+        if (isset($request->status) && $request->status != 100) {
+            $query = $query->where('owner_message_list.status', $request->status);
         }
         
         $users = $query->paginate(12)->appends(request()->query());

@@ -9,9 +9,9 @@
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Message</a></li>
-            <li class="active"><span>Partner</span></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Message</a></li>
+                <li class="active"><span>Partner</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -41,6 +41,16 @@
                                     <div class="form-group">
                                         <label for="phone" class="control-label mb-10">Phone</label>                                            
                                         <input type="text" name="phone" @if(isset($_GET['phone'])) value="{{ $_GET['phone'] }}" @endif placeholder="Phone" class="form-control">
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="phone" class="control-label mb-10">Status</label>  
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="100">All</option>
+                                            <option value="0" @if(isset($_GET['status']) && $_GET['status'] == 0) selected @endif>Unread</option>
+                                            <option value="1" @if(isset($_GET['status']) && $_GET['status'] == 1) selected @endif>Read</option>
+                                        </select>
                                     </div>
                                 </div> 
                                 <div class="col-md-2">

@@ -44,6 +44,16 @@
                                     </div>
                                 </div> 
                                 <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label for="phone" class="control-label mb-10">Status</label>  
+                                        <select name="status" id="status" class="form-control">
+                                            <option value="100">All</option>
+                                            <option value="0" @if(isset($_GET['status']) && $_GET['status'] == 0) selected @endif>Unread</option>
+                                            <option value="1" @if(isset($_GET['status']) && $_GET['status'] == 1) selected @endif>Read</option>
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="col-md-2">
                                     <div class="form-group" style="margin-top:30px;">
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                                     </div>
