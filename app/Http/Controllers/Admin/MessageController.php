@@ -20,7 +20,7 @@ class MessageController extends Controller
                     ->leftjoin('owners','owner_message_list.sender_id','owners.id')
                     ->select('owners.name','owners.phone','owners.n_key','owner_message_list.*')
                     ->where('owner_message_list.type', 0)
-                    ->orderBy('owners.id','DESC');
+                    ->orderBy('owner_message_list.id','DESC');
 
         if ($request->name) {
             $query = $query->where('owners.name', 'like', "{$request->name}%");
@@ -30,7 +30,7 @@ class MessageController extends Controller
             $query = $query->where('owners.phone', $request->phone);
         }
         
-        $partners = $query->paginate(12)->appends(request()->query());;
+        $partners = $query->paginate(12)->appends(request()->query());
         
         return view('quicarbd.admin.message.partner', compact('partners'));
     }
@@ -52,7 +52,7 @@ class MessageController extends Controller
             $query = $query->where('users.phone', $request->phone);
         }
         
-        $users = $query->paginate(12)->appends(request()->query());;
+        $users = $query->paginate(12)->appends(request()->query());
         
         return view('quicarbd.admin.message.user', compact('users'));
     }
