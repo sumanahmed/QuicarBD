@@ -159,7 +159,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="phone" class="control-label mb-10">Payment Status</label>                                            
-                                                    <input type="phone" value="{{ $ride->payment_status == 0 ? 'Unpaid' : 'Paid' }}" class="form-control" readonly>
+                                                    <input type="phone" value="{{ $ride->payment_status == 0 && $ride->tnx_id == null ? 'Unpaid' : 'Paid' }}" class="form-control" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -591,13 +591,13 @@
     }
     
     function cancelBy($cancel_by) {
-        if ($cancel_by == 0) {
+       if ($cancel_by == 0) {
             echo 'User';
-        } else if ($cancel_by == 1) {
+       } else if ($cancel_by == 1) {
             echo 'Partner';
-        } else if ($cancel_by == 2) {
+       } else if ($cancel_by == 2) {
             echo 'Admin';
-        }
+       }
     }
 @endphp
 @endsection
