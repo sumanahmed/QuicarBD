@@ -78,7 +78,7 @@ class BonusController extends Controller
         
         Bonus::create($request->all());
         
-        return redirect()->route('bonus.index')->with('message', 'Bonus added successfully');
+        return redirect()->route('bonus.index', ['type' => $request->type])->with('message', 'Bonus added successfully');
     }
     
     /**
@@ -106,7 +106,7 @@ class BonusController extends Controller
         $bonus = Bonus::findOrFail($id);
         $bonus->update($request->all());
         
-        return redirect()->route('bonus.index')->with('message', 'Bonus updated successfully');
+        return redirect()->route('bonus.index', ['type' => $bonus->type])->with('message', 'Bonus updated successfully');
     }   
     
     /**
