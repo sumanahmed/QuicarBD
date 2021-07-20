@@ -4,14 +4,13 @@
 <div class="container-fluid">				
 	<!-- Title -->
     <div class="row heading-bg">
-        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        </div>
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12"></div>
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">User</a></li>
-            <li class="active"><span>All User</span></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">User</a></li>
+                <li class="active"><span>All User</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -213,6 +212,11 @@
                             <label for="title" class="control-label mb-10">Deduct Balance <span class="text-danger text-bold" title="Required Field">*</span></label>
                             <input type="text" name="deduct_balance" id="deduct_balance" class="form-control" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                             <span class="errorDeductBalance text-danger text-bold"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="control-label mb-10">Reason </label>
+                            <input type="text" name="reason_desc" id="reason_desc" class="form-control" placeholder="Maximum 250 character" maxlength="250"/>
+                            <span class="errorReasonDesc text-danger text-bold"></span>
                         </div>
                     </form>
                 </div>

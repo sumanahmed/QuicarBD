@@ -137,9 +137,10 @@ class UserController extends Controller
                 $userAcc->online_payment    = 0;
                 $userAcc->tnx_id            = time();
                 $userAcc->type              = 1;
-                $userAcc->income_from       = 5;
+                $userAcc->income_from       = 10;
                 $userAcc->history_id        = 0;
                 $userAcc->reason            = "Admin Cashback Balance Added";
+                $userAcc->reason_desc       = $request->reason_desc;
                 $userAcc->user_id           = $user->id;
                 $userAcc->save();
         
@@ -162,9 +163,10 @@ class UserController extends Controller
                 $userAcc->online_payment    = 0;
                 $userAcc->tnx_id            = time();
                 $userAcc->type              = 1;
-                $userAcc->income_from       = 5;
+                $userAcc->income_from       = 10;
                 $userAcc->history_id        = 0;
                 $userAcc->reason            = "Admin Balance Added";
+                $userAcc->reason_desc       = $request->reason_desc;
                 $userAcc->user_id           = $user->id;
                 $userAcc->save();
         
@@ -187,9 +189,10 @@ class UserController extends Controller
                 $userAcc->online_payment    = 0;
                 $userAcc->tnx_id            = time();
                 $userAcc->type              = 0;
-                $userAcc->income_from       = 5;
+                $userAcc->income_from       = 10;
                 $userAcc->history_id        = 0;
                 $userAcc->reason            = "Admin Balance Deducted";
+                $userAcc->reason_desc       = $request->reason_desc;
                 $userAcc->user_id           = $user->id;
                 $userAcc->save();
         

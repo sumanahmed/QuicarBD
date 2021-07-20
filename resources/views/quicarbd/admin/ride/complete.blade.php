@@ -12,9 +12,9 @@
         <!-- Breadcrumb -->
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Car Rent</a></li>
-            <li class="active"><span>Complete Ride</span></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Car Rent</a></li>
+                <li class="active"><span>Complete Ride</span></li>
             </ol>
         </div>
         <!-- /Breadcrumb -->
@@ -114,6 +114,7 @@
                                                     <td style="vertical-align: middle;text-align: center;">
                                                         <a href="#" class="btn btn-xs btn-primary" id="upcomingRideSendNotification" data-toggle="modal" title="Notification" data-user_id="{{ $ride->user_id }}"  data-owner_id="{{ $ride->owner_id }}" data-ride_id="{{ $ride->id }}"><i class="fa fa-bell"></i></a> 
                                                         <a href="{{ route('ride.details', $ride->id) }}" target="_blank" class="btn btn-xs btn-info" title="Details"><i class="fa fa-eye"></i></a>                                                       
+                                                        <a href="#" id="cancelModal" data-toggle="modal" data-target="#showCancelModal" data-ride_id="{{ $ride->id }}" class="btn btn-xs btn-danger" title="Cancel"><i class="fa fa-remove"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -130,6 +131,48 @@
                     </div>
                 </div>
             </div>	
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="showCancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="exampleModalLabel1">Cancel Ride</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="cancel_from" class="control-label mb-10">Cancel From <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <select id="cancel_from" class="form-control">
+                            <option value="0">User</option>
+                            <option value="1">Partner</option>
+                            <option value="2">Admin</option>
+                        </select>
+                        <input type="hidden" id="ride_id" />
+                        <span class="text-danger cancelFromError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="charge_apply" class="control-label mb-10">Charge Apply <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <select id="charge_apply" class="form-control">
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                        <span class="text-danger chargeApplyError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="reason" class="control-label mb-10">Reason <span class="text-danger text-bold" title="Required Field">*</span></label>
+                        <textarea id="reason" class="form-control" placeholder="Enter cancel reason.."></textarea>
+                        <span class="text-danger reasonError"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="sendReason">Save</button>
+            </div>
         </div>
     </div>
 </div>
