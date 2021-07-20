@@ -1,447 +1,384 @@
 <?php
 
-use App\Http\Controllers\Admin\AccountsController;
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Admin\CarBrandController;
-use App\Http\Controllers\Admin\MarketingBannerController;
-use App\Http\Controllers\Admin\CarClassController;
-use App\Http\Controllers\Admin\CarColorController;
-use App\Http\Controllers\Admin\CarController;
-use App\Http\Controllers\Admin\CarModelController;
-use App\Http\Controllers\Admin\CarPackageController;
-use App\Http\Controllers\Admin\HotelPackageController;
-use App\Http\Controllers\Admin\TravelPackageController;
-use App\Http\Controllers\Admin\CarTypeController;
-use App\Http\Controllers\Admin\CarYearController;
-use App\Http\Controllers\Admin\RidePricingController;
-use App\Http\Controllers\Admin\CityController;
-use App\Http\Controllers\Admin\CommonController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\DistrictController;
-use App\Http\Controllers\Admin\DriverController;
-use App\Http\Controllers\Admin\HotelAmenityController;
-use App\Http\Controllers\Admin\NoticeController;
-use App\Http\Controllers\Admin\PartnerBannerController;
-use App\Http\Controllers\Admin\PropertyTypeController;
-use App\Http\Controllers\Admin\TourSportController;
-use App\Http\Controllers\Admin\UserBannerController;
-use App\Http\Controllers\Admin\YearController;
-use App\Http\Controllers\Admin\PartnerController;
-use App\Http\Controllers\Admin\CancellationReasonController;
-use App\Http\Controllers\Admin\CarPackageRideController;
-use App\Http\Controllers\Admin\HotelPackageRideController;
-use App\Http\Controllers\Admin\PackageReviewController;
-use App\Http\Controllers\Admin\PrivacyController;
-use App\Http\Controllers\Admin\RideController;
-use App\Http\Controllers\Admin\SmsNotificationController;
-use App\Http\Controllers\Admin\MessageController;
-use App\Http\Controllers\Admin\ComplainController;
-use App\Http\Controllers\Admin\BonusController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\CouponController;
-use App\Http\Controllers\Admin\NotificationLogController;
-use App\Http\Controllers\Admin\WithdrawController;
-use Illuminate\Support\Facades\Route;
+namespace App\Http\Controllers\Admin;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\Controller;
+use App\Http\Lib\Helper;
+use App\Models\RideList;
+use Illuminate\Http\Request;
+use App\Models\User;
+use GuzzleHttp\Client;
+use App\Models\CarPackage;
+use App\Models\HotelPackage;
+use App\Models\TravelPackage;
+use App\Models\UserAccount;
+use App\Models\SMS;
+use App\Models\UserAppInformation;
+use App\Models\UserAppSetting;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Validator;
+use Response;
+use DB;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+class UserController extends Controller
+{
+    //show all users
+    public function index(Request $request)
+    {
+        $query = DB::table('users')->select('users.*')->orderBy('id','DESC');
 
-Route::get('/get-city/{district_id}', [CommonController::class, 'getCity'])->name('admin.get_city'); 
-Route::get('/get-brand/{car_type_id}', [CommonController::class, 'getBrand'])->name('admin.get_brand'); 
-Route::get('/get-spot/{district_id}', [CommonController::class, 'getSpot'])->name('admin.get_spot'); 
-Route::get('/get-car/{owner_id}', [CommonController::class, 'getCar'])->name('admin.get_car'); 
-Route::get('/get-sit/{car_type}', [CommonController::class, 'getSit'])->name('admin.get_sit'); 
-Route::get('/get-car-brand/{car_type}', [CommonController::class, 'getCarBrand'])->name('admin.get_car_brand'); 
-Route::get('/get-car-model/{car_type}/{car_brand}', [CommonController::class, 'getCarModel'])->name('admin.get_car_model'); 
-Route::get('/get-car-year/{car_type}/{car_model}', [CommonController::class, 'getCarYear'])->name('admin.get_car_year'); 
-Route::get('/get-car-sit/{car_id}', [CommonController::class, 'getCarSit'])->name('admin.get_car_sit'); 
-Route::get('/get-hotel-package-charge/{owner_id}', [CommonController::class, 'getHotelPackageCharge'])->name('admin.get_hotel_package_charge'); 
-Route::get('/get-travel-package-charge/{owner_id}', [CommonController::class, 'getTravelPackageCharge'])->name('admin.get_travel_package_charge'); 
-Route::get('/sms/list', [CommonController::class, 'smsList'])->name('admin.sms_list'); 
-Route::post('/sms/store', [CommonController::class, 'smsStore'])->name('admin.sms_store'); 
-Route::post('/sms/destroy', [CommonController::class, 'smsDestroy'])->name('admin.sms_destroy'); 
+        if ($request->name) {
+            $query = $query->where('name', 'like', "{$request->name}%");
+        }
+        
+        if ($request->phone) {
+            $query = $query->where('phone', $request->phone);
+        }  
+        
+        if ($request->complete_service) {
+            $query = $query->join('ride_list','users.id','ride_list.user_id')
+                            ->addSelect('ride_list.status')
+                            ->where('ride_list.status', 4)
+                            ->where('ride_list.accepted_ride_bitting_id', '!=', null)
+                            ->distinct('ride_list.user_id');
+        }  
+        
+        if ($request->balance) {
+            $query = $query->where('balance', $request->balance);
+        }
+        
+        $users = $query->paginate(12)->appends(request()->query());
+        $sms   = SMS::select('id','title','message')->orderBy('id','DESC')->get();
 
-Route::get('/',[AuthController::class, 'login'])->name('admin.login');
-Route::post('/signin',[AuthController::class, 'signin'])->name('admin.signin');
-Route::post('/logout',[AuthController::class, 'logout'])->name('admin.logout');
+        return view('quicarbd.admin.user.index', compact('users','sms'));
+    }
 
-Route::group(['prefix'=>'/', 'middleware' => 'admin'], function(){
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-});
+    //status update
+    public function statusUpdate(Request $request){ 
+        $user                   = User::find($request->user_id);
+        $user->account_status   = $request->status;
+        $user->update();
+        if($user->update()){
+            return redirect()->back()->with('message', 'Status update successfully');
+        }else{
+            return redirect()->back()->with('error_message', 'Sorry something went wrong');
+        }
+    }
 
-Route::group(['prefix'=>'/setting/user-app-info', 'middleware' => 'admin'], function(){
-    Route::get('/edit', [UserController::class, 'userAppInfoEdit'])->name('setting.user-app-info.edit');
-    Route::post('/update', [UserController::class, 'userAppInfoUpdate'])->name('setting.user-app-info.update');
-});
+    //notification send
+    public function notificationSend(Request $request)
+    {         
+        $validators=Validator::make($request->all(),[
+            'title'   => 'required',
+            'message' => 'required',
+            'notification' => 'required',
+        ]);
+        if($validators->fails()){
+            return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+        }else{ 
 
-Route::group(['prefix'=>'/setting/user-app', 'middleware' => 'admin'], function(){
-    Route::get('/edit', [UserController::class, 'userAppSettingEdit'])->name('setting.user-app.edit');
-    Route::post('/update', [UserController::class, 'userAppSettingUpdate'])->name('setting.user-app.update');
-});
+            $id      = $request->n_key;
+            $title   = $request->title;
+            $body    = $request->message;
 
-Route::group(['prefix'=>'/setting/partner-app', 'middleware' => 'admin'], function(){
-    Route::get('/edit', [PartnerController::class, 'partnerAppSettingEdit'])->name('setting.partner-app.edit');
-    Route::post('/update', [PartnerController::class, 'partnerAppSettingUpdate'])->name('setting.partner-app.update');
-});
+            $helper = new Helper();
 
-Route::group(['prefix'=>'/setting/district', 'middleware' => 'admin'], function(){
-    Route::get('/', [DistrictController::class, 'index'])->name('setting.district.index');
-    Route::post('/store', [DistrictController::class, 'store'])->name('setting.district.store');
-    Route::post('/update', [DistrictController::class, 'update'])->name('setting.district.update');
-    Route::post('/destroy', [DistrictController::class, 'destroy'])->name('setting.district.destroy');
-});
+            if($request->notification == 1){ 
+                $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
+                $helper->smsNotification($type = 1, $request->user_id, $title, $body); // bell notification, 1=user
+                return Response::json([
+                    'status'    => 200,
+                    'message'   => "Notification send successfully",
+                ]);
+            }else{
+                $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
+                $helper->smsNotification($type = 1, $request->user_id, $title, $body); // bell notification, 1=user
+                $helper->smsSend($request->phone, $body); // sms send
+                return Response::json([
+                    'status'    => 200,
+                    'message'   => "Notification & SMS send successfully",
+                ]);
+            }            
+        }        
+    }
+    
+    //balance add
+    public function balanceAdd(Request $request)
+    {    
+        $validators=Validator::make($request->all(),[
+            'id'   => 'required',
+            'balance' => 'required',
+            'add_balance' => 'required',
+            'add_cashback_balance' => 'required',
+            'deduct_balance' => 'required',
+            'n_key' => 'required',
+        ]);
+        
+        if($validators->fails()){
+            return Response::json(['errors'=>$validators->getMessageBag()->toArray()]);
+        }
+        
+        DB::beginTransaction();
+        
+        try {
+            
+            if ($request->add_cashback_balance != null && $request->add_cashback_balance > 0) { 
+                $user = User::find($request->id); 
+                $user->cash_back_balance = ($user->cash_back_balance + $request->add_cashback_balance); 
+                $user->update();
+                
+                $userAcc                    = new UserAccount();
+                $userAcc->amount            = $request->add_cashback_balance;
+                $userAcc->adjust_cashback   = $request->add_cashback_balance;
+                $userAcc->adjust_quicar_balance = 0;
+                $userAcc->discount          = 0;
+                $userAcc->online_payment    = 0;
+                $userAcc->tnx_id            = time();
+                $userAcc->type              = 1;
+                $userAcc->income_from       = 5;
+                $userAcc->history_id        = 0;
+                $userAcc->reason            = "Admin Cashback Balance Added";
+                $userAcc->user_id           = $user->id;
+                $userAcc->save();
+        
+                $id      = $request->n_key;
+                $title   = "New cashback balance add";
+                $body    = "New cashback balance ". $request->add_cashback_balance ." with your current cashback balance. Thanks Team Quicar";
+                
+            } 
+            
+            if ($request->add_balance != null && $request->add_balance > 0) {
+                $user = User::find($request->id); 
+                $user->balance = ($user->balance + $request->add_balance); 
+                $user->update();
+                
+                $userAcc                    = new UserAccount();
+                $userAcc->amount            = $request->add_balance;
+                $userAcc->adjust_cashback   = 0;
+                $userAcc->adjust_quicar_balance = $request->add_balance;
+                $userAcc->discount          = 0;
+                $userAcc->online_payment    = 0;
+                $userAcc->tnx_id            = time();
+                $userAcc->type              = 1;
+                $userAcc->income_from       = 5;
+                $userAcc->history_id        = 0;
+                $userAcc->reason            = "Admin Balance Added";
+                $userAcc->user_id           = $user->id;
+                $userAcc->save();
+        
+                $id      = $request->n_key;
+                $title   = "New balance add";
+                $body    = "New balance ". $request->add_balance ." with your current balance. Thanks Team Quicar";
+                
+            } 
+            
+            if ($request->deduct_balance != null && $request->deduct_balance > 0) {
+                $user = User::find($request->id); 
+                $user->balance = ($user->balance - $request->deduct_balance); 
+                $user->update();
+                
+                $userAcc                    = new UserAccount();
+                $userAcc->amount            = $request->deduct_balance;
+                $userAcc->adjust_cashback   = 0;
+                $userAcc->adjust_quicar_balance = $request->deduct_balance;
+                $userAcc->discount          = 0;
+                $userAcc->online_payment    = 0;
+                $userAcc->tnx_id            = time();
+                $userAcc->type              = 0;
+                $userAcc->income_from       = 5;
+                $userAcc->history_id        = 0;
+                $userAcc->reason            = "Admin Balance Deducted";
+                $userAcc->user_id           = $user->id;
+                $userAcc->save();
+        
+                $id      = $request->n_key;
+                $title   = "Balance Deducted";
+                $body    = "Balance deducted ". $request->deduct_balance ." Tk from your current balance. Thanks Team Quicar";
+            }
+            
+    
+            $helper = new Helper();
+            $helper->sendSinglePartnerNotification($id, $title, $body); //push notification send
+            $helper->smsNotification($type = 1, $user->id, $title, $body); // send notification, 1=user
+            
+            DB::commit();
+            
+        } catch (\Exception $ex) {
+            
+            DB::rollback();
+            
+            return response([
+                'status' => 403,
+                'message' => 'Failed to save data.'
+            ]);
+        }
+        
+        return Response::json([
+            'status'    => 200,
+            'message'   => "Balance added successfully",
+        ]);  
+    }
 
-Route::group(['prefix'=>'/setting/city', 'middleware' => 'admin'], function(){
-    Route::get('/', [CityController::class, 'index'])->name('setting.city.index');
-    Route::post('/store', [CityController::class, 'store'])->name('setting.city.store');
-    Route::post('/update', [CityController::class, 'update'])->name('setting.city.update');
-    Route::post('/destroy', [CityController::class, 'destroy'])->name('setting.city.destroy');
-});
+    //user details
+    public function details($id)
+    {
+        $data['user']   = User::find($id);
+        $data['rides']  = RideList::where('user_id', $id)->orderBy('id','DESC')->get();
+        $data['total_ride'] = RideList::where('user_id', $id)->where('status', 4)->where('accepted_ride_bitting_id', '!=', null)->count('id');
+        $data['total_car_pacakage_booking'] = DB::table('car_package_order')->where('user_id', $id)->count('id');
+        $data['total_hotel_pacakage_booking'] = DB::table('hotel_package_order')->where('user_id', $id)->count('id');
+        $data['total_travel_pacakage_booking'] = DB::table('travel_packages_order')->where('user_id', $id)->count('id');
+        $data['accounts'] = DB::table('user_account')->where('user_id', $id)->orderBy('created_at','ASC')->get();
+        return view('quicarbd.admin.user.details', $data);
+    }
+    
+    //show all users
+    public function userLogList(Request $request)
+    {
+        $query = DB::table('users')
+                    ->leftjoin('user_log','users.id','user_log.user_id')
+                    ->select('user_log.visit_time',
+                            'user_log.user_id','users.name',
+                            'users.phone','users.n_key'
+                    )
+                    ->distinct();
+                    
+        // $query = DB::table('user_log')
+        //             ->select('user_log.visit_time','user_log.user_id')
+        //             ->groupBy('user_log.visit_time','user_log.user_id');
 
-Route::group(['prefix'=>'/setting/tour-spot', 'middleware' => 'admin'], function(){
-    Route::get('/', [TourSportController::class, 'index'])->name('setting.tour_spot.index');
-    Route::post('/store', [TourSportController::class, 'store'])->name('setting.tour_spot.store');
-    Route::post('/update', [TourSportController::class, 'update'])->name('setting.tour_spot.update');
-    Route::post('/destroy', [TourSportController::class, 'destroy'])->name('setting.tour_spot.destroy');
-});
+        if ($request->name) {
+            $query = $query->where('users.name', 'like', "{$request->name}%");
+        }
+        
+        if ($request->phone) {
+            $query = $query->where('users.phone', $request->phone);
+        }
+        
+        if ($request->visit_date) { 
+            $query = $query->whereDate('user_log.visit_time', date('Y-m-d', strtotime($request->visit_date)));
+        }
+        
+        $users = $query->paginate(12)->appends(request()->query());
+        $sms   = SMS::select('id','title','message')->orderBy('id','DESC')->get();
+        
+        return view('quicarbd.admin.user.log-list', compact('users','sms'));
+    }
 
-Route::group(['prefix'=>'/driver', 'middleware' => 'admin'], function(){
-    Route::get('/', [DriverController::class, 'index'])->name('driver.index');
-    Route::get('/create', [DriverController::class, 'create'])->name('driver.create');
-    Route::post('/store', [DriverController::class, 'store'])->name('driver.store');
-    Route::get('/edit/{id}', [DriverController::class, 'edit'])->name('driver.edit');
-    Route::post('/update/{id}', [DriverController::class, 'update'])->name('driver.update');
-    Route::post('/destroy', [DriverController::class, 'destroy'])->name('driver.destroy');
-    Route::get('/status-update', [DriverController::class, 'statusUpdate'])->name('driver.status-update');
-    Route::post('/hold-status', [DriverController::class, 'holdStatus'])->name('driver.hold_status');
-});
+    //user log
+    public function log($id){
+        $user_logs = DB::table('user_log')
+                    ->leftjoin('users','user_log.user_id','users.id')
+                    ->leftjoin('car_packages','user_log.product_id','car_packages.id')
+                    ->leftjoin('hotel_packages','user_log.product_id','hotel_packages.id')
+                    ->leftjoin('travel_packages','user_log.product_id','travel_packages.id')
+                    ->select('user_log.*','users.name','users.phone',
+                        DB::raw('(CASE 
+                            WHEN user_log.product_type = "1" THEN car_packages.name 
+                            WHEN user_log.product_type = "2" THEN hotel_packages.hotel_name
+                            WHEN user_log.product_type = "3" THEN travel_packages.tour_name
+                            ELSE "Others" 
+                            END) as product_name'
+                        )
+                    )
+                    ->where('user_log.user_id', $id)
+                    ->orderBy('user_log.id','DESC');
+        
+        $logs = $user_logs->paginate(12)->appends(request()->query());
+        
+        $user_name = User::find($id)->name;
 
-Route::group(['prefix'=>'/property-type', 'middleware' => 'admin'], function(){
-    Route::get('/', [PropertyTypeController::class, 'index'])->name('property_type.index');
-    Route::post('/store', [PropertyTypeController::class, 'store'])->name('property_type.store');
-    Route::post('/update', [PropertyTypeController::class, 'update'])->name('property_type.update');
-    Route::post('/destroy', [PropertyTypeController::class, 'destroy'])->name('property_type.destroy');
-});
-
-Route::group(['prefix'=>'/car-type', 'middleware' => 'admin'], function(){
-    Route::get('/', [CarTypeController::class, 'index'])->name('car_type.index');
-    Route::post('/store', [CarTypeController::class, 'store'])->name('car_type.store');
-    Route::post('/update', [CarTypeController::class, 'update'])->name('car_type.update');
-    Route::post('/destroy', [CarTypeController::class, 'destroy'])->name('car_type.destroy');
-});
-
-Route::group(['prefix'=>'/brand', 'middleware' => 'admin'], function(){
-    Route::get('/', [CarBrandController::class, 'index'])->name('brand.index');
-    Route::post('/store', [CarBrandController::class, 'store'])->name('brand.store');
-    Route::post('/update', [CarBrandController::class, 'update'])->name('brand.update');
-    Route::post('/destroy', [CarBrandController::class, 'destroy'])->name('brand.destroy');
-});
-
-Route::group(['prefix'=>'/model', 'middleware' => 'admin'], function(){
-    Route::get('/', [CarModelController::class, 'index'])->name('model.index');
-    Route::post('/store', [CarModelController::class, 'store'])->name('model.store');
-    Route::post('/update', [CarModelController::class, 'update'])->name('model.update');
-    Route::post('/destroy', [CarModelController::class, 'destroy'])->name('model.destroy');
-});
-
-Route::group(['prefix'=>'/year', 'middleware' => 'admin'], function(){
-    Route::get('/', [YearController::class, 'index'])->name('year.index');
-    Route::post('/store', [YearController::class, 'store'])->name('year.store');
-    Route::post('/update', [YearController::class, 'update'])->name('year.update');
-    Route::post('/destroy', [YearController::class, 'destroy'])->name('year.destroy');
-});
-
-Route::group(['prefix'=>'/class', 'middleware' => 'admin'], function(){
-    Route::get('/', [CarClassController::class, 'index'])->name('class.index');
-    Route::post('/store', [CarClassController::class, 'store'])->name('class.store');
-    Route::post('/update', [CarClassController::class, 'update'])->name('class.update');
-    Route::post('/destroy', [CarClassController::class, 'destroy'])->name('class.destroy');
-});
-
-Route::group(['prefix'=>'/color', 'middleware' => 'admin'], function(){
-    Route::get('/', [CarColorController::class, 'index'])->name('color.index');
-    Route::post('/store', [CarColorController::class, 'store'])->name('color.store');
-    Route::post('/update', [CarColorController::class, 'update'])->name('color.update');
-    Route::post('/destroy', [CarColorController::class, 'destroy'])->name('color.destroy');
-});
-
-Route::group(['prefix'=>'/hotel-amenity', 'middleware' => 'admin'], function(){
-    Route::get('/', [HotelAmenityController::class, 'index'])->name('hotel_amenity.index');
-    Route::post('/store', [HotelAmenityController::class, 'store'])->name('hotel_amenity.store');
-    Route::post('/update', [HotelAmenityController::class, 'update'])->name('hotel_amenity.update');
-    Route::post('/destroy', [HotelAmenityController::class, 'destroy'])->name('hotel_amenity.destroy');
-});
-
-Route::group(['prefix'=>'/car', 'middleware' => 'admin'], function(){
-    Route::get('/', [CarController::class, 'index'])->name('car.index');
-    Route::get('/create', [CarController::class, 'create'])->name('car.create');
-    Route::post('/store', [CarController::class, 'store'])->name('car.store');
-    Route::get('/edit/{car_id}', [CarController::class, 'edit'])->name('car.edit');
-    Route::get('/show/{car_id}', [CarController::class, 'show'])->name('car.show');
-    Route::post('/update/{car_id}', [CarController::class, 'update'])->name('car.update');
-    Route::get('/details/{car_id}', [CarController::class, 'details'])->name('car.details');
-    Route::get('/expired', [CarController::class, 'expired'])->name('car.expired');
-    Route::post('/destroy', [CarController::class, 'destroy'])->name('car.destroy');
-    Route::post('/owner-notification-send', [CarController::class, 'ownerSendNotification'])->name('car.destroy');
-});
-
-Route::group(['prefix'=>'/coupon', 'middleware' => 'admin'], function(){
-    Route::get('/', [CouponController::class, 'index'])->name('coupon.index');
-    Route::get('/create', [CouponController::class, 'create'])->name('coupon.create');
-    Route::post('/store', [CouponController::class, 'store'])->name('coupon.store');
-    Route::get('/edit/{id}', [CouponController::class, 'edit'])->name('coupon.edit');
-    Route::post('/update/{coupon_id}', [CouponController::class, 'update'])->name('coupon.update');
-    Route::get('/block', [CouponController::class, 'block'])->name('coupon.block');
-    Route::post('/destroy', [CouponController::class, 'destroy'])->name('coupon.destroy');
-    Route::get('/used-list', [CouponController::class, 'usedList'])->name('coupon.usedList');
-});
-
-Route::group(['prefix'=>'/partner', 'middleware' => 'admin'], function(){
-    Route::get('/', [PartnerController::class, 'index'])->name('partner.index');
-    Route::get('/create', [PartnerController::class, 'create'])->name('partner.create');
-    Route::post('/store', [PartnerController::class, 'store'])->name('partner.store');
-    Route::get('/edit/{car_id}', [PartnerController::class, 'edit'])->name('partner.edit');
-    Route::post('/update/{car_id}', [PartnerController::class, 'update'])->name('partner.update');
-    Route::get('/details/{car_id}', [PartnerController::class, 'details'])->name('partner.details');
-    Route::post('/notification/send', [PartnerController::class, 'notificationSend'])->name('partner.notification.send');
-    Route::post('/destroy', [PartnerController::class, 'destroy'])->name('partner.destroy');
-    Route::get('/status-update', [PartnerController::class, 'statusUpdate'])->name('partner.status-update');
-    Route::get('/verification', [PartnerController::class, 'verification'])->name('partner.verification');
-    Route::get('/account-type-change-request', [PartnerController::class, 'accountTypeChangeRequest'])->name('partner.account_type_change_request');
-    Route::get('/account-type-change-approve', [PartnerController::class, 'accountTypeChangeApprove'])->name('partner.account_type_change_approve');
-    Route::post('/account-type-change-cancel', [PartnerController::class, 'accountTypeChangeCancel'])->name('partner.account_type_change_cancel');
-    Route::post('/balance/add', [PartnerController::class, 'balanceAdd'])->name('partner.balance.add');
-    Route::post('/hold', [PartnerController::class, 'hold'])->name('partner.hold');
-    Route::get('/hold-list', [PartnerController::class, 'holdList'])->name('partner.hold_list');
-    Route::get('/unhold/{id}', [PartnerController::class, 'unhold'])->name('partner.unhold');
-});
-
-Route::group(['prefix'=>'/user', 'middleware' => 'admin'], function(){
-    Route::get('/', [UserController::class, 'index'])->name('user.index');
-    Route::get('/status/update', [UserController::class, 'create'])->name('user.status.update');
-    Route::get('/details/{user_id}', [UserController::class, 'details'])->name('user.details');
-    Route::post('/notification/send', [UserController::class, 'notificationSend'])->name('user.notification.send');
-    Route::post('/balance/add', [UserController::class, 'balanceAdd'])->name('user.balance.add');
-    Route::get('/user-log', [UserController::class, 'userLogList'])->name('user.user_log_list');
-    Route::get('/log/{id}', [UserController::class, 'log'])->name('user.log');
-});
-
-Route::group(['prefix'=>'/marketing-banner', 'middleware' => 'admin'], function(){
-    Route::get('/', [MarketingBannerController::class, 'index'])->name('marketing_banner.index');
-    Route::get('/create', [MarketingBannerController::class, 'create'])->name('marketing_banner.create');
-    Route::post('/store', [MarketingBannerController::class, 'store'])->name('marketing_banner.store');
-    Route::get('/edit/{id}', [MarketingBannerController::class, 'edit'])->name('marketing_banner.edit');
-    Route::post('/update/{id}', [MarketingBannerController::class, 'update'])->name('marketing_banner.update');
-    Route::post('/destroy', [MarketingBannerController::class, 'destroy'])->name('marketing_banner.destroy');
-});
-
-Route::group(['prefix'=>'/user-banner', 'middleware' => 'admin'], function(){
-    Route::get('/', [UserBannerController::class, 'index'])->name('user_banner.index');
-    Route::get('/create', [UserBannerController::class, 'create'])->name('user_banner.create');
-    Route::post('/store', [UserBannerController::class, 'store'])->name('user_banner.store');
-    Route::get('/edit/{id}', [UserBannerController::class, 'edit'])->name('user_banner.edit');
-    Route::post('/update/{id}', [UserBannerController::class, 'update'])->name('user_banner.update');
-    Route::post('/destroy', [UserBannerController::class, 'destroy'])->name('user_banner.destroy');
-    Route::get('/up/{id}', [UserBannerController::class, 'up'])->name('user_banner.up');
-    Route::get('/down/{id}', [UserBannerController::class, 'down'])->name('user_banner.down');
-});
-
-Route::group(['prefix'=>'/partner-banner', 'middleware' => 'admin'], function(){
-    Route::get('/', [PartnerBannerController::class, 'index'])->name('partner_banner.index');
-    Route::get('/create', [PartnerBannerController::class, 'create'])->name('partner_banner.create');
-    Route::post('/store', [PartnerBannerController::class, 'store'])->name('partner_banner.store');
-    Route::get('/edit/{id}', [PartnerBannerController::class, 'edit'])->name('partner_banner.edit');
-    Route::post('/update/{id}', [PartnerBannerController::class, 'update'])->name('partner_banner.update');
-    Route::post('/destroy', [PartnerBannerController::class, 'destroy'])->name('partner_banner.destroy');
-    Route::get('/up/{id}', [PartnerBannerController::class, 'up'])->name('partner_banner.up');
-    Route::get('/down/{id}', [PartnerBannerController::class, 'down'])->name('partner_banner.down');
-});
-
-Route::group(['prefix'=>'/car-package', 'middleware' => 'admin'], function(){
-    Route::get('/', [CarPackageController::class, 'index'])->name('car_package.index');
-    Route::get('/create', [CarPackageController::class, 'create'])->name('car_package.create');
-    Route::post('/store', [CarPackageController::class, 'store'])->name('car_package.store');
-    Route::get('/edit/{id}', [CarPackageController::class, 'edit'])->name('car_package.edit');
-    Route::get('/details/{id}', [CarPackageController::class, 'details'])->name('car_package.details');
-    Route::post('/update/{id}', [CarPackageController::class, 'update'])->name('car_package.update');
-    Route::post('/destroy', [CarPackageController::class, 'destroy'])->name('car_package.destroy');
-});
-
-Route::group(['prefix'=>'/hotel-package', 'middleware' => 'admin'], function(){
-    Route::get('/', [HotelPackageController::class, 'index'])->name('hotel_package.index');
-    Route::get('/create', [HotelPackageController::class, 'create'])->name('hotel_package.create');
-    Route::post('/store', [HotelPackageController::class, 'store'])->name('hotel_package.store');
-    Route::get('/edit/{id}', [HotelPackageController::class, 'edit'])->name('hotel_package.edit');
-    Route::get('/details/{id}', [HotelPackageController::class, 'details'])->name('hotel_package.details');
-    Route::post('/update/{id}', [HotelPackageController::class, 'update'])->name('hotel_package.update');
-    Route::post('/destroy', [HotelPackageController::class, 'destroy'])->name('hotel_package.destroy');
-});
-
-Route::group(['prefix'=>'/travel-package', 'middleware' => 'admin'], function(){
-    Route::get('/', [TravelPackageController::class, 'index'])->name('travel_package.index');
-    Route::get('/create', [TravelPackageController::class, 'create'])->name('travel_package.create');
-    Route::post('/store', [TravelPackageController::class, 'store'])->name('travel_package.store');
-    Route::get('/edit/{id}', [TravelPackageController::class, 'edit'])->name('travel_package.edit');
-    Route::get('/details/{id}', [TravelPackageController::class, 'details'])->name('travel_package.details');
-    Route::post('/update/{id}', [TravelPackageController::class, 'update'])->name('travel_package.update');
-    Route::post('/destroy', [TravelPackageController::class, 'destroy'])->name('travel_package.destroy');
-});
-
-Route::group(['prefix'=>'/package-review', 'middleware' => 'admin'], function(){
-    Route::get('/', [PackageReviewController::class, 'index'])->name('package_review.index');
-});
-
-Route::group(['prefix'=>'/reason/cancellation', 'middleware' => 'admin'], function(){
-    Route::get('/', [CancellationReasonController::class, 'index'])->name('reason.index');
-    Route::get('/create', [CancellationReasonController::class, 'create'])->name('reason.create');
-    Route::post('/store', [CancellationReasonController::class, 'store'])->name('reason.store');
-    Route::get('/edit/{id}', [CancellationReasonController::class, 'edit'])->name('reason.edit');
-    Route::post('/update/{id}', [CancellationReasonController::class, 'update'])->name('reason.update');
-    Route::post('/destroy', [CancellationReasonController::class, 'destroy'])->name('reason.destroy');
-});
-
-Route::group(['prefix'=>'/privacy/user', 'middleware' => 'admin'], function(){
-    Route::get('/edit', [PrivacyController::class, 'userEedit'])->name('privacy.user.edit');
-    Route::post('/update', [PrivacyController::class, 'userUpdate'])->name('privacy.user.update');
-});
-
-Route::group(['prefix'=>'/privacy/partner', 'middleware' => 'admin'], function(){
-    Route::get('/edit', [PrivacyController::class, 'partnerEdit'])->name('privacy.partner.edit');
-    Route::post('/update', [PrivacyController::class, 'partnerUpdate'])->name('privacy.partner.update');
-});
-
-Route::group(['prefix'=>'/banner', 'middleware' => 'admin'], function(){
-    Route::get('/packages', [BannerController::class, 'bannerPackages'])->name('banner.packages');
-    Route::post('/packages/update', [BannerController::class, 'bannerPackagesUpdate'])->name('banner.packages.update');
-});
-
-Route::group(['prefix'=>'/notice', 'middleware' => 'admin'], function(){
-    Route::get('/packages', [NoticeController::class, 'noticePackages'])->name('notice.packages');
-    Route::post('/packages/update', [NoticeController::class, 'noticePackagesUpdate'])->name('notice.packages.update');
-    Route::get('/partner-app', [NoticeController::class, 'noticePartnerApp'])->name('notice.partner_app');
-    Route::post('/partner-app/update', [NoticeController::class, 'noticePartnerAppUpdate'])->name('notice.partner_app.update');
-});
-
-
-Route::group(['prefix'=>'/pricing', 'middleware' => 'admin'], function(){
-    Route::get('/', [RidePricingController::class, 'index'])->name('pricing.index');
-    Route::get('/create', [RidePricingController::class, 'create'])->name('pricing.create');
-    Route::post('/store', [RidePricingController::class, 'store'])->name('pricing.store');
-    Route::get('/edit/{id}', [RidePricingController::class, 'edit'])->name('pricing.edit');
-    Route::post('/update/{id}', [RidePricingController::class, 'update'])->name('pricing.update');
-    Route::post('/destroy', [RidePricingController::class, 'destroy'])->name('pricing.destroy');
-});
-
-Route::group(['prefix'=>'/ride', 'middleware' => 'admin'], function(){
-    Route::get('/bid-expired-ride', [RideController::class, 'bidExpiredRide'])->name('ride.bid_expired_ride');
-    Route::get('/send-pending/{id}', [RideController::class, 'sendPending'])->name('ride.send_pending');
-    Route::get('/pending', [RideController::class, 'pending'])->name('ride.pending');
-    Route::get('/approve/{id}', [RideController::class, 'approve'])->name('ride.approve');
-    Route::get('/edit/{id}', [RideController::class, 'edit'])->name('ride.edit');
-    Route::post('/update/{id}', [RideController::class, 'update'])->name('ride.update');
-    Route::post('/user-approve', [RideController::class, 'userApprove'])->name('ride.user_approve');
-    Route::get('/bid-request', [RideController::class, 'bidRequest'])->name('ride.bid_request');
-    Route::get('/upcoming', [RideController::class, 'upcoming'])->name('ride.upcoming');
-    Route::get('/complete', [RideController::class, 'complete'])->name('ride.complete');
-    Route::get('/cancel', [RideController::class, 'cancel'])->name('ride.cancel');
-    Route::get('/bidding/{id}', [RideController::class, 'bidding'])->name('ride.bidding');
-    Route::get('/details/{ride_id}', [RideController::class, 'details'])->name('ride.details');
-    Route::post('/cancel/reason/send', [RideController::class, 'reasonSend'])->name('ride.reason.send');    
-    Route::post('/update-visible-time', [RideController::class, 'updateVisibleTime'])->name('ride.update_visible_time');    
-    Route::post('/notification/send', [RideController::class, 'notificationSend'])->name('ride.notification_send');    
-    Route::post('/upcoming/notification/send', [RideController::class, 'upcomingNotificationSend'])->name('ride.upcoming_notification_send');    
-    Route::post('/update-bid-amount', [RideController::class, 'updateBidAmount'])->name('ride.update_bid_amount');    
-    Route::post('/bid-cancel', [RideController::class, 'bidCancel'])->name('ride.bid_cancel');    
-    Route::post('/bid-request-qty-update', [RideController::class, 'bidRequestQtyUpdate'])->name('ride.bid_request_qty_update');    
-    Route::get('/cancel-seen/{id}', [RideController::class, 'cancelSeen'])->name('ride.cancel_seen');    
-});
-
-Route::group(['prefix'=>'/car-package-order', 'middleware' => 'admin'], function(){
-    Route::get('/booking', [CarPackageRideController::class, 'booking'])->name('car_package_order.booking');
-    Route::get('/accepted', [CarPackageRideController::class, 'accepted'])->name('car_package_order.accepted');
-    Route::get('/upcoming', [CarPackageRideController::class, 'upcoming'])->name('car_package_order.upcoming');
-    Route::get('/ongoing', [CarPackageRideController::class, 'ongoing'])->name('car_package_order.ongoing');
-    Route::get('/complete', [CarPackageRideController::class, 'complete'])->name('car_package_order.complete');
-    Route::get('/cancel', [CarPackageRideController::class, 'cancel'])->name('car_package_order.cancel');
-    Route::get('/details/{id}', [CarPackageRideController::class, 'details'])->name('car_package_order.details');
-    Route::post('/cancel/reason/send', [CarPackageRideController::class, 'reasonSend'])->name('car_package_order.reason.send');
-});
-
-Route::group(['prefix'=>'/hotel-package-order', 'middleware' => 'admin'], function(){
-    Route::get('/booking', [HotelPackageRideController::class, 'booking'])->name('hotel_package_order.booking');
-    Route::get('/upcoming', [HotelPackageRideController::class, 'upcoming'])->name('hotel_package_order.upcoming');
-    Route::get('/complete', [HotelPackageRideController::class, 'complete'])->name('hotel_package_order.complete');
-    Route::get('/cancel', [HotelPackageRideController::class, 'cancel'])->name('hotel_package_order.cancel');
-    Route::get('/details/{id}', [HotelPackageRideController::class, 'details'])->name('hotel_package_order.details');
-    Route::post('/cancel/reason/send', [HotelPackageRideController::class, 'reasonSend'])->name('hotel_package_order.reason.send');
-});
-
-Route::group(['prefix'=>'/sms-notification', 'middleware' => 'admin'], function(){
-    Route::get('/', [SmsNotificationController::class, 'index'])->name('sms_notification.index');
-    Route::post('/send', [SmsNotificationController::class, 'send'])->name('sms_notification.send');
-    Route::get('/push-notification', [SmsNotificationController::class, 'pushNotification'])->name('sms_notification.push_notification');
-    Route::post('/push-notification-send', [SmsNotificationController::class, 'pushNotificationSend'])->name('sms_notification.push_notification.send');
-    Route::get('/global-notification', [SmsNotificationController::class, 'globalNotification'])->name('sms_notification.global_notification');
-    Route::post('/global-notification-send', [SmsNotificationController::class, 'globalNotificationSend'])->name('sms_notification.global_notification.send');
-});
-
-Route::group(['prefix'=>'/notification-log', 'middleware' => 'admin'], function(){
-    Route::get('/partner', [NotificationLogController::class, 'partnerNotification'])->name('notification_log.partner');
-    Route::get('/user', [NotificationLogController::class, 'userNotification'])->name('notification_log.user');
-});
-
-Route::group(['prefix'=>'/message', 'middleware' => 'admin'], function(){
-    Route::get('/partner', [MessageController::class, 'partnerMessage'])->name('message.partner');
-    Route::get('/user', [MessageController::class, 'userMessage'])->name('message.user');
-    Route::post('/reply', [MessageController::class, 'reply'])->name('message.reply');
-});
-
-Route::group(['prefix'=>'/complain', 'middleware' => 'admin'], function(){
-    Route::get('/partner', [ComplainController::class, 'partnerComplain'])->name('complain.partner');
-    Route::get('/user', [ComplainController::class, 'userComplain'])->name('complain.user');
-    Route::post('/reply', [ComplainController::class, 'reply'])->name('complain.reply');
-});
-
-Route::group(['prefix'=>'/bonus', 'middleware' => 'admin'], function(){
-    Route::get('/', [BonusController::class, 'index'])->name('bonus.index');
-    Route::get('/create', [BonusController::class, 'create'])->name('bonus.create');
-    Route::post('/store', [BonusController::class, 'store'])->name('bonus.store');
-    Route::get('/edit/{id}', [BonusController::class, 'edit'])->name('bonus.edit');
-    Route::post('/update/{id}', [BonusController::class, 'update'])->name('bonus.update');
-    Route::post('/destroy', [BonusController::class, 'destroy'])->name('bonus.destroy');
-    Route::get('/capable', [BonusController::class, 'capable'])->name('bonus.capable');
-    Route::get('/pay-now', [BonusController::class, 'payNow'])->name('bonus.pay_now');
-    Route::get('/paid/{id}', [BonusController::class, 'paid'])->name('bonus.paid');
-});
-
-Route::group(['prefix'=>'/withdraw', 'middleware' => 'admin'], function(){
-    Route::get('/pending', [WithdrawController::class, 'pending'])->name('withdraw.pending');
-    Route::get('/complete', [WithdrawController::class, 'complete'])->name('withdraw.complete');
-    Route::get('/cancel', [WithdrawController::class, 'cancel'])->name('withdraw.cancel');
-    Route::post('/approve', [WithdrawController::class, 'approve'])->name('withdraw.approve');
-});
-
-Route::group(['prefix'=>'/accounts', 'middleware' => 'admin'], function(){
-    Route::get('/summary', [AccountsController::class, 'summary'])->name('accounts.summary');
-    Route::get('/transaction', [AccountsController::class, 'transaction'])->name('accounts.transaction');
-    Route::get('/online-transaction', [AccountsController::class, 'onlineTransaction'])->name('accounts.online_transaction');
-    Route::get('/refund', [AccountsController::class, 'refund'])->name('accounts.refund');
-    Route::get('/user-balance', [AccountsController::class, 'userBalance'])->name('accounts.user-balance');
-    Route::get('/partner-balance', [AccountsController::class, 'partnerBalance'])->name('accounts.partner-balance');
-    Route::get('/withdraw', [AccountsController::class, 'withdraw'])->name('accounts.withdraw');
-    Route::post('/withdraw-cancel', [AccountsController::class, 'withdrawCancel'])->name('accounts.withdraw.cancel');
-    Route::post('/withdraw-accept', [AccountsController::class, 'withdrawAccept'])->name('accounts.withdraw.accept');
-});
+        return view('quicarbd.admin.user.log', compact('logs','user_name'));
+    }
+    
+    //user app information edit
+    public function userAppInfoEdit()
+    {
+        $setting = UserAppInformation::find(1);
+        return view('quicarbd.admin.setting.user-app-info', compact('setting'));
+    }    
+    
+    //user app information update
+    public function userAppInfoUpdate(Request $request)
+    {
+        $this->validate($request,[
+            'forceUpdate'       => 'required',
+            'updateDate'        => 'required',
+            'latestVersionName' => 'required',
+            'latestVersionCode' => 'required',
+            'whatsNew'          => 'required'
+        ]);
+    
+        $user_app                   = UserAppInformation::find(1);
+        $user_app->forceUpdate      = $request->forceUpdate;
+        $user_app->updateDate       = date('Y-m-d', strtotime($request->updateDate));
+        $user_app->latestVersionName= $request->latestVersionName;
+        $user_app->latestVersionCode= $request->latestVersionCode;
+        $user_app->whatsNew         = $request->whatsNew;
+        if ($user_app->update()) {
+            return redirect()->route('setting.user-app-info.edit')->with('message','Updated successfully');
+        } else {
+            return redirect()->back();
+        }
+    }  
+    
+    //user app settting edit
+    public function userAppSettingEdit()
+    {
+        $setting = UserAppSetting::find(1);
+        return view('quicarbd.admin.setting.user-app', compact('setting'));
+    }    
+    
+    //user app settting update
+    public function userAppSettingUpdate(Request $request)
+    {
+        $this->validate($request,[
+            'bonus_getting_message'     => 'required',
+            'signup_bobus'              => 'required',
+            'amount'                    => 'required',
+            'marketing_dialog_title'    => 'required',
+            'marketing_dialog_show'     => 'required',
+            'max_adv_booking_ride'      => 'required',
+            'automatice_ride_approved'  => 'required',
+            'ride_service_open'         => 'required',
+            'car_travel_package_open'   => 'required',
+            'hotel_package_open'        => 'required',
+            'bitAcceptedPreNotice'      => 'required'
+        ]);
+    
+        $user_app                           = UserAppSetting::find(1);
+        $user_app->bonus_getting_message    = $request->bonus_getting_message;
+        $user_app->signup_bobus             = $request->signup_bobus;
+        $user_app->amount                   = $request->amount;
+        $user_app->marketing_dialog_title   = $request->marketing_dialog_title;
+        $user_app->marketing_dialog_show    = $request->marketing_dialog_show;
+        $user_app->max_adv_booking_ride     = $request->max_adv_booking_ride;
+        $user_app->automatice_ride_approved = $request->automatice_ride_approved;
+        $user_app->ride_service_open        = $request->ride_service_open;
+        $user_app->car_travel_package_open  = $request->car_travel_package_open;
+        $user_app->hotel_package_open       = $request->hotel_package_open;
+        $user_app->bitAcceptedPreNotice     = $request->bitAcceptedPreNotice;
+        
+        if($request->hasFile('marketing_banner_image')){
+            
+            if(($user_app->image_url != null) && file_exists($user_app->marketing_banner_image)){
+                unlink($user_app->marketing_banner_image);
+            }
+            
+            $image             = $request->file('marketing_banner_image');
+            $imageName         = time().".".$image->getClientOriginalExtension();
+            $directory         = '../mobileapi/asset/marketing-banner/';
+            $image->move($directory, $imageName);
+            $imageUrl          = $imageName;
+            $user_app->marketing_banner_image = "http://quicarbd.com/mobileapi/asset/marketing-banner/".$imageUrl;
+        }
+        
+        if ($user_app->update()) {
+            return redirect()->route('setting.user-app.edit')->with('message','Updated successfully');
+        } else {
+            return redirect()->back();
+        }
+    }
+}
