@@ -124,7 +124,7 @@ $("#carPackageSendReason").click(function(){
     var reason  = $('#reason').val();
     $.ajax({
         type: 'POST',
-        url: '/ride/cancel/reason/send',
+        url: '/car-package-order/cancel/reason/send',
         headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') },
         data: {
             package_order_id : package_order_id,

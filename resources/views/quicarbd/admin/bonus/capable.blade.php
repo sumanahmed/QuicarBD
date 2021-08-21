@@ -53,14 +53,17 @@
                                     <tbody id="partnerData">
                                         @if(isset($records) && count($records) > 0)
                                             @foreach($records as $record)
-                                                <tr class="record-{{ $record->id }}">
-                                                    <td>{{ $record->name }}</td>
-                                                    <td>{{ $record->phone }}</td>
+                                                <?php
+                                                    $user = \App\Models\User::select('id','name','phone')->where('id', $record->user_id)->first();
+                                                ?>
+                                                <tr class="record-{{ $user->id }}">
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $user->phone }}</td>
                                                     <td>{{ $required_completed }}</td>   
                                                     <td>{{ $record->total_completed }}</td>
                                                     <td></td>
                                                     <td style="vertical-align: middle;text-align: center;">
-                                                        <a href="{{ route('bonus.pay_now',['id'=>$record->id, 'bonus_id'=>$bonus_id, 'name' => $record->name, 'phone'=>$record->phone, 'type'=>$type]) }}" class="btn btn-xs btn-success" title="Pay Now"><i class="fa fa-check"></i></a>
+                                                        <a href="{{ route('bonus.pay_now',['id'=>$user->id, 'bonus_id'=>$bonus_id, 'name' => $user->name, 'phone'=>$user->phone, 'type'=>$type]) }}" class="btn btn-xs btn-success" title="Pay Now"><i class="fa fa-check"></i></a>
                                                     </td>
                                                 </tr>
                                             @endforeach

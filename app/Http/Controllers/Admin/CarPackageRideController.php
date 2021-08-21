@@ -256,7 +256,7 @@ class CarPackageRideController extends Controller
     public function reasonSend (Request $request) {
       
         $validators = Validator::make($request->all(),[
-            'ride_id' => 'required',
+            'package_order_id' => 'required',
             'reason'  => 'required'
         ]);
         

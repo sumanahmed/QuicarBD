@@ -134,19 +134,21 @@ class BonusController extends Controller
     {  
         $current_date_time = Carbon::now()->toDateTimeString(); 
         $bonus = Bonus::find($request->bonus_id);
+        
         if ($current_date_time <= $bonus->offer_finishing_time) {
             if ($request->type == 0) { //0 mean = user
-        
+            
                 $records = DB::table('ride_list')
                             ->join('users','ride_list.user_id','users.id')
-                            ->select('users.id','users.name','users.phone', DB::raw("COUNT(ride_list.id) as total_completed"))
+                            // ->select('users.id','users.name','users.phone')
+                            ->select('ride_list.user_id',DB::raw("COUNT(ride_list.user_id) as total_completed"))
                             ->where('ride_list.start_time', '>=', $request->start)
                             ->where('ride_list.start_time', '<=', $request->end)
                             ->where('ride_list.status', 4)
-                            ->groupBy('ride_list.id','users.id','users.name','users.phone')
+                            ->groupBy('ride_list.user_id')
                             ->get();
-                            
-                $records = $records->where('total_completed', $request->completed);
+                
+                $records = $records->where('total_completed', '>=', $request->completed);
                 
             } else { 
                 
@@ -240,10 +242,11 @@ class BonusController extends Controller
                 $helper->smsNotification($type=2, $request->id, $title, $msg); // send notification, 2=partner
             }
             
-            $bonus_complete = new BonusCompleteList();
-            $bonus_complete->bonus_id = $request->bonus_id;
-            $bonus_complete->receiver_id = $request->id;
-            $bonus_complete->type  = $request->type;
+            $bonus_complete             = new BonusCompleteList();
+            $bonus_complete->bonus_id   = $request->bonus_id;
+            $bonus_complete->receiver_id= $request->id;
+            $bonus_complete->type       = $request->type;
+            $bonus_complete->status     = 0;
             $bonus_complete->save();
             
             DB::commit();
