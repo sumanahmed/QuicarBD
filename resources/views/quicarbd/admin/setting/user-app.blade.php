@@ -172,6 +172,15 @@
                                                         @endif
                                                     </div>
                                                 </div> 
+                                                <div class="col-md-6">                                        
+                                                    <div class="form-group">
+                                                        <label for="bitAcceptedPreNotice" class="control-label mb-10"> Bid Accepted Pre Notice </label>
+                                                        <textarea id="bitAcceptedPreNotice" name="bitAcceptedPreNotice" class="form-control" rows="6">{{ $setting->bitAcceptedPreNotice }}</textarea>
+                                                        @if($errors->has('bitAcceptedPreNotice'))
+                                                            <span class="text-danger"> {{ $errors->first('bitAcceptedPreNotice') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div> 
                                             </div>       
                                             <div class="row" style="margin-top:10px;">
                                                 <div class="col-md-4">

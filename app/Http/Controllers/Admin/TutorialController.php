@@ -24,6 +24,10 @@ class TutorialController extends Controller
             $query = $query->where('video_id', $request->video_id);
         }
         
+        if ($request->type) {
+            $query = $query->where('type', $request->type);
+        }
+        
         $type = $request->type;
         
         $tutorials = $query->paginate(12)->appends(request()->query());

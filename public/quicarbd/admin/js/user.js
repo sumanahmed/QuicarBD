@@ -64,7 +64,8 @@ $("#addBalance").click(function(){
     var balance     = $('input[name="balance"]').val();
     var add_balance = $('input[name="add_balance"]').val();
     var add_cashback_balance = $('input[name="add_cashback_balance"]').val();
-    var deduct_balance = $('input[name="deduct_balance"]').val();
+    var deduct_balance  = $('input[name="deduct_balance"]').val();
+    var reason_desc     = $('input[name="reason_desc"]').val();
     
     $.ajax({
         type: 'POST',
@@ -77,6 +78,7 @@ $("#addBalance").click(function(){
             add_balance : add_balance,
             add_cashback_balance : add_cashback_balance,
             deduct_balance : deduct_balance,
+            reason_desc : reason_desc,
         },
         success: function (response) {
             if((response.errors)){
@@ -88,6 +90,9 @@ $("#addBalance").click(function(){
                 }
                 if(response.errors.deduct_balance){
                     $('.errorDeductBalance').text(response.errors.deduct_balance);
+                } 
+                if(response.errors.reason_desc){
+                    $('.errorReasonDesc').text(response.errors.reason_desc);
                 } 
             }else{
                 $('#userBalanceAddModal').modal('hide');
