@@ -39,6 +39,12 @@
                     ->where('payment_status',1)
                     ->where('cancel_seen', 0)
                     ->count('id');
+
+	$bidRequest = DB::table('ride_list')
+					->where('status', 1)
+					->where('payment_status', 0)
+					->where('ride_visiable_time', '>', $current_date_time)
+					->count('id');
 ?>
     <div class="wrapper theme-1-active pimary-color-blue">
 		<!-- Top Menu Items -->
@@ -79,6 +85,13 @@
 						</a>
 					</li>
 					<li class="dropdown alert-drp">
+						<a href="{{ route('ride.bid_request') }}" title="Cancel Ride">Bid Request <i class="zmdi zmdi-notifications top-nav-icon"></i>
+    						@if($bidRequest > 0)
+    						    <span class="top-nav-icon-badge">{{ $bidRequest }}</span>
+    						@endif
+						</a>
+					</li>
+					<li class="dropdown alert-drp">
 						<a href="{{ route('ride.pending') }}" title="Pending Ride">Pending Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
     						@if($pendingRide > 0)
     						    <span class="top-nav-icon-badge">{{ $pendingRide }}</span>
@@ -89,13 +102,6 @@
 						<a href="{{ route('ride.upcoming') }}" title="Booking Ride">Booking Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
     						@if($bookingRide > 0)
     						    <span class="top-nav-icon-badge">{{ $bookingRide }}</span>
-    						@endif
-						</a>
-					</li>
-					<li class="dropdown alert-drp">
-						<a href="{{ route('ride.cancel',['accepted_ride_bitting_id' => 1]) }}" title="Cancel Ride">Booking Cancel Ride <i class="zmdi zmdi-notifications top-nav-icon"></i>
-    						@if($cancelRide > 0)
-    						    <span class="top-nav-icon-badge">{{ $cancelRide }}</span>
     						@endif
 						</a>
 					</li>
